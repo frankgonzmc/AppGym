@@ -1,0 +1,24 @@
+services:
+  mybackend:
+    container_name: backendgym
+    restart: always
+    build: ./backend
+    ports:
+      - "8080:5000"
+    links:
+      - database
+
+  database:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  myfrontend:
+    container_name: frontgym
+    restart: always
+    build: ./frontclient
+    ports:
+      - "5173:5173"
+    links:
+      - mybackend
