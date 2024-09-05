@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../imagenes/logo.png";
 
 //Importar archivos CSS
@@ -36,7 +35,7 @@ export function FormularioSesion(){
 }
 
 
-export const Home = () => {
+export const LoginPage = () => {
   return (
     <div>
       <Inicio/>

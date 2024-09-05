@@ -4,9 +4,11 @@ services:
     restart: always
     build: ./backend
     ports:
-      - "8080:5000"
+      - "5000:5000"
     links:
       - database
+    volumes:
+      - .:/usr/src/app
 
   database:
     container_name: mongodb
@@ -22,3 +24,5 @@ services:
       - "5173:5173"
     links:
       - mybackend
+    volumes:
+      - .:/usr/src/app
