@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Inicio} from './pages/inicio';
-import {LoginPage} from './pages/loginPage';
+import { Inicio } from './pages/inicio';
+import { LoginPage } from './pages/loginPage';
 import { Registro } from './pages/registerPage';
 
 function App() {
@@ -8,9 +8,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<h1>Home pageeeeeeeennnnn </h1>} />
-        <Route path='/login' element={<LoginPage/>} />
-        <Route path='/register' element={<Registro/>} />
-        <Route path='/inicio' element={<Inicio/>}/>
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<Registro />} />
+        <Route path='/inicio' element={<Inicio />} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
