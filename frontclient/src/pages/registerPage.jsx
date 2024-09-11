@@ -3,7 +3,7 @@ import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
 
 
-function RegisterPage() {
+function RegistroUsuario() {
 
   const { register, handleSubmit } = useForm();
 
@@ -33,4 +33,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default RegistroUsuario;
