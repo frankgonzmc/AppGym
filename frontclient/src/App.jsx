@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/authcontext';
 import { Inicio } from './pages/inicio';
-import { LoginPage } from './pages/usuarios/loginPage';
-import profilePage from './pages/usuarios/profilePage';
-import RegistroUsuario from './pages/usuarios/registerPage';
-import rutinaPage from './pages/rutinas/rutinaPage';
-import rutinaFormPage from './pages/rutinas/formPage';
+import { LoginPage } from './pages/loginPage';
+import profilePage from './pages/profilePage';
+import RegistroUsuario from './pages/registerPage';
+import rutinaPage from './pages/rutinaPage';
+import rutinaFormPage from './pages/formPage';
 
 function App() {
   return (
