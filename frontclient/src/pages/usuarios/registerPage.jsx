@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 function RegistroUsuario() {
@@ -37,7 +38,7 @@ function RegistroUsuario() {
             <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
             {
               RegisterErrors.map((error, i) => (
-                <div className="bg-red-500 p-2 text-while">
+                <div className="bg-red-500 p-2 text-while" key={i}>
                   {error}
                 </div>
               ))
@@ -57,6 +58,10 @@ function RegistroUsuario() {
 
               <button type="submit" value="Registrarse" className="registerbtn">Registrarse</button>
             </form>
+
+            <p className="flex gap-x-2 justify-between">
+              Ya tienes una cuenta? <Link href="/login" className="text-sky-0">Inicia Sesión</Link>
+            </p>
           </div>
         </div>
       </div>

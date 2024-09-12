@@ -1,5 +1,5 @@
-import { useState, createContext, useContext } from "react";
-import { registerRequest } from "../api/auth";
+import { useState, createContext, useContext, useEffect } from "react";
+import { registerRequest, loginRequest } from "../api/auth";
 
 export const AuthContext = createContext()
 
@@ -29,9 +29,31 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const sigin = async (user) => {
+        try {
+            const res = await loginRequest(user)
+            console.log(res)
+        } catch (error) {
+            if (Array.isArray(error.response.data)) {
+                return setErrors(error.response.data)
+            }
+            setErrors(error.response.data.message)
+        }
+    }
+
+    useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors([])
+            }, 5000)
+            return () => clearTimeout(timer)
+        }
+    }, [errors])
+
     return (
         <AuthContext.Provider value={{
             signup,
+            sigin,
             user,
             isAuthenticated,
             errors
