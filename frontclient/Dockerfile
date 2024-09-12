@@ -2,7 +2,7 @@
 FROM node:18
 
 # Establece el directorio de trabajo en el contenedor
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copia el archivo package.json y package-lock.json (o yarn.lock) al contenedor
 COPY package*.json ./
