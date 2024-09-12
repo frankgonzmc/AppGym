@@ -8,7 +8,7 @@ services:
     links:
       - database
     volumes:
-      - ./backend:/usr/src/app
+      - .:/usr/src/app
 
   database:
     container_name: mongodb
@@ -25,4 +25,4 @@ services:
     links:
       - mybackend
     volumes:
-      - ./frontclient:/usr/src/app
+      - .:/usr/src/app
