@@ -1,6 +1,6 @@
 import { useAuth } from "../context/authcontext"
 
-function rutinaPage() {
+function RutinaPage() {
 
   const { user } = useAuth()
   console.log(user)
@@ -10,4 +10,4 @@ function rutinaPage() {
   )
 }
 
-export default rutinaPage
+export default RutinaPage

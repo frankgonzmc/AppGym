@@ -1,7 +1,7 @@
-function rutinaForm() {
+function RutinaForm() {
   return (
     <div>rutinaForm</div>
   )
 }
 
-export default rutinaForm
+export default RutinaForm

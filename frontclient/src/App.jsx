@@ -3,10 +3,10 @@ import { AuthProvider } from './context/authcontext';
 import { Inicio } from './pages/inicio';
 import { LoginPage } from './pages/loginPage';
 import ProtectedRoute from './ProtectedRoute';
-import profilePage from './pages/profilePage';
+import ProfilePage from './pages/profilePage';
 import RegistroUsuario from './pages/registerPage';
-import rutinaPage from './pages/rutinaPage';
-import rutinaForm from './pages/rutinaForm';
+import RutinaPage from './pages/rutinaPage';
+import RutinaForm from './pages/rutinaForm';
 
 function App() {
   return (
@@ -18,11 +18,11 @@ function App() {
           
           <Route element={<ProtectedRoute />}>
             <Route path='/' element={<Inicio />} />
-            <Route path='/profile' element={<profilePage />} />
+            <Route path='/profile' element={<ProfilePage />} />
             <Route path='/inicio' element={<Inicio />} />
-            <Route path='/rutinas' element={<rutinaPage />} />
-            <Route path='/add-rutinas' element={<rutinaForm />} />
-            <Route path='/rutina/:id' element={<rutinaForm />} />
+            <Route path='/rutinas' element={<RutinaPage />} />
+            <Route path='/add-rutinas' element={<RutinaForm />} />
+            <Route path='/rutina/:id' element={<RutinaForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
