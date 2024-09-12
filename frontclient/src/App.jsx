@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/authcontext';
 import { Inicio } from './pages/inicio';
 import { LoginPage } from './pages/loginPage';
+import ProtectedRoute from './ProtectedRoute';
 import profilePage from './pages/profilePage';
 import RegistroUsuario from './pages/registerPage';
 import rutinaPage from './pages/rutinaPage';
@@ -12,14 +13,17 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<h1>Home pageeeeeeeennnnn </h1>} />
-          <Route path='/profile' element={<profilePage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegistroUsuario />} />
-          <Route path='/inicio' element={<Inicio />} />
-          <Route path='/rutinas' element={<rutinaPage/>} />
-          <Route path='/add-rutinas' element={<rutinaForm />} />
-          <Route path='/rutina/:id' element={<rutinaForm />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/' element={<Inicio />} />
+            <Route path='/profile' element={<profilePage />} />
+            <Route path='/inicio' element={<Inicio />} />
+            <Route path='/rutinas' element={<rutinaPage />} />
+            <Route path='/add-rutinas' element={<rutinaForm />} />
+            <Route path='/rutina/:id' element={<rutinaForm />} />
+
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
