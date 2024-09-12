@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 
 //Importar archivos CSS
 import '../css/login.css';
-import { useAuth } from "../../context/authcontext";
+import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
 import logo from "../imagenes/logo.png";
 
