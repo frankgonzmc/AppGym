@@ -5,7 +5,7 @@ import { LoginPage } from './pages/loginPage';
 import profilePage from './pages/profilePage';
 import RegistroUsuario from './pages/registerPage';
 import rutinaPage from './pages/rutinaPage';
-import rutinaFormPage from './pages/formPage';
+import rutinaForm from './pages/rutinaForm';
 
 function App() {
   return (
@@ -18,8 +18,8 @@ function App() {
           <Route path='/register' element={<RegistroUsuario />} />
           <Route path='/inicio' element={<Inicio />} />
           <Route path='/rutinas' element={<rutinaPage/>} />
-          <Route path='/add-rutinas' element={<rutinaFormPage />} />
-          <Route path='/rutina/:id' element={<RegistroUsuario />} />
+          <Route path='/add-rutinas' element={<rutinaForm />} />
+          <Route path='/rutina/:id' element={<rutinaForm />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
