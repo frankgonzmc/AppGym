@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import { login, logout, profile, register,verifityToken } from "../controllers/auth.controllers.js";
+import { login, logout, profile, register, verifityToken } from "../controllers/auth.controllers.js";
 import { authRequired } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js'
 import { registerSchema, loginSchema } from '../validator/auth.schema.js'
-import { verifityTokenRequest } from '../../frontclient/src/api/auth.js';
 
 const router = Router();
 

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
         } catch (error) {
             console.log(error.response)
-            setErrors(error.response)
+            setErrors(error.response.data)
         }
     }
 
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
             if (Array.isArray(error.response.data)) {
                 return setErrors(error.response.data)
             }
-            setErrors(error.response.data.message)
+            setErrors([error.response.data.message])
         }
     }
 
@@ -58,18 +58,18 @@ export const AuthProvider = ({ children }) => {
         async function checkLogin() {
             const cookies = Cookies.get()
 
-            if (!cookies.token){
+            if (!cookies.token) {
                 setIsAuthenticated(false)
                 setLoading(false)
                 return setUser(null)
             }
-                
+
             try {
                 const res = await verifityTokenRequest(cookies.token)
                 if (!res.data) {
-                   setIsAuthenticated(false)
-                   setLoading(false)
-                   return;
+                    setIsAuthenticated(false)
+                    setLoading(false)
+                    return;
                 }
 
                 setIsAuthenticated(true)
@@ -86,13 +86,15 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{
-            signup,
-            sigin,
-            loading,
-            user,
-            isAuthenticated,
-            errors
-        }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider
+            value={{
+                signup,
+                sigin,
+                loading,
+                user,
+                isAuthenticated,
+                errors
+            }}>{children}
+        </AuthContext.Provider>
     )
 }

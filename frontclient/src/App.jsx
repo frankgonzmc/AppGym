@@ -15,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegistroUsuario />} />
+          
           <Route element={<ProtectedRoute />}>
             <Route path='/' element={<Inicio />} />
             <Route path='/profile' element={<profilePage />} />
@@ -22,7 +23,6 @@ function App() {
             <Route path='/rutinas' element={<rutinaPage />} />
             <Route path='/add-rutinas' element={<rutinaForm />} />
             <Route path='/rutina/:id' element={<rutinaForm />} />
-
           </Route>
         </Routes>
       </BrowserRouter>
