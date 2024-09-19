@@ -12,7 +12,7 @@ import ProgresoPage from './pages/progresoPage';
 import HistorialPage from './pages/historialPage';
 
 import EjercicioForm from './pages/ejercicioForm';
-import EjerciciosPage from './pages/ejerciciosPage';
+import EjercicioPage from './pages/ejercicioPage';
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
 
             <Route path='/historial' element={<HistorialPage />} />
             <Route path='/progresos' element={<ProgresoPage />} />
-            <Route path='/ejercicios' element={<EjerciciosPage />} />
+            <Route path='/ejercicios' element={<EjercicioPage />} />
             <Route path='/add-ejercicios' element={<EjercicioForm />} />
             <Route path='/ejercicios/:id' element={<EjercicioForm />} />
           </Route>
