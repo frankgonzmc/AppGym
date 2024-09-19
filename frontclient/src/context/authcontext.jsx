@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const sigin = async (user) => {
+    const signin = async (user) => {
         try {
             const res = await loginRequest(user)
             console.log(res)
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 signup,
-                sigin,
+                signin,
                 logout,
                 loading,
                 user,
