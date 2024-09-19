@@ -7,8 +7,11 @@ import { useAuth } from "../context/authcontext";
 
 export function Panel() {
 
-    const { logout } = useAuth();
+    const { isAuthenticated, user, logout } = useAuth();
 
+    if (!isAuthenticated) {
+        return <div>No estás autenticado</div>; // Manejo si no estás autenticado
+    }
 
     return (
         <div className="panel-user">
