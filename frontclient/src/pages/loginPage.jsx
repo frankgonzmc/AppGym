@@ -23,7 +23,7 @@ export function FormularioSesion() {
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
-    //console.log(data)
+    signin(data);
   })
 
   useEffect(() => {
