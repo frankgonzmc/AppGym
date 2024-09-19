@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
       <Link to="/">
-        <h1 className="text-2xl font-bold">HOME PAGE</h1>
+        <h1 className="text-2xl font-bold">APP GYM</h1>
       </Link>
       <ul className="flex items-center gap-x-4">
         {isAuthenticated ? (

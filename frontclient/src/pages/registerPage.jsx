@@ -44,7 +44,9 @@ function RegistroUsuario() {
               ))
             }
             <form onSubmit={onSubmit} className="form-register">
-              <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
+              <label
+                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
+              </label>
               {errors.username && (<p className="text-red-500">El Nombre Completo es Necesario!</p>)}
               <label
                 className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="info-childs-input" />
