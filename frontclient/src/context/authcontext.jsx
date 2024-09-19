@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     const updatePassword = async (currentPassword, newPassword) => {
         try {
             const res = await updatePasswordRequest(currentPassword, newPassword);
-            console.log('Contraseña actualizada con éxito', res.data);
+            console.log('Contr  aseña actualizada con éxito', res.data);
         } catch (error) {
             console.log('Error al actualizar la contraseña', error.response.data);
             throw new Error('No se pudo actualizar la contraseña.');
@@ -107,10 +107,11 @@ export const AuthProvider = ({ children }) => {
                 signup,
                 signin,
                 logout,
+                updatePassword,
                 loading,
                 user,
                 isAuthenticated,
-                errors
+                errors,
             }}>{children}
         </AuthContext.Provider>
     )

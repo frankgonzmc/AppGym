@@ -29,73 +29,73 @@ function ProfilePage() {
   };
 
   return (
-    <div className="flex h-[calc(50vh-50px)] items-center justify-center">
-      <div className="container w-full mx-auto mt-10">
-        <h2 className="text-3xl font-bold mb-6">Perfil de Usuario</h2>
+    <div className="container mx-auto mt-10">
+      <h2 className="text-3xl font-bold mb-6">Perfil de Usuario</h2>
 
-        <div className="mb-6">
-          <label className="block text-black-700">Nombre completo:</label>
-          <input
-            type="text"
-            value={user.username}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-black-700">Email:</label>
-          <input
-            type="email"
-            value={user.email}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
-
-        <form onSubmit={handlePasswordUpdate}>
-          <div className="mb-6">
-            <label className="block text-black-700">Contraseña actual:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-black-700">Nueva contraseña:</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-2 border border-black-300 rounded-md"
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-gray-700">Confirmar nueva contraseña:</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
-              required
-            />
-          </div>
-
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">{success}</p>}
-
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Actualizar Datos
-          </button>
-        </form>
+      <div className="mb-6">
+        <label className="block text-gray-700">Nombre completo:</label>
+        <input
+          type="text"
+          value={user.username}
+          readOnly
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
       </div>
+
+      <div className="mb-6">
+        <label className="block text-gray-700">Email:</label>
+        <input
+          type="email"
+          value={user.email}
+          readOnly
+          className="w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+
+      <form onSubmit={handlePasswordUpdate}>
+        <div className="mb-6">
+          <label className="block text-gray-700">Contraseña actual:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-gray-700">Nueva contraseña:</label>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-gray-700">Confirmar nueva contraseña:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        >
+          Actualizar Datos
+        </button>
+      </form>
     </div>
   );
 }
