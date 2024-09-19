@@ -19,7 +19,7 @@ export function Inicio() {
 export function FormularioSesion() {
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const { signin, errors: signinErrors } = useAuth();
+  const { signin, isAuthenticated, errors: signinErrors } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
