@@ -38,7 +38,7 @@ function ProfilePage() {
           type="text"
           value={user.username}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded-md text-black"
         />
       </div>
 
@@ -48,7 +48,7 @@ function ProfilePage() {
           type="email"
           value={user.email}
           readOnly
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded-md text-black"
         />
       </div>
 
@@ -59,7 +59,7 @@ function ProfilePage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
             required
           />
         </div>
@@ -70,7 +70,7 @@ function ProfilePage() {
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
             required
           />
         </div>
@@ -81,7 +81,7 @@ function ProfilePage() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
             required
           />
         </div>
