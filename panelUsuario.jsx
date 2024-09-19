@@ -1,3 +1,5 @@
+
+/*
 import React from "react";
 import userlogo from "../imagenes/user.png";
 import { Link } from "react-router-dom";
@@ -38,3 +40,4 @@ export function Panel() {
         </div>
     );
 }
+    */

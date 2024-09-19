@@ -8,6 +8,11 @@ import RegistroUsuario from './pages/registerPage';
 import RutinaPage from './pages/rutinaPage';
 import RutinaForm from './pages/rutinaForm';
 import Navbar from './components/navbar';
+import ProgresoPage from './pages/progresoPage';
+import HistorialPage from './pages/historialPage';
+
+import EjercicioForm from './pages/ejercicioForm';
+import EjerciciosPage from './pages/ejerciciosPage';
 
 function App() {
   return (
@@ -25,6 +30,13 @@ function App() {
             <Route path='/rutinas' element={<RutinaPage />} />
             <Route path='/add-rutinas' element={<RutinaForm />} />
             <Route path='/rutina/:id' element={<RutinaForm />} />
+
+
+            <Route path='/historial' element={<HistorialPage />} />
+            <Route path='/progresos' element={<ProgresoPage />} />
+            <Route path='/ejercicios' element={<EjerciciosPage />} />
+            <Route path='/add-ejercicios' element={<EjercicioForm />} />
+            <Route path='/ejercicios/:id' element={<EjercicioForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
