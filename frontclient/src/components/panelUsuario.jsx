@@ -1,17 +1,25 @@
 import React from "react";
 import userlogo from "../imagenes/user.png";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/authcontext";
 
 
 
-export function Panel(){
+export function Panel() {
+
+    const { logout } = useAuth();
+
+
     return (
         <div className="panel-user">
-            <div className="panel-user-divimg">
-                <img src={userlogo} alt="Userimg" className="panel-user-img"/>
-            </div>
+            <Link to="/">
+                <div className="panel-user-divimg">
+                    <img src={userlogo} alt="Userimg" className="panel-user-img" />
+                </div>
+            </Link>
             <div className="panel-c">
                 <h2 className="panelc-h">Nombre:</h2>
-                <h4 className="panelc-d">TuNombreyApellido</h4>
+                <h4 className="panelc-d">{user.username}</h4>
             </div>
             <div className="panel-c">
                 <h2 className="panelc-h">Nivel:</h2>
@@ -22,7 +30,7 @@ export function Panel(){
                 <h4 className="panelc-d">Aumentar masa muscular.</h4>
             </div>
             <div className="panel-c">
-                <button className="panelc-btn">Cerrar Sesión</button>
+                <Link to="/" onClick={() => { logout() }} className="panelc-btn">Cerrar Sesión</Link>
             </div>
         </div>
     );

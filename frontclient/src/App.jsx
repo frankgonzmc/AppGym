@@ -7,6 +7,7 @@ import ProfilePage from './pages/profilePage';
 import RegistroUsuario from './pages/registerPage';
 import RutinaPage from './pages/rutinaPage';
 import RutinaForm from './pages/rutinaForm';
+import Navbar from './components/navbar';
 
 function App() {
   return (

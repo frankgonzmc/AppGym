@@ -60,7 +60,7 @@ function RegistroUsuario() {
             </form>
 
             <p className="flex gap-x-2 justify-between">
-              Ya tienes una cuenta? <Link to="/login" className="text-sky-0">Inicia Sesión</Link>
+              Ya tienes una cuenta? <Link to="/login" className="text-sky-500">Inicia Sesión</Link>
             </p>
           </div>
         </div>
