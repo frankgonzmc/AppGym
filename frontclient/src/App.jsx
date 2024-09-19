@@ -13,6 +13,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar/>
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegistroUsuario />} />

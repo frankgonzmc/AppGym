@@ -52,6 +52,8 @@ export function FormularioSesion() {
 
           <button type="submit" value="container4-button1" className="registerbtn text-center items-center">Iniciar Sesion</button>
         </form>
+        <hr />
+        <br />
         <p className="flex gap-x-2 justify-between">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
