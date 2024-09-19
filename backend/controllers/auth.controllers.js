@@ -12,7 +12,7 @@ export const register = async (req, res) => {
 
         const userFound = await User.findOne({ email })
         if (userFound)
-            return res.status(400).json({ message: ["El email ya existe."] })
+            return res.status(400).json({ message: ["El email no es valido."] })
 
 
         const passwordHash = await bcrypt.hash(password, 10)

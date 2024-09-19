@@ -20,7 +20,7 @@ export function FormularioSesion() {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const { signin, errors: signinErrors } = useAuth();
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
+    //console.log(data)
   })
 
   return (
@@ -46,7 +46,7 @@ export function FormularioSesion() {
           <button type="submit" value="container4-button1" className="registerbtn text-center items-center">Iniciar Sesion</button>
         </form>
         <p className="flex gap-x-2 justify-between">
-          No tienes una cuenta? <Link href="/register" className="text-sky-0">Registrarse</Link>
+          No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
       </div>
     </div>
