@@ -1,11 +1,12 @@
 import { createContext, useContext, useState } from "react";
 import {
-    createEjercicioRequest,
-    deleteEjercicioRequest,
-    getEjercicioRequest,
+    createEjerciciosRequest,
+    deleteEjerciciosRequest,
+    updateEjerciciosRequest,
     getEjerciciosRequest,
-    updateEjercicioRequest,
+    getEjercicioRequest,
 } from "../api/ejercicio";
+
 
 const EjercicioContext = createContext();
 
@@ -29,7 +30,7 @@ export function EjercicioProvider({ children }) {
 
     const deleteEjercicio = async (id) => {
         try {
-            const res = await deleteEjercicioRequest(id);
+            const res = await deleteEjerciciosRequest(id);
             if (res.status === 204) setEjercicios(ejercicios.filter((ejercicio) => ejercicio._id !== id));
         } catch (error) {
             console.log(error);
@@ -38,7 +39,7 @@ export function EjercicioProvider({ children }) {
 
     const createEjercicio = async (ejercicio) => {
         try {
-            const res = await createEjercicioRequest(ejercicio);
+            const res = await createEjerciciosRequest(ejercicio);
             console.log(res.data);
         } catch (error) {
             console.log(error);
@@ -56,7 +57,7 @@ export function EjercicioProvider({ children }) {
 
     const updateEjercicio = async (id, ejercicio) => {
         try {
-            await updateEjercicioRequest(id, ejercicio);
+            await updateEjerciciosRequest(id, ejercicio);
         } catch (error) {
             console.error(error);
         }
