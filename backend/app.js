@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
+import detallerutinaRoutes from './routes/detallerutina.routes.js';
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
+app.use('/api', detallerutinaRoutes);
 
 export default app;

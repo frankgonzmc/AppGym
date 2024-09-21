@@ -24,7 +24,7 @@ const ejercicioSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        required: true,
+        required: false,
     },
     date: {
         type: Date,
