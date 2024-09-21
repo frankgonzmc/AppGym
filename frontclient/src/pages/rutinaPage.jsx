@@ -4,10 +4,10 @@ import { RutinaCard } from "../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 
 export default function RutinaPage() {
-  const { rutinas, getRutina } = useRutinas();
+  const { rutinas, getRutinas } = useRutinas();
 
   useEffect(() => {
-    getRutina();
+    getRutinas();
   }, []);
 
   return (
