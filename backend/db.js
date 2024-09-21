@@ -1,17 +1,11 @@
 import mongoose from "mongoose";
-
+import { MONGODB_URI } from "./config.js";
 
 export const connectDB = async () => {
-    try {
-        //Cambiar localhost por servicio del contenedor
-        await mongoose.connect('mongodb://database/rutinabd', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 8000,
-        });
-
-        console.log("se conecto la base de datos")
-    } catch (error) {
-        console.log(error);
-    }
-}
+  try {
+    await mongoose.connect(MONGODB_URI);
+    console.log("MongoDB is connected");
+  } catch (error) {
+    console.error(error);
+  }
+};
