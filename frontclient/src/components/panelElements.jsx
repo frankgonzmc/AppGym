@@ -1,4 +1,3 @@
-
 import React from "react";
 import calendar from "../imagenes/calendar.png";
 import muscle from "../imagenes/muscle.png";
@@ -6,6 +5,7 @@ import control from "../imagenes/control.png";
 import ai from "../imagenes/ai.png";
 import tab from "../imagenes/tab.png";
 import body from "../imagenes/body.png";
+import { Link } from "react-router-dom";
 
 
 export function PanelElements() {
