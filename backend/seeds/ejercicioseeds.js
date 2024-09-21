@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Ejercicio from "../models/ejercicio.model.js"; // Ajusta la ruta según sea necesario
-import { connectDB } from './db.js';
+import { connectDB } from "../db.js"; // Importa tu función de conexión
 
 const ejerciciosPredeterminados = [
     {
@@ -68,13 +68,9 @@ const seedDatabase = async () => {
         await connectDB(); // Conéctate a la base de datos
         console.log("Conectado a la base de datos");
 
-        // Limpia la colección antes de agregar datos (opcional)
-        await Ejercicio.deleteMany();
-
         // Inserta los ejercicios predeterminados
-        await Ejercicio.insertMany(ejerciciosPredeterminados);
-        
-        console.log("Datos predeterminados agregados");
+        const result = await Ejercicio.insertMany(ejerciciosPredeterminados);
+        console.log("Datos predeterminados agregados:", result);
     } catch (error) {
         console.error("Error al agregar datos:", error);
     } finally {
