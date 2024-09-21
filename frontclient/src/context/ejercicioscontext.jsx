@@ -16,12 +16,12 @@ export const useEjercicios = () => {
 };
 
 export function EjercicioProvider({ children }) {
-    const [ejercicio, setEjercicio] = useState([]);
+    const [ejercicios, setEjercicios] = useState([]);
 
     const getEjercicios = async () => {
         try {
             const res = await getEjerciciosRequest();
-            setEjercicio(res.data);
+            setEjercicios(res.data);
         } catch (error) {
             console.error(error);
         }
@@ -30,7 +30,7 @@ export function EjercicioProvider({ children }) {
     const deleteEjercicio = async (id) => {
         try {
             const res = await deleteEjercicioRequest(id);
-            if (res.status === 204) setEjercicio(ejercicio.filter((ejercicio) => ejercicio._id !== id));
+            if (res.status === 204) setEjercicios(ejercicios.filter((ejercicio) => ejercicio._id !== id));
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +65,7 @@ export function EjercicioProvider({ children }) {
     return (
         <EjercicioContext.Provider
             value={{
-                ejercicio,
+                ejercicios,
                 getEjercicios,
                 deleteEjercicio,
                 createEjercicio,

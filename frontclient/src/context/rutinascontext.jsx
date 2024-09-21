@@ -16,12 +16,12 @@ export const useRutinas = () => {
 };
 
 export function RutinaProvider({ children }) {
-    const [rutina, setRutina] = useState([]);
+    const [rutinas, setRutinas] = useState([]);
 
     const getRutinas = async () => {
         try {
             const res = await getRutinasRequest();
-            setRutina(res.data);
+            setRutinas(res.data);
         } catch (error) {
             console.error(error);
         }
@@ -30,7 +30,7 @@ export function RutinaProvider({ children }) {
     const deleteRutina = async (id) => {
         try {
             const res = await deleteRutinaRequest(id);
-            if (res.status === 204) setRutina(rutina.filter((rutina) => rutina._id !== id));
+            if (res.status === 204) setRutinas(rutinas.filter((rutina) => rutina._id !== id));
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +65,7 @@ export function RutinaProvider({ children }) {
     return (
         <RutinaContext.Provider
             value={{
-                rutina,
+                rutinas,
                 getRutina,
                 deleteRutina,
                 createRutina,
