@@ -3,7 +3,7 @@ import { useEjercicios } from "../context/ejercicioscontext";
 import { EjercicioCard } from "../components/ejercicio/ejercicioCard";
 import { ImFileEmpty } from "react-icons/im";
 
-export function EjercicioPage() {
+export default function EjercicioPage() {
   const { ejercicio, getEjercicio } = useEjercicios();
 
   useEffect(() => {

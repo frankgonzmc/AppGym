@@ -1,4 +1,3 @@
-/*
 import { useForm } from 'react-hook-from'
 import { useEjercicios } from '../context/ejercicioscontext';
 
@@ -39,4 +38,4 @@ function ejercicioForm() {
   )
 }
 
-export default ejercicioForm*/
+export default ejercicioForm
