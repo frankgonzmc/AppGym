@@ -1,5 +1,5 @@
-import { useEjercicios } from "../context/ejercicioscontext";
-import { Button, ButtonLink, Card } from "../components/ui";
+import { useEjercicios } from "../../context/ejercicioscontext";
+import { Button, ButtonLink, Card } from "../ui";
 
 export function EjercicioCard({ ejercicio }) {
   const { deleteEjercicio } = useEjercicios();

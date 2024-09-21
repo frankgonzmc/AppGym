@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRutina } from "../context/rutinascontext";
-import { RutinaCard } from "../components/rutinaCard";
+import { RutinaCard } from "../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 
 export function rutinaPage() {

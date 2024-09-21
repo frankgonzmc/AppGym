@@ -1,5 +1,5 @@
-import { useRutina } from "../context/rutinascontext";
-import { Button, ButtonLink, Card } from "../components/ui";
+import { useRutina } from "../../context/rutinascontext";
+import { Button, ButtonLink, Card } from "../ui";
 
 export function RutinaCard({ rutina }) {
   const { deleteRutina } = useRutina();
