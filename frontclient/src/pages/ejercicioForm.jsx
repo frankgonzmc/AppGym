@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-from'
+import { useForm } from 'react-hook-form'
 import { useEjercicios } from '../context/ejercicioscontext';
 
 function ejercicioForm() {
