@@ -4,7 +4,7 @@ import { RutinaCard } from "../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 
 export default function RutinaPage() {
-  const { rutina, getRutina } = useRutinas();
+  const { rutinas, getRutina } = useRutinas();
 
   useEffect(() => {
     getRutina();
@@ -12,7 +12,7 @@ export default function RutinaPage() {
 
   return (
     <>
-      {!rutina || rutina.length === 0 && (
+      {!rutinas || rutinas.length === 0 && (
         <div className="flex justify-center items-center p-10">
           <div>
             <ImFileEmpty className="text-6xl text-gray-400 m-auto my-2" />
@@ -24,7 +24,7 @@ export default function RutinaPage() {
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {rutina && rutina.map((rutina) => (
+        {rutinas && rutinas.map((rutina) => (
           <RutinaCard rutina={rutina} key={rutina._id} />
         ))}
       </div>

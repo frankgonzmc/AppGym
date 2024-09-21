@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Ejercicio from "./models/Ejercicio.js"; // Asegúrate de que la ruta sea correcta
-import { connectDB } from "./db.js"; // Importa tu función de conexión
+import Ejercicio from "../models/ejercicio.model.js"; // Ajusta la ruta según sea necesario
+import { connectDB } from "../db.js"; // Importa tu función de conexión
 
 const ejerciciosPredeterminados = [
     {
