@@ -56,7 +56,7 @@ function ProfilePage() {
         <div className="mb-6">
           <label className="block text-white">Edad:</label>
           <input
-            type="email"
+            type="number"
             value={user.edad}
             readOnly
             className="w-full p-2 border border-gray-300 rounded-md text-black"
@@ -66,7 +66,7 @@ function ProfilePage() {
         <div className="mb-6">
           <label className="block text-white">Estatura:</label>
           <input
-            type="email"
+            type="number"
             value={user.estatura}
             readOnly
             className="w-full p-2 border border-gray-300 rounded-md text-black"
@@ -76,7 +76,7 @@ function ProfilePage() {
         <div className="mb-6">
           <label className="block text-white">Peso:</label>
           <input
-            type="email"
+            type="number"
             value={user.peso}
             readOnly
             className="w-full p-2 border border-gray-300 rounded-md text-black"
