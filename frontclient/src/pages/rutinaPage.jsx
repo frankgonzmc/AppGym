@@ -19,6 +19,10 @@ export default function RutinaPage() {
             <h1 className="font-bold text-xl">
               No hay Rutinas por el momento, agrega uno...
             </h1>
+
+            <p>
+              <Link to="/add-rutinas"></Link>
+            </p>
           </div>
         </div>
       )}

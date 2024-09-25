@@ -19,6 +19,9 @@ export default function EjercicioPage() {
             <h1 className="font-bold text-xl">
               No hay ejercicios por el momento, agrega uno...
             </h1>
+            <p>
+              <Link to="/add-ejercicios"></Link>
+            </p>
           </div>
         </div>
       )}
