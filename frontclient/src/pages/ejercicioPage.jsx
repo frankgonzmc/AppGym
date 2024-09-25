@@ -20,8 +20,8 @@ export default function EjercicioPage() {
             <h1 className="font-bold text-xl">
               No hay ejercicios por el momento, agrega uno...
             </h1>
-            <p>
-              <Link to="/add-ejercicios"></Link>
+            <p className="flex gap-x-2 justify-between">
+              <Link to="/add-ejercicios"> CREAR EJERCICIOS </Link>
             </p>
           </div>
         </div>

@@ -21,8 +21,8 @@ export default function RutinaPage() {
               No hay Rutinas por el momento, agrega uno...
             </h1>
 
-            <p>
-              <Link to="/add-rutinas"></Link>
+            <p className="flex gap-x-2 justify-between">
+              <Link to="/add-rutinas"> CREAR RUTINA</Link>
             </p>
           </div>
         </div>
