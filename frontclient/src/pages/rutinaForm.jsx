@@ -3,6 +3,7 @@ import { useRutinas } from '../context/rutinascontext';
 
 import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
+import '../css/login.css';
 
 const RutinaForm = () => {
   const { createRutina } = useRutinas();
@@ -65,80 +66,83 @@ const RutinaForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3 className='text-center text-black'>Crea tu Rutina</h3>
+    <div className="flex justify-center items-center p-10">
+      <form onSubmit={handleSubmit}>
+        <h3 className='text-center text-black'>Crea tu Rutina</h3>
 
-      <input
-        type="text"
-        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
-        placeholder="Nombre de la Rutina"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        required
-      />
+        <input
+          type="text"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          placeholder="Nombre de la Rutina"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          required
+        />
 
-      <textarea
-        placeholder="Descripción"
-        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        required
-      />
+        <textarea
+          placeholder="Descripción"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          required
+        />
 
-      <input
-        type="text"
-        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
-        placeholder="Nivel"
-        value={nivel}
-        onChange={(e) => setNivel(e.target.value)}
-        required
-      />
+        <input
+          type="text"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          placeholder="Nivel"
+          value={nivel}
+          onChange={(e) => setNivel(e.target.value)}
+          required
+        />
 
-      <h3>Selecciona Ejercicios</h3>
-      {ejercicios.map((ejercicio) => (
-        <div className="ejercicio-item" key={ejercicio._id}>
-          <input
-            type="checkbox"
-            value={ejercicio._id}
-            checked={selectedEjercicios.includes(ejercicio._id)}
-            onChange={(e) => {
-              if (e.target.checked) {
-                setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
-              } else {
-                setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
-              }
-            }}
-          />
-          <label>{ejercicio.nombre}</label>
-        </div>
-      ))}
+        <h3>Selecciona Ejercicios</h3>
+        {ejercicios.map((ejercicio) => (
+          <div className="ejercicio-item" key={ejercicio._id}>
+            <input
+              type="checkbox"
+              value={ejercicio._id}
+              checked={selectedEjercicios.includes(ejercicio._id)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
+                } else {
+                  setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
+                }
+              }}
+            />
+            <label>{ejercicio.nombre}</label>
+          </div>
+        ))}
 
-      <input
-        type="number"
-        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
-        placeholder="Series"
-        value={series}
-        onChange={(e) => setSeries(Number(e.target.value))}
-        required
-      />
-      <input
-        type="number"
-        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
-        placeholder="Repeticiones"
-        value={repeticiones}
-        onChange={(e) => setRepeticiones(Number(e.target.value))}
-        required
-      />
-      <input
-        type="number"
-        placeholder="Duración (segundos)"
-        value={duracion}
-        onChange={(e) => setDuracion(Number(e.target.value))}
-        required
-      />
+        <input
+          type="number"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          placeholder="Series"
+          value={series}
+          onChange={(e) => setSeries(Number(e.target.value))}
+          required
+        />
+        <input
+          type="number"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          placeholder="Repeticiones"
+          value={repeticiones}
+          onChange={(e) => setRepeticiones(Number(e.target.value))}
+          required
+        />
+        <input
+          type="number"
+          className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
+          placeholder="Duración (segundos)"
+          value={duracion}
+          onChange={(e) => setDuracion(Number(e.target.value))}
+          required
+        />
 
-      <button type="submit">Crear Rutina</button>
-    </form>
+        <button value="container4-button1" className="registerbtn text-center items-center" type="submit">Crear Rutina</button>
+      </form>
+    </div>
   );
 };
 
