@@ -13,7 +13,6 @@ export function EjercicioCard({ ejercicio }) {
           <ButtonLink to={`/ejercicio/${ejercicio._id}`}>Edit</ButtonLink>
         </div>
       </header>
-      <p className="text-slate-300">{ejercicio.codigo}</p>
       <p className="text-slate-300">{ejercicio.nombre}</p>
       <p className="text-slate-300">{ejercicio.descripcion}</p>
       <p className="text-slate-300">{ejercicio.categoria}</p>

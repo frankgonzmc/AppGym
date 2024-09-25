@@ -29,7 +29,6 @@ function ProfilePage() {
   };
 
   return (
-
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="bg-zinc-800 max-w-md w-full p-6 rounded-md">
         <h2 className="text-3xl font-bold mb-6">Perfil de Usuario</h2>
@@ -49,6 +48,36 @@ function ProfilePage() {
           <input
             type="email"
             value={user.email}
+            readOnly
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-white">Edad:</label>
+          <input
+            type="email"
+            value={user.edad}
+            readOnly
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-white">Estatura:</label>
+          <input
+            type="email"
+            value={user.estatura}
+            readOnly
+            className="w-full p-2 border border-gray-300 rounded-md text-black"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-white">Peso:</label>
+          <input
+            type="email"
+            value={user.peso}
             readOnly
             className="w-full p-2 border border-gray-300 rounded-md text-black"
           />

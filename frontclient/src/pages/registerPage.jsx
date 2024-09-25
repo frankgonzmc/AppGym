@@ -56,7 +56,20 @@ function RegistroUsuario() {
                 className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="info-childs-input" />
               </label>
               {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
+              <label
+                className="form-label"><input type="edad" {...register('edad', { required: true })} placeholder="Edad" className="info-childs-input" />
+              </label>
+              {errors.edad && (<p className="text-red-500"> Edad es Necesario! </p>)}
 
+              <label
+                className="form-label"><input type="password" {...register('estatura', { required: true })} placeholder="Estatura" className="info-childs-input" />
+              </label>
+              {errors.estatura && (<p className="text-red-500"> Estatura es Necesario! </p>)}
+
+              <label
+                className="form-label"><input type="peso" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input" />
+              </label>
+              {errors.peso && (<p className="text-red-500"> Peso es Necesario! </p>)}
 
               <button type="submit" value="Registrarse" className="registerbtn">Registrarse</button>
             </form>
