@@ -32,10 +32,10 @@ export function PanelElements() {
             <Link to="/historial">
                 <div className="paneles-item">
                     <button className="paneles-btn"><img src={ai} alt="GetRutine" className="paneles-img" /></button>
-                    <h2>Solicitar Rutina</h2>
+                    <h2>Historial Rutinas</h2>
                 </div>
             </Link>
-            <Link to="/rutinas">
+            <Link to="/add-rutinas">
                 <div className="paneles-item">
                     <button className="paneles-btn"><img src={tab} alt="AddRutine" className="paneles-img" /></button>
                     <h2>Crear Rutina</h2>
