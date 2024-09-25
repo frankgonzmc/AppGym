@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRutinas } from '../context/rutinascontext';
-import { getEjerciciosRequest } from '../api/ejercicio'; 
-import '../css/rutinaForm.css';
+import { getEjerciciosRequest } from '../api/ejercicio';
 
 const RutinaForm = () => {
   const { createRutina } = useRutinas();
@@ -49,7 +48,7 @@ const RutinaForm = () => {
           duracion
         };
 
-        await createDetalleRutina(detalleRutina);
+        await createDetalleRutina(detalleRutina); // Usa el nuevo contexto aquí
       }
     }
 
@@ -64,10 +63,11 @@ const RutinaForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Crea tu Rutina</h3>
+      <h3 className='text-center text-black'>Crea tu Rutina</h3>
 
       <input
         type="text"
+        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
         placeholder="Nombre de la Rutina"
         value={nombre}
         onChange={(e) => setNombre(e.target.value)}
@@ -76,6 +76,7 @@ const RutinaForm = () => {
 
       <textarea
         placeholder="Descripción"
+        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
         value={descripcion}
         onChange={(e) => setDescripcion(e.target.value)}
         required
@@ -83,6 +84,7 @@ const RutinaForm = () => {
 
       <input
         type="text"
+        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
         placeholder="Nivel"
         value={nivel}
         onChange={(e) => setNivel(e.target.value)}
@@ -110,6 +112,7 @@ const RutinaForm = () => {
 
       <input
         type="number"
+        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
         placeholder="Series"
         value={series}
         onChange={(e) => setSeries(Number(e.target.value))}
@@ -117,6 +120,7 @@ const RutinaForm = () => {
       />
       <input
         type="number"
+        className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'
         placeholder="Repeticiones"
         value={repeticiones}
         onChange={(e) => setRepeticiones(Number(e.target.value))}
