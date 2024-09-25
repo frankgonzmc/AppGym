@@ -7,7 +7,7 @@ export const getEjercicios = async (req, res) => {
 
 export const createEjercicios = async (req, res) => {
     const { codigo, nombre, descripcion, categoria, duracion, date } = req.body
-    const newEjercicio = new Ejercicios ({
+    const newEjercicio = new Ejercicios({
         codigo,
         nombre,
         descripcion,
@@ -19,6 +19,7 @@ export const createEjercicios = async (req, res) => {
     const saveEjercicio = await newEjercicio.save()
     res.json(saveEjercicio)
 };
+
 export const getEjercicio = async (req, res) => {
     const ejercicio = await Ejercicios.findById(req.params.id);
     if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." })
@@ -36,6 +37,7 @@ export const updateEjercicios = async (req, res) => {
 export const deleteEjercicios = async (req, res) => {
     const ejercicio = await Ejercicios.findByIdAndDelete(req.params.id)
     if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." })
-    res.json(ejercicio)
+
+    return res.status(204);
 
 };
