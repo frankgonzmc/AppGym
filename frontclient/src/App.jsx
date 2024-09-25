@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from '../context/authcontext';
+import { AuthProvider } from './context/authcontext';
 import { RutinaProvider } from './context/rutinascontext';
 import { EjercicioProvider } from './context/ejercicioscontext';
 import { HistorialProvider } from './context/historialcontext';
