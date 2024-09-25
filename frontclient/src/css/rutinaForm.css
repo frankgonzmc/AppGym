@@ -1,88 +1,57 @@
-/* General styling for the form */
 form {
-    background-color: #f9f9f9;
+    background-color: #f7f7f7;
     padding: 20px;
     border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 40px auto;
-    font-family: 'Arial', sans-serif;
 }
 
-/* Form heading */
 h3 {
-    font-size: 18px;
-    color: #333;
     margin-bottom: 15px;
-    text-align: center;
 }
 
-/* Input fields styling */
-input[type="text"],
-input[type="number"],
-textarea {
+input,
+textarea,
+select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    color: #333;
 }
 
-/* Textarea specific styling */
 textarea {
-    height: 80px;
-    resize: none;
+    height: 100px;
 }
 
-/* Checkbox styling */
 input[type="checkbox"] {
+    width: auto;
     margin-right: 10px;
 }
 
-/* Styling for exercises list */
-div {
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
-
-/* Styling for the submit button */
-button[type="submit"] {
-    background-color: #4CAF50;
+button {
+    background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     width: 100%;
-    text-align: center;
-    margin-top: 15px;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+button:hover {
+    background-color: #0056b3;
 }
 
-/* Additional form styling */
-form input:focus,
-form textarea:focus {
-    outline: none;
-    border-color: #4CAF50;
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: #bbb;
-}
-
-/* Optional: Adding some padding around the form container */
-body {
+.ejercicio-item {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #333;
+    margin-bottom: 10px;
+}
+
+.ejercicio-item label {
+    margin-left: 5px;
 }

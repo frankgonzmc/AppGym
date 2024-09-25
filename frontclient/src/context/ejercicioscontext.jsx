@@ -1,5 +1,11 @@
 import { createContext, useContext, useState } from "react";
-import { createEjerciciosRequest, getEjerciciosRequest, getEjercicioRequest, deleteEjerciciosRequest, updateEjerciciosRequest } from "../api/ejercicio"
+import {
+    createEjerciciosRequest,
+    getEjerciciosRequest,
+    getEjercicioRequest,
+    deleteEjerciciosRequest,
+    updateEjerciciosRequest
+} from "../api/ejercicio"
 
 const EjercicioContext = createContext();
 
