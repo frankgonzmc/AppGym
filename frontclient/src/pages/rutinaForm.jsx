@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRutinas } from '../context/rutinascontext';
-import { getEjerciciosRequest } from '../api/ejercicio'; // Asumiendo que tienes esta función
+import { getEjerciciosRequest } from '../api/ejercicio'; 
+import '../css/rutinaForm.css';
 
 const RutinaForm = () => {
   const { createRutina } = useRutinas();
@@ -13,7 +14,6 @@ const RutinaForm = () => {
   const [repeticiones, setRepeticiones] = useState(10);
   const [duracion, setDuracion] = useState(60);
 
-  // Obtener los ejercicios disponibles
   useEffect(() => {
     const fetchEjercicios = async () => {
       try {
@@ -26,22 +26,18 @@ const RutinaForm = () => {
     fetchEjercicios();
   }, []);
 
-  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crear la rutina
     const nuevaRutina = {
       nombre,
       descripcion,
       nivel,
-      user: user._id // Reemplaza con el ID del usuario actual
+      user: user._id
     };
 
-    // Crear la rutina y obtener su ID
     const rutinaCreada = await createRutina(nuevaRutina);
 
-    // Agregar los detalles de la rutina
     if (rutinaCreada) {
       for (const ejercicioId of selectedEjercicios) {
         const detalleRutina = {
@@ -53,12 +49,10 @@ const RutinaForm = () => {
           duracion
         };
 
-        // Aquí deberías hacer una llamada a tu API para guardar el detalle
-        await createDetalleRutina(detalleRutina); // Implementa esta función en tu API
+        await createDetalleRutina(detalleRutina);
       }
     }
 
-    // Reiniciar el formulario
     setNombre('');
     setDescripcion('');
     setNivel('');
@@ -70,6 +64,8 @@ const RutinaForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h3>Crea tu Rutina</h3>
+
       <input
         type="text"
         placeholder="Nombre de la Rutina"
@@ -77,12 +73,14 @@ const RutinaForm = () => {
         onChange={(e) => setNombre(e.target.value)}
         required
       />
+
       <textarea
         placeholder="Descripción"
         value={descripcion}
         onChange={(e) => setDescripcion(e.target.value)}
         required
       />
+
       <input
         type="text"
         placeholder="Nivel"
@@ -93,7 +91,7 @@ const RutinaForm = () => {
 
       <h3>Selecciona Ejercicios</h3>
       {ejercicios.map((ejercicio) => (
-        <div key={ejercicio._id}>
+        <div className="ejercicio-item" key={ejercicio._id}>
           <input
             type="checkbox"
             value={ejercicio._id}
@@ -106,7 +104,7 @@ const RutinaForm = () => {
               }
             }}
           />
-          {ejercicio.nombre}
+          <label>{ejercicio.nombre}</label>
         </div>
       ))}
 
