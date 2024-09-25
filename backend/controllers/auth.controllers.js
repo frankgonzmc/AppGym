@@ -32,6 +32,9 @@ export const register = async (req, res) => {
             id: userSaved.id,
             username: userSaved.username,
             email: userSaved.email,
+            edad: userSaved.edad,
+            peso: userSaved.peso,
+            estatura: userSaved.estatura,
             createdAt: userSaved.createdAt,
             updatedAt: userSaved.updatedAt,
         });
@@ -64,12 +67,6 @@ export const login = async (req, res) => {
             updatedAt: userEncontrado.updatedAt,
         });
 
-        /*
-        
-            res.json({
-            message: "Usuario creado con exito!",
-        })
-        */
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -15,15 +15,17 @@ const userSchema = new mongoose.Schema({
     edad: {
         type: Number,
         required: true,
-
+        min: 0,  // Puedes establecer un límite mínimo
     },
     estatura: {
         type: Number,
         required: true,
+        min: 0,  // Puedes establecer un límite mínimo
     },
     peso: {
         type: Number,
         required: true,
+        min: 0,  // Puedes establecer un límite mínimo
     },
     password: {
         type: String,

@@ -62,14 +62,26 @@ function RegistroUsuario() {
               {errors.edad && (<p className="text-red-500"> Edad es Necesario! </p>)}
 
               <label
-                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="info-childs-input" />
+                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="info-childs-input" step="0.01" />
               </label>
-              {errors.estatura && (<p className="text-red-500"> Estatura es Necesario! </p>)}
+              {errors.estatura && (
+                <p className="text-red-500">
+                  {errors.estatura.type === "required" && "Estatura es Necesario!"}
+                  {errors.estatura.type === "min" && "La estatura no puede ser negativa!"}
+                  {errors.estatura.type === "max" && "La estatura debe ser menor a 3 metros!"}
+                </p>
+              )}
 
               <label
-                className="form-label"><input type="number" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input" />
+                className="form-label"><input type="number" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input " step="0.01" />
               </label>
-              {errors.peso && (<p className="text-red-500"> Peso es Necesario! </p>)}
+              {errors.peso && (
+                <p className="text-red-500">
+                  {errors.peso.type === "required" && "Estatura es Necesario!"}
+                  {errors.peso.type === "min" && "La estatura no puede ser negativa!"}
+                  {errors.peso.type === "max" && "La estatura debe ser menor a 3 metros!"}
+                </p>
+              )}
 
               <button type="submit" value="Registrarse" className="registerbtn">Registrarse</button>
             </form>
