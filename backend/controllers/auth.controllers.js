@@ -63,6 +63,9 @@ export const login = async (req, res) => {
             id: userEncontrado.id,
             username: userEncontrado.username,
             email: userEncontrado.email,
+            peso: userEncontrado.peso,
+            estatura: userEncontrado.estatura,
+            edad: userEncontrado.edad,
             createdAt: userEncontrado.createdAt,
             updatedAt: userEncontrado.updatedAt,
         });
@@ -107,6 +110,9 @@ export const verifityToken = async (req, res) => {
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
+            edad: userFound.edad,
+            estatura: userFound.estatura,
+            peso: userFound.peso,
         })
 
     })
