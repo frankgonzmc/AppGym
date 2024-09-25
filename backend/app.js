@@ -6,11 +6,13 @@ import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
+import detallerutinaRoutes from './routes/detallerutina.routes.js';
+import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: FRONTEND_URL,
     credentials: true
 }))
 app.use(morgan("dev"));
@@ -21,5 +23,6 @@ app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
+app.use('/api', detallerutinaRoutes);
 
 export default app;

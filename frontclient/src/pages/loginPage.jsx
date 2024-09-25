@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 //Importar archivos CSS
 import '../css/login.css';
 import { useAuth } from "../context/authcontext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../imagenes/logo.png";
+import { useEffect } from "react";
 
 export function Inicio() {
   return (
@@ -18,10 +19,16 @@ export function Inicio() {
 export function FormularioSesion() {
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const { signin, errors: signinErrors } = useAuth();
+  const { signin, isAuthenticated, errors: signinErrors } = useAuth();
+  const navigate = useNavigate();
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
+    signin(data);
   })
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/inicio')
+  }, [isAuthenticated])
 
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
@@ -45,8 +52,10 @@ export function FormularioSesion() {
 
           <button type="submit" value="container4-button1" className="registerbtn text-center items-center">Iniciar Sesion</button>
         </form>
+        <hr />
+        <br />
         <p className="flex gap-x-2 justify-between">
-          No tienes una cuenta? <Link href="/register" className="text-sky-0">Registrarse</Link>
+          No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
       </div>
     </div>
