@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { email, password, username } = req.body
+    const { email, password, username, edad, peso, estatura } = req.body
 
     try {
         const userFound = await User.findOne({ email })
@@ -18,6 +18,9 @@ export const register = async (req, res) => {
         const newUser = new User({
             username,
             email,
+            edad,
+            peso,
+            estatura,
             password: passwordHash,
         });
 
@@ -88,6 +91,9 @@ export const profile = async (req, res) => {
         id: userEncontrado.id,
         username: userEncontrado.username,
         email: userEncontrado.email,
+        edad: userEncontrado.edad,
+        estatura: userEncontrado.estatura,
+        peso: userEncontrado.peso,
     });
 }
 
