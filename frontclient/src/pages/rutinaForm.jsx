@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRutinas } from '../context/rutinascontext';
+import { useAuth } from '../context/authContext'; // Importa el contexto de autenticación
 import { getEjerciciosRequest } from '../api/ejercicio';
 
 const RutinaForm = () => {
   const { createRutina } = useRutinas();
+  const { user } = useAuth(); // Obtén el usuario autenticado
   const [ejercicios, setEjercicios] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
