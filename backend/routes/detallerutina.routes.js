@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToken.js';
-import { getDetallesRutina, createDetalleRutina, updateDetalleRutina, deleteDetalleRutina } from '../controllers/detallerutina.controllers.js';
+import { updateDetalleRutina, deleteDetalleRutina } from '../controllers/detallerutina.controllers.js';
 
 const router = Router();
 
