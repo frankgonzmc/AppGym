@@ -10,7 +10,7 @@ const router = Router()
 router.get('/rutinas', authRequired, getRutinas)
 router.get('/rutina/:id', authRequired, getRutina)
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas)
-router.delete('/rutina/:id', authRequired, deleteRutina)
-router.put('/rutina/:id', authRequired, updateRutina)
+router.delete('/rutinas/:id', authRequired, deleteRutina)
+router.put('/rutinas/:id', authRequired, updateRutina)
 
 export default router
