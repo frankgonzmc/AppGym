@@ -4,7 +4,7 @@ import { useRutinas } from '../context/rutinascontext';
 import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
 import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
-import { useDetallesRutina } from '../context/detallerutinaContext';
+import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
   const { createRutina } = useRutinas();

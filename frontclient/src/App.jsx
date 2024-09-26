@@ -16,7 +16,7 @@ import HistorialPage from './pages/historialPage';
 import EjercicioForm from './pages/ejercicioForm';
 import EjercicioPage from './pages/ejercicioPage';
 import { ProgresoProvider } from './context/progresocontext';
-import { DetalleRutinaProvider } from './context/detallerutinaContext';
+import { DetalleRutinaProvider } from './context/detallerutinacontext';
 
 function App() {
   return (
