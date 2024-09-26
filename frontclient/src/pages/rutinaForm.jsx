@@ -22,12 +22,6 @@ const RutinaForm = () => {
   const [duracion, setDuracion] = useState(60);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navegar("/inicio")
-    }
-  }, [isAuthenticated])
-
-  useEffect(() => {
     const fetchEjercicios = async () => {
       try {
         const res = await getEjerciciosRequest();
@@ -79,8 +73,8 @@ const RutinaForm = () => {
     setDescripcion('');
     setNivel('');
     setSelectedEjercicios([]);
-    setSeries(1);
-    setRepeticiones(10);
+    setSeries(10);
+    setRepeticiones(4);
     setDuracion(60);
     navigate('/rutinas'); // Redireccionar a la lista de rutinas
   };
