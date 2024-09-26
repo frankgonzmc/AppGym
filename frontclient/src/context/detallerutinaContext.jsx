@@ -28,7 +28,7 @@ export function DetalleRutinaProvider({ children }) {
     const deleteDetalleRutina = async (id) => {
         try {
             const res = await deleteDetalleRutinaRequest(id);
-            if (res.status === 204) setEjercicios(ejercicios.filter((ejercicio) => ejercicio._id !== id));
+            if (res.status === 204) setDetalles(detalles.filter(detalle => detalle._id !== id)); // 
         } catch (error) {
             console.log(error);
         }
