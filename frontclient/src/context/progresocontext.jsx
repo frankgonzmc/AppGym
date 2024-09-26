@@ -9,7 +9,7 @@ const ProgresoContext = createContext();
 export const useProgreso = () => {
     const context = useContext(ProgresoContext);
 
-    if (!context) throw new Error("useHistorial debe estar dentro de un HistorialProvider");
+    if (!context) throw new Error("useProgreso debe estar dentro de un ProgresoProvider");
     return context;
 
 }

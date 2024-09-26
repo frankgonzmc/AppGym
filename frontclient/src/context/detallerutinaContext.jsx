@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import {
     createDetalleRutinaRequest,
+    deleteDetalleRutinaRequest,
 } from "../api/detallerutina"; // Asegúrate de crear este archivo en api/
 
 const DetalleRutinaContext = createContext();
@@ -24,8 +25,22 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+    const deleteDetalleRutina = async (id) => {
+        try {
+            const res = await deleteDetalleRutinaRequest(id);
+            if (res.status === 204) setEjercicios(ejercicios.filter((ejercicio) => ejercicio._id !== id));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
-        <DetalleRutinaContext.Provider value={{ detalles, createDetalleRutina }}>
+        <DetalleRutinaContext.Provider
+            value={{
+                detalles,
+                createDetalleRutina,
+                deleteDetalleRutina
+            }}>
             {children}
         </DetalleRutinaContext.Provider>
     );

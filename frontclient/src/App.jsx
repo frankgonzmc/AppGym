@@ -43,6 +43,7 @@ function App() {
                       <Route path='/ejercicios' element={<EjercicioPage />} />
                       <Route path='/add-ejercicios' element={<EjercicioForm />} />
                       <Route path='/ejercicio/:id' element={<EjercicioForm />} />
+                      <Route path='/detallerutina/:id' element={<DetallerutinaPage />} />
                     </Route>
                   </Routes>
                 </BrowserRouter>
