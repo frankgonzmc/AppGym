@@ -1,15 +1,15 @@
-import { useEjercicios } from "../../context/ejercicioscontext";
+import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Button, ButtonLink, Card } from "../ui";
 
-export function EjercicioCard({ detalle }) {
-  const { deleteEjercicio } = useEjercicios();
+export default function DetalleRutinaCard({ detalle }) {
+  const { deleteDetalleRutina } = useDetallesRutina();
 
   return (
     <Card>
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">EJERCICIO</h1>
         <div className="flex gap-x-2 items-center">
-          <Button onClick={() => deleteEjercicio(detalle.ejercicio._id)}>Delete</Button>
+          <Button onClick={() => deleteDetalleRutina(detalle.ejercicio._id)}>Delete</Button>
           <ButtonLink to={`/ejercicio/${detalle.ejercicio._id}`}>Edit</ButtonLink>
         </div>
       </header>
