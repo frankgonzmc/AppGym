@@ -14,6 +14,7 @@ import Navbar from './components/navbar';
 import ProgresoPage from './pages/progresoPage';
 import HistorialPage from './pages/historialPage';
 import EjercicioForm from './pages/ejercicioForm';
+import DetallerutinaPage from './pages/detallerutina';
 import EjercicioPage from './pages/ejercicioPage';
 import { ProgresoProvider } from './context/progresocontext';
 import { DetalleRutinaProvider } from './context/detallerutinacontext';
