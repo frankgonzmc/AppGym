@@ -2,20 +2,44 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEjercicios } from '../context/ejercicioscontext';
 import { useEffect } from 'react';
+import { useAuth } from "../context/authcontext";
 
 function ejercicioForm() {
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
-  const { createEjercicio } = useEjercicios(); // Obtener la función para crear un ejercicio
+  const { createEjercicio, getEjercicio, updateEjercicio } = useEjercicios(); // Obtener la función para crear un ejercicio
   const params = useParams();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    
-  },[])
+    async function loadEjercicio() {
+      if (params.id) {
+        const ejercicio = await getEjercicio(params.id);
+        console.log(ejercicio)
+        setValue('codigo', ejercicio.codigo);
+        setValue('nombre', ejercicio.nombre);
+        setValue('descripcion', ejercicio.descripcion);
+        setValue('duracion', ejercicio.duracion);
+        setValue('categoria', ejercicio.categoria);
+      }
+    }
+    loadEjercicio();
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/login')
+  }, [isAuthenticated])
 
   const onSubmit = handleSubmit((data) => {
-    createEjercicio(data);
+
+    if (params.id) {
+      updateEjercicio(params.id, data)
+    } else {
+      createEjercicio(data);
+    }
+
+
     navigate('/ejercicios')
   })
 

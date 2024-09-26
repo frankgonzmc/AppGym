@@ -14,7 +14,7 @@ export default function RutinaPage() {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/inicio')
+    if (isAuthenticated) navigate('/login')
   }, [isAuthenticated])
 
   return (
