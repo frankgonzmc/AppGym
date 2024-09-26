@@ -4,6 +4,7 @@ import { useRutinas } from '../context/rutinascontext';
 import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
 import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
+import { useForm } from "react-hook-form";
 import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
@@ -11,6 +12,7 @@ const RutinaForm = () => {
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
+  const { handleSubmit } = useForm();
   const navigate = useNavigate();
   const [ejercicios, setEjercicios] = useState([]);
   const [nombre, setNombre] = useState('');
@@ -20,6 +22,12 @@ const RutinaForm = () => {
   const [series, setSeries] = useState(10);
   const [repeticiones, setRepeticiones] = useState(4);
   const [duracion, setDuracion] = useState(60);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navegar("/inicio")
+    }
+  }, [isAuthenticated])
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -78,7 +86,6 @@ const RutinaForm = () => {
     setDuracion(60);
     navigate('/rutinas'); // Redireccionar a la lista de rutinas
   };
-
   return (
     <div className="flex justify-center text-black items-center p-10">
       <form onSubmit={onSubmit}>

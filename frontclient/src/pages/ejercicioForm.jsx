@@ -1,15 +1,22 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEjercicios } from '../context/ejercicioscontext';
+import { useEffect } from 'react';
 
 function ejercicioForm() {
 
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const { createEjercicio } = useEjercicios(); // Obtener la función para crear un ejercicio
+  const params = useParams();
+
+  useEffect(() => {
+    
+  },[])
 
   const onSubmit = handleSubmit((data) => {
     createEjercicio(data);
+    navigate('/ejercicios')
   })
 
   return (
