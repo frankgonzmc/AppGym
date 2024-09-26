@@ -8,6 +8,9 @@ import '../css/login.css';
 const RutinaForm = () => {
   const { createRutina } = useRutinas();
   const { user } = useAuth();
+
+
+
   const [ejercicios, setEjercicios] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -52,7 +55,9 @@ const RutinaForm = () => {
           duracion
         };
 
-        await createDetalleRutina(detalleRutina); // Usa el nuevo contexto aquí
+        const DetalleRutina = await createDetalleRutina(detalleRutina); // Usa el nuevo contexto aquí
+
+        console.log(DetalleRutina);
       }
     }
 
