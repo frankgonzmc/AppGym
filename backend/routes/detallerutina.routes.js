@@ -4,12 +4,6 @@ import { updateDetalleRutina, deleteDetalleRutina } from '../controllers/detalle
 
 const router = Router();
 
-// Obtener todos los detalles de rutina por ID de rutina
-router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina);
-
-// Crear un nuevo detalle de rutina
-router.post('/detalles-rutinas', authRequired, createDetalleRutina);
-
 // Actualizar un detalle de rutina existente
 router.put('/detalles-rutinas/:id', authRequired, updateDetalleRutina);
 
