@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEjercicios } from '../context/ejercicioscontext';
 import { useEffect } from 'react';
-import { useAuth } from "../context/authcontext";
 
 function ejercicioForm() {
 
@@ -10,7 +9,6 @@ function ejercicioForm() {
   const navigate = useNavigate();
   const { createEjercicio, getEjercicio, updateEjercicio } = useEjercicios(); // Obtener la función para crear un ejercicio
   const params = useParams();
-  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function loadEjercicio() {
@@ -26,10 +24,6 @@ function ejercicioForm() {
     }
     loadEjercicio();
   }, [])
-
-  useEffect(() => {
-    if (isAuthenticated) navigate('/login')
-  }, [isAuthenticated])
 
   const onSubmit = handleSubmit((data) => {
 
