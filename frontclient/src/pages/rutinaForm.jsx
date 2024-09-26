@@ -4,7 +4,6 @@ import { useRutinas } from '../context/rutinascontext';
 import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
 import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
-import { useForm } from "react-hook-form";
 import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
@@ -12,7 +11,6 @@ const RutinaForm = () => {
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
-  const { handleSubmit } = useForm();
   const navigate = useNavigate();
   const [ejercicios, setEjercicios] = useState([]);
   const [nombre, setNombre] = useState('');
@@ -41,7 +39,7 @@ const RutinaForm = () => {
     fetchEjercicios();
   }, []);
 
-  const onSubmit = handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const nuevaRutina = {
@@ -88,7 +86,7 @@ const RutinaForm = () => {
   };
   return (
     <div className="flex justify-center text-black items-center p-10">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <h3 className='text-center text-black'>Crea tu Rutina</h3>
 
         <input
