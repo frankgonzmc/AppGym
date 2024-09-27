@@ -17,6 +17,8 @@ export const getRutinas = async (req, res) => {
 // Crear una nueva rutina y asociar detalles de rutina y progreso
 export const createRutinas = async (req, res) => {
     try {
+        console.log(req.body); // Verifica los datos que recibes
+
         const { nombre, descripcion, nivel, date, detalles, progreso } = req.body;
 
         // Crear la nueva rutina
@@ -28,24 +30,34 @@ export const createRutinas = async (req, res) => {
             user: req.user.id
         });
         const saveRutina = await newRutina.save();
-        console.log(saveRutina);
+        console.log("Rutina guardada:", saveRutina);
 
         // Crear los detalles de la rutina asociados
         if (detalles && detalles.length > 0) {
-            for (const detalle of detalles) {
-                const { ejercicio, orden, series, repeticiones, duracion } = detalle;
+            try {
+                for (const detalle of detalles) {
+                    const { ejercicio, orden, series, repeticiones, duracion } = detalle;
 
-                const newDetalleRutina = new DetallesRutina({
-                    rutina: saveRutina._id,
-                    ejercicio,
-                    orden,
-                    series,
-                    repeticiones,
-                    duracion
-                });
+                    console.log("Guardando detalle:", detalle);
 
-                await newDetalleRutina.save();
+                    const newDetalleRutina = new DetallesRutina({
+                        rutina: saveRutina._id,
+                        ejercicio,
+                        orden,
+                        series,
+                        repeticiones,
+                        duracion
+                    });
+
+                    await newDetalleRutina.save();
+                    console.log("Detalle guardado:", newDetalleRutina);
+                }
+            } catch (error) {
+                console.error("Error al guardar los detalles de la rutina:", error);
+                return res.status(500).json({ message: "Error al guardar los detalles de la rutina", error });
             }
+        } else {
+            console.log("No se proporcionaron detalles para guardar.");
         }
 
         // Crear el progreso asociado
@@ -61,13 +73,16 @@ export const createRutinas = async (req, res) => {
             });
 
             await newProgreso.save();
+            console.log("Progreso guardado:", newProgreso);
         }
 
         res.json(saveRutina);
     } catch (error) {
+        console.error("Error al crear rutina:", error);
         res.status(500).json({ message: "Error al crear rutina", error });
     }
 };
+
 
 // Obtener una rutina por su ID
 export const getRutina = async (req, res) => {
@@ -75,7 +90,7 @@ export const getRutina = async (req, res) => {
         const rutina = await Rutinas.findById(req.params.id).populate('user');
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
 
-        const detalles = await DetalleRutina.find({ rutina: req.params.id }).populate('ejercicio');
+        const detalles = await DetallesRutina.find({ rutina: req.params.id }).populate('ejercicio');
         res.json({ rutina, detalles });
     } catch (error) {
         res.status(500).json({ message: "Error al obtener rutina", error });
