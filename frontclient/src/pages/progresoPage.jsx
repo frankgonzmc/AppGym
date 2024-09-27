@@ -23,10 +23,6 @@ const Timer = ({ duration, onComplete }) => {
   return <h4>Tiempo restante: {timeLeft} segundos</h4>;
 };
 
-// Asegúrate de pasar un duration a Timer
-<Timer duration={30} onComplete={handleSessionComplete} />
-
-
 const ProgresoPage = () => {
   const { id } = useParams(); // Obtener el ID de la rutina desde la URL
   const [rutina, setRutina] = useState(null);
