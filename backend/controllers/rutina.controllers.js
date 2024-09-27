@@ -1,5 +1,4 @@
 import Rutinas from '../models/rutina.model.js'
-import Ejercicio from '../models/ejercicio.model.js'
 import DetallesRutina from '../models/detallerutina.model.js'
 import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
 
@@ -18,42 +17,72 @@ export const getRutinas = async (req, res) => {
 // Crear una nueva rutina y asociar detalles de rutina y progreso
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, nivel, detalles } = req.body;
+        console.log(req.body); // Verifica los datos que recibes
 
-        // Guarda la rutina primero
-        const rutina = new Rutinas({
+        const { nombre, descripcion, nivel, date, detalles, progreso } = req.body;
+
+        // Crear la nueva rutina
+        const newRutina = new Rutinas({
             nombre,
             descripcion,
             nivel,
-            user: req.userId,
+            date,
+            user: req.user.id
         });
-        await rutina.save();
+        const saveRutina = await newRutina.save();
+        console.log("Rutina guardada:", saveRutina);
 
-        // Guarda los detalles
-        for (const detalle of detalles) {
-            // Busca el ObjectId del ejercicio por su nombre
-            const ejercicio = await Ejercicio.findOne({ nombre: detalle.ejercicio });
-            if (!ejercicio) {
-                return res.status(400).json({ message: `Ejercicio ${detalle.ejercicio} no encontrado` });
+        // Crear los detalles de la rutina asociados
+        if (detalles && detalles.length > 0) {
+            try {
+                for (const detalle of detalles) {
+                    const { ejercicio, orden, series, repeticiones, duracion } = detalle;
+
+                    console.log("Guardando detalle:", detalle);
+
+                    const newDetalleRutina = new DetallesRutina({
+                        rutina: saveRutina._id,
+                        ejercicio,
+                        orden,
+                        series,
+                        repeticiones,
+                        duracion
+                    });
+
+                    await newDetalleRutina.save();
+                    console.log("Detalle guardado:", newDetalleRutina);
+                }
+            } catch (error) {
+                console.error("Error al guardar los detalles de la rutina:", error);
+                return res.status(500).json({ message: "Error al guardar los detalles de la rutina", error });
             }
-
-            const detalleRutina = new DetallesRutina({
-                ejercicio: ejercicio._id, // Guardar el ObjectId en lugar del nombre
-                orden: detalle.orden,
-                series: detalle.series,
-                repeticiones: detalle.repeticiones,
-                duracion: detalle.duracion,
-                rutina: rutina._id,
-            });
-            await detalleRutina.save();
+        } else {
+            console.log("No se proporcionaron detalles para guardar.");
         }
 
-        res.status(201).json({ message: "Rutina creada con éxito" });
+        // Crear el progreso asociado
+        if (progreso) {
+            const { user, fecha, notas, estado } = progreso;
+
+            const newProgreso = new Progreso({
+                user,
+                rutina: saveRutina._id,
+                fecha,
+                notas,
+                estado
+            });
+
+            await newProgreso.save();
+            console.log("Progreso guardado:", newProgreso);
+        }
+
+        res.json(saveRutina);
     } catch (error) {
-        console.error("Error al guardar los detalles de la rutina:", error);
-        res.status(500).json({ message: "Error al crear la rutina", error });
+        console.error("Error al crear rutina:", error);
+        res.status(500).json({ message: "Error al crear rutina", error });
     }
 };
+
 
 // Obtener una rutina por su ID
 export const getRutina = async (req, res) => {
