@@ -11,7 +11,12 @@ const progresoSchema = new mongoose.Schema({
         ref: 'Rutina',
         required: true,
     },
-    fecha: {
+    ejercicio: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ejercicio',
+        required: true,
+    },
+    fecha : {
         type: Date,
         required: true,
     },
