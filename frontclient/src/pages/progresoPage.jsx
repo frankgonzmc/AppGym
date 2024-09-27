@@ -20,12 +20,12 @@ const Timer = ({ duration, onComplete }) => {
     return () => clearInterval(timerId);
   }, [timeLeft, onComplete]);
 
-  return (
-    <div>
-      <h4>Tiempo restante: {timeLeft} segundos</h4>
-    </div>
-  );
+  return <h4>Tiempo restante: {timeLeft} segundos</h4>;
 };
+
+// Asegúrate de pasar un duration a Timer
+<Timer duration={30} onComplete={handleSessionComplete} />
+
 
 const ProgresoPage = () => {
   const { id } = useParams(); // Obtener el ID de la rutina desde la URL
@@ -51,7 +51,7 @@ const ProgresoPage = () => {
     console.log('Sesión completada');
     // Aquí puedes actualizar el estado del ejercicio a "Completado"
   };
-  
+
   return (
     // ... código existente ...
     <>

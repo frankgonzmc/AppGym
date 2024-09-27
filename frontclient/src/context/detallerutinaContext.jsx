@@ -22,13 +22,16 @@ export function DetalleRutinaProvider({ children }) {
             return res.data;
         } catch (error) {
             console.error(error);
+            return { error: error.message }; // Retornar un mensaje de error
         }
     };
 
     const deleteDetalleRutina = async (id) => {
         try {
             const res = await deleteDetalleRutinaRequest(id);
-            if (res.status === 204) setDetalles(detalles.filter(detalle => detalle._id !== id)); // 
+            if (res.status === 204) {
+                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
+            }
         } catch (error) {
             console.log(error);
         }
