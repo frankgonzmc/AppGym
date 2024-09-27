@@ -15,10 +15,6 @@ const progresoSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    notas: {
-        type: String, // TEXT en SQL es equivalente a String en MongoDB
-        required: false,
-    },
     estado: {
         type: String,
         required: true,
