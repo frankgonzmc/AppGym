@@ -1,6 +1,7 @@
 import Rutinas from '../models/rutina.model.js'
 import DetallesRutina from '../models/detallerutina.model.js'
 import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
+import mongoose from 'mongoose';
 
 // Obtener todas las rutinas del usuario autenticado
 export const getRutinas = async (req, res) => {
