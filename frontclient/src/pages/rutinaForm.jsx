@@ -36,56 +36,62 @@ const RutinaForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const nuevaRutina = {
-      nombre,
-      descripcion,
-      nivel,
-      user: user._id
-    };
+    try {
+      const nuevaRutina = {
+        nombre,
+        descripcion,
+        nivel,
+        user: user._id
+      };
 
-    const rutinaCreada = await createRutina(nuevaRutina);
+      const rutinaCreada = await createRutina(nuevaRutina);
 
-    if (rutinaCreada) {
-      for (const ejercicioId of selectedEjercicios) {
-        const detalleRutina = {
-          rutina: rutinaCreada._id,
-          ejercicio: ejercicioId,
-          orden: selectedEjercicios.indexOf(ejercicioId) + 1,
-          series,
-          repeticiones,
-          duracion
-        };
+      if (rutinaCreada) {
+        for (const ejercicioId of selectedEjercicios) {
+          const detalleRutina = {
+            rutina: rutinaCreada._id,
+            ejercicio: ejercicioId,
+            orden: selectedEjercicios.indexOf(ejercicioId) + 1,
+            series,
+            repeticiones,
+            duracion
+          };
 
-        await createDetalleRutina(detalleRutina); // Crear detalle de rutina
+          const detalleResponse = await createDetalleRutina(detalleRutina);
+          console.log('DetalleRutina creado:', detalleResponse);
 
-        // Crear progreso asociado
-        await createProgreso({
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-          estado: 'En Progreso' // Estado inicial
-        });
+          const progresoResponse = await createProgreso({
+            user: user._id,
+            rutina: rutinaCreada._id,
+            fecha: new Date(),
+            estado: 'En Progreso'
+          });
+          console.log('Progreso creado:', progresoResponse);
+        }
       }
-    }
 
-    // Resetear estados
-    setNombre('');
-    setDescripcion('');
-    setNivel('');
-    setSelectedEjercicios([]);
-    setSeries(10);
-    setRepeticiones(4);
-    setDuracion(60);
-    navigate('/rutinas'); // Redireccionar a la lista de rutinas
+      // Resetear estados
+      setNombre('');
+      setDescripcion('');
+      setNivel('');
+      setSelectedEjercicios([]);
+      setSeries(10);
+      setRepeticiones(4);
+      setDuracion(60);
+      navigate('/rutinas'); // Redireccionar a la lista de rutinas
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
-    <div className="flex justify-center text-black items-center p-10">
+    <div className="flex justify-center text-white items-center p-10">
       <form onSubmit={handleSubmit}>
-        <h3 className='text-center text-black'>Crea tu Rutina</h3>
+        <h3 className='text-center text-white'>Crea tu Rutina</h3>
 
         <input
           type="text"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           placeholder="Nombre de la Rutina"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
@@ -94,7 +100,7 @@ const RutinaForm = () => {
 
         <textarea
           placeholder="Descripción"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           required
@@ -102,7 +108,7 @@ const RutinaForm = () => {
 
         <input
           type="text"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           placeholder="Nivel"
           value={nivel}
           onChange={(e) => setNivel(e.target.value)}
@@ -111,7 +117,7 @@ const RutinaForm = () => {
 
         <h3>Selecciona Ejercicios</h3>
         {ejercicios.map((ejercicio) => (
-          <div className="ejercicio-item text-black" key={ejercicio._id}>
+          <div className="ejercicio-item text-white" key={ejercicio._id}>
             <input
               type="checkbox"
               value={ejercicio._id}
@@ -130,7 +136,7 @@ const RutinaForm = () => {
 
         <input
           type="number"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           placeholder="Series"
           value={series}
           onChange={(e) => setSeries(Number(e.target.value))}
@@ -138,7 +144,7 @@ const RutinaForm = () => {
         />
         <input
           type="number"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           placeholder="Repeticiones"
           value={repeticiones}
           onChange={(e) => setRepeticiones(Number(e.target.value))}
@@ -146,14 +152,14 @@ const RutinaForm = () => {
         />
         <input
           type="number"
-          className='w-full bg-zinc-700 text-black px-4 py-2 rounded-md my-2'
+          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
           placeholder="Duración (segundos)"
           value={duracion}
           onChange={(e) => setDuracion(Number(e.target.value))}
           required
         />
 
-        <button value="container4-button1" className="registerbtn text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
+        <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
       </form>
     </div>
   );
