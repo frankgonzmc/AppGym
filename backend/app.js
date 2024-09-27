@@ -23,6 +23,6 @@ app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
-app.use('/api', detallerutinaRoutes);
+app.use("/api", detallerutinaRoutes);
 
 export default app;

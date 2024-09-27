@@ -4,7 +4,7 @@ import { createDetalleRutina, updateDetalleRutina, deleteDetalleRutina } from '.
 
 const router = Router();
 
-router.post('/detalles-rutina', authRequired, createDetalleRutina);
+router.post('/detalles-rutinas', authRequired, createDetalleRutina);
 
 // Actualizar un detalle de rutina existente
 router.put('/detalles-rutinas/:id', authRequired, updateDetalleRutina);
