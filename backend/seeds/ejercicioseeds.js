@@ -55,7 +55,7 @@ const ejerciciosPredeterminados = [
         codigo: "EJ007",
         nombre: "Burpees",
         descripcion: "Ejercicio completo que combina fuerza y cardio.",
-        categoria: "Fuerza/Cardio",
+        categoria: "Fuerza",
         duracion: 20,
         estado: "En proceso"
     }
