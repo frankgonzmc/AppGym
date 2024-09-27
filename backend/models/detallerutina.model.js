@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const detallesRutinaSchema = new mongoose.Schema({
+const detallesrutinaSchema = new mongoose.Schema({
     rutina: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rutina',
@@ -31,4 +31,4 @@ const detallesRutinaSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-export default mongoose.model("DetallesRutina", detallesRutinaSchema);
+export default mongoose.model("DetallesRutina", detallesrutinaSchema);
