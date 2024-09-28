@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRutinas } from '../context/rutinascontext';
 import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
 import { getEjerciciosRequest } from '../api/ejercicio';
@@ -7,19 +7,14 @@ import { useAuth } from '../context/authcontext';
 import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
+  const { register, handleSubmit, setValue } = useForm();
   const { createRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
+  const [ejercicios, setEjercicios] = useState([]);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [ejercicios, setEjercicios] = useState([]);
-  const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [nivel, setNivel] = useState('');
-  const [selectedEjercicios, setSelectedEjercicios] = useState([]);
-  const [series, setSeries] = useState(10);
-  const [repeticiones, setRepeticiones] = useState(4);
-  const [duracion, setDuracion] = useState(60);
+  const params = useParams();
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -32,6 +27,45 @@ const RutinaForm = () => {
     };
     fetchEjercicios();
   }, []);
+
+  useEffect(() => {
+    async function loadEjercicio() {
+      if (params.id) {
+        const ejercicio = await getEjercicio(params.id);
+        console.log(ejercicio)
+        setValue('codigo', ejercicio.codigo);
+        setValue('nombre', ejercicio.nombre);
+        setValue('descripcion', ejercicio.descripcion);
+        setValue('duracion', ejercicio.duracion);
+        setValue('categoria', ejercicio.categoria);
+      }
+    }
+    loadEjercicio();
+  }, [])
+
+  const onSubmit = handleSubmit((data) => {
+
+    if (params.id) {
+      updateEjercicio(params.id, data)
+    } else {
+      createEjercicio(data);
+    }
+
+
+    navigate('/rutina')
+  })
+
+  /*
+  
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [nivel, setNivel] = useState('');
+  const [selectedEjercicios, setSelectedEjercicios] = useState([]);
+  const [series, setSeries] = useState(10);
+  const [repeticiones, setRepeticiones] = useState(4);
+  const [duracion, setDuracion] = useState(60);
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +117,7 @@ const RutinaForm = () => {
       console.log(error);
     }
   };
-
+*/
   return (
     <div className="flex justify-center text-white items-center p-10">
       <form onSubmit={handleSubmit}>
@@ -92,26 +126,21 @@ const RutinaForm = () => {
         <input
           type="text"
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Nombre de la Rutina"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Nombre de la rutina" {...register('nombre')}
           required
         />
 
         <textarea
-          placeholder="Descripción"
+          type="textarea"
+          placeholder="Descripción" {...register('descripcion')}
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
           required
         />
 
         <input
           type="text"
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Nivel"
-          value={nivel}
-          onChange={(e) => setNivel(e.target.value)}
+          placeholder="Nivel" {...register('nivel')}
           required
         />
 
@@ -137,25 +166,19 @@ const RutinaForm = () => {
         <input
           type="number"
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Series"
-          value={series}
-          onChange={(e) => setSeries(Number(e.target.value))}
+          placeholder="Series" {...register('series')}
           required
         />
         <input
           type="number"
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Repeticiones"
-          value={repeticiones}
-          onChange={(e) => setRepeticiones(Number(e.target.value))}
+          placeholder="Repeticiones" {...register('repeticiones')}
           required
         />
         <input
           type="number"
           className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Duración (segundos)"
-          value={duracion}
-          onChange={(e) => setDuracion(Number(e.target.value))}
+          placeholder="Duración (segundos)" {...register('series')}
           required
         />
 

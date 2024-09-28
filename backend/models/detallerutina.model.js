@@ -11,16 +11,8 @@ const detallesrutinaSchema = new mongoose.Schema({
         ref: 'Ejercicio',
         required: true,
     },
-    orden: {
+    total: {
         type: Number,
-        required: true,
-    },
-    series: {
-        type: Number,
-        required: true,
-    },
-    repeticiones: {
-        type: Number, // Esto es específico para ejercicios de fuerza
         required: true,
     },
     duracion: {

@@ -18,7 +18,19 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    series:{
+        type: Number,
+        required: true,
+    },
     duracion: {
+        type: Number,
+        required: true,
+    },
+    descanso: {
+        type: Number,
+        required: true,
+    },
+    repeticiones: {
         type: Number,
         required: true,
     },
