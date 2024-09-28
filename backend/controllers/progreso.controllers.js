@@ -19,11 +19,11 @@ export const getProgreso = async (req, res) => {
 
 export const createProgreso = async (req, res) => {
     try {
-        const { user, rutina, ejercicio, fecha, estado } = req.body;
+        const { ejercicio, fecha, estado } = req.body;
 
         const nuevoProgreso = new Progresos({
-            user,
-            rutina,
+            user: req.user.id,
+            rutina: req.params.id,
             ejercicio,
             fecha,
             estado,

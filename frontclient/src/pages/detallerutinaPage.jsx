@@ -4,12 +4,32 @@ import { getRutinaRequest } from '../api/rutina'; // Asegúrate de que esta func
 import EjercicioCard from '../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
 
 const DetallerutinaPage = () => {
+
+
+  useEffect(() => {
+
+  }, []);
+
+  if (loading) return <div>Cargando...</div>;
+
+
+  return (
+    <div className="container mx-auto p-4">
+      
+    </div>
+  );
+};
+
+export default DetallerutinaPage;
+
+
+/*
   const { id } = useParams();
   const [rutina, setRutina] = useState(null);
   const [detalles, setDetalles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  
     const fetchRutina = async () => {
       setLoading(true);
       try {
@@ -23,23 +43,15 @@ const DetallerutinaPage = () => {
       }
     };
     fetchRutina();
-  }, [id]);
-
-  if (loading) return <div>Cargando...</div>;
 
 
-  return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold">{rutina.nombre}</h2>
-      <p className="text-lg">{rutina.descripcion}</p>
-      <h3 className="text-2xl mt-4">Ejercicios Asociados</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {detalles.map(detalle => (
-          <EjercicioCard key={detalle._id} detalle={detalle} />
-        ))}
-      </div>
-    </div>
-  );
-};
 
-export default DetallerutinaPage;
+<h2 className="text-3xl font-bold">{rutina.nombre}</h2>
+<p className="text-lg">{rutina.descripcion}</p>
+<h3 className="text-2xl mt-4">Ejercicios Asociados</h3>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {detalles.map(detalle => (
+    <EjercicioCard key={detalle._id} detalle={detalle} />
+  ))}
+</div>
+*/

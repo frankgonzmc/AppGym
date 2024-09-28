@@ -2,14 +2,11 @@ import DetallesRutina from '../models/detallerutina.model.js';
 
 export const createDetalleRutina = async (req, res) => {
     try {
-        const { rutina, ejercicio, orden, series, repeticiones, duracion } = req.body;
+        const { rutina, ejercicio, duracion } = req.body;
 
         const nuevoDetalleRutina = new DetallesRutina({
             rutina,
             ejercicio,
-            orden,
-            series,
-            repeticiones,
             duracion,
         });
 

@@ -8,7 +8,7 @@ import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
-  const { createRutina } = useRutinas();
+  const { createRutina, getRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
@@ -18,6 +18,17 @@ const RutinaForm = () => {
   const [selectedEjercicios, setSelectedEjercicios] = useState([]);
   const [ejercicios, setEjercicios] = useState([]);
 
+  useEffect(() => {
+    async function loadRutina() {
+      if (params.id) {
+        const rutina = await getRutina(params.id);
+        console.log(rutina)
+        setValue('nombre', rutina.nombre);
+        setValue('descripcion', rutina.descripcion);
+      }
+    }
+    loadRutina();
+  }, [])
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -39,6 +50,31 @@ const RutinaForm = () => {
       try {
 
         console.log(data);
+        /*
+        const rutinaCreada = createRutina(data);
+
+        if (rutinaCreada) {
+          for (const ejercicioId of selectedEjercicios) {
+            const detalleRutina = {
+              rutina: rutinaCreada._id,
+              ejercicio: ejercicioId,
+              duracion
+            };
+
+            const detalleResponse = createDetalleRutina(detalleRutina);
+            console.log('DetalleRutina creado:', detalleResponse);
+
+            const progresoResponse = createProgreso({
+              user: user._id,
+              rutina: rutinaCreada._id,
+              fecha: new Date(),
+              estado: 'En Progreso'
+            });
+
+
+            console.log('Progreso creado:', progresoResponse);
+          }
+        }*/
 
       } catch (error) {
         console.log(error);
@@ -47,69 +83,6 @@ const RutinaForm = () => {
 
     navigate('/rutinas')
   })
-
-  /*
-  
-  const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [nivel, setNivel] = useState('');
-  const [series, setSeries] = useState(10);
-  const [repeticiones, setRepeticiones] = useState(4);
-  const [duracion, setDuracion] = useState(60);
-
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const nuevaRutina = {
-        nombre,
-        descripcion,
-        nivel,
-        user: user._id
-      };
-
-      const rutinaCreada = await createRutina(nuevaRutina);
-
-      if (rutinaCreada) {
-        for (const ejercicioId of selectedEjercicios) {
-          const detalleRutina = {
-            rutina: rutinaCreada._id,
-            ejercicio: ejercicioId,
-            orden: selectedEjercicios.indexOf(ejercicioId) + 1,
-            series,
-            repeticiones,
-            duracion
-          };
-
-          const detalleResponse = await createDetalleRutina(detalleRutina);
-          console.log('DetalleRutina creado:', detalleResponse);
-
-          const progresoResponse = await createProgreso({
-            user: user._id,
-            rutina: rutinaCreada._id,
-            fecha: new Date(),
-            estado: 'En Progreso'
-          });
-          console.log('Progreso creado:', progresoResponse);
-        }
-      }
-
-      // Resetear estados
-      setNombre('');
-      setDescripcion('');
-      setNivel('');
-      setSelectedEjercicios([]);
-      setSeries(10);
-      setRepeticiones(4);
-      setDuracion(60);
-      navigate('/rutinas'); // Redireccionar a la lista de rutinas
-    } catch (error) {
-      console.log(error);
-    }
-  };
-*/
   return (
     <div className="flex justify-center text-white items-center p-10">
       <form onSubmit={onSubmit}>
@@ -148,25 +121,6 @@ const RutinaForm = () => {
           </div>
         ))}
 
-        <input
-          type="number"
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Series" {...register('series')}
-          required
-        />
-        <input
-          type="number"
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Repeticiones" {...register('repeticiones')}
-          required
-        />
-        <input
-          type="number"
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Duración (segundos)" {...register('series')}
-          required
-        />
-
         <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
       </form>
     </div>
@@ -174,3 +128,92 @@ const RutinaForm = () => {
 };
 
 export default RutinaForm;
+
+
+
+/*
+ 
+const [nombre, setNombre] = useState('');
+const [descripcion, setDescripcion] = useState('');
+const [nivel, setNivel] = useState('');
+const [series, setSeries] = useState(10);
+const [repeticiones, setRepeticiones] = useState(4);
+const [duracion, setDuracion] = useState(60);
+
+ 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const nuevaRutina = {
+      nombre,
+      descripcion,
+      nivel,
+      user: user._id
+    };
+
+    const rutinaCreada = await createRutina(nuevaRutina);
+
+    if (rutinaCreada) {
+      for (const ejercicioId of selectedEjercicios) {
+        const detalleRutina = {
+          rutina: rutinaCreada._id,
+          ejercicio: ejercicioId,
+          orden: selectedEjercicios.indexOf(ejercicioId) + 1,
+          series,
+          repeticiones,
+          duracion
+        };
+
+        const detalleResponse = await createDetalleRutina(detalleRutina);
+        console.log('DetalleRutina creado:', detalleResponse);
+
+        const progresoResponse = await createProgreso({
+          user: user._id,
+          rutina: rutinaCreada._id,
+          fecha: new Date(),
+          estado: 'En Progreso'
+        });
+        console.log('Progreso creado:', progresoResponse);
+      }
+    }
+
+    // Resetear estados
+    setNombre('');
+    setDescripcion('');
+    setNivel('');
+    setSelectedEjercicios([]);
+    setSeries(10);
+    setRepeticiones(4);
+    setDuracion(60);
+    navigate('/rutinas'); // Redireccionar a la lista de rutinas
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+useEffect(() => {
+  async function loadEjercicio() {
+    if (params.id) {
+      const ejercicio = await getEjercicio(params.id);
+      console.log(ejercicio)
+      setValue('codigo', ejercicio.codigo);
+      setValue('nombre', ejercicio.nombre);
+      setValue('descripcion', ejercicio.descripcion);
+      setValue('nivel', ejercicio.duracion);
+      setValue('categoria', ejercicio.categoria);
+      setValue('series', ejercicio.descripcion);
+      setValue('duracion', ejercicio.duracion);
+      setValue('descanso', ejercicio.categoria);
+      setValue('repeticiones', ejercicio.descripcion);
+      setValue('estado', ejercicio.duracion);
+    }
+  }
+  loadEjercicio();
+}, [])
+
+
+
+*/
