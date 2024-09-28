@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import {
     getHistorialRequest,
+    createHistorialRequest,
+    deleteHistorialRequest,
 } from "../api/historial";
 
 
@@ -22,7 +24,28 @@ export function HistorialProvider({ children }) {
             const res = await getHistorialRequest(id);
             return res.data;
         } catch (error) {
-            console.error(error);
+            console.log(error);
+        }
+    };
+
+    const createHistorial  = async (historial) => {
+        try {
+            const res = await createHistorialRequest(historial);
+            return res.data;
+        } catch (error) {
+            console.log(error);
+            return { error: error.message }; // Retornar un mensaje de error
+        }
+    };
+
+    const deleteHistorial  = async (id) => {
+        try {
+            const res = await deleteHistorialRequest(id);
+            if (res.status === 204) {
+                //setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -32,6 +55,8 @@ export function HistorialProvider({ children }) {
                 historials,
                 setHistorials,
                 getHistorial,
+                deleteHistorial,
+                createHistorial,
             }}
         >
             {children}

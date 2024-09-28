@@ -16,3 +16,34 @@ export const getProgreso = async (req, res) => {
         res.status(500).json({ message: "Error al obtener progreso", error });
     }
 };
+
+export const createProgreso = async (req, res) => {
+    try {
+        const { user, rutina, ejercicio, fecha, estado } = req.body;
+
+        const nuevoProgreso = new Progresos({
+            user,
+            rutina,
+            ejercicio,
+            fecha,
+            estado,
+        });
+
+        const progresoGuardado = await nuevoProgreso.save();
+        res.status(201).json(progresoGuardado);
+    } catch (error) {
+        res.status(500).json({ message: "Error al crear el detalle de la rutina", error });
+    }
+};
+
+// Eliminar un progreso del usuario existente
+export const deleteProgreso = async (req, res) => {
+    try {
+        const progreso = await Progresos.findByIdAndDelete(req.params.id);
+        if (!progreso) return res.status(404).json({ message: "Detalle no encontrado..." });
+
+        res.json({ message: "Progreso eliminado con éxito", progreso });
+    } catch (error) {
+        res.status(500).json({ message: "Error al eliminar detalle", error });
+    }
+};
