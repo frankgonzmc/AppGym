@@ -42,6 +42,7 @@ const ejercicioSchema = new mongoose.Schema({
     estado: {
         type: String,
         required: false,
+        enum: ['En Progreso', 'Completado'],
     },
     date: {
         type: Date,

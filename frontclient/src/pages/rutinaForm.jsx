@@ -44,40 +44,39 @@ const RutinaForm = () => {
     fetchEjercicios();
   }, []);
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
 
     if (params.id) {
       //updateRutina(params.id, data)
       console.log(params.id, data)
     } else {
       try {
-
-        console.log(data);
-        /*
-        const rutinaCreada = createRutina(data);
-
-        if (rutinaCreada) {
-          for (const ejercicioId of selectedEjercicios) {
-            const detalleRutina = {
-              rutina: rutinaCreada._id,
-              ejercicio: ejercicioId,
-              duracion
-            };
-
-            const detalleResponse = createDetalleRutina(detalleRutina);
-            console.log('DetalleRutina creado:', detalleResponse);
-
-            const progresoResponse = createProgreso({
-              user: user._id,
-              rutina: rutinaCreada._id,
-              fecha: new Date(),
-              estado: 'En Progreso'
-            });
-
-
-            console.log('Progreso creado:', progresoResponse);
-          }
-        }*/
+        // Crear la rutina
+        const rutinaData = {
+          ...data,
+          user: user._id,
+        };
+  
+        const rutinaCreada = await createRutina(rutinaData);
+  
+        // Crear detalles de rutina utilizando el ID de la rutina recién creada
+        for (const ejercicioId of selectedEjercicios) {
+          const detalleRutina = {
+            rutina: rutinaCreada._id, // ID de la rutina recién creada
+            ejercicio: ejercicioId, // ID de cada ejercicio seleccionado
+            // Agrega más detalles como series y repeticiones si es necesario
+          };
+          await createDetalleRutina(detalleRutina);
+        }
+  
+        // Crear progreso para la rutina
+        const progresoData = {
+          user: user._id,
+          rutina: rutinaCreada._id,
+          fecha: new Date(),
+          estado: 'En Progreso',
+        };
+        await createProgreso(progresoData);
 
       } catch (error) {
         console.log(error);
