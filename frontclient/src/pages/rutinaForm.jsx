@@ -11,10 +11,13 @@ const RutinaForm = () => {
   const { createRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
-  const [ejercicios, setEjercicios] = useState([]);
   const { user } = useAuth();
   const navigate = useNavigate();
   const params = useParams();
+
+  const [selectedEjercicios, setSelectedEjercicios] = useState([]);
+  const [ejercicios, setEjercicios] = useState([]);
+
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -50,7 +53,6 @@ const RutinaForm = () => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [nivel, setNivel] = useState('');
-  const [selectedEjercicios, setSelectedEjercicios] = useState([]);
   const [series, setSeries] = useState(10);
   const [repeticiones, setRepeticiones] = useState(4);
   const [duracion, setDuracion] = useState(60);
@@ -127,14 +129,7 @@ const RutinaForm = () => {
           required
         />
 
-        <input
-          type="text"
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Nivel" {...register('nivel')}
-          required
-        />
-
-        <h3>Selecciona Ejercicios</h3>
+        <h3 className='text-white'>Selecciona Ejercicios</h3>
         {ejercicios.map((ejercicio) => (
           <div className="ejercicio-item text-white" key={ejercicio._id}>
             <input
@@ -149,7 +144,7 @@ const RutinaForm = () => {
                 }
               }}
             />
-            <label>{ejercicio.nombre}</label>
+            <label className='text-white'>{ejercicio.nombre}</label>
           </div>
         ))}
 
