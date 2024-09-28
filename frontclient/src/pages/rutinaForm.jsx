@@ -8,10 +8,12 @@ import { useDetallesRutina } from '../context/detallerutinacontext';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
+
   const { createRutina, getRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -46,6 +48,7 @@ const RutinaForm = () => {
 
     if (params.id) {
       //updateRutina(params.id, data)
+      console.log(params.id, data)
     } else {
       try {
 

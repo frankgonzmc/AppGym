@@ -10,10 +10,11 @@ export const registerSchema = z.object({
         message: "Email Invalido...",
     }),
     password: z.string({
-        required_error: 'El Username es Requerido.'
+        required_error: 'El Password es Requerido.'
     }).min(6, {
-        message: "El password debe contener al menos 6 caracteres minimo.",
+        message: "El Password debe contener al menos 6 caracteres minimo.",
     })
+    
 })
 
 export const loginSchema = z.object({
@@ -23,8 +24,8 @@ export const loginSchema = z.object({
         message: "Email Invalido...",
     }),
     password: z.string({
-        required_error: 'El Username es Requerido.'
+        required_error: 'El Password es Requerido.'
     }).min(6, {
-        message: "El password debe contener al menos 6 caracteres minimo.",
+        message: "El Password debe contener al menos 6 caracteres minimo.",
     })
 })

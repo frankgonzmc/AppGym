@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { email, password, username, edad, peso, estatura } = req.body
+    const { email, password, username, edad, peso, estatura, nivel } = req.body
 
     try {
         const userFound = await User.findOne({ email })
@@ -18,10 +18,11 @@ export const register = async (req, res) => {
         const newUser = new User({
             username,
             email,
+            password: passwordHash,
             edad,
             peso,
             estatura,
-            password: passwordHash,
+            nivel,
         });
 
         const userSaved = await newUser.save();
@@ -32,6 +33,7 @@ export const register = async (req, res) => {
             id: userSaved.id,
             username: userSaved.username,
             email: userSaved.email,
+            nivel: userSaved.nivel,
             edad: userSaved.edad,
             peso: userSaved.peso,
             estatura: userSaved.estatura,
@@ -66,6 +68,7 @@ export const login = async (req, res) => {
             peso: userEncontrado.peso,
             estatura: userEncontrado.estatura,
             edad: userEncontrado.edad,
+            nivel: userEncontrado.nivel,
             createdAt: userEncontrado.createdAt,
             updatedAt: userEncontrado.updatedAt,
         });
@@ -94,6 +97,7 @@ export const profile = async (req, res) => {
         edad: userEncontrado.edad,
         estatura: userEncontrado.estatura,
         peso: userEncontrado.peso,
+        nivel: userEncontrado.nivel,
     });
 }
 
@@ -113,6 +117,7 @@ export const verifityToken = async (req, res) => {
             edad: userFound.edad,
             estatura: userFound.estatura,
             peso: userFound.peso,
+            nivel: userFound.nivel,
         })
 
     })

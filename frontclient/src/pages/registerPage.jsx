@@ -11,7 +11,8 @@ function RegistroUsuario() {
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
-  const navegar = useNavigate()
+  const navegar = useNavigate();
+  const nivel = 
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -77,17 +78,19 @@ function RegistroUsuario() {
               </label>
               {errors.peso && (
                 <p className="text-red-500">
-                  {errors.peso.type === "required" && "Estatura es Necesario!"}
-                  {errors.peso.type === "min" && "La estatura no puede ser negativa!"}
-                  {errors.peso.type === "max" && "La estatura debe ser menor a 3 metros!"}
+                  {errors.peso.type === "required" && "Peso es Necesario!"}
+                  {errors.peso.type === "min" && "El Peso no puede ser negativo!"}
+                  {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
                 </p>
               )}
-
-              <button type="submit" value="Registrarse" className="registerbtn">Registrarse</button>
+              <label
+                className=""><input type="text" {...register('nivel', { required: true })} className="info-childs-input " />
+              </label>
+              <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
             <p className="flex gap-x-2 justify-between">
-              Ya tienes una cuenta? <Link to="/login" className="text-sky-500">Inicia Sesión</Link>
+              Ya tienes una cuenta? <Link to="/login" className="text-sky-500">ve a Iniciar Sesión</Link>
             </p>
           </div>
         </div>

@@ -16,8 +16,8 @@
 .container-form {
     display: flex;
     box-shadow : 0 5px 7px rgba(0,0, 0, .1);
-    height: 500px;
-    max-width: 900px;
+    height: 800px;
+    max-width: 1300px;
     transition: all 1s ease;
     margin: 10px;
     border-radius : 20px;
