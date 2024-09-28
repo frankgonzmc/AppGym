@@ -47,15 +47,15 @@ function ejercicioForm() {
 
         <textarea rows="3" placeholder="Descripción del ejercicio" {...register('descripcion')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2'></textarea>
 
-        <input type="number" placeholder="Nivel" {...register('nivel')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
+        <input type="text" placeholder="Nivel" {...register('nivel')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
 
         <input type="number" placeholder="Series" {...register('series')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
 
         <input type="number" placeholder="Duración" {...register('duracion')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
 
-        <input type="number" placeholder="Descanso" {...register('duracion')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
+        <input type="number" placeholder="Descanso" {...register('descanso')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
 
-        <input type="number" placeholder="Repeticiones" {...register('duracion')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
+        <input type="number" placeholder="Repeticiones" {...register('repeticiones')} className='w-full bg-zinc-700 text-while px-4 py-2 rounded-md my-2' />
 
         <input type="hidden" {...register('estado')} value={estado} />
 

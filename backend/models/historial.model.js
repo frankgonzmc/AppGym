@@ -11,10 +11,6 @@ const historialSchema = new mongoose.Schema({
         ref: 'Rutina',
         required: true,
     },
-    nota: {
-        type: String,
-        required: true,
-    },
     estado: {
         type: String,
         required: true,
