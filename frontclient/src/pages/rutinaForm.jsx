@@ -87,45 +87,47 @@ const RutinaForm = () => {
     navigate('/rutinas')
   })
   return (
-    <div className="flex justify-center text-white items-center p-10">
-      <form onSubmit={onSubmit}>
-        <h3 className='text-center text-white'>Crea tu Rutina</h3>
+    <div className="flex justify-center items-center p-35">
+      <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
+        <form onSubmit={onSubmit}>
+          <h3 className='text-center text-white'>Crea tu Rutina</h3>
 
-        <input
-          type="text"
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          placeholder="Nombre de la rutina" {...register('nombre')}
-          required
-        />
+          <input
+            type="text"
+            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+            placeholder="Nombre de la rutina" {...register('nombre')}
+            required
+          />
 
-        <textarea
-          type="textarea"
-          placeholder="Descripción" {...register('descripcion')}
-          className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-          required
-        />
+          <textarea
+            type="textarea"
+            placeholder="Descripción" {...register('descripcion')}
+            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+            required
+          />
 
-        <h3 className='text-white'>Selecciona Ejercicios</h3>
-        {ejercicios.map((ejercicio) => (
-          <div className="ejercicio-item text-white" key={ejercicio._id}>
-            <input
-              type="checkbox"
-              value={ejercicio._id}
-              checked={selectedEjercicios.includes(ejercicio._id)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
-                } else {
-                  setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
-                }
-              }}
-            />
-            <label className='text-white'>{ejercicio.nombre}</label>
-          </div>
-        ))}
+          <h3 className='text-white'>Selecciona Ejercicios</h3>
+          {ejercicios.map((ejercicio) => (
+            <div className="ejercicio-item text-white" key={ejercicio._id}>
+              <input
+                type="checkbox"
+                value={ejercicio._id}
+                checked={selectedEjercicios.includes(ejercicio._id)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
+                  } else {
+                    setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
+                  }
+                }}
+              />
+              <label className='text-white'>{ejercicio.nombre}</label>
+            </div>
+          ))}
 
-        <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
-      </form>
+          <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
+        </form>
+      </div>
     </div>
   );
 };
