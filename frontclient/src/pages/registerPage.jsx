@@ -12,7 +12,7 @@ function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
   const navegar = useNavigate();
-  const nivel = "principiante"; // Define el nivel por defecto
+  const nivel = "Principiante"; // Define el nivel por defecto
 
   useEffect(() => {
     if (isAuthenticated) {
