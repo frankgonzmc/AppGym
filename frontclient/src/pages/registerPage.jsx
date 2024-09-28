@@ -12,7 +12,7 @@ function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
   const navegar = useNavigate();
-  const nivel = 
+  const nivel = "principiante"; // Define el nivel por defecto
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -83,9 +83,7 @@ function RegistroUsuario() {
                   {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
                 </p>
               )}
-              <label
-                className=""><input type="text" {...register('nivel', { required: true })} className="info-childs-input " />
-              </label>
+              <input type="hidden" {...register('nivel')} value={nivel} />
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
