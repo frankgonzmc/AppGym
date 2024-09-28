@@ -28,31 +28,21 @@ const RutinaForm = () => {
     fetchEjercicios();
   }, []);
 
-  useEffect(() => {
-    async function loadEjercicio() {
-      if (params.id) {
-        const ejercicio = await getEjercicio(params.id);
-        console.log(ejercicio)
-        setValue('codigo', ejercicio.codigo);
-        setValue('nombre', ejercicio.nombre);
-        setValue('descripcion', ejercicio.descripcion);
-        setValue('duracion', ejercicio.duracion);
-        setValue('categoria', ejercicio.categoria);
-      }
-    }
-    loadEjercicio();
-  }, [])
-
   const onSubmit = handleSubmit((data) => {
 
     if (params.id) {
-      updateEjercicio(params.id, data)
+      //updateRutina(params.id, data)
     } else {
-      createEjercicio(data);
+      try {
+
+        console.log(data);
+
+      } catch (error) {
+        console.log(error);
+      }
     }
 
-
-    navigate('/rutina')
+    navigate('/rutinas')
   })
 
   /*
@@ -120,7 +110,7 @@ const RutinaForm = () => {
 */
   return (
     <div className="flex justify-center text-white items-center p-10">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <h3 className='text-center text-white'>Crea tu Rutina</h3>
 
         <input

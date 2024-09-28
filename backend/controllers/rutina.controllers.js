@@ -19,15 +19,14 @@ export const createRutinas = async (req, res) => {
     try {
         console.log(req.body); // Verifica los datos que recibes
 
-        const { nombre, descripcion, nivel, date, detalles, progreso, historial } = req.body;
+        const { nombre, descripcion, date, detalles, progreso, historial } = req.body;
 
         // Crear la nueva rutina
         const newRutina = new Rutinas({
+            user: req.user.id,
             nombre,
             descripcion,
-            nivel,
             date,
-            user: req.user.id
         });
         const saveRutina = await newRutina.save();
         console.log("Rutina guardada:", saveRutina);
@@ -36,16 +35,14 @@ export const createRutinas = async (req, res) => {
         if (detalles && detalles.length > 0) {
             try {
                 for (const detalle of detalles) {
-                    const { ejercicio, orden, series, repeticiones, duracion } = detalle;
+                    const { ejercicio, total, duracion } = detalle;
 
                     console.log("Guardando detalle:", detalle);
 
                     const newDetalleRutina = new DetallesRutina({
                         rutina: saveRutina._id,
                         ejercicio,
-                        orden,
-                        series,
-                        repeticiones,
+                        total,
                         duracion
                     });
 
@@ -85,11 +82,12 @@ export const createRutinas = async (req, res) => {
         // Crear el progreso asociado
         if (historial) {
             try {
-                const { user, estado } = historial;
+                const { user, nota, estado } = historial;
 
                 const newProgreso = new Progreso({
                     user,
                     rutina: saveRutina._id,
+                    nota,
                     estado
                 });
 

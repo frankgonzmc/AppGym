@@ -14,6 +14,11 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    nivel:{
+        type: String,
+        required: true,
+        enum: ['Principiante', 'Intermedio', 'Avanzado'],
+    },
     categoria: {
         type: String,
         required: true,

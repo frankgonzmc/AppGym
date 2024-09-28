@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 
 const rutinaSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     nombre: {
         type: String,
         required: true
@@ -10,19 +15,10 @@ const rutinaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    nivel: {
-        type: String,
-        required: true,
-    },
     date: {
         type: Date,
         default: Date.now,
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    }
 }, {
     timestamps: true
 })
