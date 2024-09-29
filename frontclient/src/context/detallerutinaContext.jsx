@@ -3,6 +3,7 @@ import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
+    updateHistorialRequest,
 } from "../api/detallerutina"; // Asegúrate de crear este archivo en api/
 
 const DetalleRutinaContext = createContext();
@@ -25,7 +26,7 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    const createDetalleRutina = async (detalle) => {
+    const createDetalleRutina = async (detalles) => {
         try {
             const res = await createDetalleRutinaRequest(detalle);
             setDetalles([...detalles, res.data]);
@@ -47,13 +48,22 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+    const updateDetalleRutina = async (id, detalles) => {
+        try {
+            await updateHistorialRequest(id, detalles);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <DetalleRutinaContext.Provider
             value={{
                 detalles,
                 createDetalleRutina,
                 deleteDetalleRutina,
-                getDetalleRutina
+                getDetalleRutina,
+                updateDetalleRutina,
             }}>
             {children}
         </DetalleRutinaContext.Provider>
