@@ -10,7 +10,7 @@ export const register = async (req, res) => {
     try {
         const userFound = await User.findOne({ email })
         if (userFound)
-            return res.status(400).json({ message: ["El email no es valido."] })
+            return res.status(400).json({ message: ["El email no es valido, o  ya existe!"] })
 
 
         const passwordHash = await bcrypt.hash(password, 10)
@@ -28,11 +28,7 @@ export const register = async (req, res) => {
         const userSaved = await newUser.save();
         const token = await createAccessToken({ id: userSaved._id });
 
-        res.cookie("token", token, {
-            httpOnly: process.env.NODE_ENV !== "development",
-            secure: true,
-            sameSite: "none",
-        });
+        res.cookie('token', token);
         res.json({
             id: userSaved.id,
             username: userSaved.username,
