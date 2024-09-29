@@ -41,8 +41,10 @@ function App() {
                       <Route path='/add-rutinas' element={<RutinaForm />} />
                       <Route path='/rutina/:id' element={<RutinaForm />} />
 
+                      <Route path='/historial' element={<HistorialPage />} />
                       <Route path='/historial/:id' element={<HistorialPage />} />
 
+                      <Route path='/progresos' element={<ProgresoPage />} />
                       <Route path='/progresos/:id' element={<ProgresoPage />} />
 
                       <Route path='/ejercicios' element={<EjercicioPage />} />
@@ -50,6 +52,8 @@ function App() {
                       <Route path='/ejercicio/:id' element={<EjercicioForm />} />
 
                       <Route path='/detalles-rutinas/:id' element={<DetallerutinaPage />} />
+
+                      <Route path='/calendar' element={<CalendarPage />} />
                     </Route>
                   </Routes>
                 </BrowserRouter>

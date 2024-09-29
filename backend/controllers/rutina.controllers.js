@@ -17,16 +17,19 @@ export const getRutinas = async (req, res) => {
 // Crear una nueva rutina y asociar detalles de rutina y progreso
 export const createRutinas = async (req, res) => {
     try {
-        console.log(req.body); // Verifica los datos que recibes
-
         const { nombre, descripcion, date, detalles, progreso, historial } = req.body;
+
+        // Validar campos requeridos
+        if (!nombre || !descripcion) {
+            return res.status(400).json({ message: "Los campos nombre y descripción son requeridos." });
+        }
 
         // Crear la nueva rutina
         const newRutina = new Rutinas({
             user: req.user.id,
             nombre,
             descripcion,
-            date,
+            date: date || new Date(), // Usa la fecha actual si no se proporciona
         });
         const saveRutina = await newRutina.save();
         console.log("Rutina guardada:", saveRutina);
@@ -35,14 +38,13 @@ export const createRutinas = async (req, res) => {
         if (detalles && detalles.length > 0) {
             try {
                 for (const detalle of detalles) {
-                    const { ejercicio, total, duracion } = detalle;
+                    const { ejercicio, duracion } = detalle;
 
                     console.log("Guardando detalle:", detalle);
 
                     const newDetalleRutina = new DetallesRutina({
                         rutina: saveRutina._id,
                         ejercicio,
-                        total,
                         duracion
                     });
 

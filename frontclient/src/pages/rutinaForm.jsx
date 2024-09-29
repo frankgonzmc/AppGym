@@ -56,50 +56,46 @@ const RutinaForm = () => {
       console.log(params.id, data)
     } else {
       try {
-        // Crear la rutina
-        const rutinaData = {
-          ...data,
+        const nuevaRutina = {
           user: user._id,
+          nombre,
+          descripcion,
         };
 
-        const rutinaCreada = await createRutina(rutinaData);
+        const rutinaCreada = await createRutina(nuevaRutina);
 
-        // Asegúrate de que rutinaCreada no es undefined
-        if (!rutinaCreada || !rutinaCreada._id) {
-          throw new Error('Rutina no creada correctamente');
+        if (rutinaCreada) {
+          for (const ejercicioId of selectedEjercicios) {
+            const detalleRutina = {
+              rutina: rutinaCreada._id,
+              ejercicio: ejercicioId,
+              duracion
+            };
+
+            const detalleResponse = await createDetalleRutina(detalleRutina);
+            console.log('DetalleRutina creado:', detalleResponse);
+
+            // Crear progreso para la rutina
+            const progresoData = {
+              user: user._id,
+              rutina: rutinaCreada._id,
+              fecha: new Date(),
+              estado: 'En Progreso',
+            };
+            const progresocreado = await createProgreso(progresoData);
+            console.log('Progreso creado:', progresocreado);
+
+            // Crear historial para la rutina
+            const historialData = {
+              user: user._id,
+              rutina: rutinaCreada._id,
+              fecha: new Date(),
+              estado: 'En Progreso',
+            };
+            const historialCreado = await createHistorial(historialData);
+            console.log('Historial creado:', historialCreado);
+          }
         }
-
-        // Crear detalles de rutina utilizando el ID de la rutina recién creada
-        for (const ejercicioId of selectedEjercicios) {
-          const detalleRutina = {
-            rutina: rutinaCreada._id, // Asegúrate de que este ID existe
-            ejercicio: ejercicioId,
-            // Aquí puedes agregar series, repeticiones, etc.
-          };
-          const detallecreado = await createDetalleRutina(detalleRutina); // Asegúrate de que esta función esté definida y manejando bien la creación
-          console.log('DetalleRutina creado:', detallecreado);
-        }
-
-        // Crear progreso para la rutina
-        const progresoData = {
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-          estado: 'En Progreso',
-        };
-        const progresocreado = await createProgreso(progresoData);
-        console.log('Progreso creado:', progresocreado);
-
-        // Crear historial para la rutina
-        const historialData = {
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-          estado: 'En Progreso',
-        };
-        const historialCreado = await createHistorial(historialData);
-        console.log('Historial creado:', historialCreado);
-
       } catch (error) {
         console.log(error);
       }
@@ -107,6 +103,8 @@ const RutinaForm = () => {
 
     navigate('/rutinas')
   })
+
+
   return (
     <div className="flex justify-center items-center p-35">
       <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
