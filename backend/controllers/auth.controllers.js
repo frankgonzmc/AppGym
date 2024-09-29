@@ -156,7 +156,7 @@ export const forgotPassword = async (req, res) => {
         // Generar un token único
         const token = crypto.randomBytes(20).toString('hex');
 
-        // Guardar el token y su expiración en la base de datos
+        // Guardar els token y su expiración en la base de datos
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
         await user.save();
