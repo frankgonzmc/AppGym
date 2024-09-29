@@ -51,6 +51,7 @@ const RutinaForm = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
+    const duracion = 1
 
     if (params.id) {
       //updateRutina(params.id, data)
@@ -70,7 +71,7 @@ const RutinaForm = () => {
             const detalleRutina = {
               rutina: rutinaCreada._id,
               ejercicio: ejercicioId,
-              duracion,
+              duracion: duracion,
             };
 
             const detalleResponse = await createDetalleRutina(detalleRutina);
