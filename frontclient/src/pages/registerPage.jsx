@@ -2,20 +2,18 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
-import { Message, Button } from "../components/ui";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { registerSchema } from "../schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 function RegistroUsuario() {
 
   const { register, handleSubmit, formState: { errors }, } = useForm({
     resolver: zodResolver(registerSchema),
   });
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
+  const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
   const navegar = useNavigate();
   const nivel = "Principiante"; // Define el nivel por defecto
 
@@ -42,9 +40,13 @@ function RegistroUsuario() {
         <div className="form-information">
           <div className="form-information-childs">
             <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
-            {registerErrors.map((error, i) => (
-              <Message message={error} key={i} />
-            ))}
+            {
+              RegisterErrors.map((error, i) => (
+                <div className="bg-red-500 p-2 text-while" key={i}>
+                  {error}
+                </div>
+              ))
+            }
             <form onSubmit={onSubmit} className="form-register">
               <label
                 className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
@@ -85,7 +87,7 @@ function RegistroUsuario() {
                 </p>
               )}
               <input type="hidden" {...register('nivel')} value={nivel} />
-              <Button>Registrar Usuario</Button>
+              <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
             <p className="flex gap-x-2 justify-between">
