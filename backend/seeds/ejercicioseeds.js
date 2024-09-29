@@ -12,7 +12,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ002",
@@ -20,10 +21,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer los muslos y glúteos.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
-        "series": 8,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 3,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -32,10 +33,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer el core.",
         "nivel": "Principiante",
         "categoria": "Fuerza",
-        "series": 5,
-        "duracion": 60,
-        "descanso": 20,
-        "repeticiones": 1,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -44,10 +45,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para mejorar la resistencia cardiovascular.",
         "nivel": "Avanzado",
         "categoria": "Cardio",
-        "series": 6,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 5,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -56,8 +57,8 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer las piernas.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
-        "series": 8,
-        "duracion": 25,
+        "series": 10,
+        "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
@@ -68,10 +69,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer la espalda y los brazos.",
         "nivel": "Avanzado",
         "categoria": "Fuerza",
-        "series": 5,
-        "duracion": 15,
-        "descanso": 30,
-        "repeticiones": 3,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -92,9 +93,9 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio pliométrico para mejorar la explosividad.",
         "nivel": "Intermedio",
         "categoria": "Cardio",
-        "series": 6,
+        "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -105,9 +106,9 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Fuerza",
         "series": 10,
-        "duracion": 25,
+        "duracion": 20,
         "descanso": 10,
-        "repeticiones": 3,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -116,9 +117,9 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio cardiovascular para quemar grasa.",
         "nivel": "Intermedio",
         "categoria": "Cardio",
-        "series": 6,
+        "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -128,10 +129,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio compuesto para trabajar todo el cuerpo.",
         "nivel": "Avanzado",
         "categoria": "Fuerza",
-        "series": 5,
-        "duracion": 30,
-        "descanso": 30,
-        "repeticiones": 2,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -140,10 +141,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer el pecho.",
         "nivel": "Avanzado",
         "categoria": "Fuerza",
-        "series": 6,
-        "duracion": 25,
-        "descanso": 20,
-        "repeticiones": 3,
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -152,9 +153,9 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer la espalda.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
-        "series": 8,
+        "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -164,9 +165,9 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para fortalecer los hombros.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
-        "series": 6,
+        "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -176,10 +177,10 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para los deltoides.",
         "nivel": "Principiante",
         "categoria": "Fuerza",
-        "series": 8,
-        "duracion": 15,
+        "series": 10,
+        "duracion": 20,
         "descanso": 10,
-        "repeticiones": 3,
+        "repeticiones": 4,
         "estado": "En proceso"
     },
     {
@@ -189,7 +190,7 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Cardio",
         "series": 1,
-        "duracion": 30,
+        "duracion": 180,
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso"
@@ -201,8 +202,8 @@ const ejerciciosPredeterminados = [
         "nivel": "Principiante",
         "categoria": "Cardio",
         "series": 1,
-        "duracion": 45,
-        "descanso": 30,
+        "duracion": 300,
+        "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso"
     },
@@ -212,9 +213,9 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para trabajar los tríceps.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
-        "series": 8,
+        "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -226,7 +227,7 @@ const ejerciciosPredeterminados = [
         "categoria": "Fuerza",
         "series": 10,
         "duracion": 20,
-        "descanso": 15,
+        "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso"
     },
@@ -236,7 +237,7 @@ const ejerciciosPredeterminados = [
         "descripcion": "Ejercicio para mejorar la resistencia y quemar calorías.",
         "nivel": "Principiante",
         "categoria": "Cardio",
-        "series": 6,
+        "series": 10,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,

@@ -16,9 +16,11 @@ export function EjercicioCard({ ejercicio }) {
       </header>
       <p className="text-slate-300">{ejercicio.descripcion}</p>
       <p className="text-slate-300">{ejercicio.categoria}</p>
-      <p className="text-slate-300">{ejercicio.duracion}</p>
+      <p className="text-slate-300">{ejercicio.duracion} segundos</p>
       <p className="text-slate-300">{ejercicio.estado}</p>
-      {/* format date */}
+      {ejercicio.imagen && (
+        <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-full h-auto" />
+      )}
       <p>
         {ejercicio.date &&
           new Date(ejercicio.date).toLocaleDateString("en-US", {
