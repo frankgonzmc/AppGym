@@ -19,7 +19,7 @@ function RegistroUsuario() {
   }, [isAuthenticated])
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values);
+    signup(values);
   })
 
   return (
