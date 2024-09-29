@@ -14,7 +14,7 @@ export function RutinaCard({ rutina }) {
           <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
         </div>
       </header>
-      <p className="text-slate-300">{rutina.descripcion}</p>
+      <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
       {/* format date */}
       <p>
         {rutina.date &&

@@ -26,11 +26,11 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/sentadillas.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ003",
-        "nombre": "Plancha",
+        "nombre": "Planchas estaticas",
         "descripcion": "Ejercicio para fortalecer el core.",
         "nivel": "Principiante",
         "categoria": "Fuerza",
@@ -39,7 +39,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/planchas.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ004",
@@ -52,7 +52,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/burpees.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ005",
@@ -65,11 +65,11 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/Zancadas.webp" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ006",
-        "nombre": "Dominadas",
+        "nombre": "Dominadas Elevados",
         "descripcion": "Ejercicio para fortalecer la espalda y los brazos.",
         "nivel": "Avanzado",
         "categoria": "Fuerza",
@@ -78,7 +78,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/dominadas.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ007",
@@ -91,7 +91,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/abdominales.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ008",
@@ -104,7 +104,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/saltosencaja.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ009",
@@ -117,7 +117,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/flexionesdiamantes.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ010",
@@ -130,7 +130,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/mountainclimbers.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ011",
@@ -143,7 +143,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/pesomuerto.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ012",
@@ -156,11 +156,11 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/pressdebanca.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ013",
-        "nombre": "Remo con barra",
+        "nombre": "Remo con barra en Punta",
         "descripcion": "Ejercicio para fortalecer la espalda.",
         "nivel": "Intermedio",
         "categoria": "Fuerza",
@@ -169,7 +169,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/remo-en-punta-gif.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ014",
@@ -182,7 +182,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/pressmilitar.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ015",
@@ -195,7 +195,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/elevacioneslaterales.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ016",
@@ -208,7 +208,7 @@ const ejerciciosPredeterminados = [
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/correr.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ017",
@@ -221,7 +221,7 @@ const ejerciciosPredeterminados = [
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/bicicletaestacionaria.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ018",
@@ -234,11 +234,11 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/pressfrances.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ019",
-        "nombre": "Curl de bíceps",
+        "nombre": "Curl de bíceps alternados",
         "descripcion": "Ejercicio para fortalecer los bíceps.",
         "nivel": "Principiante",
         "categoria": "Fuerza",
@@ -247,7 +247,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/curl-biceps-alterno-con-mancuernas.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ020",
@@ -260,7 +260,7 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 4,
         "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+        "imagen": "http://localhost:5000/uploads/Jumpingjacks.gif" // Agregar URL de la imagen
     }
 ];
 

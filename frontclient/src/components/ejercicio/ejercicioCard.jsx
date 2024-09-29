@@ -9,15 +9,15 @@ export function EjercicioCard({ ejercicio }) {
     <Card>
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">{ejercicio.nombre}</h1>
-        <div className="flex gap-x-2 items-center">
-          <Button onClick={() => deleteEjercicio(ejercicio._id)}>Delete</Button>
-          <ButtonLink to={`/ejercicio/${ejercicio._id}`}>Edit</ButtonLink>
-        </div>
       </header>
-      <p className="text-slate-300">{ejercicio.descripcion}</p>
-      <p className="text-slate-300">{ejercicio.categoria}</p>
-      <p className="text-slate-300">{ejercicio.duracion} segundos</p>
-      <p className="text-slate-300">{ejercicio.estado}</p>
+      <p className="text-slate-300">Descripción: {ejercicio.descripcion}</p>
+      <p className="text-slate-300">Nivel: {ejercicio.nivel}</p>
+      <p className="text-slate-300">Categoria: {ejercicio.categoria}</p>
+      <hr />
+      <p className="text-slate-300">Series: {ejercicio.series}</p>
+      <p className="text-slate-300">Repeticiones: {ejercicio.repeticiones}</p>
+      <p className="text-slate-300">Duración: {ejercicio.duracion} segundos</p>
+      <p className="text-slate-300">Descanso: {ejercicio.descanso}</p>
       {ejercicio.imagen && (
         <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-full h-auto" />
       )}
@@ -30,6 +30,28 @@ export function EjercicioCard({ ejercicio }) {
             day: "numeric",
           })}
       </p>
+      <footer>
+        <div className="flex gap-x-2 items-center">
+          <Button onClick={() => deleteEjercicio(ejercicio._id)}>Delete</Button>
+          <ButtonLink to={`/ejercicio/${ejercicio._id}`}>Edit</ButtonLink>
+        </div>
+      </footer>
     </Card>
   );
 }
+
+/*
+{
+        "codigo": "EJ001",
+        "nombre": "Flexiones",
+        "descripcion": "Ejercicio para fortalecer el pecho y tríceps.",
+        "nivel": "Principiante",
+        "categoria": "Fuerza",
+        "series": 10,
+        "duracion": 20,
+        "descanso": 10,
+        "repeticiones": 4,
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
+    },
+*/
