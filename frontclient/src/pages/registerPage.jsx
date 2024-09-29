@@ -2,14 +2,18 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
+import { Card, Message, Button, Input, Label } from "../components/ui";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { registerSchema } from "../schemas/auth";
 
 
 function RegistroUsuario() {
 
-  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const { register, handleSubmit, formState: { errors }, } = useForm({
+    resolver: zodResolver(registerSchema),
+  });
   const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
   const navegar = useNavigate();
   const nivel = "Principiante"; // Define el nivel por defecto
@@ -37,13 +41,9 @@ function RegistroUsuario() {
         <div className="form-information">
           <div className="form-information-childs">
             <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
-            {
-              Array.isArray(RegisterErrors) && RegisterErrors.map((error, i) => (
-                <div className="bg-red-500 p-2 text-white" key={i}>
-                  {error}
-                </div>
-              ))
-            }
+            {registerErrors.map((error, i) => (
+              <Message message={error} key={i} />
+            ))}
             <form onSubmit={onSubmit} className="form-register">
               <label
                 className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
