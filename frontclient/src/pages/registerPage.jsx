@@ -82,6 +82,7 @@ function RegistroUsuario() {
                 </p>
               )}
               <input type="hidden" {...register('nivel')} value={nivel} />
+              {errors.nivel && (<p className="text-red-500"> Nivel es Necesario! </p>)}
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
