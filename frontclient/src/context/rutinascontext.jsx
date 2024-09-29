@@ -37,7 +37,7 @@ export function RutinaProvider({ children }) {
             console.log(res.data);
             return res.data; // Devolver la rutina creada
         } catch (error) {
-            console.log(error);
+            console.error(error.response.data);
         }
     };
 
