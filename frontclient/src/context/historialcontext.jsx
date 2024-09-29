@@ -29,7 +29,7 @@ export function HistorialProvider({ children }) {
         }
     };
 
-    const createHistorial  = async (historial) => {
+    const createHistorial = async (historial) => {
         try {
             const res = await createHistorialRequest(historial);
             return res.data;
@@ -38,7 +38,7 @@ export function HistorialProvider({ children }) {
             return { error: error.message }; // Retornar un mensaje de error
         }
     };
-
+    
     const deleteHistorial  = async (id) => {
         try {
             const res = await deleteHistorialRequest(id);

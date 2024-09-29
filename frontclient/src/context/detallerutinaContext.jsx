@@ -3,7 +3,7 @@ import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
-    updateHistorialRequest,
+    updateDetalleRutinaRequest,
 } from "../api/detallerutina"; // Asegúrate de crear este archivo en api/
 
 const DetalleRutinaContext = createContext();
@@ -50,7 +50,7 @@ export function DetalleRutinaProvider({ children }) {
 
     const updateDetalleRutina = async (id, detalles) => {
         try {
-            await updateHistorialRequest(id, detalles);
+            await updateDetalleRutinaRequest(id, detalles);
         } catch (error) {
             console.error(error);
         }
