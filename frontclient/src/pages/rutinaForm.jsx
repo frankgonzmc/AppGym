@@ -35,7 +35,7 @@ const RutinaForm = () => {
       }
     }
     loadRutina();
-  }, [])
+  }, [params.id, setValue])
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -51,11 +51,9 @@ const RutinaForm = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
-    const duracion = 1
 
     if (params.id) {
-      updateRutina(params.id, data)
-      console.log(params.id, data)
+      await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
     } else {
 
       if (!nombre || !descripcion || selectedEjercicios.length === 0) {
@@ -71,28 +69,30 @@ const RutinaForm = () => {
           const detallesRutina = selectedEjercicios.map(ejercicioId => ({
             rutina: rutinaCreada._id,
             ejercicio: ejercicioId,
-            duracion: duracion// Asegúrate de definir esto correctamente
+            fecha: new Date(),
           }));
 
           await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
-          const progresoData = {
-            user: user._id,
-            rutina: rutinaCreada._id,
-            fecha: new Date(),
-            estado: 'En Progreso'
-          };
-          console.log(progresoData);
-          await createProgreso(progresoData);
-
-          const historialData = {
-            user: user._id,
-            rutina: rutinaCreada._id,
-            fecha: new Date(),
-          };
-          console.log(historialData);
-          await createHistorial(historialData);
         }
+
+        const progresoData = {
+          user: user._id,
+          rutina: rutinaCreada._id,
+          fecha: new Date(),
+          estado: 'En Progreso'
+        };
+        console.log(progresoData);
+        await createProgreso(progresoData);
+
+        const historialData = {
+          user: user._id,
+          rutina: rutinaCreada._id,
+          fecha: new Date(),
+        };
+        console.log(historialData);
+        await createHistorial(historialData);
+
       } catch (error) {
         console.log(error);
       }
@@ -103,7 +103,7 @@ const RutinaForm = () => {
 
 
   return (
-    <Card className="flex justify-center"> 
+    <Card>
       <div className="flex justify-center items-center p-35">
         <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
           <form onSubmit={onSubmit}>

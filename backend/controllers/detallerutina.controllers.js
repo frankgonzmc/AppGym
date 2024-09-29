@@ -17,12 +17,12 @@ export const getDetallesRutina = async (req, res) => {
 
 export const createDetalleRutina = async (req, res) => {
     try {
-        const { rutina, ejercicio, duracion } = req.body;
+        const { rutina, ejercicio, fecha } = req.body;
 
         const nuevoDetalleRutina = new DetallesRutina({
             rutina,
             ejercicio,
-            duracion,
+            fecha,
         });
 
         const detalleGuardado = await nuevoDetalleRutina.save();

@@ -11,9 +11,9 @@ const detallesrutinaSchema = new mongoose.Schema({
         ref: 'Ejercicio',
         required: true,
     },
-    duracion: {
-        type: Number, // Duración en segundos, útil para ejercicios de cardio
-        required: true,
+    fecha: {
+        type: Date,
+        default: Date.now,
     },
 }, {
     timestamps: true,

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { login, logout, profile, register, verifityToken, updatePassword } from "../controllers/auth.controllers.js";
+import { login, logout, profile, register, verifityToken, updatePassword, forgotPassword, resetPassword} from "../controllers/auth.controllers.js";
 import { authRequired } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js'
 import { registerSchema, loginSchema } from '../validator/auth.schema.js'
@@ -13,5 +13,7 @@ router.post('/update-password', authRequired, updatePassword);
 router.post('/logout', authRequired, logout);
 router.get('/profile', authRequired, profile)
 router.get('/verify', verifityToken);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password/:token', resetPassword);
 
 export default router
