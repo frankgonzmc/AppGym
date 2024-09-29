@@ -38,8 +38,8 @@ function RegistroUsuario() {
           <div className="form-information-childs">
             <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
             {
-              RegisterErrors.map((error, i) => (
-                <div className="bg-red-500 p-2 text-while" key={i}>
+              Array.isArray(RegisterErrors) && RegisterErrors.map((error, i) => (
+                <div className="bg-red-500 p-2 text-white" key={i}>
                   {error}
                 </div>
               ))
