@@ -21,7 +21,7 @@ export const registerSchema = z.object({
         required_error: 'La Estatura es Requerido.',
     }),
     peso: z.string({
-        required_error: 'La Peso es Requerido.',
+        required_error: 'El Peso es Requerido.',
     }),
 })
 

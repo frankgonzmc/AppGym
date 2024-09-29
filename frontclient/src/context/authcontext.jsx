@@ -2,7 +2,7 @@ import { useState, createContext, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifityTokenRequest, updatePasswordRequest } from "../api/auth";
 import Cookies from 'js-cookie'
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     const updatePassword = async (currentPassword, newPassword) => {
         try {
             const res = await updatePasswordRequest(currentPassword, newPassword);
-            console.log('Contr  aseña actualizada con éxito', res.data);
+            console.log('Contraseña actualizada con éxito', res.data);
         } catch (error) {
             console.log('Error al actualizar la contraseña', error.response.data);
             throw new Error('No se pudo actualizar la contraseña.');
