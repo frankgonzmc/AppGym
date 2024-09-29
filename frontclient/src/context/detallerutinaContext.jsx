@@ -32,7 +32,7 @@ export function DetalleRutinaProvider({ children }) {
             setDetalles([...detalles, res.data]);
             return res.data;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return { error: error.message }; // Retornar un mensaje de error
         }
     };
