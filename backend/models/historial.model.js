@@ -11,9 +11,9 @@ const historialSchema = new mongoose.Schema({
         ref: 'Rutina',
         required: true,
     },
-    estado: {
-        type: String,
-        required: true,
+    fecha: {
+        type: Date,
+        default: Date.now,
     },
 }, {
     timestamps: true,

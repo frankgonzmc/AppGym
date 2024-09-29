@@ -76,11 +76,20 @@ const RutinaForm = () => {
 
           await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
-          const progresoData = { user: user._id, rutina: rutinaCreada._id, fecha: new Date(), estado: 'En Progreso' };
+          const progresoData = { 
+            user: user._id, 
+            rutina: rutinaCreada._id, 
+            fecha: new Date(), 
+            estado: 'En Progreso' 
+          };
           console.log(progresoData);
           await createProgreso(progresoData);
 
-          const historialData = { user: user._id, rutina: rutinaCreada._id, estado: 'En Progreso' };
+          const historialData = { 
+            user: user._id, 
+            rutina: rutinaCreada._id, 
+            fecha: new Date(), 
+          };
           console.log(historialData);
           await createHistorial(historialData);
         }
