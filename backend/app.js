@@ -10,6 +10,7 @@ import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
 import { FRONTEND_URL } from "./config.js";
 import { fileURLToPath } from 'url';  // Importar esta utilidadimport dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 // Crear __dirname manualmente
 const __filename = fileURLToPath(import.meta.url);
