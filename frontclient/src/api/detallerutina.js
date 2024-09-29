@@ -8,4 +8,4 @@ export const createDetalleRutinaRequest = (detalle) => axios.post('/detalles-rut
 // Asegúrate de agregar esta función para eliminar un detalle de rutina
 export const deleteDetalleRutinaRequest = (id) => axios.delete(`/detalles-rutinas/${id}`);
 
-export const updateDetalleRutinaRequest = (id, detalles) => axios.put(`/detalles-rutinas/${id}`, detalles)
+export const updateDetalleRutinaRequest = (id, detalle) => axios.put(`/detalles-rutinas/${id}`, detalle)

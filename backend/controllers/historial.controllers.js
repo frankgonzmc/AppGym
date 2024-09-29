@@ -45,3 +45,15 @@ export const deleteHistorial = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar el historial", error });
     }
 };
+
+export const updateHistorial = async (req, res) => {
+    try {
+        const historial = await Historial.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        })
+        if (!historial) return res.status(404).json({ message: "historial no encontrado..." })
+        res.json(historial)
+    } catch (error) {
+        return res.status(404).json({ message: "historial no encontrado..." });
+    }
+};

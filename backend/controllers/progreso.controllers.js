@@ -47,3 +47,15 @@ export const deleteProgreso = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar detalle", error });
     }
 };
+
+export const updateProgreso = async (req, res) => {
+    try {
+        const progreso = await Progresos.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        })
+        if (!progreso) return res.status(404).json({ message: "progreso no encontrado..." })
+        res.json(progreso)
+    } catch (error) {
+        return res.status(404).json({ message: "progreso no encontrado..." });
+    }
+};

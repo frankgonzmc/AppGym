@@ -22,18 +22,17 @@ export function DetalleRutinaProvider({ children }) {
             const res = await getDetalleRutinaRequest(id);
             return res.data;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
-    const createDetalleRutina = async (detalles) => {
+    const createDetalleRutina = async (detalle) => {
         try {
             const res = await createDetalleRutinaRequest(detalle);
-            setDetalles([...detalles, res.data]);
+            console.log(res.data);
             return res.data;
         } catch (error) {
-            console.error(error);
-            return { error: error.message }; // Retornar un mensaje de error
+            console.error('Error al crear detalle de rutina:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -48,9 +47,9 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    const updateDetalleRutina = async (id, detalles) => {
+    const updateDetalleRutina = async (id, detalle) => {
         try {
-            await updateDetalleRutinaRequest(id, detalles);
+            await updateDetalleRutinaRequest(id, detalle);
         } catch (error) {
             console.error(error);
         }
