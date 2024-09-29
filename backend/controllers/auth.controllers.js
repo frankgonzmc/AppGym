@@ -178,7 +178,10 @@ export const forgotPassword = async (req, res) => {
                    http://localhost:5000/api/reset-password/${token}`,
         };
 
-        await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions).catch(error => {
+            console.error("Error enviando correo:", error);
+            res.status(500).json({ message: error.message });
+        });
         res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
     } catch (error) {
         res.status(500).json({ message: error.message });
