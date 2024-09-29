@@ -14,6 +14,13 @@ export const getEjercicios = async (req, res) => {
 export const createEjercicios = async (req, res) => {
     try {
         const { codigo, nombre, descripcion, nivel, categoria, series, duracion, descanso, repeticiones, estado, date } = req.body
+
+        // Guardar la ruta de la imagen si existe
+        let imagenPath = null;
+        if (req.file) {
+            imagenPath = req.file.path; // Obtener la ruta de la imagen subida
+        }
+
         const newEjercicio = new Ejercicios({
             codigo,
             nombre,
@@ -26,6 +33,7 @@ export const createEjercicios = async (req, res) => {
             repeticiones,
             estado,
             date,
+            imagen: imagenPath,
         });
 
         const saveEjercicio = await newEjercicio.save()

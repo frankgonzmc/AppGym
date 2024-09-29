@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+import path from 'path';
 import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
@@ -24,5 +25,6 @@ app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
 app.use("/api", detallerutinaRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 export default app;
