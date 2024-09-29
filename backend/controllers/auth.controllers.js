@@ -147,6 +147,7 @@ export const updatePassword = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
+    console.log(req.body);
     const { email } = req.body;
     try {
         const user = await User.findOne({ email });

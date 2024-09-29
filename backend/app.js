@@ -9,13 +9,14 @@ import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
 import { FRONTEND_URL } from "./config.js";
-import { fileURLToPath } from 'url';  // Importar esta utilidad
+import { fileURLToPath } from 'url';  // Importar esta utilidadimport dotenv from 'dotenv';
 
 // Crear __dirname manualmente
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+dotenv.config();
 
 app.use(cors({
     origin: FRONTEND_URL,
