@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from './axios'
+import axios from '../api/axios'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
         setLoading(true); // Mostrar carga
 
         try {
-            const response = await axios.post('http://localhost:5000/api/forgot-password', { email });
+            const response = await axios.post('/forgot-password', { email });
             setMessage(response.data.message);
             setEmail(''); // Limpiar el campo de email
         } catch (error) {
