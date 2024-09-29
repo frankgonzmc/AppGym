@@ -15,6 +15,7 @@ import ProgresoPage from './pages/progresoPage';
 import HistorialPage from './pages/historialPage';
 import EjercicioForm from './pages/ejercicioForm';
 import DetallerutinaPage from './pages/detallerutinaPage';
+import CalendarPage from './pages/calendarPage';
 import EjercicioPage from './pages/ejercicioPage';
 import { ProgresoProvider } from './context/progresocontext';
 import { DetalleRutinaProvider } from './context/detallerutinacontext';
