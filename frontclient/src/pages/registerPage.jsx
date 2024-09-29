@@ -90,7 +90,7 @@ function RegistroUsuario() {
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
-            <p className="flex gap-x-2 justify-between">
+            <p className="flex gap-x-2 justify-between text-black">
               Ya tienes una cuenta? <Link to="/login" className="text-sky-500">ve a Iniciar Sesión</Link>
             </p>
           </div>
