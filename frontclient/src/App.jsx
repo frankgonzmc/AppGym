@@ -45,8 +45,8 @@ function App() {
                       <Route path='/historial' element={<HistorialPage />} />
                       <Route path='/historial/:id' element={<HistorialPage />} />
 
-                      <Route path='/progresos' element={<ProgresoPage />} />
-                      <Route path='/progresos/:id' element={<ProgresoPage />} />
+                      <Route path='/progreso' element={<ProgresoPage />} />
+                      <Route path='/progreso/:id' element={<ProgresoPage />} />
 
                       <Route path='/ejercicios' element={<EjercicioPage />} />
                       <Route path='/add-ejercicios' element={<EjercicioForm />} />
