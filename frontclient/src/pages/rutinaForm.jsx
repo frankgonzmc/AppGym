@@ -50,6 +50,7 @@ const RutinaForm = () => {
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
+    const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
 
     if (params.id) {
       //updateRutina(params.id, data)
