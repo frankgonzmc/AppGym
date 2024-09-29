@@ -175,7 +175,7 @@ export const forgotPassword = async (req, res) => {
             to: user.email,
             subject: 'Recuperación de Contraseña',
             text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: 
-                   http://localhost:5000/reset-password/${token}`,
+                   http://localhost:5000/api/reset-password/${token}`,
         };
 
         await transporter.sendMail(mailOptions);
