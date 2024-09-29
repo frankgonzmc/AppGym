@@ -26,8 +26,12 @@ export const AuthProvider = ({ children }) => {
             setUser(res.data);
             setIsAuthenticated(true);
         } catch (error) {
-            console.log(error.response)
-            setErrors(error.response.data)
+            if (Array.isArray(error.response.data)) {
+                return setErrors(error.response.data)
+            }
+            setErrors([error.response.data.message])
+           // console.log(error.response)
+            //setErrors(error.response.data)
         }
     }
 
@@ -71,28 +75,35 @@ export const AuthProvider = ({ children }) => {
     }, [errors])
 
     useEffect(() => {
-        const checkLogin = async () => {
-            const cookies = Cookies.get();
+        async function checkLogin() {
+            const cookies = Cookies.get()
+
             if (!cookies.token) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return;
+                setIsAuthenticated(false)
+                setLoading(false)
+                return setUser(null)
             }
 
             try {
-                const res = await verifityTokenRequest(cookies.token);
-                console.log(res);
-                if (!res.data) return setIsAuthenticated(false);
-                setIsAuthenticated(true);
-                setUser(res.data);
-                setLoading(false);
+                const res = await verifityTokenRequest(cookies.token)
+                if (!res.data) {
+                    setIsAuthenticated(false)
+                    setLoading(false)
+                    return;
+                }
+
+                setIsAuthenticated(true)
+                setUser(res.data)
+                setLoading(false)
             } catch (error) {
-                setIsAuthenticated(false);
-                setLoading(false);
+                setIsAuthenticated(false)
+                setUser(null)
+                setLoading(false)
             }
-        };
+        }
+
         checkLogin();
-    }, []);
+    }, [])
 
     return (
         <AuthContext.Provider

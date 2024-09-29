@@ -18,7 +18,7 @@ function Navbar() {
           <>
             <li className="relative">
               <button onClick={toggleDropdown} className="text-white">
-                {user.username} ▼
+                Bienvenido: {user.username} ▼
               </button>
               {dropdownOpen && (
                 <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg">
