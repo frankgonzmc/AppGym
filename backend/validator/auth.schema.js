@@ -13,16 +13,7 @@ export const registerSchema = z.object({
         required_error: 'El Password es Requerido.'
     }).min(6, {
         message: "El Password debe contener al menos 6 caracteres minimo.",
-    }),
-    edad: z.string({
-        required_error: 'La Edad es Requerido.',
-    }),
-    estatura: z.string({
-        required_error: 'La Estatura es Requerido.',
-    }),
-    peso: z.string({
-        required_error: 'El Peso es Requerido.',
-    }),
+    })
 })
 
 export const loginSchema = z.object({
