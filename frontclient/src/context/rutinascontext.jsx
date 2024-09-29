@@ -33,7 +33,9 @@ export function RutinaProvider({ children }) {
     const createRutina = async (rutina) => {
         try {
             const res = await createRutinaRequest(rutina);
+            setRutinas((prev) => [...prev, res.data]); // Añadir la nueva rutina al estado
             console.log(res.data);
+            return res.data; // Devolver la rutina creada
         } catch (error) {
             console.log(error);
         }

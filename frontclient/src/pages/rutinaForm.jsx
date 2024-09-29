@@ -62,14 +62,19 @@ const RutinaForm = () => {
 
         const rutinaCreada = await createRutina(rutinaData);
 
+        // Asegúrate de que rutinaCreada no es undefined
+        if (!rutinaCreada || !rutinaCreada._id) {
+          throw new Error('Rutina no creada correctamente');
+        }
+
         // Crear detalles de rutina utilizando el ID de la rutina recién creada
         for (const ejercicioId of selectedEjercicios) {
           const detalleRutina = {
-            rutina: rutinaCreada._id, // ID de la rutina recién creada
-            ejercicio: ejercicioId, // ID de cada ejercicio seleccionado
-            // Agrega más detalles como series y repeticiones si es necesario
+            rutina: rutinaCreada._id, // Asegúrate de que este ID existe
+            ejercicio: ejercicioId,
+            // Aquí puedes agregar series, repeticiones, etc.
           };
-          await createDetalleRutina(detalleRutina);
+          await createDetalleRutina(detalleRutina); // Asegúrate de que esta función esté definida y manejando bien la creación
         }
 
         // Crear progreso para la rutina
