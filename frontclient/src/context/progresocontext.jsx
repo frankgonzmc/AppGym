@@ -34,7 +34,7 @@ export function ProgresoProvider({ children }) {
             const res = await createProgresoRequest(progreso);
             console.log(res.data);
         } catch (error) {
-            console.log(error);
+            console.error('Error al crear progreso:', error.response ? error.response.data : error.message);
         }
     };
 

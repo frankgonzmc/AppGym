@@ -3,6 +3,7 @@ import {
     getHistorialRequest,
     createHistorialRequest,
     deleteHistorialRequest,
+    updateHistorialRequest,
 } from "../api/historial";
 
 
@@ -33,7 +34,7 @@ export function HistorialProvider({ children }) {
             const res = await createHistorialRequest(historial);
             return res.data;
         } catch (error) {
-            console.log(error);
+            console.error('Error al crear historial:', error.response ? error.response.data : error.message);
             return { error: error.message }; // Retornar un mensaje de error
         }
     };
@@ -49,6 +50,14 @@ export function HistorialProvider({ children }) {
         }
     };
 
+    const updateHistorial = async (id, historial) => {
+        try {
+            await updateHistorialRequest(id, historial);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <HistorialContext.Provider
             value={{
@@ -57,6 +66,7 @@ export function HistorialProvider({ children }) {
                 getHistorial,
                 deleteHistorial,
                 createHistorial,
+                updateHistorial,
             }}
         >
             {children}
