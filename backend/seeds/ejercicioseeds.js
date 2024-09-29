@@ -25,7 +25,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ003",
@@ -37,7 +38,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ004",
@@ -49,7 +51,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ005",
@@ -61,7 +64,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ006",
@@ -73,7 +77,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ007",
@@ -85,7 +90,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ008",
@@ -97,7 +103,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ009",
@@ -109,7 +116,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ010",
@@ -121,7 +129,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ011",
@@ -133,7 +142,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ012",
@@ -145,7 +155,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ013",
@@ -157,7 +168,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ014",
@@ -169,7 +181,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ015",
@@ -181,7 +194,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ016",
@@ -193,7 +207,8 @@ const ejerciciosPredeterminados = [
         "duracion": 180,
         "descanso": 60,
         "repeticiones": 1,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ017",
@@ -205,7 +220,8 @@ const ejerciciosPredeterminados = [
         "duracion": 300,
         "descanso": 60,
         "repeticiones": 1,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ018",
@@ -217,7 +233,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ019",
@@ -229,7 +246,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     },
     {
         "codigo": "EJ020",
@@ -241,7 +259,8 @@ const ejerciciosPredeterminados = [
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 4,
-        "estado": "En proceso"
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
     }
 ];
 
