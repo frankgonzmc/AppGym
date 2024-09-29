@@ -83,7 +83,7 @@ const RutinaForm = () => {
           await createHistorial(historialData);
         }
       } catch (error) {
-        console.error('Error al crear la rutina:', error.response.data);
+        console.log(error.message);
       }
 
       navigate('/rutinas');
