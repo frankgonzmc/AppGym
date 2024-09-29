@@ -6,8 +6,8 @@ import seedEjercicios from "./seeds/ejercicioseeds.js"; // Ruta a tu archivo see
 async function main() {
     try {
         await connectDB();
+        await seedEjercicios();
         app.listen(PORT);
-        seedEjercicios();
         console.log(`Conectado en el puerto: ${PORT}`);
     } catch (error) {
         console.error(error);
