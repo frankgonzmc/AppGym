@@ -3,13 +3,13 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import path from 'path';
-import { fileURLToPath } from 'url';  // Importar esta utilidad
 import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
 import { FRONTEND_URL } from "./config.js";
+import { fileURLToPath } from 'url';  // Importar esta utilidad
 
 // Crear __dirname manualmente
 const __filename = fileURLToPath(import.meta.url);
