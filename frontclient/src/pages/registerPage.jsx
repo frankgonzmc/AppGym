@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
-import { Message } from "../components/ui";
+import { Message, Button } from "../components/ui";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -85,7 +85,7 @@ function RegistroUsuario() {
                 </p>
               )}
               <input type="hidden" {...register('nivel')} value={nivel} />
-              <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
+              <Button>Registrar Usuario</Button>
             </form>
 
             <p className="flex gap-x-2 justify-between">
