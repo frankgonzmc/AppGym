@@ -29,7 +29,7 @@ export const createRutinas = async (req, res) => {
             user: req.user.id,
             nombre,
             descripcion,
-            date: date || new Date(), // Usa la fecha actual si no se proporciona
+            date: new Date(), // Usa la fecha actual si no se proporciona
         });
         const saveRutina = await newRutina.save();
         console.log("Rutina guardada:", saveRutina);
