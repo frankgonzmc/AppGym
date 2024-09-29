@@ -246,10 +246,16 @@ const ejerciciosPredeterminados = [
 ];
 
 
-const seedDatabase = async () => {
+const seedEjercicios = async () => {
     try {
-        await connectDB(); // Conéctate a la base de datos
-        console.log("Conectado a la base de datos");
+        await connectDB();
+
+        // Verificar si ya existen documentos en la colección
+        const count = await Ejercicio.countDocuments();
+        if (count > 0) {
+            console.log("Los ejercicios ya existen en la base de datos. Seeding no es necesario.");
+            return;
+        }
 
         // Inserta los ejercicios predeterminados
         const result = await Ejercicio.insertMany(ejerciciosPredeterminados);
@@ -257,8 +263,8 @@ const seedDatabase = async () => {
     } catch (error) {
         console.error("Error al agregar datos:", error);
     } finally {
-        mongoose.connection.close(); // Cierra la conexión
+        mongoose.connection.close();
     }
 };
 
-seedDatabase();
+export default seedEjercicios;
