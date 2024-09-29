@@ -2,7 +2,7 @@ import { useState, createContext, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifityTokenRequest, updatePasswordRequest } from "../api/auth";
 import Cookies from 'js-cookie'
 
-const AuthContext = createContext()
+export const AuthContext = createContext()
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
@@ -22,16 +22,12 @@ export const AuthProvider = ({ children }) => {
     const signup = async (user) => {
         try {
             const res = await registerRequest(user);
-            if (res.status === 200) {
-                setUser(res.data);
-                setIsAuthenticated(true);
-            }
+            console.log(res.data);
+            setUser(res.data);
+            setIsAuthenticated(true);
         } catch (error) {
-            console.log(error.response ? error.response.data : error.message);
-            //console.log(error.response.data);
-            //setErrors(error.response.data.message);
-            // setErrors(Array.isArray(error.response.data.message) ? error.response.data.message : [error.response.data.message]);
-            setErrors(Array.isArray(error.response?.data?.message) ? error.response.data.message : [error.response?.data?.message || 'Error desconocido']);
+            console.log(error.response)
+            setErrors(error.response.data)
         }
     }
 
@@ -52,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     const updatePassword = async (currentPassword, newPassword) => {
         try {
             const res = await updatePasswordRequest(currentPassword, newPassword);
-            console.log('Contraseña actualizada con éxito', res.data);
+            console.log('Contr  aseña actualizada con éxito', res.data);
         } catch (error) {
             console.log('Error al actualizar la contraseña', error.response.data);
             throw new Error('No se pudo actualizar la contraseña.');

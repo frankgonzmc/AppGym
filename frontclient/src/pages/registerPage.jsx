@@ -5,13 +5,10 @@ import '../css/register.css';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-
 function RegistroUsuario() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
-
   const navegar = useNavigate();
   const nivel = "Principiante"; // Define el nivel por defecto
 
@@ -39,15 +36,15 @@ function RegistroUsuario() {
           <div className="form-information-childs">
             <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
             {
-              Array.isArray(RegisterErrors) && RegisterErrors.map((error, i) => (
-                <div className="bg-red-500 p-2 text-white" key={i}>
+              RegisterErrors.map((error, i) => (
+                <div className="bg-red-500 p-2 text-while" key={i}>
                   {error}
                 </div>
               ))
             }
             <form onSubmit={onSubmit} className="form-register">
               <label
-                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" autoFocus />
+                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
               </label>
               {errors.username && (<p className="text-red-500">El Nombre Completo es Necesario!</p>)}
               <label
@@ -84,9 +81,7 @@ function RegistroUsuario() {
                   {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
                 </p>
               )}
-
               <input type="hidden" {...register('nivel')} value={nivel} />
-
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
