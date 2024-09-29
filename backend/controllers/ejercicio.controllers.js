@@ -11,13 +11,18 @@ export const getEjercicios = async (req, res) => {
 
 export const createEjercicios = async (req, res) => {
     try {
-        const { codigo, nombre, descripcion, categoria, duracion, date } = req.body
+        const { codigo, nombre, descripcion, nivel, categoria, series, duracion, descanso, repeticiones, estado, date } = req.body
         const newEjercicio = new Ejercicios({
             codigo,
             nombre,
             descripcion,
+            nivel,
             categoria,
+            series,
             duracion,
+            descanso,
+            repeticiones,
+            estado,
             date,
         });
 

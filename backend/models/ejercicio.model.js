@@ -17,7 +17,6 @@ const ejercicioSchema = new mongoose.Schema({
     nivel:{
         type: String,
         required: true,
-        enum: ['Principiante', 'Intermedio', 'Avanzado'],
     },
     categoria: {
         type: String,
@@ -41,8 +40,7 @@ const ejercicioSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        required: false,
-        enum: ['En Progreso', 'Completado'],
+        required: true,
     },
     date: {
         type: Date,

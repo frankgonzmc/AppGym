@@ -19,6 +19,10 @@ function ejercicioForm() {
         setValue('codigo', ejercicio.codigo);
         setValue('nombre', ejercicio.nombre);
         setValue('descripcion', ejercicio.descripcion);
+        setValue('nivel', ejercicio.nivel);
+        setValue('series', ejercicio.series);
+        setValue('repeticiones', ejercicio.repeticiones);
+        setValue('descanso', ejercicio.descanso);
         setValue('duracion', ejercicio.duracion);
         setValue('categoria', ejercicio.categoria);
       }
