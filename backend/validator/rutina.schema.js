@@ -7,8 +7,5 @@ export const createRutinaSchema = z.object({
     descripcion: z.string({
         required_error: "La descripcion es requerida"
     }),
-    nivel: z.string({
-        required_error: "El nivel de la rutina es requerido"
-    }),
     date: z.string().datetime().optional(),
 })
