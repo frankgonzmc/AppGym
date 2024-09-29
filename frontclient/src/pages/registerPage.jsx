@@ -19,7 +19,7 @@ function RegistroUsuario() {
   }, [isAuthenticated])
 
   const onSubmit = handleSubmit(async (values) => {
-    signup(values);
+    console.log(values);
   })
 
   return (
@@ -81,7 +81,7 @@ function RegistroUsuario() {
                   {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
                 </p>
               )}
-              
+
               <input type="hidden" {...register('nivel')} value={nivel} />
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
