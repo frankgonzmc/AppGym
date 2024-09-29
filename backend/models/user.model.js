@@ -16,10 +16,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    nivel: {
-        type: String,
-        required: true,
-    },
     edad: {
         type: Number,
         required: true,
@@ -34,6 +30,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 0,  // Puedes establecer un límite mínimo
+    },
+    nivel: {
+        type: String,
+        required: true,
+        enum: ['Principiante', 'Intermedio', 'Avanzado'],
     }
 }, {
     timestamps: true
