@@ -6,12 +6,14 @@ import { useProgreso } from '../context/progresocontext'; // Asegúrate de impor
 import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
 import { useDetallesRutina } from '../context/detallerutinacontext';
+import { useHistorial } from '../context/historialcontext'; // Asegúrate de importar el contexto de historial
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
 
   const { createRutina, getRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
+  const { createHistorial } = useHistorial();
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
 
@@ -74,7 +76,8 @@ const RutinaForm = () => {
             ejercicio: ejercicioId,
             // Aquí puedes agregar series, repeticiones, etc.
           };
-          await createDetalleRutina(detalleRutina); // Asegúrate de que esta función esté definida y manejando bien la creación
+          const detallecreado = await createDetalleRutina(detalleRutina); // Asegúrate de que esta función esté definida y manejando bien la creación
+          console.log('DetalleRutina creado:', detallecreado);
         }
 
         // Crear progreso para la rutina
@@ -94,7 +97,7 @@ const RutinaForm = () => {
           fecha: new Date(),
           estado: 'En Progreso',
         };
-        const historialCreado = await createProgreso(progresoData);
+        const historialCreado = await createHistorial(historialData);
         console.log('Historial creado:', historialCreado);
 
       } catch (error) {
