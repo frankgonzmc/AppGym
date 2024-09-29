@@ -42,6 +42,10 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    imagen:{
+        type: String,
+        required: false,
+    },
     date: {
         type: Date,
         default: Date.now,
