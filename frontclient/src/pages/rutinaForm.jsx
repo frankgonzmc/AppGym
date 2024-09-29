@@ -69,7 +69,7 @@ const RutinaForm = () => {
             const detalleRutina = {
               rutina: rutinaCreada._id,
               ejercicio: ejercicioId,
-              duracion
+              duracion,
             };
 
             const detalleResponse = await createDetalleRutina(detalleRutina);
