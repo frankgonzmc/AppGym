@@ -8,12 +8,8 @@ export function RutinaCard({ rutina }) {
     <Card>
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">{rutina.nombre}</h1>
-        <div className="flex gap-x-3 items-center">
-          <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button>
-          <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
-          <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
-        </div>
       </header>
+      <hr />
       <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
       {/* format date */}
       <p>
@@ -25,6 +21,14 @@ export function RutinaCard({ rutina }) {
             day: "numeric",
           })}
       </p>
+      <hr />
+      <footer>
+        <div className="flex gap-x-3 items-center">
+          <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button>
+          <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
+          <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
+        </div>
+      </footer>
     </Card>
   );
 }

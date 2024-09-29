@@ -9,6 +9,7 @@ export default function DetalleRutinaCard({ detalles }) {
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">{detalles.ejercicio.nombre}</h1>
       </header>
+      <hr />
       <p className="text-slate-300">Descripción: {detalles.ejercicio.descripcion}</p>
       <p className="text-slate-300">Categoría: {detalles.ejercicio.categoria}</p>
       <p className="text-slate-300">Duración: {detalles.ejercicio.duracion} minutos</p>
@@ -24,6 +25,7 @@ export default function DetalleRutinaCard({ detalles }) {
             day: "numeric",
           })}
       </p>
+      <hr />
       <footer>
         <div className="flex gap-x-2 items-center">
           <Button onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</Button>

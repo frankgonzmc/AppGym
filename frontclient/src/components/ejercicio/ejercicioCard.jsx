@@ -10,6 +10,7 @@ export function EjercicioCard({ ejercicio }) {
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">{ejercicio.nombre}</h1>
       </header>
+      <hr />
       <p className="text-slate-300">Descripción: {ejercicio.descripcion}</p>
       <p className="text-slate-300">Nivel: {ejercicio.nivel}</p>
       <p className="text-slate-300">Categoria: {ejercicio.categoria}</p>
@@ -17,7 +18,7 @@ export function EjercicioCard({ ejercicio }) {
       <p className="text-slate-300">Series: {ejercicio.series}</p>
       <p className="text-slate-300">Repeticiones: {ejercicio.repeticiones}</p>
       <p className="text-slate-300">Duración: {ejercicio.duracion} segundos</p>
-      <p className="text-slate-300">Descanso: {ejercicio.descanso}</p>
+      <p className="text-slate-300">Descanso: {ejercicio.descanso} segundos</p>
       {ejercicio.imagen && (
         <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-full h-auto" />
       )}
@@ -30,6 +31,7 @@ export function EjercicioCard({ ejercicio }) {
             day: "numeric",
           })}
       </p>
+      <hr />
       <footer>
         <div className="flex gap-x-2 items-center">
           <Button onClick={() => deleteEjercicio(ejercicio._id)}>Delete</Button>
