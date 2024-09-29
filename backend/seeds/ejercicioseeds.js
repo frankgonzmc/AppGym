@@ -262,8 +262,6 @@ const seedEjercicios = async () => {
         console.log("Datos predeterminados agregados:", result);
     } catch (error) {
         console.error("Error al agregar datos:", error);
-    } finally {
-        mongoose.connection.close();
     }
 };
 
