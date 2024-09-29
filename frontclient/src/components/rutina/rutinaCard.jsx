@@ -11,11 +11,11 @@ export function RutinaCard({ rutina }) {
         <div className="flex gap-x-2 items-center">
           <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button>
           <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
+          <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
         </div>
       </header>
       <p className="text-slate-300">{rutina.nombre}</p>
       <p className="text-slate-300">{rutina.descripcion}</p>
-      <p className="text-slate-300">{rutina.nivel}</p>
       {/* format date */}
       <p>
         {rutina.date &&
