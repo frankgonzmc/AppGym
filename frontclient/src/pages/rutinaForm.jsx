@@ -7,6 +7,7 @@ import { getEjerciciosRequest } from '../api/ejercicio';
 import { useAuth } from '../context/authcontext';
 import { useDetallesRutina } from '../context/detallerutinacontext';
 import { useHistorial } from '../context/historialcontext'; // Asegúrate de importar el contexto de historial
+import { Card } from '../components/ui';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
@@ -24,18 +25,17 @@ const RutinaForm = () => {
   const [ejercicios, setEjercicios] = useState([]);
 
   useEffect(() => {
-    const loadRutina = async () => {
+    async function loadRutina() {
       if (params.id) {
         const rutina = await getRutina(params.id);
-        if (rutina) {
-          setValue('nombre', rutina.nombre);
-          setValue('descripcion', rutina.descripcion);
-          setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
-        }
+        console.log(rutina)
+        setValue('nombre', rutina.nombre);
+        setValue('descripcion', rutina.descripcion);
+        setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
       }
-    };
+    }
     loadRutina();
-  }, [params.id, setValue]);
+  }, [])
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -54,7 +54,7 @@ const RutinaForm = () => {
     const duracion = 1
 
     if (params.id) {
-      //updateRutina(params.id, data)
+      updateRutina(params.id, data)
       console.log(params.id, data)
     } else {
 
@@ -76,19 +76,19 @@ const RutinaForm = () => {
 
           await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
-          const progresoData = { 
-            user: user._id, 
-            rutina: rutinaCreada._id, 
-            fecha: new Date(), 
-            estado: 'En Progreso' 
+          const progresoData = {
+            user: user._id,
+            rutina: rutinaCreada._id,
+            fecha: new Date(),
+            estado: 'En Progreso'
           };
           console.log(progresoData);
           await createProgreso(progresoData);
 
-          const historialData = { 
-            user: user._id, 
-            rutina: rutinaCreada._id, 
-            fecha: new Date(), 
+          const historialData = {
+            user: user._id,
+            rutina: rutinaCreada._id,
+            fecha: new Date(),
           };
           console.log(historialData);
           await createHistorial(historialData);
@@ -103,48 +103,50 @@ const RutinaForm = () => {
 
 
   return (
-    <div className="flex justify-center items-center p-35">
-      <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
-        <form onSubmit={onSubmit}>
-          <h3 className='text-center text-white'>Crea tu Rutina</h3>
+    <Card>
+      <div className="flex justify-center items-center p-35">
+        <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
+          <form onSubmit={onSubmit}>
+            <h3 className='text-center text-white'>Crea tu Rutina</h3>
 
-          <input
-            type="text"
-            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-            placeholder="Nombre de la rutina" {...register('nombre')}
-            required
-          />
+            <input
+              type="text"
+              className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+              placeholder="Nombre de la rutina" {...register('nombre')}
+              required
+            />
 
-          <textarea
-            type="textarea"
-            placeholder="Descripción" {...register('descripcion')}
-            className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-            required
-          />
+            <textarea
+              type="textarea"
+              placeholder="Descripción" {...register('descripcion')}
+              className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+              required
+            />
 
-          <h3 className='text-white'>Selecciona Ejercicios</h3>
-          {ejercicios.map((ejercicio) => (
-            <div className="ejercicio-item text-white" key={ejercicio._id}>
-              <input
-                type="checkbox"
-                value={ejercicio._id}
-                checked={selectedEjercicios.includes(ejercicio._id)}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
-                  } else {
-                    setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
-                  }
-                }}
-              />
-              <label className='text-white'>{ejercicio.nombre}</label>
-            </div>
-          ))}
+            <h3 className='text-white'>Selecciona Ejercicios</h3>
+            {ejercicios.map((ejercicio) => (
+              <div className="ejercicio-item text-white" key={ejercicio._id}>
+                <input
+                  type="checkbox"
+                  value={ejercicio._id}
+                  checked={selectedEjercicios.includes(ejercicio._id)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
+                    } else {
+                      setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
+                    }
+                  }}
+                />
+                <label className='text-white'>{ejercicio.nombre}</label>
+              </div>
+            ))}
 
-          <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
-        </form>
+            <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
