@@ -44,12 +44,3 @@ const DetallerutinaPage = () => {
 };
 
 export default DetallerutinaPage;
-
-
-/*
-  
-
-
-
-
-*/
