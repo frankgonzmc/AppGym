@@ -1,4 +1,19 @@
 import DetallesRutina from '../models/detallerutina.model.js';
+import Rutinas from '../models/rutina.model.js';
+
+// Obtener una rutina por su ID
+export const getDetallesRutina = async (req, res) => {
+    try {
+        const rutina = await Rutinas.findById(req.params.id).populate('user');
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+
+        const detalles = await DetallesRutina.find({ rutina: req.params.id }).populate('ejercicio');
+        res.json({ rutina, detalles });
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener rutina", error });
+    }
+};
+
 
 export const createDetalleRutina = async (req, res) => {
     try {
