@@ -4,7 +4,7 @@ import { getRutinaRequest } from '../api/rutina'; // Asegúrate de que esta func
 import EjercicioCard from '../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
 
 const DetallerutinaPage = () => {
-  const [loading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [rutina, setRutina] = useState(null);
   const [detalles, setDetalles] = useState([]);
