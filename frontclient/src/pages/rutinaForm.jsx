@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRutinas } from '../context/rutinascontext';
 import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
@@ -21,16 +22,18 @@ const RutinaForm = () => {
   const [ejercicios, setEjercicios] = useState([]);
 
   useEffect(() => {
-    async function loadRutina() {
+    const loadRutina = async () => {
       if (params.id) {
         const rutina = await getRutina(params.id);
-        console.log(rutina)
-        setValue('nombre', rutina.nombre);
-        setValue('descripcion', rutina.descripcion);
+        if (rutina) {
+          setValue('nombre', rutina.nombre);
+          setValue('descripcion', rutina.descripcion);
+          setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
+        }
       }
-    }
+    };
     loadRutina();
-  }, [])
+  }, [params.id, setValue]);
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -56,9 +59,9 @@ const RutinaForm = () => {
           ...data,
           user: user._id,
         };
-  
+
         const rutinaCreada = await createRutina(rutinaData);
-  
+
         // Crear detalles de rutina utilizando el ID de la rutina recién creada
         for (const ejercicioId of selectedEjercicios) {
           const detalleRutina = {
@@ -68,7 +71,7 @@ const RutinaForm = () => {
           };
           await createDetalleRutina(detalleRutina);
         }
-  
+
         // Crear progreso para la rutina
         const progresoData = {
           user: user._id,
