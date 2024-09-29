@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/forgot-password': {
-        target: 'http://localhost:5000', // Cambia esto por el puerto en el que corre tu servidor Express
+      '/api/forgot-password': {
+        target: 'http://localhost:5000/api', // Cambia esto por el puerto en el que corre tu servidor Express
         changeOrigin: true,
         secure: false,
       },
