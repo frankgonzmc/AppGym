@@ -41,19 +41,3 @@ export function EjercicioCard({ ejercicio }) {
     </Card>
   );
 }
-
-/*
-{
-        "codigo": "EJ001",
-        "nombre": "Flexiones",
-        "descripcion": "Ejercicio para fortalecer el pecho y tríceps.",
-        "nivel": "Principiante",
-        "categoria": "Fuerza",
-        "series": 10,
-        "duracion": 20,
-        "descanso": 10,
-        "repeticiones": 4,
-        "estado": "En proceso",
-        "imagen": "http://localhost:5000/uploads/pushup.gif" // Agregar URL de la imagen
-    },
-*/
