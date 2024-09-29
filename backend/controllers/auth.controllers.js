@@ -5,13 +5,12 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { email, password, username, edad, peso, estatura, nivel } = req.body
+    const { username, email, password, edad, estatura, peso, nivel } = req.body
 
     try {
         const userFound = await User.findOne({ email })
         if (userFound)
             return res.status(400).json({ message: ["El email no es valido, o  ya existe!"] })
-
 
         const passwordHash = await bcrypt.hash(password, 10)
 
@@ -20,8 +19,8 @@ export const register = async (req, res) => {
             email,
             password: passwordHash,
             edad,
-            peso,
             estatura,
+            peso,
             nivel,
         });
 
@@ -33,10 +32,10 @@ export const register = async (req, res) => {
             id: userSaved.id,
             username: userSaved.username,
             email: userSaved.email,
-            nivel: userSaved.nivel,
             edad: userSaved.edad,
-            peso: userSaved.peso,
             estatura: userSaved.estatura,
+            peso: userSaved.peso,
+            nivel: userSaved.nivel,
             createdAt: userSaved.createdAt,
             updatedAt: userSaved.updatedAt,
         });
@@ -66,8 +65,8 @@ export const login = async (req, res) => {
             username: userEncontrado.username,
             email: userEncontrado.email,
             peso: userEncontrado.peso,
-            estatura: userEncontrado.estatura,
             edad: userEncontrado.edad,
+            estatura: userEncontrado.estatura,
             nivel: userEncontrado.nivel,
             createdAt: userEncontrado.createdAt,
             updatedAt: userEncontrado.updatedAt,
