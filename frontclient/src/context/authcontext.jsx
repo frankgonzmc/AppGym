@@ -27,9 +27,11 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(true);
             }
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error.response ? error.response.data : error.message);
+            //console.log(error.response.data);
             //setErrors(error.response.data.message);
-            setErrors(Array.isArray(error.response.data.message) ? error.response.data.message : [error.response.data.message]);
+            // setErrors(Array.isArray(error.response.data.message) ? error.response.data.message : [error.response.data.message]);
+            setErrors(Array.isArray(error.response?.data?.message) ? error.response.data.message : [error.response?.data?.message || 'Error desconocido']);
         }
     }
 
