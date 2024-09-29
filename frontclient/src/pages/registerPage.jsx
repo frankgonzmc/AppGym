@@ -81,8 +81,8 @@ function RegistroUsuario() {
                   {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
                 </p>
               )}
+              
               <input type="hidden" {...register('nivel')} value={nivel} />
-              {errors.nivel && (<p className="text-red-500"> Nivel es Necesario! </p>)}
               <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
             </form>
 
