@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
-import { Card, Message, Button, Input, Label } from "../components/ui";
+import { Message } from "../components/ui";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { registerSchema } from "../schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 
 function RegistroUsuario() {
@@ -14,7 +15,7 @@ function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors }, } = useForm({
     resolver: zodResolver(registerSchema),
   });
-  const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navegar = useNavigate();
   const nivel = "Principiante"; // Define el nivel por defecto
 
