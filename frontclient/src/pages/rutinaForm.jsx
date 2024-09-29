@@ -57,53 +57,37 @@ const RutinaForm = () => {
       //updateRutina(params.id, data)
       console.log(params.id, data)
     } else {
-      try {
-        const nuevaRutina = {
-          user: user._id,
-          nombre,
-          descripcion,
-        };
 
+      if (!nombre || !descripcion || selectedEjercicios.length === 0) {
+        console.error("Faltan datos requeridos");
+        return; // No continuar si faltan datos
+      }
+
+      try {
+        const nuevaRutina = { user: user._id, nombre, descripcion };
         const rutinaCreada = await createRutina(nuevaRutina);
 
         if (rutinaCreada) {
-          for (const ejercicioId of selectedEjercicios) {
-            const detalleRutina = {
-              rutina: rutinaCreada._id,
-              ejercicio: ejercicioId,
-              duracion: duracion,
-            };
+          const detallesRutina = selectedEjercicios.map(ejercicioId => ({
+            rutina: rutinaCreada._id,
+            ejercicio: ejercicioId,
+            duracion: duracion// Asegúrate de definir esto correctamente
+          }));
 
-            const detalleResponse = await createDetalleRutina(detalleRutina);
-            console.log('DetalleRutina creado:', detalleResponse);
+          await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
-            // Crear progreso para la rutina
-            const progresoData = {
-              user: user._id,
-              rutina: rutinaCreada._id,
-              fecha: new Date(),
-              estado: 'En Progreso',
-            };
-            const progresocreado = await createProgreso(progresoData);
-            console.log('Progreso creado:', progresocreado);
+          const progresoData = { user: user._id, rutina: rutinaCreada._id, fecha: new Date(), estado: 'En Progreso' };
+          await createProgreso(progresoData);
 
-            // Crear historial para la rutina
-            const historialData = {
-              user: user._id,
-              rutina: rutinaCreada._id,
-              fecha: new Date(),
-              estado: 'En Progreso',
-            };
-            const historialCreado = await createHistorial(historialData);
-            console.log('Historial creado:', historialCreado);
-          }
+          const historialData = { user: user._id, rutina: rutinaCreada._id, estado: 'En Progreso' };
+          await createHistorial(historialData);
         }
       } catch (error) {
-        console.log(error);
+        console.error('Error al crear la rutina:', error.response.data);
       }
-    }
 
-    navigate('/rutinas')
+      navigate('/rutinas');
+    }
   })
 
 
