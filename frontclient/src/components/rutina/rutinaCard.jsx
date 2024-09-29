@@ -8,7 +8,7 @@ export function RutinaCard({ rutina }) {
     <Card>
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold text-center">RUTINAS</h1>
-        <div className="flex gap-x-2 items-center">
+        <div className="flex gap-x-3 items-center">
           <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button>
           <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
           <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
