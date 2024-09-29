@@ -11,7 +11,7 @@ const ForgotPassword = () => {
         setLoading(true); // Mostrar carga
 
         try {
-            const response = await axios.post('/forgot-password', { email });
+            const response = await axios.post('http://localhost:5000/api/forgot-password', { email });
             setMessage(response.data.message);
             setEmail(''); // Limpiar el campo de email
         } catch (error) {
