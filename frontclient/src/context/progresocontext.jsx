@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import {
     getProgresoRequest,
-    createProgresosRequest,
+    createProgresoRequest,
     deleteProgresoRequest,
     updateProgresoRequest,
 } from "../api/progreso";
@@ -31,7 +31,7 @@ export function ProgresoProvider({ children }) {
 
     const createProgreso = async (progreso) => {
         try {
-            const res = await createProgresosRequest(progreso);
+            const res = await createProgresoRequest(progreso);
             console.log(res.data);
         } catch (error) {
             console.log(error);
