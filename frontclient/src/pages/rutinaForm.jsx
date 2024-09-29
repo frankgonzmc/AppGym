@@ -103,7 +103,7 @@ const RutinaForm = () => {
 
 
   return (
-    <Card>
+    <Card className="flex justify-center"> 
       <div className="flex justify-center items-center p-35">
         <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
           <form onSubmit={onSubmit}>
