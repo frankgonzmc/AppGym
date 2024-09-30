@@ -6,7 +6,6 @@ import {
     updateProgresoRequest,
 } from "../api/progreso";
 
-
 const ProgresoContext = createContext();
 
 export const useProgreso = () => {
@@ -21,20 +20,27 @@ export function ProgresoProvider({ children }) {
     const [progresos, setProgresos] = useState([]);
 
     const getProgreso = async (id) => {
-        try {
-            const res = await getProgresoRequest(id);
-            return res.data;
-        } catch (error) {
-            console.error(error);
-        }
+        const progreso = await getProgresoRequest(id);
+        const rutina = await getRutina(id); // Obtén los detalles de la rutina
+        return { progreso, ejercicios: rutina.detalles.map(detalle => detalle.ejercicio) };
     };
+    
 
     const createProgreso = async (progreso) => {
         try {
             const res = await createProgresoRequest(progreso);
             console.log(res.data);
         } catch (error) {
-            console.error('Error al crear progreso:', error.response ? error.response.data : error.message);
+            if (error.response) {
+                // Si hay una respuesta del servidor
+                console.error('Error al crear progreso:', error.response.data);
+            } else if (error.request) {
+                // Si se hizo la solicitud pero no hubo respuesta
+                console.error('Error en la solicitud:', error.request);
+            } else {
+                // Cualquier otro tipo de error
+                console.error('Error desconocido -> ELSE ENCONTRADO:', error.message);
+            }
         }
     };
 

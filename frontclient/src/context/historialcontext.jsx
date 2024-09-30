@@ -34,21 +34,20 @@ export function HistorialProvider({ children }) {
             const res = await createHistorialRequest(historial);
             return res.data;
         } catch (error) {
-            console.error('Error al crear historial:', error.response ? error.response.data : error.message);
+            if (error.response) {
+                // Si hay una respuesta del servidor
+                console.error('Error al crear historial:', error.response.data);
+            } else if (error.request) {
+                // Si se hizo la solicitud pero no hubo respuesta
+                console.error('Error en la solicitud:', error.request);
+            } else {
+                // Cualquier otro tipo de error
+                console.error('Error desconocido --> SE ATIVO EL ELSE <-- :', error.message);
+            }
             return { error: error.message }; // Retornar un mensaje de error
         }
     };
     
-    const deleteHistorial  = async (id) => {
-        try {
-            const res = await deleteHistorialRequest(id);
-            if (res.status === 204) {
-                //setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const updateHistorial = async (id, historial) => {
         try {
