@@ -6,7 +6,7 @@ export const loginRequest = (user) => axios.post(`/login`, user)
 
 export const verifityTokenRequest = () => axios.get('/verify')
 
-export const resetPasswordRequest = () => axios.post('/reset-password')
+export const resetPasswordRequest = () => axios.post('/reset-password:token')
 
 export const forgotPasswordRequest = (email) => axios.post('/forgot-password', { email })
 
