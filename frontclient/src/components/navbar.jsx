@@ -6,19 +6,32 @@ function Navbar() {
   const { isAuthenticated, logout, user } = useAuth(); // Asegúrate de que user esté disponible en tu contexto
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+    setShowDropdown(true);
+  }
+
+  useEffect(() => {
+    let timer;
+    if (dropdownOpen) {
+      timer = setTimeout(() => {
+        setShowDropdown(false); // Oculta la flecha después de 5 segundos
+      }, 5000);
+    }
+    return () => clearTimeout(timer); // Limpiar el timer en caso de que el componente se desmonte
+  }, [dropdownOpen]);
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
       <Link to="/">
-        <h1 className="text-2xl font-bold">APP GYM</h1>
+        <h1 className="text-2xl font-bold text-white">APP GYM</h1>
       </Link>
       <ul className="flex items-center gap-x-4">
         {isAuthenticated ? (
           <>
             <li className="relative">
               <button onClick={toggleDropdown} className="text-white">
-                Bienvenido: {user.username} ▼
+              Nivel: {user.nivel} | Bienvenido: {user.username} {showDropdown && '▼'}
               </button>
               {dropdownOpen && (
                 <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg">

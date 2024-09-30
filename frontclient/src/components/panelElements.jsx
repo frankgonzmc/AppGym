@@ -23,7 +23,7 @@ export function PanelElements() {
                     <h2>Mis Rutinas</h2>
                 </div>
             </Link>
-            <Link to="/progresos">
+            <Link to="/progreso">
                 <div className="paneles-item">
                     <button className="paneles-btn"><img src={control} alt="Panel" className="paneles-img" /></button>
                     <h2>Panel de Seguimiento</h2>
