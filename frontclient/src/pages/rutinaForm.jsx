@@ -123,7 +123,7 @@ const RutinaForm = () => {
 
   return (
     <Card>
-      <div className="flex justify-center items-center p-35">
+      <div className="flex justify-center items-center p-5">
         <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
           <form onSubmit={onSubmit}>
             <h3 className='text-center text-white'>Crea tu Rutina</h3>

@@ -42,7 +42,7 @@ export function HistorialProvider({ children }) {
                 console.error('Error en la solicitud:', error.request);
             } else {
                 // Cualquier otro tipo de error
-                console.error('Error desconocido --> SE ATIVO EL ELSE <-- :', error.message);
+                console.error('Error desconocido --> SE ACTIVO EL ELSE <-- :', error.message);
             }
             return { error: error.message }; // Retornar un mensaje de error
         }
