@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
+import { useEffect } from "react";
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth(); // Asegúrate de que user esté disponible en tu contexto
