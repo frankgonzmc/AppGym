@@ -101,16 +101,18 @@ const RutinaForm = () => {
           fecha: new Date(),
           estado: 'En Progreso'
         };
-        console.log(progresoData);
-        await createProgreso(progresoData);
+        
+        //await createProgreso(progresoData);
 
         const historialData = {
           user: user._id,
           rutina: rutinaCreada._id,
           fecha: new Date(),
         };
-        console.log(historialData);
-        await createHistorial(historialData);
+        
+        //await createHistorial(historialData);
+        console.log(progresoData);
+        console.log(historialData)
 
       } catch (error) {
         console.log(error);
