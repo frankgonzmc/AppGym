@@ -4,8 +4,9 @@ import { useAuth } from "../context/authcontext";
 import { useEffect } from "react";
 
 function Navbar() {
-  const { isAuthenticated, logout, user } = useAuth(); // Asegúrate de que user esté disponible en tu contexto
+  const { isAuthenticated, logout, user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -32,7 +33,7 @@ function Navbar() {
           <>
             <li className="relative">
               <button onClick={toggleDropdown} className="text-white">
-              Nivel: {user.nivel} | Bienvenido: {user.username} {showDropdown && '▼'}
+                Nivel: {user.nivel} | Bienvenido: {user.username} {showDropdown && '▼'}
               </button>
               {dropdownOpen && (
                 <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg">
