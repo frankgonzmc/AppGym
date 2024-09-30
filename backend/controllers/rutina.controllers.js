@@ -1,6 +1,7 @@
 import Rutinas from '../models/rutina.model.js'
 import DetallesRutina from '../models/detallerutina.model.js'
 import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
+import Historial from '../models/historial.model.js';
 
 // Obtener todas las rutinas del usuario autenticado
 export const getRutinas = async (req, res) => {
@@ -62,11 +63,12 @@ export const createRutinas = async (req, res) => {
         // Crear el progreso asociado
         if (progreso) {
             try {
-                const { user, rutina, fecha, estado } = progreso;
+                const { user, rutina, ejercicio, fecha, estado } = progreso;
 
                 const newProgreso = new Progreso({
                     user,
                     rutina,
+                    ejercicio,
                     fecha,
                     estado
                 });
@@ -83,17 +85,16 @@ export const createRutinas = async (req, res) => {
         // Crear el progreso asociado
         if (historial) {
             try {
-                const { user, rutina, nota, estado } = historial;
+                const { user, rutina, fecha } = historial;
 
-                const newProgreso = new Progreso({
+                const newHistorial = new Historial({
                     user,
                     rutina,
-                    nota,
-                    estado
+                    fecha
                 });
 
-                await newProgreso.save();
-                console.log("Historial guardado:", newProgreso);
+                await newHistorial.save();
+                console.log("Historial guardado:", newHistorial);
             } catch (error) {
                 console.log(error);
             }
