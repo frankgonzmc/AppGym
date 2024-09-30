@@ -16,6 +16,7 @@ export const getRutinas = async (req, res) => {
 };
 
 // Crear una nueva rutina y asociar detalles de rutina y progreso
+/*
 export const createRutinas = async (req, res) => {
     try {
         const { nombre, descripcion, date, detalles, progreso, historial } = req.body;
@@ -100,6 +101,66 @@ export const createRutinas = async (req, res) => {
             }
         } else {
             console.log("No se proporcionaron historial para guardar.");
+        }
+
+        res.json(saveRutina);
+    } catch (error) {
+        console.error("Error al crear rutina:", error);
+        res.status(500).json({ message: "Error al crear rutina", error });
+    }
+};
+*/
+
+export const createRutinas = async (req, res) => {
+    try {
+        const { nombre, descripcion, detalles, progreso, historial } = req.body;
+
+        // Validar campos requeridos
+        if (!nombre || !descripcion) {
+            return res.status(400).json({ message: "Los campos nombre y descripción son requeridos." });
+        }
+
+        // Crear la nueva rutina
+        const newRutina = new Rutinas({
+            user: req.user.id,
+            nombre,
+            descripcion,
+            date: new Date(),
+        });
+        const saveRutina = await newRutina.save();
+        console.log("Rutina guardada:", saveRutina);
+
+        // Crear los detalles de la rutina
+        if (detalles && detalles.length > 0) {
+            for (const detalle of detalles) {
+                const newDetalleRutina = new DetallesRutina(detalle);
+                await newDetalleRutina.save();
+                console.log("Detalle guardado:", newDetalleRutina);
+            }
+        }
+
+        // Crear el progreso asociado
+        if (progreso) {
+            console.log("Datos de progreso:", progreso); // Verifica lo que recibes
+            const newProgreso = new Progreso({
+                user: req.user.id,
+                rutina: saveRutina._id,
+                ...progreso
+            });
+            const progresoGuardado = await newProgreso.save();
+            console.log("Progreso guardado:", progresoGuardado);
+        }
+
+        // Crear el historial asociado
+        if (historial) {
+            console.log("Datos de historial:", historial); // Verifica lo que recibes
+            const newHistorial = new Historial({
+                user: req.user.id,
+                rutina: saveRutina._id,
+                ...historial
+            });
+            const historialGuardado = await newHistorial.save();
+            console.log("Historial guardado:", historialGuardado);
         }
 
         res.json(saveRutina);
