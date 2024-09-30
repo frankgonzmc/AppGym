@@ -14,6 +14,6 @@ router.post('/logout', authRequired, logout);
 router.get('/profile', authRequired, profile)
 router.get('/verify', verifityToken);
 router.post('/forgot-password', forgotPassword);
-router.post('/reset-password/:Token', resetPassword);
+router.post('/reset-password/:token', resetPassword);
 
 export default router
