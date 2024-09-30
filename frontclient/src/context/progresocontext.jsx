@@ -17,7 +17,7 @@ export const useProgreso = () => {
 }
 
 export function ProgresoProvider({ children }) {
-    const [progresos, setProgresos] = useState([]);
+    const [progreso, setProgreso] = useState([]);
 
     const getProgreso = async (id) => {
         const progreso = await getProgresoRequest(id);
@@ -48,7 +48,7 @@ export function ProgresoProvider({ children }) {
         try {
             const res = await deleteProgresoRequest(id);
             if (res.status === 204) {
-                //setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
+                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
             }
         } catch (error) {
             console.log(error);
@@ -66,8 +66,8 @@ export function ProgresoProvider({ children }) {
     return (
         <ProgresoContext.Provider
             value={{
-                progresos,
-                setProgresos,
+                progreso,
+                setProgreso,
                 getProgreso,
                 createProgreso,
                 deleteProgreso,

@@ -57,6 +57,17 @@ export function HistorialProvider({ children }) {
         }
     };
 
+    const deleteHistorial = async (id) => {
+        try {
+            const res = await deleteHistorialRequest(id);
+            if (res.status === 204) {
+                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <HistorialContext.Provider
             value={{
