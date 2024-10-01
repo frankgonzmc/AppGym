@@ -1,6 +1,6 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
-import { env } from 'node:process';
+import crypto from 'crypto';
 import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
@@ -174,7 +174,14 @@ export const forgotPassword = async (req, res) => {
                    http://localhost:5000/api/reset-password/${token}`,
         };
 
-        await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions)
+            .then(() => {
+                res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
+            })
+            .catch(error => {
+                console.error("Error al enviar el correo:", error); // Log del error
+                res.status(500).json({ message: "Error al enviar el correo." });
+            });
 
         res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
     } catch (error) {
