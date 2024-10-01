@@ -137,6 +137,8 @@ export const createRutinas = async (req, res) => {
                 await newDetalleRutina.save();
                 console.log("Detalle guardado:", newDetalleRutina);
             }
+        } else {
+            console.log("No se proporcionaron detalles para guardar.");
         }
 
         // Crear el progreso asociado
