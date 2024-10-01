@@ -76,7 +76,6 @@ const RutinaForm = () => {
         }
 
         const progresoData = {
-          user: user._id,
           rutina: rutinaCreada._id,
           fecha: new Date(),
           estado: 'En Progreso'
@@ -85,7 +84,6 @@ const RutinaForm = () => {
         await createProgreso(progresoData);
 
         const historialData = {
-          user: user._id,
           rutina: rutinaCreada._id,
           fecha: new Date(),
         };

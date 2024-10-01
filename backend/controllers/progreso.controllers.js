@@ -1,8 +1,8 @@
-import Progresos from '../models/progreso.model.js';
+import Progreso from '../models/progreso.model.js';
 
 export const getProgreso = async (req, res) => {
     try {
-        const progreso = await Progresos.find({
+        const progreso = await Progreso.find({
             user: req.user.id,
             rutina: req.params.id, // O req.rutina._id si ya tienes la rutina en req.rutina
         }).populate('user').populate('rutina');
@@ -19,12 +19,11 @@ export const getProgreso = async (req, res) => {
 
 export const createProgreso = async (req, res) => {
     try {
-        const { ejercicio, fecha, estado } = req.body;
+        const { user, rutina, fecha, estado } = req.body;
 
-        const nuevoProgreso = new Progresos({
-            user: req.user.id,
-            rutina: req.params.id,
-            ejercicio,
+        const nuevoProgreso = new Progreso({
+            user, //req.user.id,
+            rutina, //req.params.id,
             fecha,
             estado,
         });
@@ -39,7 +38,7 @@ export const createProgreso = async (req, res) => {
 // Eliminar un progreso del usuario existente
 export const deleteProgreso = async (req, res) => {
     try {
-        const progreso = await Progresos.findByIdAndDelete(req.params.id);
+        const progreso = await Progreso.findByIdAndDelete(req.params.id);
         if (!progreso) return res.status(404).json({ message: "Detalle no encontrado..." });
 
         res.json({ message: "Progreso eliminado con éxito", progreso });
@@ -50,7 +49,7 @@ export const deleteProgreso = async (req, res) => {
 
 export const updateProgreso = async (req, res) => {
     try {
-        const progreso = await Progresos.findByIdAndUpdate(req.params.id, req.body, {
+        const progreso = await Progreso.findByIdAndUpdate(req.params.id, req.body, {
             new: true
         })
         if (!progreso) return res.status(404).json({ message: "progreso no encontrado..." })
