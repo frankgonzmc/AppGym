@@ -33,12 +33,10 @@ export function HistorialProvider({ children }) {
     const createHistorial = async (historial) => {
         try {
             const res = await createHistorialRequest(historial);
-            return res.data;
+            console.log(res.data);
+            return res.data; // Devolver la rutina creada
         } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                return setErrors(error.response.data)
-            }
-            setErrors([error.response.data.message])
+            console.error(error.response.data);
         }
     };
 

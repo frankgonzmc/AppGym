@@ -31,11 +31,9 @@ export function ProgresoProvider({ children }) {
         try {
             const res = await createProgresoRequest(progreso);
             console.log(res.data);
+            return res.data; // Devolver la rutina creada
         } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                return setErrors(error.response.data)
-            }
-            setErrors([error.response.data.message])
+            console.error(error.response.data);
         }
     };
 

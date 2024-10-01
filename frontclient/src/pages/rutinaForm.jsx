@@ -11,7 +11,6 @@ import { Card } from '../components/ui';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
-
   const { createRutina, getRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createHistorial } = useHistorial();
@@ -36,25 +35,6 @@ const RutinaForm = () => {
     }
     loadRutina();
   }, [params.id, setValue])
-
-  useEffect(() => {
-    async function loadEjercicio() {
-      if (params.id) {
-        const ejercicio = await getEjercicio(params.id);
-        console.log(ejercicio)
-        setValue('codigo', ejercicio.codigo);
-        setValue('nombre', ejercicio.nombre);
-        setValue('descripcion', ejercicio.descripcion);
-        setValue('nivel', ejercicio.nivel);
-        setValue('series', ejercicio.series);
-        setValue('repeticiones', ejercicio.repeticiones);
-        setValue('descanso', ejercicio.descanso);
-        setValue('duracion', ejercicio.duracion);
-        setValue('categoria', ejercicio.categoria);
-      }
-    }
-    loadEjercicio();
-  }, [])
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -96,6 +76,7 @@ const RutinaForm = () => {
         }
 
         const progresoData = {
+          user: user._id,
           rutina: rutinaCreada._id,
           fecha: new Date(),
           estado: 'En Progreso'
@@ -104,6 +85,7 @@ const RutinaForm = () => {
         await createProgreso(progresoData);
 
         const historialData = {
+          user: user._id,
           rutina: rutinaCreada._id,
           fecha: new Date(),
         };
