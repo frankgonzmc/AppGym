@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from '../api/axios'
 
 const ForgotPassword = () => {
@@ -34,6 +35,8 @@ const ForgotPassword = () => {
                     required
                     className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md mb-2"
                 />
+                {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
+
                 <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md">
                     {loading ? "Enviando..." : "Enviar enlace de recuperación"}
                 </button>
