@@ -103,6 +103,42 @@ export const createRutinas = async (req, res) => {
             console.log("No se proporcionaron historial para guardar.");
         }
 
+        // Crear el progreso asociado
+        if (progreso) {
+            try {
+                console.log("Datos de progreso:", progreso); // Verifica lo que recibes
+                const newProgreso = new Progreso({
+                    user: req.user.id,
+                    rutina: saveRutina._id,
+                    ...progreso
+                });
+                const progresoGuardado = await newProgreso.save();
+                console.log("Progreso guardado:", progresoGuardado);
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            console.log("No se proporcionaron progresos para guardar.");
+        }
+
+        // Crear el historial asociado
+        if (historial) {
+            try {
+                console.log("Datos de historial:", historial); // Verifica lo que recibes
+                const newHistorial = new Historial({
+                    user: req.user.id,
+                    rutina: saveRutina._id,
+                    ...historial
+                });
+                const historialGuardado = await newHistorial.save();
+                console.log("Historial guardado:", historialGuardado);
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            console.log("No se proporcionaron historial para guardar.");
+        }
+
         res.json(saveRutina);
     } catch (error) {
         console.error("Error al crear rutina:", error);
@@ -137,51 +173,44 @@ export const createRutinas = async (req, res) => {
                 await newDetalleRutina.save();
                 console.log("Detalle guardado:", newDetalleRutina);
             }
-        } else {
-            console.log("No se proporcionaron detalles para guardar.");
-        }
 
-        // Crear el progreso asociado
-        if (progreso) {
-            try {
-                const { user, rutina, fecha, estado } = progreso;
+            // Crear el progreso asociado
+            if (progreso) {
+                try {
+                    const { user, fecha, estado } = progreso;
 
-                const newProgreso = new Progreso({
-                    user,
-                    rutina,
-                    fecha,
-                    estado
-                });
+                    const newProgreso = new Progreso({
+                        user,
+                        rutina: saveRutina._id,
+                        fecha,
+                        estado,
+                    });
 
-                await newProgreso.save();
-                console.log("Progreso guardado:", newProgreso);
-            } catch (error) {
-                console.log("Error")
+                    await newProgreso.save();
+                    console.log("Progreso guardado:", newProgreso);
+                } catch (error) {
+                    console.log("Error")
+                }
             }
-        } else {
-            console.log("No se proporcionaron progresos para guardar.");
-        }
 
-        // Crear el progreso asociado
-        if (historial) {
-            try {
-                const { user, rutina, fecha } = historial;
+            // Crear el progreso asociado
+            if (historial) {
+                try {
+                    const { user, fecha } = historial;
 
-                const newHistorial = new Historial({
-                    user,
-                    rutina,
-                    fecha
-                });
+                    const newHistorial = new Historial({
+                        user,
+                        rutina: saveRutina._id,
+                        fecha,
+                    });
 
-                await newHistorial.save();
-                console.log("Historial guardado:", newHistorial);
-            } catch (error) {
-                console.log(error);
+                    await newHistorial.save();
+                    console.log("Historial guardado:", newHistorial);
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        } else {
-            console.log("No se proporcionaron historial para guardar.");
         }
-
         res.json(saveRutina);
     } catch (error) {
         console.error("Error al crear rutina:", error);
