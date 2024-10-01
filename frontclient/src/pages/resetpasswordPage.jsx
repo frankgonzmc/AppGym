@@ -10,7 +10,7 @@ const ForgotPassword = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         setLoading(true);
-
+        console.log(data);
         try {
             const response = await axios.post('/forgot-password', { email: data.email });
             setMessage(response.data.message);
