@@ -177,38 +177,35 @@ export const createRutinas = async (req, res) => {
             // Crear el progreso asociado
             if (progreso) {
                 try {
-                    const { user, fecha, estado } = progreso;
-
+                    console.log("Datos de progreso:", progreso); // Verifica lo que recibes
                     const newProgreso = new Progreso({
-                        user,
                         rutina: saveRutina._id,
-                        fecha,
-                        estado,
+                        ...progreso
                     });
-
-                    await newProgreso.save();
-                    console.log("Progreso guardado:", newProgreso);
+                    const progresoGuardado = await newProgreso.save();
+                    console.log(progresoGuardado);
                 } catch (error) {
-                    console.log("Error")
+                    console.log(error)
                 }
+            } else {
+                console.log("No se proporcionaron progresos para guardar.");
             }
 
-            // Crear el progreso asociado
+            // Crear el historial asociado
             if (historial) {
                 try {
-                    const { user, fecha } = historial;
-
+                    console.log("Datos de historial:", historial); // Verifica lo que recibes
                     const newHistorial = new Historial({
-                        user,
                         rutina: saveRutina._id,
-                        fecha,
+                        ...historial
                     });
-
-                    await newHistorial.save();
-                    console.log("Historial guardado:", newHistorial);
+                    const historialGuardado = await newHistorial.save();
+                    console.log(historialGuardado);
                 } catch (error) {
-                    console.log(error);
+                    console.log(error)
                 }
+            } else {
+                console.log("No se proporcionaron historial para guardar.");
             }
         }
         res.json(saveRutina);
