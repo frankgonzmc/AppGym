@@ -144,34 +144,39 @@ export const createRutinas = async (req, res) => {
         // Crear el progreso asociado
         if (progreso) {
             try {
-                console.log("Datos de progreso:", progreso); // Verifica lo que recibes
+                const { user, rutina, fecha, estado } = progreso;
+
                 const newProgreso = new Progreso({
-                    user: req.user.id,
-                    rutina: saveRutina._id,
-                    ...progreso
+                    user,
+                    rutina,
+                    fecha,
+                    estado
                 });
-                const progresoGuardado = await newProgreso.save();
-                console.log("Progreso guardado:", progresoGuardado);
+
+                await newProgreso.save();
+                console.log("Progreso guardado:", newProgreso);
             } catch (error) {
-                console.log(error)
+                console.log("Error")
             }
         } else {
             console.log("No se proporcionaron progresos para guardar.");
         }
 
-        // Crear el historial asociado
+        // Crear el progreso asociado
         if (historial) {
             try {
-                console.log("Datos de historial:", historial); // Verifica lo que recibes
+                const { user, rutina, fecha } = historial;
+
                 const newHistorial = new Historial({
-                    user: req.user.id,
-                    rutina: saveRutina._id,
-                    ...historial
+                    user,
+                    rutina,
+                    fecha
                 });
-                const historialGuardado = await newHistorial.save();
-                console.log("Historial guardado:", historialGuardado);
+
+                await newHistorial.save();
+                console.log("Historial guardado:", newHistorial);
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
         } else {
             console.log("No se proporcionaron historial para guardar.");
