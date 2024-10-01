@@ -34,20 +34,10 @@ export function HistorialProvider({ children }) {
             const res = await createHistorialRequest(historial);
             return res.data;
         } catch (error) {
-            if (error.response) {
-                // Si hay una respuesta del servidor
-                console.error('Error al crear historial:', error.response.data);
-            } else if (error.request) {
-                // Si se hizo la solicitud pero no hubo respuesta
-                console.error('Error en la solicitud:', error.request);
-            } else {
-                // Cualquier otro tipo de error
-                console.error('Error desconocido --> SE ACTIVO EL ELSE <-- :', error.message);
-            }
-            return { error: error.message }; // Retornar un mensaje de error
+            console.log(error);
         }
     };
-    
+
 
     const updateHistorial = async (id, historial) => {
         try {

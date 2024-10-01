@@ -31,16 +31,7 @@ export function ProgresoProvider({ children }) {
             const res = await createProgresoRequest(progreso);
             console.log(res.data);
         } catch (error) {
-            if (error.response) {
-                // Si hay una respuesta del servidor
-                console.error('Error al crear progreso:', error.response.data);
-            } else if (error.request) {
-                // Si se hizo la solicitud pero no hubo respuesta
-                console.error('Error en la solicitud:', error.request);
-            } else {
-                // Cualquier otro tipo de error
-                console.error('Error desconocido -> ELSE ENCONTRADO:', error.message);
-            }
+            console.log(error);
         }
     };
 
