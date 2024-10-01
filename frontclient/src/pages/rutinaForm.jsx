@@ -52,7 +52,12 @@ const RutinaForm = () => {
     const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
 
     if (params.id) {
+
+
       await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
+
+      
+
     } else {
 
       if (!nombre || !descripcion || selectedEjercicios.length === 0) {

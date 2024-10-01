@@ -24,7 +24,7 @@ export function RutinaCard({ rutina }) {
       <hr />
       <footer>
         <div className="flex gap-x-3 items-center">
-          <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
+          <ButtonLink to={`/rutinas/${rutina._id}`}>Edit</ButtonLink>
           <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
         </div>
       </footer>
