@@ -29,7 +29,6 @@ const ForgotPassword = () => {
                 <h2 className="text-white mb-4">Recuperar Contraseña</h2>
                 <input
                     type="email"
-                    value={email}
                     {...register('email', { required: true })}
                     placeholder="Ingresa tu correo"
                     required
