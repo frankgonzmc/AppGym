@@ -179,6 +179,7 @@ export const createRutinas = async (req, res) => {
                 try {
                     console.log("Datos de progreso:", progreso); // Verifica lo que recibes
                     const newProgreso = new Progreso({
+                        user: req.user.id,
                         rutina: saveRutina._id,
                         ...progreso
                     });
@@ -196,6 +197,7 @@ export const createRutinas = async (req, res) => {
                 try {
                     console.log("Datos de historial:", historial); // Verifica lo que recibes
                     const newHistorial = new Historial({
+                        user: req.user.id,
                         rutina: saveRutina._id,
                         ...historial
                     });
