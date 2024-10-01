@@ -19,6 +19,7 @@ export const useHistorial = () => {
 
 export function HistorialProvider({ children }) {
     const [historials, setHistorials] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const getHistorial = async (id) => {
         try {
@@ -34,7 +35,10 @@ export function HistorialProvider({ children }) {
             const res = await createHistorialRequest(historial);
             return res.data;
         } catch (error) {
-            console.log(error);
+            if (Array.isArray(error.response.data)) {
+                return setErrors(error.response.data)
+            }
+            setErrors([error.response.data.message])
         }
     };
 

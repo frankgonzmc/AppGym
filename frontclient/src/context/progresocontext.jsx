@@ -18,6 +18,7 @@ export const useProgreso = () => {
 
 export function ProgresoProvider({ children }) {
     const [progreso, setProgreso] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const getProgreso = async (id) => {
         const progreso = await getProgresoRequest(id);
@@ -31,7 +32,10 @@ export function ProgresoProvider({ children }) {
             const res = await createProgresoRequest(progreso);
             console.log(res.data);
         } catch (error) {
-            console.log(error);
+            if (Array.isArray(error.response.data)) {
+                return setErrors(error.response.data)
+            }
+            setErrors([error.response.data.message])
         }
     };
 
