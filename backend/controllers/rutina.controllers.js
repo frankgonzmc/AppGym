@@ -188,8 +188,6 @@ export const createRutinas = async (req, res) => {
                 } catch (error) {
                     console.log(error)
                 }
-            } else {
-                console.log("No se proporcionaron progresos para guardar.");
             }
 
             // Crear el historial asociado
@@ -206,8 +204,6 @@ export const createRutinas = async (req, res) => {
                 } catch (error) {
                     console.log(error)
                 }
-            } else {
-                console.log("No se proporcionaron historial para guardar.");
             }
         }
         res.json(saveRutina);
