@@ -147,30 +147,25 @@ export const updatePassword = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-    console.log(req.body);
+    console.log(req.body); // Asegúrate de ver qué estás recibiendo
     const { email } = req.body;
     try {
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: "Usuario no encontrado" });
 
-        // Generar un token único
         const token = crypto.randomBytes(20).toString('hex');
-
-        // Guardar els token y su expiración en la base de datos
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
+        user.resetPasswordExpires = Date.now() + 3600000;
         await user.save();
 
-        // Configurar el transporte de nodemailer
         const transporter = nodemailer.createTransport({
-            service: 'Gmail', // O el servicio que uses
+            service: 'Gmail',
             auth: {
-                user: process.env.EMAIL_USER, // Tu correo electrónico
-                pass: process.env.EMAIL_PASS, // Tu contraseña
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
 
-        // Enviar el correo
         const mailOptions = {
             to: user.email,
             subject: 'Recuperación de Contraseña',
@@ -178,12 +173,11 @@ export const forgotPassword = async (req, res) => {
                    http://localhost:5000/api/reset-password/${token}`,
         };
 
-        await transporter.sendMail(mailOptions).catch(error => {
-            console.error("Error enviando correo:", error);
-            res.status(500).json({ message: error.message });
-        });
+        await transporter.sendMail(mailOptions);
+
         res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
     } catch (error) {
+        console.error("Error en forgotPassword:", error); // Para ver errores en el backend
         res.status(500).json({ message: error.message });
     }
 };
