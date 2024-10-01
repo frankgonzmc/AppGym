@@ -19,12 +19,12 @@ export const getHistorial = async (req, res) => {
 
 export const createHistorial = async (req, res) => {
     try {
-        const { rutina, estado } = req.body;
+        const { rutina, fecha } = req.body;
 
         const nuevoHistorial = new Historial({
             user: req.user.id,
             rutina,
-            estado,
+            fecha,
         });
 
         const historialGuardado = await nuevoHistorial.save();
