@@ -24,7 +24,6 @@ export function RutinaCard({ rutina }) {
       <hr />
       <footer>
         <div className="flex gap-x-3 items-center">
-          <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button>
           <ButtonLink to={`/rutina/${rutina._id}`}>Edit</ButtonLink>
           <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
         </div>
@@ -32,3 +31,4 @@ export function RutinaCard({ rutina }) {
     </Card>
   );
 }
+/* <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button> */
