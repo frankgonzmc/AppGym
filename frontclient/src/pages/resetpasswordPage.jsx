@@ -14,6 +14,7 @@ const ForgotPassword = () => {
             const response = await axios.post('/forgot-password', { email });
             setMessage(response.data.message);
             setEmail(''); // Limpiar el campo de email
+            console.log(email); //el email que estoy pasando....
         } catch (error) {
             setMessage(error.response ? error.response.data.message : "Error en la solicitud");
         }
