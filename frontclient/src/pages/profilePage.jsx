@@ -1,5 +1,6 @@
 import { useAuth } from "../context/authcontext";
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 function ProfilePage() {
   const { user, updatePassword } = useAuth(); // Agregamos una función para obtener los ejercicios del usuario
