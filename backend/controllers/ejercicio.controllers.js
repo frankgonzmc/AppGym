@@ -53,6 +53,18 @@ export const getEjercicio = async (req, res) => {
     }
 };
 
+export const getNivelEjercicio = async (req, res) => {
+    const { nivel } = req.params;
+  
+    try {
+      // Obtener ejercicios filtrados por nivel
+      const ejercicios = await Ejercicios.find({ nivel: nivel });
+      res.json(ejercicios);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener los ejercicios" });
+    }
+};
+
 export const updateEjercicios = async (req, res) => {
     try {
         const ejercicio = await Ejercicios.findByIdAndUpdate(req.params.id, req.body, {
@@ -67,15 +79,15 @@ export const updateEjercicios = async (req, res) => {
 
 export const deleteEjercicios = async (req, res) => {
     try {
-        const ejercicio = await Ejercicios.findByIdAndDelete(req.params.id)
-        if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." })
-
-        return res.status(204);
-
+      const ejercicio = await Ejercicios.findByIdAndDelete(req.params.id);
+      if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." });
+  
+      return res.status(204).json({ message: "Ejercicio eliminado correctamente" });
     } catch (error) {
-        return res.status(404).json({ message: "Ejercicio no encontrado..." });
+      return res.status(404).json({ message: "Ejercicio no encontrado..." });
     }
-};
+  };  
+
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
