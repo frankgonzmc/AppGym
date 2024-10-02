@@ -1,15 +1,16 @@
-.inicio-container{
+.inicio-container {
     background-color: #fff;
     display: flex;
     height: 100vh;
 }
 
 /*PANEL DE USUARIO*/
-.panel-user{
+.panel-user {
     width: 20%;
     background-color: #171717;
 }
-.panel-user-divimg{
+
+.panel-user-divimg {
     width: 55%;
     border-radius: 50%;
     background-color: #ff0000;
@@ -17,19 +18,24 @@
     margin-top: 5%;
     margin-left: 20%;
 }
-.panel-user-img{
+
+.panel-user-img {
     width: 100%;
 }
-.panel-c{
+
+.panel-c {
     margin-top: 5%;
 }
-.panelc-h{
+
+.panelc-h {
     margin-left: 5%;
 }
-.panelc-d{
+
+.panelc-d {
     margin-left: 10%;
 }
-.panelc-btn{
+
+.panelc-btn {
     background-color: #ff0000;
     color: #fff;
     border-radius: 10px;
@@ -41,24 +47,27 @@
 }
 
 /*PANEL ELEMENTS*/
-.panel-elements{
+.panel-elements {
     width: 80%;
     display: flex;
     flex-wrap: wrap;
     padding-top: 5%;
 }
-.paneles-item{
+
+.paneles-item {
     flex: 1 1 33.33%;
     text-align: center;
     color: #000;
 }
-.paneles-img{
+
+.paneles-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
     margin-left: 15%;
 }
-.paneles-btn{
+
+.paneles-btn {
     background-color: #ff0000;
     border-radius: 50%;
     border: none;
@@ -67,9 +76,32 @@
     overflow: hidden;
     align-items: center;
 }
-.paneles-btn:hover{
+
+.paneles-btn:hover {
     width: 170px;
     height: 170px;
     background-color: #c40303;
     transition: 2s;
+}
+
+.inicio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.panel-elements {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    width: 60%;
+}
+
+/* Añadir animaciones y efectos */
+.panel-elements:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
 }
