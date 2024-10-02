@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
-import { useEffect } from "react";
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -11,7 +12,7 @@ function Navbar() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
     setShowDropdown(true);
-  }
+  };
 
   useEffect(() => {
     let timer;
@@ -24,89 +25,29 @@ function Navbar() {
   }, [dropdownOpen]);
 
   return (
-    <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
-      <Link to="/">
-        <h1 className="text-2xl font-bold text-white">APP GYM</h1>
-      </Link>
-      <ul className="flex items-center gap-x-4">
+    <nav className="bg-zinc-700 my-3 p-3 rounded-lg">
+      <Link to="/" className="text-white text-2xl font-bold">APP GYM</Link>
+      <Nav className="ml-auto">
         {isAuthenticated ? (
-          <>
-            <li className="relative">
-              <button onClick={toggleDropdown} className="text-white">
-                Nivel: {user.nivel} | Bienvenido: {user.username} {showDropdown && '▼'}
-              </button>
-              {dropdownOpen && (
-                <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg">
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link to="/profile">Perfil</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link to="/" onClick={logout}>Cerrar Sesión</Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-          </>
+          <NavDropdown
+            title={`Nivel: ${user.nivel} | Bienvenido: ${user.username} ${showDropdown && '▼'}`}
+            id="nav-dropdown"
+            show={dropdownOpen}
+            onToggle={toggleDropdown}
+            className="text-white"
+          >
+            <NavDropdown.Item as={Link} to="/profile">Perfil</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
+          </NavDropdown>
         ) : (
           <>
-            <li>
-              <Link to="/login" className="text-white">Login</Link>
-            </li>
-            <li>
-              <Link to="/register" className="text-white">Register</Link>
-            </li>
+            <Nav.Link as={Link} to="/login" className="text-white">Login</Nav.Link>
+            <Nav.Link as={Link} to="/register" className="text-white">Register</Nav.Link>
           </>
         )}
-      </ul>
+      </Nav>
     </nav>
   );
 }
 
 export default Navbar;
-
-
-/*
-import { useAuth } from "../context/authcontext"
-
-function navbar() {
-
-  const { isAuthenticated, logout } = useAuth();
-
-  return (
-    <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
-      <Link to="/">
-        <h1 className="text-2x1 font-bold">HOME PAGE</h1>
-      </Link>
-      <ul className=" flex gap-x-2">
-        {isAuthenticated ? (
-          <>
-            <li>
-              Welcome USUARIO
-            </li>
-            <li>
-              <Link to="/profile">Perfil</Link>
-            </li>
-            <li>
-              <Link to="/" onClick={() => { logout() }}>Cerrar Sesión</Link>
-            </li>
-          </>
-
-        ) : (
-          <>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </>
-        )
-        }
-      </ul >
-    </nav >
-  )
-}
-
-export default navbar
-
-*/
