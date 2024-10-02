@@ -48,20 +48,20 @@ function RegistroUsuario() {
               </label>
               {errors.username && (<p className="text-red-500">El Nombre Completo es Necesario!</p>)}
               <label
-                className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="info-childs-input" />
+                className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
               </label>
               {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
               <label
-                className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="info-childs-input" />
+                className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
               </label>
               {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
               <label
-                className="form-label"><input type="number" {...register('edad', { required: true })} placeholder="Edad" className="info-childs-input" />
+                className="form-label"><input type="number" {...register('edad', { required: true })} placeholder="Edad" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" />
               </label>
               {errors.edad && (<p className="text-red-500"> Edad es Necesario! </p>)}
 
               <label
-                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="info-childs-input" step="0.01" />
+                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" step="0.01" />
               </label>
               {errors.estatura && (
                 <p className="text-red-500">
@@ -83,10 +83,10 @@ function RegistroUsuario() {
               )}
 
               <input type="hidden" {...register('nivel')} value={nivel} />
-              <button type="submit" value="Registrarse" className="registerbtn">Continuar Registrar</button>
+              <button type="submit" className="btn btn-success">Continuar Registrar</button>
             </form>
 
-            <p className="flex gap-x-2 justify-between text-black">
+            <p className="flex gap-x-2 justify-between text-white">
               Ya tienes una cuenta? <Link to="/login" className="text-sky-500">ve a Iniciar Sesión</Link>
             </p>
           </div>
