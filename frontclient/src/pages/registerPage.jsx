@@ -47,24 +47,24 @@ function RegistroUsuario() {
             }
             <Form onSubmit={onSubmit} className="form-register">
               <label
-                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full text-white px-4 py-2 rounded-md my-2" />
+                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full text-black px-4 py-2 rounded-md my-2" />
               </label>
               {errors.username && (<p className="text-red-500">El Nombre Completo es Necesario!</p>)}
               <label
-                className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="w-full text-white px-4 py-2 rounded-md my-2" />
+                className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="w-full text-black px-4 py-2 rounded-md my-2" />
               </label>
               {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
               <label
-                className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="w-full text-white px-4 py-2 rounded-md my-2" />
+                className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="w-full text-black px-4 py-2 rounded-md my-2" />
               </label>
               {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
               <label
-                className="form-label"><input type="number" {...register('edad', { required: true })} placeholder="Edad" className="w-full text-white px-4 py-2 rounded-md my-2" />
+                className="form-label"><input type="number" {...register('edad', { required: true })} placeholder="Edad" className="w-full text-black px-4 py-2 rounded-md my-2" />
               </label>
               {errors.edad && (<p className="text-red-500"> Edad es Necesario! </p>)}
 
               <label
-                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="w-full text-white px-4 py-2 rounded-md my-2" step="0.01" />
+                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="w-full text-black px-4 py-2 rounded-md my-2" step="0.01" />
               </label>
               {errors.estatura && (
                 <p className="text-red-500">
@@ -75,7 +75,7 @@ function RegistroUsuario() {
               )}
 
               <label
-                className="form-label"><input type="number" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input " step="0.01" />
+                className="form-label"><input type="number" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input text-black" step="0.01" />
               </label>
               {errors.peso && (
                 <p className="text-red-500">
