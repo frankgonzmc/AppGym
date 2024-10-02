@@ -107,7 +107,7 @@ export const upload = multer({
         fileSize: 1024 * 1024 * 5 // Limitar el tamaño de archivos a 5 MB
     },
     fileFilter: function (req, file, cb) {
-        const filetypes = /jpeg|jpg|png|gif/; // Solo permite imágenes
+        const filetypes = /jpeg|jpg|webp|png|gif/; // Solo permite imágenes
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
