@@ -16,7 +16,7 @@
 .container-form {
     display: flex;
     box-shadow: 0 5px 7px rgba(0, 0, 0, .1);
-    height: 800px;
+    height: 950px;
     max-width: 1300px;
     transition: all 1s ease;
     margin: 10px;
@@ -57,6 +57,14 @@
     color: #9191bd;
     transition: background-color .3s ease;
 }
+
+/*  
+.info-childs-input:hover{
+    background-color: #9191bd;
+    border: none;
+    color: #fff;
+    box-shadow : 0 2px 5px rgba(0,0, 0, .1);
+}*/
 
 .form-information {
     width: 60%;
@@ -103,21 +111,6 @@
     color: #333;
 }
 
-
-.registerbtn {
-    background-color: #000;
-    color: #fff bold;
-    border-radius: 20px;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
-}
-
-.registerbtn:hover {
-    background-color: #ff0000;
-}
 
 /* Responsive */
 @media screen and (max-width:750px) {

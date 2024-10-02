@@ -27,9 +27,7 @@ function Navbar() {
   return (
     <nav className="bg-zinc-700 my-3 p-3 rounded-lg d-flex justify-content-between align-items-center">
       <div className="d-flex align-items-center">
-        <li>
-          <Link to="/"><h1 className="text-2xl font-bold text-white mr-4">APP GYM</h1></Link>
-        </li>
+        <Link to="/"><h1 className="text-2xl font-bold text-white mt-1 mr-4">APP GYM</h1></Link>
         {isAuthenticated && (
           <NavDropdown
             title={`Nivel: ${user.nivel} | Bienvenido: ${user.username}`}

@@ -42,21 +42,21 @@ export function FormularioSesion() {
         }
         <form onSubmit={onSubmit} className="form-register">
           <label
-            className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="info-childs-input" />
+            className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Ingrese el Email" className="info-childs-input" />
           </label>
           {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
           <label
-            className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="info-childs-input" />
+            className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Ingrese el Password" className="info-childs-input" />
           </label>
           {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
 
-          <button type="submit" className="btn btn-primary">Iniciar Sesion</button>
+          <button type="submit" className="btn btn-primary mt-4 my-4">Iniciar Sesion</button>
           <br />
           <p className="flex gap-x-2 justify-between">
             <Link to="/forgot-password">olvidaste tu contraseña?</Link>
           </p>
         </form>
-        <hr />
+        <hr className="text-white"/>
         <br />
         <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
