@@ -1,7 +1,23 @@
 .inicio-container {
-    background-color: #fff;
     display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.panel-elements {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    width: 60%;
+}
+
+/* Añadir animaciones y efectos */
+.panel-elements:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
 }
 
 /*PANEL DE USUARIO*/
@@ -46,14 +62,6 @@
     margin-left: 25%;
 }
 
-/*PANEL ELEMENTS*/
-.panel-elements {
-    width: 80%;
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 5%;
-}
-
 .paneles-item {
     flex: 1 1 33.33%;
     text-align: center;
@@ -84,24 +92,3 @@
     transition: 2s;
 }
 
-.inicio-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-}
-
-.panel-elements {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    width: 60%;
-}
-
-/* Añadir animaciones y efectos */
-.panel-elements:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
-}
