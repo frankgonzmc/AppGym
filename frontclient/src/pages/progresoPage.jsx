@@ -1,3 +1,24 @@
+import React from 'react';
+import '../css/progresoPage.css';
+
+function ProgresoPage() {
+  return (
+    <div className="progreso-page-container">
+      <h2>Progreso de Rutinas</h2>
+      <div className="progress-bar-container">
+        <span className="progress-label">Ejercicio 1</span>
+        <div className="progress-bar">
+          <div className="progress-fill"></div>
+        </div>
+      </div>
+      {/* Puedes agregar más barras de progreso para cada ejercicio */}
+    </div>
+  );
+}
+
+export default ProgresoPage;
+
+/*
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRutinaRequest } from '../api/rutina'; // Asegúrate de que esta función esté definida
@@ -54,8 +75,7 @@ const ProgresoPage = () => {
       {detalles.map(detalle => (
         <>
           <EjercicioCard key={detalle._id} detalle={detalle} />
-          {/* Agregar temporizador para cada ejercicio */}
-          <Timer duration={40} onComplete={handleSessionComplete} /> {/* Temporizador de 40 segundos */}
+          <Timer duration={40} onComplete={handleSessionComplete} />
         </>
       ))}
     </>
@@ -63,3 +83,5 @@ const ProgresoPage = () => {
 };
 
 export default ProgresoPage;
+
+*/
