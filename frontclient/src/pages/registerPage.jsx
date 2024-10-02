@@ -5,7 +5,7 @@ import '../css/register.css';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 
 function RegistroUsuario() {
@@ -103,15 +103,33 @@ export default RegistroUsuario;
 
 
 /*
-<Container className="section-register">
+
+import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
+
+function RegistroUsuario() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
+  const navegar = useNavigate();
+  const nivel = "Principiante";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navegar("/inicio");
+    }
+  }, [isAuthenticated]);
+
+  const onSubmit = handleSubmit(async (values) => {
+    signup(values);
+  });
+
+  return (
+    <Container className="section-register">
       <Row>
-        <div className="container-form">
-          <Col md={6} className="information">
-            <img src={fondo} alt="Fondo" className="img-fluid" />
-            <h2>Bienvenido</h2>
-            <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
-          </Col>
-        </div>
+        <Col md={6} className="information">
+          <img src={fondo} alt="Fondo" className="img-fluid" />
+          <h2>Bienvenido</h2>
+          <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
+        </Col>
         <Col md={6} className="form-information">
           <h2>Crear una Cuenta</h2>
           {registerErrors.map((error, i) => (
@@ -136,11 +154,11 @@ export default RegistroUsuario;
             </Form.Group>
             <Form.Group controlId="estatura">
               <Form.Control type="number" placeholder="Estatura" {...register('estatura', { required: true })} step="0.01" />
-              {errors.estatura && <Form.Text className="text-danger">{errors.estatura.type === "required" ? "Estatura es Necesario!" : "La estatura debe ser válida!"}</Form.Text>}
+              {errors.estatura && <Form.Text className="text-danger">Estatura es Necesario!</Form.Text>}
             </Form.Group>
             <Form.Group controlId="peso">
               <Form.Control type="number" placeholder="Peso" {...register('peso', { required: true })} step="0.01" />
-              {errors.peso && <Form.Text className="text-danger">{errors.peso.type === "required" ? "Peso es Necesario!" : "El Peso debe ser válido!"}</Form.Text>}
+              {errors.peso && <Form.Text className="text-danger">Peso es Necesario!</Form.Text>}
             </Form.Group>
             <input type="hidden" {...register('nivel')} value={nivel} />
             <Button type="submit" className="btn btn-success">Continuar Registrar</Button>
@@ -151,4 +169,9 @@ export default RegistroUsuario;
         </Col>
       </Row>
     </Container>
+  );
+}
+
+export default RegistroUsuario;
+
 */
