@@ -24,7 +24,7 @@ function ProfilePage() {
       setPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    } catch (err) {
+    } catch (error) {
       setError("Error al actualizar la contraseña");
     }
   };
@@ -89,14 +89,14 @@ function ProfilePage() {
             </div>
           </div>
         </div>
-        {/* Imagen de perfil */}
+        {/* Imagen de perfil 
         <div className="w-32 h-32">
           <img
             src={user.profileImage || "/default-profile.png"}
             alt="Profile"
             className="w-full h-full object-cover rounded-full"
           />
-        </div>
+        </div>*/}
       </section>
 
       {/* Sección de Actualización de Contraseña */}

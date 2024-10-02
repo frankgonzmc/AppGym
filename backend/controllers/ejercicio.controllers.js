@@ -61,7 +61,7 @@ export const getNivelEjercicio = async (req, res) => {
       const ejercicios = await Ejercicios.find({ nivel: nivel });
       res.json(ejercicios);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener los ejercicios" });
+      res.status(500).json({ message: "Error al obtener el nivel de los ejercicios" });
     }
 };
 

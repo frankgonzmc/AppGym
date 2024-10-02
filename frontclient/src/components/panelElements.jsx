@@ -20,6 +20,7 @@ export function PanelElements() {
         try {
             const response = await axios.get(`/api/ejercicios/${user.nivel}`);
             setExercises(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error("Error al obtener los ejercicios", error);
         }
@@ -102,7 +103,7 @@ export function PanelElements() {
 
             {/* Sección 2: Recomendaciones de ejercicios */}
             <div className="panel-ejercicios">
-                <section className="bg-gray-800 p-6 rounded-md shadow-lg mb-8">
+                <section className="bg-gray-800 p-12 rounded-md shadow-lg mb-8">
                     <h2 className="text-2xl font-bold text-white mb-4">Recomendaciones de Ejercicios</h2>
                     <p className="text-gray-400 mb-4">
                         Basado en tu nivel actual: <span className="font-semibold">{user.nivel}</span>
