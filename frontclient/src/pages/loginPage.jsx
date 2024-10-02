@@ -58,7 +58,7 @@ export function FormularioSesion() {
         </form>
         <hr />
         <br />
-        <p className="flex gap-x-2 justify-between">
+        <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
       </div>
