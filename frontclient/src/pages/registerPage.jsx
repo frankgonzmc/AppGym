@@ -5,6 +5,9 @@ import '../css/register.css';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
+
 function RegistroUsuario() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -42,7 +45,7 @@ function RegistroUsuario() {
                 </div>
               ))
             }
-            <form onSubmit={onSubmit} className="form-register">
+            <Form onSubmit={onSubmit} className="form-register">
               <label
                 className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full text-white px-4 py-2 rounded-md my-2" />
               </label>
@@ -84,7 +87,7 @@ function RegistroUsuario() {
 
               <input type="hidden" {...register('nivel')} value={nivel} />
               <button type="submit" className="btn btn-success mt-2 my-2">Continuar Registrar</button>
-            </form>
+            </Form>
 
             <p className="flex gap-x-2 justify-between text-white mt-2 my-2">
               Ya tienes una cuenta? <Link to="/login" className="text-sky-500">ve a Iniciar Sesión</Link>
