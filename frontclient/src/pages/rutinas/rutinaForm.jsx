@@ -11,7 +11,7 @@ import { Card } from '../../components/ui';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
-  const { createRutina, getRutina } = useRutinas();
+  const { createRutina, getRutina, updateRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
   const { createHistorial } = useHistorial();
   const { createDetalleRutina } = useDetallesRutina();
@@ -54,38 +54,28 @@ const RutinaForm = () => {
 
 
   const onSubmit = handleSubmit(async (data) => {
-    const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
+    const { nombre, descripcion } = data;
 
-    if (params.id) {
+    if (!nombre || !descripcion || selectedEjercicios.length === 0) {
+      console.error("Faltan datos requeridos");
+      return;
+    }
 
-      try {
+    try {
+      if (params.id) {
         await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
         navigate('/rutinas');
-      } catch (error) {
-        console.error("Error al actualizar la rutina:", error);
-      }
-
-    } else {
-
-      if (!nombre || !descripcion || selectedEjercicios.length === 0) {
-        console.error("Faltan datos requeridos");
-        return; // No continuar si faltan datos
-      }
-
-      try {
+      } else {
         const nuevaRutina = { user: user._id, nombre, descripcion };
         const rutinaCreada = await createRutina(nuevaRutina);
 
-        if (rutinaCreada) {
-          const detallesRutina = selectedEjercicios.map(ejercicioId => ({
-            rutina: rutinaCreada._id,
-            ejercicio: ejercicioId,
-            fecha: new Date(),
-          }));
+        const detallesRutina = selectedEjercicios.map(ejercicioId => ({
+          rutina: rutinaCreada._id,
+          ejercicio: ejercicioId,
+          fecha: new Date(),
+        }));
 
-          await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
-
-        }
+        await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
         const progresoData = {
           user: user._id,
@@ -104,14 +94,13 @@ const RutinaForm = () => {
 
         await createHistorial(historialData);
 
-
-      } catch (error) {
-        console.log(error);
+        navigate('/rutinas');
       }
-
-      navigate('/rutinas');
+    } catch (error) {
+      console.error("Error al actualizar o crear la rutina:", error);
+      // Mostrar un mensaje al usuario aquí, si es necesario
     }
-  })
+  });
 
   const handleCheckboxChange = (ejercicioId) => {
     if (selectedEjercicios.includes(ejercicioId)) {

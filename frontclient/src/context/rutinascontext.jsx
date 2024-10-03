@@ -50,13 +50,17 @@ export function RutinaProvider({ children }) {
         }
     };
 
-    const updateRutina = async (id, rutina) => {
+    const updateRutina = async (id, updatedRutina) => {
         try {
-            await updateRutinaRequest(id, rutina);
+            const res = await updateRutinaRequest(id, updatedRutina);
+            // Actualizar el estado local con la rutina actualizada
+            setRutinas((prev) =>
+                prev.map((rutina) => (rutina._id === id ? { ...rutina, ...res.data } : rutina))
+            );
         } catch (error) {
-            console.error(error);
+            console.error(error.response ? error.response.data : error.message);
         }
-    };
+    };    
 
     return (
         <RutinaContext.Provider
