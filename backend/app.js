@@ -8,7 +8,6 @@ import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
-import historialRoutes from './routes/historial.routes.js';
 import { FRONTEND_URL } from "./config.js";
 import { fileURLToPath } from 'url';  // Importar esta utilidadimport dotenv from 'dotenv';
 import dotenv from 'dotenv';
