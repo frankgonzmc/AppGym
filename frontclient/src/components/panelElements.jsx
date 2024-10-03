@@ -8,23 +8,21 @@ import body from "../imagenes/body.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
 import axios from "axios";
-import '../css/panelElements.css'; // Asegúrate de importar los estilos aquí
+import '../css/panelElements.css';
 
 export function PanelElements() {
-    const { user } = useAuth(); // Agregamos una función para obtener los ejercicios del usuario
+    const { user } = useAuth();
     const [exercises, setExercises] = useState([]);
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
 
-    // Función para obtener ejercicios por nivel
     const fetchExercises = async () => {
         try {
             const response = await axios.get(`/api/ejercicios/${user.nivel}`);
             setExercises(response.data);
-            console.log("Ejercicios obtenidos:", response.data);
         } catch (error) {
             console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
         }
-    };      
+    };
 
     useEffect(() => {
         if (user?.nivel) {
@@ -32,7 +30,6 @@ export function PanelElements() {
         }
     }, [user]);
 
-    // Cambiar el ejercicio mostrado cada 5 segundos
     useEffect(() => {
         if (exercises.length > 0) {
             const interval = setInterval(() => {
@@ -47,16 +44,9 @@ export function PanelElements() {
     }
 
     const currentExercise = exercises[currentExerciseIndex];
-    console.log("Índice actual:", currentExerciseIndex, "Ejercicio actual:", currentExercise);
-
-
-    if (!currentExercise) {
-        return <p>No hay ejercicio seleccionado.</p>;
-    }
 
     return (
         <div className="panel-container">
-            {/* Sección 1: Panel de enlaces */}
             <div className="panel-elements">
                 <Link to="/calendar">
                     <div className="paneles-item">
@@ -69,7 +59,7 @@ export function PanelElements() {
                 <Link to="/rutinas">
                     <div className="paneles-item">
                         <button className="paneles-btn">
-                            <img src={muscle} alt="Rutines" className="paneles-img" />
+                            <img src={muscle} alt="Rutinas" className="paneles-img" />
                         </button>
                         <h2>Mis Rutinas</h2>
                     </div>
@@ -85,7 +75,7 @@ export function PanelElements() {
                 <Link to="/historial">
                     <div className="paneles-item">
                         <button className="paneles-btn">
-                            <img src={ai} alt="GetRutine" className="paneles-img" />
+                            <img src={ai} alt="Historial" className="paneles-img" />
                         </button>
                         <h2>Historial Rutinas</h2>
                     </div>
@@ -93,7 +83,7 @@ export function PanelElements() {
                 <Link to="/add-rutinas">
                     <div className="paneles-item">
                         <button className="paneles-btn">
-                            <img src={tab} alt="AddRutine" className="paneles-img" />
+                            <img src={tab} alt="Añadir Rutina" className="paneles-img" />
                         </button>
                         <h2>Crear Rutina</h2>
                     </div>
@@ -108,33 +98,22 @@ export function PanelElements() {
                 </Link>
             </div>
 
-            {/* Sección 2: Recomendaciones de ejercicios */}
             <div className="panel-ejercicios">
                 <section className="bg-gray-800 p-12 rounded-md shadow-lg mb-8">
                     <h2 className="text-2xl font-bold text-white mb-4">Recomendaciones de Ejercicios</h2>
                     <p className="text-gray-400 mb-4">
                         Basado en tu nivel actual: <span className="font-semibold">{user.nivel}</span>
                     </p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="bg-zinc-800 max-w-3xl w-full p-8 rounded-md flex space-x-6">
-                            {/* Ejercicio Recomendado */}
-                            <div className="flex-1">
-                                <h2 className="text-3xl font-bold mb-6">Ejercicio Recomendado</h2>
-
-                                <div className="bg-gray-700 p-4 rounded-md">
-                                    <h3 className="text-2xl font-bold mb-4">{currentExercise?.nombre || "Nombre no disponible"}</h3>
-                                    <p className="text-white mb-2">Descripción: {currentExercise?.descripcion || "Descripción no disponible"}</p>
-                                    <p className="text-white mb-2">Nivel: {currentExercise?.nivel || "Nivel no disponible"}</p>
-                                    <p className="text-white mb-2">Categoría: {currentExercise?.categoria || "Categoría no disponible"}</p>
-                                    <p className="text-white mb-2">Series: {currentExercise?.series || "N/A"}</p>
-                                    <p className="text-white mb-2">Duración: {currentExercise?.duracion || "N/A"} segundos</p>
-                                    <p className="text-white mb-2">Descanso: {currentExercise?.descanso || "N/A"} segundos</p>
-                                    <p className="text-white mb-2">Repeticiones: {currentExercise?.repeticiones || "N/A"}</p>
-                                    <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-full h-48 object-cover mt-4 rounded-md" />
-                                </div>
-                            </div>
-                        </div>
+                    <div className="bg-gray-700 p-4 rounded-md">
+                        <h3 className="text-2xl font-bold mb-4">{currentExercise?.nombre || "Nombre no disponible"}</h3>
+                        <p className="text-white mb-2">Descripción: {currentExercise?.descripcion || "Descripción no disponible"}</p>
+                        <p className="text-white mb-2">Nivel: {currentExercise?.nivel || "Nivel no disponible"}</p>
+                        <p className="text-white mb-2">Categoría: {currentExercise?.categoria || "Categoría no disponible"}</p>
+                        <p className="text-white mb-2">Series: {currentExercise?.series || "N/A"}</p>
+                        <p className="text-white mb-2">Duración: {currentExercise?.duracion || "N/A"} segundos</p>
+                        <p className="text-white mb-2">Descanso: {currentExercise?.descanso || "N/A"} segundos</p>
+                        <p className="text-white mb-2">Repeticiones: {currentExercise?.repeticiones || "N/A"}</p>
+                        <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-full h-48 object-cover mt-4 rounded-md" />
                     </div>
                 </section>
             </div>

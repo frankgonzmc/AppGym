@@ -1,9 +1,18 @@
+.panel-container {
+    max-width: 1200px;
+    /* Limitar el ancho máximo del contenedor */
+    margin: 0 auto;
+    /* Centrar el contenedor */
+    padding: 20px;
+}
+
 .panel-elements {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 20px;
-    background-color: #a39b9b;
+    background-color: #e0d3d3;
+    /* Color de fondo más claro */
     gap: 20px;
 }
 
@@ -12,18 +21,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #a38282;
+    background-color: #d7a4a4;
+    /* Color de fondo */
     border-radius: 10px;
     padding: 20px;
-    width: 200px;
+    width: calc(33.33% - 20px);
+    /* Tres elementos en la misma fila */
     height: 250px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .paneles-item:hover {
     transform: scale(1.05);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .paneles-btn {
@@ -35,14 +46,16 @@
 }
 
 .paneles-img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    /* Ajustar el tamaño de la imagen */
+    height: 80px;
     object-fit: cover;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .paneles-item h2 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    /* Tamaño de fuente más grande */
     color: #333;
     text-align: center;
     margin-top: 10px;
@@ -50,4 +63,35 @@
 
 .paneles-item h2:hover {
     color: #007bff;
+}
+
+/* Estilos para la sección de recomendaciones */
+.panel-ejercicios {
+    margin-top: 20px;
+    /* Separación de la sección de enlaces */
+}
+
+.bg-gray-800 {
+    background-color: #4b4b4b;
+    /* Fondo más oscuro */
+}
+
+.bg-gray-700 {
+    background-color: #6d6d6d;
+    /* Fondo más claro para el ejercicio */
+}
+
+.panel-ejercicios h2 {
+    color: #ffffff;
+    /* Texto blanco para el encabezado */
+}
+
+.panel-ejercicios p {
+    color: #dcdcdc;
+    /* Texto gris claro */
+}
+
+.panel-ejercicios img {
+    border-radius: 10px;
+    /* Bordes redondeados en la imagen */
 }
