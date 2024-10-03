@@ -39,13 +39,11 @@ const RutinaForm = () => {
     async function loadRutina() {
       if (params.id) {
         const data = await getRutina(params.id);
-        console.log(data); // Revisa la estructura
 
         if (data && data.rutina) {
           setValue('nombre', data.rutina.nombre);
           setValue('descripcion', data.rutina.descripcion);
           setSelectedEjercicios(data.detalles.map(detalle => detalle.ejercicio._id));
-          console.log("Valores establecidos:", data.rutina.nombre, data.rutina.descripcion);
         }
       }
     }
@@ -63,8 +61,14 @@ const RutinaForm = () => {
 
     try {
       if (params.id) {
-        await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
-        navigate('/rutinas');
+        try {
+          await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
+          console.log("Rutina actualizado");
+          navigate('/rutinas');
+        } catch (error) {
+          console.log(error);
+        }
+
       } else {
         const nuevaRutina = { user: user._id, nombre, descripcion };
         const rutinaCreada = await createRutina(nuevaRutina);
@@ -110,7 +114,6 @@ const RutinaForm = () => {
     }
   };
 
-
   return (
     <Card>
       <div className="flex justify-center items-center p-5">
@@ -145,7 +148,7 @@ const RutinaForm = () => {
               </div>
             ))}
 
-            <button className="btn btn-primary rounded-md my-2" type="submit">Crear Rutina</button>
+            <button className="btn btn-primary rounded-md my-2" type="submit">Guardar Rutina</button>
           </form>
         </div>
       </div>
@@ -154,92 +157,3 @@ const RutinaForm = () => {
 };
 
 export default RutinaForm;
-
-
-
-/*
- 
-const [nombre, setNombre] = useState('');
-const [descripcion, setDescripcion] = useState('');
-const [nivel, setNivel] = useState('');
-const [series, setSeries] = useState(10);
-const [repeticiones, setRepeticiones] = useState(4);
-const [duracion, setDuracion] = useState(60);
-
- 
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const nuevaRutina = {
-      nombre,
-      descripcion,
-      nivel,
-      user: user._id
-    };
-
-    const rutinaCreada = await createRutina(nuevaRutina);
-
-    if (rutinaCreada) {
-      for (const ejercicioId of selectedEjercicios) {
-        const detalleRutina = {
-          rutina: rutinaCreada._id,
-          ejercicio: ejercicioId,
-          orden: selectedEjercicios.indexOf(ejercicioId) + 1,
-          series,
-          repeticiones,
-          duracion
-        };
-
-        const detalleResponse = await createDetalleRutina(detalleRutina);
-        console.log('DetalleRutina creado:', detalleResponse);
-
-        const progresoResponse = await createProgreso({
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-          estado: 'En Progreso'
-        });
-        console.log('Progreso creado:', progresoResponse);
-      }
-    }
-
-    // Resetear estados
-    setNombre('');
-    setDescripcion('');
-    setNivel('');
-    setSelectedEjercicios([]);
-    setSeries(10);
-    setRepeticiones(4);
-    setDuracion(60);
-    navigate('/rutinas'); // Redireccionar a la lista de rutinas
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-useEffect(() => {
-  async function loadEjercicio() {
-    if (params.id) {
-      const ejercicio = await getEjercicio(params.id);
-      console.log(ejercicio)
-      setValue('codigo', ejercicio.codigo);
-      setValue('nombre', ejercicio.nombre);
-      setValue('descripcion', ejercicio.descripcion);
-      setValue('nivel', ejercicio.duracion);
-      setValue('categoria', ejercicio.categoria);
-      setValue('series', ejercicio.descripcion);
-      setValue('duracion', ejercicio.duracion);
-      setValue('descanso', ejercicio.categoria);
-      setValue('repeticiones', ejercicio.descripcion);
-      setValue('estado', ejercicio.duracion);
-    }
-  }
-  loadEjercicio();
-}, [])
-
-
-
-*/
