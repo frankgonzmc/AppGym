@@ -1,7 +1,6 @@
 import Rutinas from '../models/rutina.model.js'
 import DetallesRutina from '../models/detallerutina.model.js'
 import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
-import Historial from '../models/historial.model.js';
 
 // Obtener todas las rutinas del usuario autenticado
 export const getRutinas = async (req, res) => {
@@ -149,7 +148,7 @@ export const createRutinas = async (req, res) => {
 
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, detalles, progreso, historial } = req.body;
+        const { nombre, descripcion, detalles, progreso } = req.body;
 
         // Validar campos requeridos
         if (!nombre || !descripcion) {
@@ -185,22 +184,6 @@ export const createRutinas = async (req, res) => {
                     });
                     const progresoGuardado = await newProgreso.save();
                     console.log(progresoGuardado);
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-
-            // Crear el historial asociado
-            if (historial) {
-                try {
-                    console.log("Datos de historial:", historial); // Verifica lo que recibes
-                    const newHistorial = new Historial({
-                        user: req.user.id,
-                        rutina: saveRutina._id,
-                        ...historial
-                    });
-                    const historialGuardado = await newHistorial.save();
-                    console.log(historialGuardado);
                 } catch (error) {
                     console.log(error)
                 }
