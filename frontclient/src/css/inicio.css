@@ -1,5 +1,7 @@
 .inicio-container {
     display: flex;
+    flex-direction: column;
+    /* Asegúrate de que el contenido esté en una columna */
     height: 100vh;
     background: #ffffff;
     padding: 20px;
@@ -11,7 +13,8 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    width: auto;
+    width: 100%;
+    /* Cambiado de 60% a 100% para ocupar todo el ancho del contenedor */
     max-width: 1920px;
     /* Máximo ancho para pantallas grandes */
     margin: 0 auto;
