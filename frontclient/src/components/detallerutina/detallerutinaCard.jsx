@@ -1,37 +1,69 @@
-import { useDetallesRutina } from "../../context/detallerutinacontext";
-import { Card } from "../ui";
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, ProgressBar } from 'react-bootstrap'; // Importar react-bootstrap
 
 export default function DetalleRutinaCard({ detalles }) {
-  const { deleteDetalleRutina } = useDetallesRutina();
+  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion); // Duración inicial
+  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso); // Descanso inicial
+  const [seriesCompletadas, setSeriesCompletadas] = useState(0);
+  const [isPausado, setIsPausado] = useState(true);
+  const [isDescanso, setIsDescanso] = useState(false);
+
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (!isPausado) {
+      intervalRef.current = setInterval(() => {
+        if (!isDescanso) {
+          if (duracionRestante > 0) {
+            setDuracionRestante(prev => prev - 1);
+          } else {
+            setIsDescanso(true);
+            setDescansoRestante(detalles.ejercicio.descanso); // Reinicia el descanso
+          }
+        } else {
+          if (descansoRestante > 0) {
+            setDescansoRestante(prev => prev - 1);
+          } else {
+            setIsDescanso(false);
+            setDuracionRestante(detalles.ejercicio.duracion); // Reinicia la duración
+            setSeriesCompletadas(prev => prev + 1);
+            if (seriesCompletadas + 1 === detalles.ejercicio.series) {
+              clearInterval(intervalRef.current);
+              alert('¡Ejercicio completado!');
+            }
+          }
+        }
+      }, 1000);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, detalles.ejercicio.duracion, detalles.ejercicio.descanso, detalles.ejercicio.series]);
+
+  const handlePausarReanudar = () => {
+    setIsPausado(prev => !prev);
+  };
+
+  const handleReset = () => {
+    setDuracionRestante(detalles.ejercicio.duracion);
+    setDescansoRestante(detalles.ejercicio.descanso);
+    setSeriesCompletadas(0);
+    setIsPausado(true);
+    setIsDescanso(false);
+  };
 
   return (
-    <Card>
-      <header className="flex justify-between">
-        <h1 className="text-2xl text-slate-300 font-bold text-center">{detalles.ejercicio.nombre}</h1>
-      </header>
-      <hr className="text-slate-300" />
-      <p className="text-slate-300">Descripción: {detalles.ejercicio.descripcion}</p>
-      <p className="text-slate-300">Categoría: {detalles.ejercicio.categoria}</p>
-      <p className="text-slate-300">Duración: {detalles.ejercicio.duracion} minutos</p>
-      <p className="text-slate-300">Series: {detalles.ejercicio.series}</p>
-      <p className="text-slate-300">Repeticiones: {detalles.ejercicio.repeticiones}</p>
-      <p className="text-slate-300">Descanso: {detalles.ejercicio.descanso}</p>
-      <p className="text-slate-300">
-        {detalles.createdAt &&
-          new Date(detalles.createdAt).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-      </p>
-      <hr className="text-slate-300" />
-      <footer>
-        <div className="flex gap-x-2 items-center">
-          <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
-          <button className="btn btn-succes">Iniciar Ejercicio</button>
-        </div>
-      </footer>
-    </Card>
+    <div className="exercise-card">
+      <h1>{detalles.ejercicio.nombre}</h1>
+      <p>{detalles.ejercicio.descripcion}</p>
+      <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
+      {isDescanso && <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} label={`Descanso: ${descansoRestante}s`} />}
+
+      <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
+
+      <Button onClick={handlePausarReanudar}>
+        {isPausado ? 'Iniciar' : 'Pausar'}
+      </Button>
+      <Button variant="danger" onClick={handleReset}>Reset</Button>
+    </div>
   );
 }
