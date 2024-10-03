@@ -20,11 +20,11 @@ export function PanelElements() {
         try {
             const response = await axios.get(`/api/ejercicios/${user.nivel}`);
             setExercises(response.data);
-            console.log("Ejercicios obtenidos:", response.data); // Añade este log
+            console.log("Ejercicios obtenidos:", response.data);
         } catch (error) {
-            console.error("Error al obtener los ejercicios", error);
+            console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
         }
-    };
+    };      
 
     useEffect(() => {
         if (user?.nivel) {
