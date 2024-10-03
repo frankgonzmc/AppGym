@@ -34,7 +34,7 @@ function Navbar() {
             id="nav-dropdown"
             show={dropdownOpen}
             onToggle={toggleDropdown}
-            className="text-white text-right"
+            className="text-2x1 text-white text-left"
           >
             <NavDropdown.Item as={Link} to="/profile">Perfil</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
