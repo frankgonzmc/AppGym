@@ -20,7 +20,7 @@ export function PanelElements() {
         try {
             const response = await axios.get(`/api/ejercicios/${user.nivel}`);
             setExercises(response.data);
-            console.log(response.data);
+            console.log("Ejercicios obtenidos:", response.data); // Añade este log
         } catch (error) {
             console.error("Error al obtener los ejercicios", error);
         }
@@ -34,23 +34,26 @@ export function PanelElements() {
 
     // Cambiar el ejercicio mostrado cada 5 segundos
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentExerciseIndex((prevIndex) => (prevIndex + 1) % exercises.length);
-        }, 5000);
-
-        return () => clearInterval(interval);
+        if (exercises.length > 0) {
+            const interval = setInterval(() => {
+                setCurrentExerciseIndex((prevIndex) => (prevIndex + 1) % exercises.length);
+            }, 5000);
+            return () => clearInterval(interval);
+        }
     }, [exercises]);
 
     if (exercises.length === 0) {
         return <p>No hay ejercicios disponibles para tu nivel.</p>;
     }
-    
+
     const currentExercise = exercises[currentExerciseIndex];
-    
+    console.log("Índice actual:", currentExerciseIndex, "Ejercicio actual:", currentExercise);
+
+
     if (!currentExercise) {
         return <p>No hay ejercicio seleccionado.</p>;
     }
-    
+
     return (
         <div className="panel-container">
             {/* Sección 1: Panel de enlaces */}
