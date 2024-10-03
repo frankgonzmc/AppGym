@@ -3,7 +3,7 @@ import { Card } from "../ui";
 import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "react-bootstrap";
 
-export function RutinaCard({ rutina }) {
+export default function RutinaCard({ rutina }) {
   // Asegurarte de que rutina existe y tiene las propiedades necesarias, o usar valores predeterminados
   const duracionInicial = rutina?.duracion || 0; // Si rutina.duracion no está definido, usar 0
   const seriesInicial = rutina?.series || 0;
