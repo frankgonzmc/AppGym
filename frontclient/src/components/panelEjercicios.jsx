@@ -48,7 +48,7 @@ export function PanelEjercicios() {
                     Basado en tu nivel actual: <span className="font-semibold">{user.nivel}</span>
                 </p>
                 <div className="bg-gray-700 p-4 rounded-md">
-                    <h3 className="text-2xl font-bold mb-4">{currentExercise?.nombre || "Nombre no disponible"}</h3>
+                    <h3 className="text-2xl text-white font-bold mb-4">{currentExercise?.nombre || "Nombre no disponible"}</h3>
                     <p className="text-white mb-2">Descripción: {currentExercise?.descripcion || "Descripción no disponible"}</p>
                     <p className="text-white mb-2">Nivel: {currentExercise?.nivel || "Nivel no disponible"}</p>
                     <p className="text-white mb-2">Categoría: {currentExercise?.categoria || "Categoría no disponible"}</p>
@@ -56,7 +56,7 @@ export function PanelEjercicios() {
                     <p className="text-white mb-2">Duración: {currentExercise?.duracion || "N/A"} segundos</p>
                     <p className="text-white mb-2">Descanso: {currentExercise?.descanso || "N/A"} segundos</p>
                     <p className="text-white mb-2">Repeticiones: {currentExercise?.repeticiones || "N/A"}</p>
-                    <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-full h-48 object-cover mt-4 rounded-md" />
+                    <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-full h-68 object-cover mt-4 rounded-md" />
                 </div>
             </section>
         </div>
