@@ -50,9 +50,9 @@ export function RutinaProvider({ children }) {
         }
     };
 
-    const updateRutina = async (id, updatedRutina) => {
+    const updateRutina = async (id, rutina) => {
         try {
-            const res = await updateRutinaRequest(id, updatedRutina);
+            const res = await updateRutinaRequest(id, rutina);
             // Actualizar el estado local con la rutina actualizada
             setRutinas((prev) =>
                 prev.map((rutina) => (rutina._id === id ? { ...rutina, ...res.data } : rutina))
