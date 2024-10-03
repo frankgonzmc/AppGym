@@ -7,12 +7,12 @@ export function RutinaCard({ rutina }) {
   return (
     <Card>
       <header className="flex justify-between">
-        <h1 className="text-2xl font-bold text-center">{rutina.nombre}</h1>
+        <h1 className="text-2xl text-slate-300 font-bold text-center">{rutina.nombre}</h1>
       </header>
-      <hr />
+      <hr className="text-slate-300" />
       <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
       {/* format date */}
-      <p>
+      <p className="text-slate-300">
         {rutina.date &&
           new Date(rutina.date).toLocaleDateString("en-US", {
             weekday: "long",
@@ -21,7 +21,7 @@ export function RutinaCard({ rutina }) {
             day: "numeric",
           })}
       </p>
-      <hr />
+      <hr className="text-slate-300" />
       <footer>
         <div className="flex gap-x-3 items-center">
           <ButtonLink to={`/rutinas/${rutina._id}`}>Edit</ButtonLink>
