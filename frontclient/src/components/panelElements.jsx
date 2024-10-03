@@ -1,7 +1,6 @@
 import calendar from "../imagenes/calendar.png";
 import muscle from "../imagenes/muscle.png";
 import control from "../imagenes/control.png";
-import ai from "../imagenes/ai.png";
 import tab from "../imagenes/tab.png";
 import body from "../imagenes/body.png";
 import { Link } from "react-router-dom";
@@ -33,15 +32,7 @@ export function PanelElements() {
                         <button className="paneles-btn">
                             <img src={control} alt="Panel" className="paneles-img" />
                         </button>
-                        <h2>Panel de Seguimiento</h2>
-                    </div>
-                </Link>
-                <Link to="/historial">
-                    <div className="paneles-item">
-                        <button className="paneles-btn">
-                            <img src={ai} alt="Historial" className="paneles-img" />
-                        </button>
-                        <h2>Historial Rutinas</h2>
+                        <h2>Panel de Progresos</h2>
                     </div>
                 </Link>
                 <Link to="/add-rutinas">
