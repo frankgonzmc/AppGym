@@ -24,19 +24,6 @@ const RutinaForm = () => {
   const [ejercicios, setEjercicios] = useState([]);
 
   useEffect(() => {
-    async function loadRutina() {
-      if (params.id) {
-        const rutina = await getRutina(params.id);
-        console.log(rutina)
-        setValue('nombre', rutina.nombre);
-        setValue('descripcion', rutina.descripcion);
-        setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
-      }
-    }
-    loadRutina();
-  }, [params.id, setValue])
-
-  useEffect(() => {
     const fetchEjercicios = async () => {
       try {
         const res = await getEjerciciosRequest();
@@ -48,15 +35,24 @@ const RutinaForm = () => {
     fetchEjercicios();
   }, []);
 
+  useEffect(() => {
+    async function loadRutina() {
+      if (params.id) {
+        const rutina = await getRutina(params.id);
+        setValue('nombre', rutina.nombre);
+        setValue('descripcion', rutina.descripcion);
+        setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
+      }
+    }
+    loadRutina();
+  }, [params.id, setValue]);
+
   const onSubmit = handleSubmit(async (data) => {
     const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario
 
     if (params.id) {
 
-
       await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
-
-      
 
     } else {
 
@@ -86,7 +82,7 @@ const RutinaForm = () => {
           fecha: new Date(),
           estado: 'En Progreso'
         };
-        
+
         await createProgreso(progresoData);
 
         const historialData = {
@@ -94,9 +90,9 @@ const RutinaForm = () => {
           rutina: rutinaCreada._id,
           fecha: new Date(),
         };
-        
+
         await createHistorial(historialData);
-        
+
 
       } catch (error) {
         console.log(error);
@@ -105,6 +101,14 @@ const RutinaForm = () => {
       navigate('/rutinas');
     }
   })
+
+  const handleCheckboxChange = (ejercicioId) => {
+    if (selectedEjercicios.includes(ejercicioId)) {
+      setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicioId));
+    } else {
+      setSelectedEjercicios([...selectedEjercicios, ejercicioId]);
+    }
+  };
 
 
   return (
@@ -135,19 +139,13 @@ const RutinaForm = () => {
                   type="checkbox"
                   value={ejercicio._id}
                   checked={selectedEjercicios.includes(ejercicio._id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedEjercicios([...selectedEjercicios, ejercicio._id]);
-                    } else {
-                      setSelectedEjercicios(selectedEjercicios.filter(id => id !== ejercicio._id));
-                    }
-                  }}
+                  onChange={() => handleCheckboxChange(ejercicio._id)}
                 />
                 <label className='text-white'>{ejercicio.nombre}</label>
               </div>
             ))}
 
-            <button value="container4-button1" className="registerbtn text-white text-center items-center rounded-md my-2" type="submit">Crear Rutina</button>
+            <button className="btn btn-primary rounded-md my-2" type="submit">Crear Rutina</button>
           </form>
         </div>
       </div>
