@@ -52,7 +52,12 @@ const RutinaForm = () => {
 
     if (params.id) {
 
-      await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
+      try {
+        await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
+        navigate('/rutinas');
+      } catch (error) {
+        console.error("Error al actualizar la rutina:", error);
+      }
 
     } else {
 
