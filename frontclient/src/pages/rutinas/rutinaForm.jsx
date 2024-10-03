@@ -39,6 +39,7 @@ const RutinaForm = () => {
     async function loadRutina() {
       if (params.id) {
         const rutina = await getRutina(params.id);
+        console.log(rutina);
         setValue('nombre', rutina.nombre);
         setValue('descripcion', rutina.descripcion);
         setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
