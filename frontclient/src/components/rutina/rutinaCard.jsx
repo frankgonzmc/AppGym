@@ -7,10 +7,10 @@ export function RutinaCard({ rutina }) {
   const { deleteRutina } = useRutinas();
   const navigate = useNavigate();
 
-  // Calcular progreso basado en ejercicios completados
-  const ejerciciosCompletados = rutina.ejercicios.filter(e => e.estado === 'Completado').length;
-  const totalEjercicios = rutina.ejercicios.length;
-  const progreso = (ejerciciosCompletados / totalEjercicios) * 100;
+  // Verifica si rutina.ejercicios existe y tiene ejercicios
+  const ejerciciosCompletados = rutina.ejercicios ? rutina.ejercicios.filter(e => e.estado === 'Completado').length : 0;
+  const totalEjercicios = rutina.ejercicios ? rutina.ejercicios.length : 0;
+  const progreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
 
   return (
     <Card>
