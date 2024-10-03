@@ -55,13 +55,14 @@ export const getEjercicio = async (req, res) => {
 
 export const getNivelEjercicio = async (req, res) => {
     const { nivel } = req.params;
-  
+
     try {
-      // Obtener ejercicios filtrados por nivel
-      const ejercicios = await Ejercicios.find({ nivel: nivel });
-      res.json(ejercicios);
+        // Obtener ejercicios filtrados por nivel
+        const ejercicios = await Ejercicios.find({ nivel: nivel });
+        res.json(ejercicios);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener el nivel de los ejercicios" });
+        console.error(error);  // Agrega esta línea para ver el error
+        res.status(500).json({ message: "Error al obtener el nivel de los ejercicios" });
     }
 };
 
@@ -79,14 +80,14 @@ export const updateEjercicios = async (req, res) => {
 
 export const deleteEjercicios = async (req, res) => {
     try {
-      const ejercicio = await Ejercicios.findByIdAndDelete(req.params.id);
-      if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." });
-  
-      return res.status(204).json({ message: "Ejercicio eliminado correctamente" });
+        const ejercicio = await Ejercicios.findByIdAndDelete(req.params.id);
+        if (!ejercicio) return res.status(404).json({ message: "Ejercicio no encontrado..." });
+
+        return res.status(204).json({ message: "Ejercicio eliminado correctamente" });
     } catch (error) {
-      return res.status(404).json({ message: "Ejercicio no encontrado..." });
+        return res.status(404).json({ message: "Ejercicio no encontrado..." });
     }
-  };  
+};
 
 
 // Configuración de almacenamiento para multer
