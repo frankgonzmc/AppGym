@@ -57,13 +57,13 @@ export default function DetalleRutinaCard({ detalles }) {
     <Card
       style={{
         borderColor: ejercicioCompletado ? 'green' : 'gray', // Borde verde si completado, gris si no
-        borderWidth: '2px',
+        borderWidth: '12px',
         borderStyle: 'solid',
-        padding: '15px',
+        padding: '25px',
       }}
     >
       <div className="exercise-card">
-        <h1>{detalles.ejercicio.nombre}</h1>
+        <h1 className='text-2xl text-slate-300 font-bold text-center'>{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
@@ -79,12 +79,14 @@ export default function DetalleRutinaCard({ detalles }) {
 
         <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
 
-        <Button onClick={handlePausarReanudar}>
-          {isPausado ? 'Iniciar' : 'Pausar'}
-        </Button>
-        <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
-          Reset
-        </Button>
+        <div className="d-flex justify-content-between">
+          <Button onClick={handlePausarReanudar}>
+            {isPausado ? 'Iniciar' : 'Pausar'}
+          </Button>
+          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
+            Reset
+          </Button>
+        </div>
       </div>
     </Card>
   );
