@@ -3,7 +3,7 @@ import { AuthProvider } from './context/authcontext';
 import { RutinaProvider } from './context/rutinascontext';
 import { EjercicioProvider } from './context/ejercicioscontext';
 import { HistorialProvider } from './context/historialcontext';
-import { Inicio } from './pages/auth/inicio';
+import { Inicio } from './pages/inicio';
 import { LoginPage } from './pages/auth/loginPage';
 import ProtectedRoute from './ProtectedRoute';
 import ProfilePage from './pages/auth/profilePage';
