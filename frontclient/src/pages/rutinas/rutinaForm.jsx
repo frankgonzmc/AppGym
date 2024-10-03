@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRutinas } from '../context/rutinascontext';
-import { useProgreso } from '../context/progresocontext'; // Asegúrate de importar el contexto de progreso
-import { getEjerciciosRequest } from '../api/ejercicio';
-import { useAuth } from '../context/authcontext';
-import { useDetallesRutina } from '../context/detallerutinacontext';
-import { useHistorial } from '../context/historialcontext'; // Asegúrate de importar el contexto de historial
-import { Card } from '../components/ui';
+import { useRutinas } from '../../context/rutinascontext';
+import { useProgreso } from '../../context/progresocontext'; // Asegúrate de importar el contexto de progreso
+import { getEjerciciosRequest } from '../../api/ejercicio';
+import { useAuth } from '../../context/authcontext';
+import { useDetallesRutina } from '../../context/detallerutinacontext';
+import { useHistorial } from '../../context/historialcontext'; // Asegúrate de importar el contexto de historial
+import { Card } from '../../components/ui';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();

@@ -1,4 +1,4 @@
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
 
 function ProfilePage() {

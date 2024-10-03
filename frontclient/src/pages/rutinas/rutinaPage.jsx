@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useRutinas } from "../context/rutinascontext";
-import { RutinaCard } from "../components/rutina/rutinaCard";
+import { useRutinas } from "../../context/rutinascontext";
+import { RutinaCard } from "../../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from '../api/axios'
+import axios from '../../api/axios'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');

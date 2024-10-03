@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useEjercicios } from "../context/ejercicioscontext";
-import { EjercicioCard } from "../components/ejercicio/ejercicioCard";
+import { useEjercicios } from "../../context/ejercicioscontext";
+import { EjercicioCard } from "../../components/ejercicio/ejercicioCard";
 import { ImFileEmpty } from "react-icons/im";
 import { Link } from "react-router-dom";
 

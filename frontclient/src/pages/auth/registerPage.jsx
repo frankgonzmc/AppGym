@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../../context/authcontext";
 import fondo from "../imagenes/magym.jpg";
 import '../css/register.css';
 import { useEffect } from "react";

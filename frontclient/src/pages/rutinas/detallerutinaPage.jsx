@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getRutinaRequest } from '../api/rutina'; // Asegúrate de que esta función esté definida
-import EjercicioCard from '../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
+import { getRutinaRequest } from '../../api/rutina'; // Asegúrate de que esta función esté definida
+import EjercicioCard from '../../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
 
 const DetallerutinaPage = () => {
   const [loading, setLoading] = useState(true);
