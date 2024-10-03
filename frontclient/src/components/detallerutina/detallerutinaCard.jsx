@@ -59,6 +59,7 @@ export default function DetalleRutinaCard({ detalles }) {
         borderColor: ejercicioCompletado ? 'green' : 'gray', // Borde verde si completado, gris si no
         borderWidth: '2px',
         borderStyle: 'solid',
+        padding: '15px',
       }}
     >
       <div className="exercise-card">
