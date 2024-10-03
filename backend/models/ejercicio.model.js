@@ -14,7 +14,7 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    nivel:{
+    nivel: {
         type: String,
         required: true,
     },
@@ -22,7 +22,7 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    series:{
+    series: {
         type: Number,
         required: true,
     },
@@ -42,7 +42,7 @@ const ejercicioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    imagen:{
+    imagen: {
         type: String,
         required: false,
     },
@@ -50,8 +50,16 @@ const ejercicioSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    seriesCompletar: { // Nuevo campo
+        type: Number,
+        required: false,
+    },
+    seriesProgreso: { // Nuevo campo
+        type: Number,
+        default: 0, // Comienza en 0
+    },
 }, {
     timestamps: true,
 })
 
-export default mongoose.model("Ejercicio", ejercicioSchema)
+export default mongoose.model("Ejercicio", ejercicioSchema);

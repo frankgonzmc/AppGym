@@ -4,15 +4,15 @@ import { Button, Card, ProgressBar } from 'react-bootstrap';
 export default function DetalleRutinaCard({ detalles }) {
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
-  const [seriesCompletadas, setSeriesCompletadas] = useState(0);
+  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.ejercicio.seriesProgreso || 0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
 
   const intervalRef = useRef(null);
 
-  // Cargar el progreso del usuario desde el almacenamiento local al montar el componente
   useEffect(() => {
+    // Cargar el progreso del usuario desde el almacenamiento local
     const progresoGuardado = JSON.parse(localStorage.getItem(`progreso_${detalles.ejercicio.codigo}`));
     if (progresoGuardado) {
       setDuracionRestante(progresoGuardado.duracionRestante || detalles.ejercicio.duracion);
@@ -47,20 +47,23 @@ export default function DetalleRutinaCard({ detalles }) {
           } else {
             setIsDescanso(false);
             setDuracionRestante(detalles.ejercicio.duracion);
-            setSeriesCompletadas(prev => prev + 1);
-
-            if (seriesCompletadas + 1 > detalles.ejercicio.series) {
-              clearInterval(intervalRef.current);
-              setEjercicioCompletado(true);
-              alert('¡Ejercicio completado!');
-            }
+            setSeriesCompletadas(prev => {
+              const nuevasSeriesCompletadas = prev + 1;
+              // Verificar si se han completado todas las series
+              if (nuevasSeriesCompletadas >= detalles.ejercicio.seriesCompletar) {
+                clearInterval(intervalRef.current);
+                setEjercicioCompletado(true);
+                alert('¡Ejercicio completado!');
+              }
+              return nuevasSeriesCompletadas;
+            });
           }
         }
       }, 1000);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, detalles.ejercicio.duracion, detalles.ejercicio.descanso, detalles.ejercicio.series, ejercicioCompletado]);
+  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, detalles.ejercicio.duracion, detalles.ejercicio.descanso, detalles.ejercicio.seriesCompletar, ejercicioCompletado]);
 
   const handlePausarReanudar = () => {
     setIsPausado(prev => !prev);
@@ -100,7 +103,7 @@ export default function DetalleRutinaCard({ detalles }) {
           />
         )}
 
-        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
+        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.seriesCompletar}</p>
 
         <div className="d-flex justify-content-between">
           <Button onClick={handlePausarReanudar}>
