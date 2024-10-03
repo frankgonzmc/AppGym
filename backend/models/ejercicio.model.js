@@ -52,7 +52,7 @@ const ejercicioSchema = new mongoose.Schema({
     },
     seriesCompletar: { // Nuevo campo
         type: Number,
-        required: false,
+        required: true,
     },
     seriesProgreso: { // Nuevo campo
         type: Number,
