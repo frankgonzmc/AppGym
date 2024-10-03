@@ -49,7 +49,7 @@ export default function DetalleRutinaCard({ detalles }) {
             setDuracionRestante(detalles.ejercicio.duracion);
             setSeriesCompletadas(prev => prev + 1);
 
-            if (seriesCompletadas + 1 >= detalles.ejercicio.series) {
+            if (seriesCompletadas + 1 > detalles.ejercicio.series) {
               clearInterval(intervalRef.current);
               setEjercicioCompletado(true);
               alert('¡Ejercicio completado!');
