@@ -32,7 +32,6 @@ app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
-app.use("/api", historialRoutes)
 app.use("/api", detallerutinaRoutes);
 
 // Configurar ruta estática para acceder a las imágenes subidas
