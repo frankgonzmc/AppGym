@@ -1,75 +1,46 @@
-import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useEjercicios } from '../../context/ejercicioscontext';
-import { Button, ButtonLink, Card } from "../../components/ui";
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getRutinaRequest } from '../../api/rutina'; // Asegúrate de que esta función esté definida
+import EjercicioCard from '../../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
 
-function HistorialPage() {
+const HistorialPage = () => {
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const [rutina, setRutina] = useState(null);
+  const [detalles, setDetalles] = useState([]);
 
-    const { register, handleSubmit, setValue } = useForm();
-    const navigate = useNavigate();
-    const { createEjercicio, getEjercicio, updateEjercicio } = useEjercicios(); // Obtener la función para crear un ejercicio
-    const params = useParams();
-    const estado = "En Progreso"
+  useEffect(() => {
+    const fetchRutina = async () => {
+      setLoading(true);
+      try {
+        const res = await getRutinaRequest(id);
+        setRutina(res.data.rutina);
+        setDetalles(res.data.detalles);
+      } catch (error) {
+        console.error('Error al obtener la rutina:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRutina();
+  }, []);
 
-    useEffect(() => {
-        async function loadEjercicio() {
-            if (params.id) {
-                const ejercicio = await getEjercicio(params.id);
-                console.log(ejercicio)
-                setValue('nombre', ejercicio.nombre);
-                setValue('descripcion', ejercicio.descripcion);
-                setValue('nivel', ejercicio.nivel);
-                setValue('categoria', ejercicio.categoria);
-            }
-        }
-        loadEjercicio();
-    }, [])
-
-    const onSubmit = handleSubmit((data) => {
-
-        if (params.id) {
-            updateEjercicio(params.id, data)
-        } else {
-            createEjercicio(data);
-        }
+  if (loading) return <div>Cargando...</div>;
 
 
-        navigate('/ejercicios')
-    })
+  return (
 
-    return (
-        <Card>
-            <form onSubmit={onSubmit}></form>
-            <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
-                <form onSubmit={onSubmit}>
+    <div className="container mx-auto p-4">
+      <h2 className="text-3xl font-bold">{rutina.nombre}</h2>
+      <p className="text-lg">{rutina.descripcion}</p>
+      <h3 className="text-2xl mt-4">Ejercicios Asociados</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {detalles.map(detalle => (
+          <EjercicioCard key={detalle._id} detalles={detalle} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-                    <input type="text" placeholder="Nombre del ejercicio" {...register('nombre')} className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2' />
-
-                    <textarea rows="3" placeholder="Descripción del ejercicio" {...register('descripcion')} className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'></textarea>
-
-                    <input type="text" placeholder="Nivel" {...register('nivel')} className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2' />
-
-                    <input type="hidden" {...register('estado')} value={estado} />
-
-                    <select {...register('categoria')} className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'>
-                        <option value="">Seleccione una categoría</option>
-                        <option value="Fuerza">Fuerza</option>
-                        <option value="Cardio">Cardio</option>
-                        <option value="Flexibilidad">Flexibilidad</option>
-                        <option value="Postura">Postura</option>
-                        <option value="Salud">Salud</option>
-                        <option value="Pérdida de Peso">Pérdida de Peso</option>
-                        <option value="Musculación">Musculación</option>
-                        <option value="Entrenamiento Funcional">Entrenamiento Funcional</option>
-                        <option value="Deportes">Deportes</option>
-                        <option value="Recuperación">Recuperación</option>
-                    </select>
-                    <button className="btn btn-primary rounded-md my-2" type="submit">Guardar Ejercicio</button>
-                </form>
-            </div>
-        </Card>
-    )
-}
-
-export default HistorialPage
+export default HistorialPage;

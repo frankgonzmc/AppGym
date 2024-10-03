@@ -223,6 +223,7 @@ export const getRutina = async (req, res) => {
         const detalles = await DetallesRutina.find({ rutina: req.params.id }).populate('ejercicio');
         res.json({ rutina, detalles });
     } catch (error) {
+        console.error("Error al obtener rutina:", error);
         res.status(500).json({ message: "Error al obtener rutina", error });
     }
 };
