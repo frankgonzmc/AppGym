@@ -1,11 +1,11 @@
 import { useEjercicios } from "../../context/ejercicioscontext";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, ButtonLink, Card } from "../ui";
 
 
 export function EjercicioCard({ ejercicio }) {
   const { deleteEjercicio } = useEjercicios();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Card>
@@ -36,7 +36,7 @@ export function EjercicioCard({ ejercicio }) {
       <footer>
         <div className="flex gap-x-2 items-center">
           <button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Delete</button>
-          <button className="btn btn-primary" onClick={() => history.push(`/ejercicio/${ejercicio._id}`)} >Editar Ejercicio</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/ejercicio/${ejercicio._id}`)}>Editar Ejercicio</button>
         </div>
       </footer>
     </Card>
