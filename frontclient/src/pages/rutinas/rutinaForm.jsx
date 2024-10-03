@@ -6,14 +6,12 @@ import { useProgreso } from '../../context/progresocontext'; // Asegúrate de im
 import { getEjerciciosRequest } from '../../api/ejercicio';
 import { useAuth } from '../../context/authcontext';
 import { useDetallesRutina } from '../../context/detallerutinacontext';
-import { useHistorial } from '../../context/historialcontext'; // Asegúrate de importar el contexto de historial
 import { Card } from '../../components/ui';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
   const { createRutina, getRutina, updateRutina } = useRutinas();
   const { createProgreso } = useProgreso(); // Usa el contexto para crear progreso
-  const { createHistorial } = useHistorial();
   const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
 
@@ -89,14 +87,6 @@ const RutinaForm = () => {
         };
 
         await createProgreso(progresoData);
-
-        const historialData = {
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-        };
-
-        await createHistorial(historialData);
 
         navigate('/rutinas');
       }
