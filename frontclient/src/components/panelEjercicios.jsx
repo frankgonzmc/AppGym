@@ -2,7 +2,7 @@ import { useAuth } from "../context/authcontext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function panelEjercicios() {
+export function panelEjercicios() {
 
     const { user } = useAuth();
     const [exercises, setExercises] = useState([]);
@@ -61,5 +61,3 @@ function panelEjercicios() {
         </div>
     )
 }
-
-export default panelEjercicios
