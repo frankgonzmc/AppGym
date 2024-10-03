@@ -1,15 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Card, ProgressBar } from 'react-bootstrap'; // Importar react-bootstrap
+import { Button, Card, ProgressBar } from 'react-bootstrap';
 
 export default function DetalleRutinaCard({ detalles }) {
-  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion); // Duración inicial
-  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso); // Descanso inicial
+  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
+  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
   const [seriesCompletadas, setSeriesCompletadas] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState(false); // Estado para indicar si el ejercicio está completo
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
 
   const intervalRef = useRef(null);
+
+  // Cargar el progreso del usuario desde el almacenamiento local al montar el componente
+  useEffect(() => {
+    const progresoGuardado = JSON.parse(localStorage.getItem(`progreso_${detalles.ejercicio.codigo}`));
+    if (progresoGuardado) {
+      setDuracionRestante(progresoGuardado.duracionRestante || detalles.ejercicio.duracion);
+      setDescansoRestante(progresoGuardado.descansoRestante || detalles.ejercicio.descanso);
+      setSeriesCompletadas(progresoGuardado.seriesCompletadas || 0);
+      setEjercicioCompletado(progresoGuardado.ejercicioCompletado || false);
+    }
+  }, [detalles.ejercicio.codigo]);
+
+  useEffect(() => {
+    localStorage.setItem(`progreso_${detalles.ejercicio.codigo}`, JSON.stringify({
+      duracionRestante,
+      descansoRestante,
+      seriesCompletadas,
+      ejercicioCompletado,
+    }));
+  }, [duracionRestante, descansoRestante, seriesCompletadas, ejercicioCompletado, detalles.ejercicio.codigo]);
 
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
@@ -19,20 +39,19 @@ export default function DetalleRutinaCard({ detalles }) {
             setDuracionRestante(prev => prev - 1);
           } else {
             setIsDescanso(true);
-            setDescansoRestante(detalles.ejercicio.descanso); // Reinicia el descanso
+            setDescansoRestante(detalles.ejercicio.descanso);
           }
         } else {
           if (descansoRestante > 0) {
             setDescansoRestante(prev => prev - 1);
           } else {
             setIsDescanso(false);
-            setDuracionRestante(detalles.ejercicio.duracion); // Reinicia la duración
+            setDuracionRestante(detalles.ejercicio.duracion);
             setSeriesCompletadas(prev => prev + 1);
 
-            // Modificar la condición para marcar el ejercicio como completado
             if (seriesCompletadas + 1 >= detalles.ejercicio.series) {
               clearInterval(intervalRef.current);
-              setEjercicioCompletado(true); // Marcar el ejercicio como completado
+              setEjercicioCompletado(true);
               alert('¡Ejercicio completado!');
             }
           }
@@ -53,13 +72,14 @@ export default function DetalleRutinaCard({ detalles }) {
     setSeriesCompletadas(0);
     setIsPausado(true);
     setIsDescanso(false);
-    setEjercicioCompletado(false); // Resetear el estado de ejercicio completado
+    setEjercicioCompletado(false);
+    localStorage.removeItem(`progreso_${detalles.ejercicio.codigo}`); // Limpiar el progreso guardado
   };
 
   return (
     <Card
       style={{
-        borderColor: ejercicioCompletado ? 'green' : 'gray', // Borde verde si completado, gris si no
+        borderColor: ejercicioCompletado ? 'green' : 'gray',
         borderWidth: '12px',
         borderStyle: 'solid',
         padding: '25px',
