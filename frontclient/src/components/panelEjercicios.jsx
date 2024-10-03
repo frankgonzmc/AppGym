@@ -1,8 +1,9 @@
 import { useAuth } from "../context/authcontext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import '../css/panelElements.css';
 
-export function panelEjercicios() {
+export function PanelEjercicios() {
 
     const { user } = useAuth();
     const [exercises, setExercises] = useState([]);
