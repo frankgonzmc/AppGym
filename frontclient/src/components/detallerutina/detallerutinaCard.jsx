@@ -3,19 +3,19 @@ import { Card } from "../ui";
 import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "react-bootstrap"; // Importamos el ProgressBar de react-bootstrap
 
-export default function RutinaCard({ rutina }) {
+export function RutinaCard({ rutina }) {
   const [seriesActual, setSeriesActual] = useState(0);
   const [duracionRestante, setDuracionRestante] = useState(rutina.duracion); // Duración del ejercicio
   const [descansoRestante, setDescansoRestante] = useState(rutina.descanso); // Descanso entre series
   const [enDescanso, setEnDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false); // Estado del ejercicio
   const [progreso, setProgreso] = useState(0);
-
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
-
+    
     // Verificar si el ejercicio se completó
     if (seriesActual >= rutina.series) {
       setEjercicioCompletado(true); // Marcar como completado
