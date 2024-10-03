@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Asegúrate de importar los estilos de la librería
-import '../css/calendarPage.css'; // Tu propio archivo CSS para personalizar el calendario
+import '../../css/calendarPage.css'; // Tu propio archivo CSS para personalizar el calendario
 
 function CalendarPage() {
   const [value, setValue] = useState(new Date());

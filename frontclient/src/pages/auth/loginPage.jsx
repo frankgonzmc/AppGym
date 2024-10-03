@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 //Importar archivos CSS
-import '../css/login.css';
+import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../imagenes/logo.png";
