@@ -38,15 +38,20 @@ const RutinaForm = () => {
   useEffect(() => {
     async function loadRutina() {
       if (params.id) {
-        const rutina = await getRutina(params.id);
-        console.log(rutina);
-        setValue('nombre', rutina.nombre);
-        setValue('descripcion', rutina.descripcion);
-        setSelectedEjercicios(rutina.detalles.map(detalle => detalle.ejercicio));
+        const data = await getRutina(params.id);
+        console.log(data); // Revisa la estructura
+
+        if (data && data.rutina) {
+          setValue('nombre', data.rutina.nombre);
+          setValue('descripcion', data.rutina.descripcion);
+          setSelectedEjercicios(data.detalles.map(detalle => detalle.ejercicio._id));
+          console.log("Valores establecidos:", data.rutina.nombre, data.rutina.descripcion);
+        }
       }
     }
     loadRutina();
   }, [params.id, setValue]);
+
 
   const onSubmit = handleSubmit(async (data) => {
     const { nombre, descripcion } = data; // Obtener nombre y descripción del formulario

@@ -230,14 +230,23 @@ export const getRutina = async (req, res) => {
 // Actualizar una rutina existente
 export const updateRutina = async (req, res) => {
     try {
-        const rutina = await Rutinas.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
-        });
+        // Validar que el ID es correcto
+        const rutinaId = req.params.id;
+        if (!rutinaId) return res.status(400).json({ message: "ID de rutina es requerido." });
+
+        // Validar campos requeridos
+        const { nombre, descripcion } = req.body;
+        const updateData = {};
+        if (nombre) updateData.nombre = nombre;
+        if (descripcion) updateData.descripcion = descripcion;
+
+        const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
 
         res.json(rutina);
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar rutina", error });
+        console.error("Error al actualizar rutina:", error);
+        res.status(500).json({ message: "Error al actualizar rutina", error: error.message });
     }
 };
 
