@@ -12,7 +12,7 @@ function Navbar() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
     setShowDropdown(true);
-  }
+  };
 
   useEffect(() => {
     let timer;
@@ -28,30 +28,31 @@ function Navbar() {
     <nav className="bg-zinc-700 my-3 p-3 rounded-lg d-flex justify-content-between align-items-center">
       <div className="d-flex align-items-center">
         <Link to="/"><h1 className="text-2xl font-bold text-white mt-1 mr-4">APP GYM</h1></Link>
+      </div>
+      <div className="d-flex align-items-center">
         {isAuthenticated && (
           <NavDropdown
             title={`Nivel: ${user.nivel} | Bienvenido: ${user.username}`}
             id="nav-dropdown"
             show={dropdownOpen}
             onToggle={toggleDropdown}
-            className="text-2x1 text-white text-left"
+            className="text-2xl text-white text-right"
           >
             <NavDropdown.Item as={Link} to="/profile">Perfil</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
           </NavDropdown>
         )}
+        <Nav>
+          {!isAuthenticated ? (
+            <>
+              <Nav.Link as={Link} to="/login" className="text-white">Login</Nav.Link>
+              <Nav.Link as={Link} to="/register" className="text-white">Register</Nav.Link>
+            </>
+          ) : null}
+        </Nav>
       </div>
-      <Nav>
-        {!isAuthenticated ? (
-          <>
-            <Nav.Link as={Link} to="/login" className="text-white">Login</Nav.Link>
-            <Nav.Link as={Link} to="/register" className="text-white">Register</Nav.Link>
-          </>
-        ) : null}
-      </Nav>
     </nav>
   );
 }
 
 export default Navbar;
-
