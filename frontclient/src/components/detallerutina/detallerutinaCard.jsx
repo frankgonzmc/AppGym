@@ -28,9 +28,12 @@ export default function DetalleRutinaCard({ detalles }) {
             setIsDescanso(false);
             setDuracionRestante(detalles.ejercicio.duracion); // Reinicia la duración
             setSeriesCompletadas(prev => prev + 1);
-            if (seriesCompletadas + 1 === detalles.ejercicio.series) {
+
+            // Modificar la condición para marcar el ejercicio como completado
+            if (seriesCompletadas + 1 >= detalles.ejercicio.series) {
               clearInterval(intervalRef.current);
               setEjercicioCompletado(true); // Marcar el ejercicio como completado
+              alert('¡Ejercicio completado!');
             }
           }
         }
@@ -63,7 +66,7 @@ export default function DetalleRutinaCard({ detalles }) {
       }}
     >
       <div className="exercise-card">
-        <h1 className='text-2xl text-slate-300 font-bold text-center'>{detalles.ejercicio.nombre}</h1>
+        <h1 className='text-2xl text-black font-bold text-center'>{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
