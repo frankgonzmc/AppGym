@@ -8,6 +8,17 @@ import {
 
 const DetalleRutinaContext = createContext();
 
+
+// Obtener detalles de rutina
+export const fetchDetallesRutina = async (id) => {
+    try {
+        const response = await getDetalleRutinaRequest(id);
+        return response.data; // Devuelve los detalles obtenidos
+    } catch (error) {
+        console.error("Error al obtener detalles de rutina:", error);
+    }
+};
+
 export const useDetallesRutina = () => {
     const context = useContext(DetalleRutinaContext);
     if (!context) throw new Error("useDetallesRutina debe estar dentro de un DetalleRutinaProvider");
@@ -26,6 +37,16 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+    // Obtener detalles de rutina
+    const fetchDetallesRutina = async (id) => {
+        try {
+            const response = await getDetalleRutinaRequest(id);
+            return response.data; // Devuelve los detalles obtenidos
+        } catch (error) {
+            console.error("Error al obtener detalles de rutina:", error);
+        }
+    };
+
     const createDetalleRutina = async (detalle) => {
         try {
             const res = await createDetalleRutinaRequest(detalle);
@@ -36,6 +57,21 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+    // Eliminar detalle de rutina
+    const deleteDetalleRutina = async (id) => {
+        try {
+            const res = await deleteDetalleRutinaRequest(id);
+            if (res.status === 204) {
+                console.log("Detalle eliminado con éxito");
+            }
+        } catch (error) {
+            console.error("Error al eliminar detalle de rutina:", error);
+        }
+    };
+
+
+
+    /*
     const deleteDetalleRutina = async (id) => {
         try {
             const res = await deleteDetalleRutinaRequest(id);
@@ -45,13 +81,14 @@ export function DetalleRutinaProvider({ children }) {
         } catch (error) {
             console.log(error);
         }
-    };
+    };*/
 
     const updateDetalleRutina = async (id, detalle) => {
         try {
-            await updateDetalleRutinaRequest(id, detalle);
+            const response = await updateDetalleRutinaRequest(id, detalle);
+            return response.data; // Devuelve el detalle actualizado
         } catch (error) {
-            console.error(error);
+            console.error("Error al actualizar detalle de rutina:", error);
         }
     };
 
@@ -62,6 +99,7 @@ export function DetalleRutinaProvider({ children }) {
                 createDetalleRutina,
                 deleteDetalleRutina,
                 getDetalleRutina,
+                fetchDetallesRutina,
                 updateDetalleRutina,
             }}>
             {children}
