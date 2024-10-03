@@ -1,5 +1,5 @@
 import { useDetallesRutina } from "../../context/detallerutinacontext";
-import { Button, ButtonLink, Card } from "../ui";
+import { Card } from "../ui";
 
 export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
@@ -7,7 +7,7 @@ export default function DetalleRutinaCard({ detalles }) {
   return (
     <Card>
       <header className="flex justify-between">
-        <h1 className="text-2xl font-bold text-center">{detalles.ejercicio.nombre}</h1>
+        <h1 className="text-2xl text-slate-300 font-bold text-center">{detalles.ejercicio.nombre}</h1>
       </header>
       <hr />
       <p className="text-slate-300">Descripción: {detalles.ejercicio.descripcion}</p>
@@ -16,7 +16,7 @@ export default function DetalleRutinaCard({ detalles }) {
       <p className="text-slate-300">Series: {detalles.ejercicio.series}</p>
       <p className="text-slate-300">Repeticiones: {detalles.ejercicio.repeticiones}</p>
       <p className="text-slate-300">Descanso: {detalles.ejercicio.descanso}</p>
-      <p>
+      <p className="text-slate-300">
         {detalles.createdAt &&
           new Date(detalles.createdAt).toLocaleDateString("en-US", {
             weekday: "long",
@@ -28,7 +28,8 @@ export default function DetalleRutinaCard({ detalles }) {
       <hr />
       <footer>
         <div className="flex gap-x-2 items-center">
-          <Button onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</Button>
+          <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
+          <button className="btn btn-succes">Iniciar Ejercicio</button>
         </div>
       </footer>
     </Card>

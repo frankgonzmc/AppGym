@@ -3,6 +3,8 @@ import { AuthProvider } from './context/authcontext';
 import { RutinaProvider } from './context/rutinascontext';
 import { EjercicioProvider } from './context/ejercicioscontext';
 import { HistorialProvider } from './context/historialcontext';
+import { ProgresoProvider } from './context/progresocontext';
+import { DetalleRutinaProvider } from './context/detallerutinacontext';
 import { Inicio } from './pages/inicio';
 import { LoginPage } from './pages/auth/loginPage';
 import ProtectedRoute from './ProtectedRoute';
@@ -18,8 +20,6 @@ import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
 import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ResetpasswordPage from './pages/auth/resetpasswordPage';
-import { ProgresoProvider } from './context/progresocontext';
-import { DetalleRutinaProvider } from './context/detallerutinacontext';
 
 function App() {
   return (
