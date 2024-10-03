@@ -1,8 +1,10 @@
 import { useRutinas } from "../../context/rutinascontext";
-import { Button, ButtonLink, Card } from "../ui";
+import { Card } from "../ui";
+import { useNavigate } from 'react-router-dom';
 
 export function RutinaCard({ rutina }) {
   const { deleteRutina } = useRutinas();
+  const navigate = useNavigate();
 
   return (
     <Card>
@@ -24,11 +26,10 @@ export function RutinaCard({ rutina }) {
       <hr className="text-slate-300" />
       <footer>
         <div className="flex gap-x-3 items-center">
-          <ButtonLink to={`/rutinas/${rutina._id}`}>Edit</ButtonLink>
-          <ButtonLink to={`/detalles-rutinas/${rutina._id}`}>Ver Detalles</ButtonLink>
+          <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Editar</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/detalles-rutinas/${rutina._id}`)}>Ver Detalles</button>
         </div>
       </footer>
     </Card>
   );
 }
-/* <Button onClick={() => deleteRutina(rutina._id)}>Delete</Button> */
