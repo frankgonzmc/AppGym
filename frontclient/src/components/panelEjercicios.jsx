@@ -56,7 +56,7 @@ export function PanelEjercicios() {
                     <p className="text-white mb-2">Duración: {currentExercise?.duracion || "N/A"} segundos</p>
                     <p className="text-white mb-2">Descanso: {currentExercise?.descanso || "N/A"} segundos</p>
                     <p className="text-white mb-2">Repeticiones: {currentExercise?.repeticiones || "N/A"}</p>
-                    <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-full h-68 object-cover mt-4 rounded-md" />
+                    <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-auto h-auto object-cover mt-4 rounded-md" />
                 </div>
             </section>
         </div>
