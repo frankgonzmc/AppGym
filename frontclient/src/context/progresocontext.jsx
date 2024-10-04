@@ -22,10 +22,22 @@ export function ProgresoProvider({ children }) {
     const [errors, setErrors] = useState([]);
 
     const getProgreso = async (id) => {
-        const progreso = await getProgresoRequest(id);
-        const rutina = await getRutinaRequest(id); // Aquí usamos getRutinaRequest
-        return { progreso, ejercicios: rutina.detalles.map(detalle => detalle.ejercicio) };
+        try {
+            const progreso = await getProgresoRequest(id);
+            const rutina = await getRutinaRequest(id);
+
+            // Si 'rutina' o 'detalles' no existen, devuelve un array vacío
+            const ejercicios = rutina?.detalles?.length
+                ? rutina.detalles.map(detalle => detalle.ejercicio)
+                : [];
+
+            return { progreso, ejercicios };
+        } catch (error) {
+            console.error("Error al obtener progreso o rutina:", error);
+            return { progreso: null, ejercicios: [] };
+        }
     };
+
 
 
     const createProgreso = async (progreso) => {
