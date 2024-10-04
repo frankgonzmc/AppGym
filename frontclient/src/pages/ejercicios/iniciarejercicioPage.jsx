@@ -108,8 +108,8 @@ import { useProgreso } from '../../context/progresocontext'; // Importamos el co
 
 export default function IniciarejercicioPage({ location }) {
   const { updateProgresoEjercicio } = useProgreso(); // Usamos la función para actualizar progreso
-  const detalles = location.state.detalles; // Asegúrate de obtener los detalles correctamente
-
+  const detalles = location.state?.detalles; // Usa optional chaining
+  
   // Si no hay detalles (caso de acceder directamente a la URL sin haber pasado datos):
   if (!detalles) {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
