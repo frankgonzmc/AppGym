@@ -46,7 +46,7 @@ function App() {
                     <Route path='/progreso' element={<ProgresoPage />} />
                     <Route path='/progreso/:id' element={<ProgresoPage />} />
 
-                    <Route path='/inicar-ejercicios' element={<IniciarejercicioPage />} />
+                    <Route path='/iniciar-ejercicios' element={<IniciarejercicioPage />} />
                     <Route path='/ejercicios' element={<EjercicioPage />} />
                     <Route path='/add-ejercicios' element={<EjercicioForm />} />
                     <Route path='/ejercicio/:id' element={<EjercicioForm />} />
