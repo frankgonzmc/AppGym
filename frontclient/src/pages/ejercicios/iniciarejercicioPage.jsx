@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
+import { useProgreso } from '../../context/progresocontext'; // Importamos el contexto de progreso
 
 export default function IniciarejercicioPage({ detalles }) {
+  const { updateProgresoEjercicio } = useProgreso(); // Usamos la función para actualizar progreso
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.ejercicio.seriesProgreso || 0);
@@ -11,26 +13,17 @@ export default function IniciarejercicioPage({ detalles }) {
 
   const intervalRef = useRef(null);
 
+  // Guardar el progreso del ejercicio
   useEffect(() => {
-    // Cargar el progreso del usuario desde el almacenamiento local
-    const progresoGuardado = JSON.parse(localStorage.getItem(`progreso_${detalles.ejercicio.codigo}`));
-    if (progresoGuardado) {
-      setDuracionRestante(progresoGuardado.duracionRestante || detalles.ejercicio.duracion);
-      setDescansoRestante(progresoGuardado.descansoRestante || detalles.ejercicio.descanso);
-      setSeriesCompletadas(progresoGuardado.seriesCompletadas || 0);
-      setEjercicioCompletado(progresoGuardado.ejercicioCompletado || false);
+    if (seriesCompletadas > 0) {
+      updateProgresoEjercicio(detalles.ejercicio._id, {
+        seriesCompletadas,
+        ejercicioCompletado,
+      });
     }
-  }, [detalles.ejercicio.codigo]);
+  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles.ejercicio._id]);
 
-  useEffect(() => {
-    localStorage.setItem(`progreso_${detalles.ejercicio.codigo}`, JSON.stringify({
-      duracionRestante,
-      descansoRestante,
-      seriesCompletadas,
-      ejercicioCompletado,
-    }));
-  }, [duracionRestante, descansoRestante, seriesCompletadas, ejercicioCompletado, detalles.ejercicio.codigo]);
-
+  // Temporizador y lógica de descanso
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
       intervalRef.current = setInterval(() => {
@@ -47,24 +40,21 @@ export default function IniciarejercicioPage({ detalles }) {
           } else {
             setIsDescanso(false);
             setDuracionRestante(detalles.ejercicio.duracion);
-            setSeriesCompletadas(prev => {
-              const nuevasSeriesCompletadas = prev + 1;
-              // Verificar si se han completado todas las series
-              if (nuevasSeriesCompletadas >= detalles.ejercicio.seriesCompletar) {
-                clearInterval(intervalRef.current);
-                setEjercicioCompletado(true);
-                alert('¡Ejercicio completado!');
-              }
-              return nuevasSeriesCompletadas;
-            });
+            setSeriesCompletadas(prev => prev + 1);
+            if (seriesCompletadas + 1 >= detalles.ejercicio.seriesCompletar) {
+              clearInterval(intervalRef.current);
+              setEjercicioCompletado(true);
+              alert('¡Ejercicio completado!');
+            }
           }
         }
       }, 1000);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, detalles.ejercicio.duracion, detalles.ejercicio.descanso, detalles.ejercicio.seriesCompletar, ejercicioCompletado]);
+  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
 
+  // Control de pausa y reset
   const handlePausarReanudar = () => {
     setIsPausado(prev => !prev);
   };
@@ -76,40 +66,24 @@ export default function IniciarejercicioPage({ detalles }) {
     setIsPausado(true);
     setIsDescanso(false);
     setEjercicioCompletado(false);
-    localStorage.removeItem(`progreso_${detalles.ejercicio.codigo}`); // Limpiar el progreso guardado
   };
 
   return (
-    <Card
-      style={{
-        borderColor: ejercicioCompletado ? 'green' : 'gray',
-        borderWidth: '12px',
-        borderStyle: 'solid',
-        padding: '25px',
-      }}
-    >
+    <Card>
       <div className="exercise-card">
         <h1 className='text-2xl text-black font-bold text-center'>{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
-        <ProgressBar
-          now={(duracionRestante / detalles.ejercicio.duracion) * 100}
-          label={`${duracionRestante}s`}
-        />
+        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
         {isDescanso && (
-          <ProgressBar
-            variant="info"
-            now={(descansoRestante / detalles.ejercicio.descanso) * 100}
-            label={`Descanso: ${descansoRestante}s`}
-          />
+          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} label={`Descanso: ${descansoRestante}s`} />
         )}
-
         <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.seriesCompletar}</p>
 
         <div className="d-flex justify-content-between">
           <Button onClick={handlePausarReanudar}>
             {isPausado ? 'Iniciar' : 'Pausar'}
           </Button>
-          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
+          <Button variant="danger" onClick={handleReset}>
             Reset
           </Button>
         </div>

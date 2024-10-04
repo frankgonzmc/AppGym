@@ -25,7 +25,7 @@ export function ProgresoProvider({ children }) {
         const rutina = await getRutina(id); // Obtén los detalles de la rutina
         return { progreso, ejercicios: rutina.detalles.map(detalle => detalle.ejercicio) };
     };
-    
+
 
     const createProgreso = async (progreso) => {
         try {
@@ -56,6 +56,23 @@ export function ProgresoProvider({ children }) {
         }
     };
 
+    const updateProgresoEjercicio = (id, progresoEjercicio) => {
+        setProgreso((prevProgreso) => ({
+            ...prevProgreso,
+            [id]: progresoEjercicio, // actualizar progreso de un ejercicio en específico
+        }));
+    };
+
+    const updateProgresoRutina = (id, progresoRutina) => {
+        setRutinas((prevRutinas) =>
+            prevRutinas.map((rutina) =>
+                rutina._id === id
+                    ? { ...rutina, progreso: progresoRutina }
+                    : rutina
+            )
+        );
+    };
+
     return (
         <ProgresoContext.Provider
             value={{
@@ -65,6 +82,8 @@ export function ProgresoProvider({ children }) {
                 createProgreso,
                 deleteProgreso,
                 updateProgreso,
+                updateProgresoEjercicio,
+                updateProgresoRutina,
             }}
         >
             {children}

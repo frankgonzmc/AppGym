@@ -1,16 +1,16 @@
-import { useRutinas } from "../../context/rutinascontext";
 import { Card } from "../ui";
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap'; // Importamos el ProgressBar de react-bootstrap
+import { useProgreso } from "../../context/progresocontext"; // Importamos el contexto de progreso
 
 export function RutinaCard({ rutina }) {
-  const { deleteRutina } = useRutinas();
   const navigate = useNavigate();
+  const { progreso } = useProgreso(); // Obtenemos el progreso global
 
-  // Verifica si rutina.ejercicios existe y tiene ejercicios
-  const ejerciciosCompletados = rutina.ejercicios ? rutina.ejercicios.filter(e => e.estado === 'Completado').length : 0;
+  // Calcular ejercicios completados basados en el progreso
+  const ejerciciosCompletados = progreso[rutina._id]?.ejerciciosCompletados || 0;
   const totalEjercicios = rutina.ejercicios ? rutina.ejercicios.length : 0;
-  const progreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
+  const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
 
   return (
     <Card>
@@ -20,24 +20,11 @@ export function RutinaCard({ rutina }) {
       <hr className="text-slate-300" />
       <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
 
-      {/* Formatear la fecha */}
-      <p className="text-slate-300">
-        {rutina.date &&
-          new Date(rutina.date).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-      </p>
-
-      <hr className="text-slate-300" />
-
-      {/* Barra de progreso */}
+      {/* Progreso de la rutina */}
       <div className="my-3">
         <p className="text-slate-300">Progreso de la rutina:</p>
-        <ProgressBar now={progreso} label={`${Math.round(progreso)}%`} />
-        {progreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
+        <ProgressBar now={porcentajeProgreso} label={`${Math.round(porcentajeProgreso)}%`} />
+        {porcentajeProgreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
 
       <footer>
