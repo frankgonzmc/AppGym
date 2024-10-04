@@ -57,21 +57,6 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    // Eliminar detalle de rutina
-    const deleteDetalleRutina = async (id) => {
-        try {
-            const res = await deleteDetalleRutinaRequest(id);
-            if (res.status === 204) {
-                console.log("Detalle eliminado con éxito");
-            }
-        } catch (error) {
-            console.error("Error al eliminar detalle de rutina:", error);
-        }
-    };
-
-
-
-    /*
     const deleteDetalleRutina = async (id) => {
         try {
             const res = await deleteDetalleRutinaRequest(id);
@@ -81,7 +66,7 @@ export function DetalleRutinaProvider({ children }) {
         } catch (error) {
             console.log(error);
         }
-    };*/
+    };
 
     const updateDetalleRutina = async (id, detalle) => {
         try {
