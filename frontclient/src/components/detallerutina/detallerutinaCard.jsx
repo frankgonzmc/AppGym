@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap'; // Importamos el ProgressBar de react-bootstrap
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 
-export function RutinaCard({ rutina }) {
+export function DetallerutinaPage({ rutina }) {
   const { deleteDetalleRutina } = useDetallesRutina();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export function RutinaCard({ rutina }) {
             day: "numeric",
           })}
       </p>
-      
+
       <hr className="text-slate-300" />
 
       {/* Barra de progreso */}
