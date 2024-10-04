@@ -59,13 +59,10 @@ const RutinaForm = () => {
 
     try {
       if (params.id) {
-        try {
-          await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
-          console.log("Rutina actualizado");
-          navigate('/rutinas');
-        } catch (error) {
-          console.log(error);
-        }
+        
+        await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
+        console.log(params.id, { ...data, ejercicios: selectedEjercicios });
+        navigate('/rutinas');
 
       } else {
         const nuevaRutina = { user: user._id, nombre, descripcion };
