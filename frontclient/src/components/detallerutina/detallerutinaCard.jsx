@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "../ui";
 
 export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
+  const navigate = useNavigate();
 
   return (
     <Card>
