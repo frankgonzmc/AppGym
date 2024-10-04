@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { getRutinaRequest } from "../api/rutinas"; // Asegúrate de que la función esté definida correctamente
 import {
     getProgresoRequest,
     createProgresoRequest,
@@ -22,7 +23,7 @@ export function ProgresoProvider({ children }) {
 
     const getProgreso = async (id) => {
         const progreso = await getProgresoRequest(id);
-        const rutina = await getRutina(id); // Obtén los detalles de la rutina
+        const rutina = await getRutinaRequest(id); // Aquí usamos getRutinaRequest
         return { progreso, ejercicios: rutina.detalles.map(detalle => detalle.ejercicio) };
     };
 
