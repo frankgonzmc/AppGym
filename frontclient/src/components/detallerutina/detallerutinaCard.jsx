@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap'; // Importamos el ProgressBar de react-bootstrap
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 
-export function DetallerutinaPage({ rutina }) {
+export default function DetallerutinaPage({ rutina }) {
   const { deleteDetalleRutina } = useDetallesRutina();
   const navigate = useNavigate();
 
