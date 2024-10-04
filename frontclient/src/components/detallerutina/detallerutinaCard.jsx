@@ -1,119 +1,50 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, Card, ProgressBar } from 'react-bootstrap';
+import { Card } from "../ui";
+import { useNavigate } from 'react-router-dom';
+import { ProgressBar } from 'react-bootstrap'; // Importamos el ProgressBar de react-bootstrap
+import { useDetallesRutina } from "../../context/detallerutinacontext";
 
-export default function DetalleRutinaCard({ detalles }) {
-  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
-  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
-  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.ejercicio.seriesProgreso || 0);
-  const [isPausado, setIsPausado] = useState(true);
-  const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
+export function RutinaCard({ rutina }) {
+  const { deleteDetalleRutina } = useDetallesRutina();
+  const navigate = useNavigate();
 
-  const intervalRef = useRef(null);
-
-  useEffect(() => {
-    // Cargar el progreso del usuario desde el almacenamiento local
-    const progresoGuardado = JSON.parse(localStorage.getItem(`progreso_${detalles.ejercicio.codigo}`));
-    if (progresoGuardado) {
-      setDuracionRestante(progresoGuardado.duracionRestante || detalles.ejercicio.duracion);
-      setDescansoRestante(progresoGuardado.descansoRestante || detalles.ejercicio.descanso);
-      setSeriesCompletadas(progresoGuardado.seriesCompletadas || 0);
-      setEjercicioCompletado(progresoGuardado.ejercicioCompletado || false);
-    }
-  }, [detalles.ejercicio.codigo]);
-
-  useEffect(() => {
-    localStorage.setItem(`progreso_${detalles.ejercicio.codigo}`, JSON.stringify({
-      duracionRestante,
-      descansoRestante,
-      seriesCompletadas,
-      ejercicioCompletado,
-    }));
-  }, [duracionRestante, descansoRestante, seriesCompletadas, ejercicioCompletado, detalles.ejercicio.codigo]);
-
-  useEffect(() => {
-    if (!isPausado && !ejercicioCompletado) {
-      intervalRef.current = setInterval(() => {
-        if (!isDescanso) {
-          if (duracionRestante > 0) {
-            setDuracionRestante(prev => prev - 1);
-          } else {
-            setIsDescanso(true);
-            setDescansoRestante(detalles.ejercicio.descanso);
-          }
-        } else {
-          if (descansoRestante > 0) {
-            setDescansoRestante(prev => prev - 1);
-          } else {
-            setIsDescanso(false);
-            setDuracionRestante(detalles.ejercicio.duracion);
-            setSeriesCompletadas(prev => {
-              const nuevasSeriesCompletadas = prev + 1;
-              // Verificar si se han completado todas las series
-              if (nuevasSeriesCompletadas >= detalles.ejercicio.seriesCompletar) {
-                clearInterval(intervalRef.current);
-                setEjercicioCompletado(true);
-                alert('¡Ejercicio completado!');
-              }
-              return nuevasSeriesCompletadas;
-            });
-          }
-        }
-      }, 1000);
-    }
-
-    return () => clearInterval(intervalRef.current);
-  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, detalles.ejercicio.duracion, detalles.ejercicio.descanso, detalles.ejercicio.seriesCompletar, ejercicioCompletado]);
-
-  const handlePausarReanudar = () => {
-    setIsPausado(prev => !prev);
-  };
-
-  const handleReset = () => {
-    setDuracionRestante(detalles.ejercicio.duracion);
-    setDescansoRestante(detalles.ejercicio.descanso);
-    setSeriesCompletadas(0);
-    setIsPausado(true);
-    setIsDescanso(false);
-    setEjercicioCompletado(false);
-    localStorage.removeItem(`progreso_${detalles.ejercicio.codigo}`); // Limpiar el progreso guardado
-  };
+  // Calcular progreso basado en ejercicios completados
+  const ejerciciosCompletados = rutina.ejercicios.filter(e => e.estado === 'Completado').length;
+  const totalEjercicios = rutina.ejercicios.length;
+  const progreso = (ejerciciosCompletados / totalEjercicios) * 100;
 
   return (
-    <Card
-      style={{
-        borderColor: ejercicioCompletado ? 'green' : 'gray',
-        borderWidth: '12px',
-        borderStyle: 'solid',
-        padding: '25px',
-      }}
-    >
-      <div className="exercise-card">
-        <h1 className='text-2xl text-black font-bold text-center'>{detalles.ejercicio.nombre}</h1>
-        <p>{detalles.ejercicio.descripcion}</p>
-        <ProgressBar
-          now={(duracionRestante / detalles.ejercicio.duracion) * 100}
-          label={`${duracionRestante}s`}
-        />
-        {isDescanso && (
-          <ProgressBar
-            variant="info"
-            now={(descansoRestante / detalles.ejercicio.descanso) * 100}
-            label={`Descanso: ${descansoRestante}s`}
-          />
-        )}
+    <Card>
+      <header className="flex justify-between">
+        <h1 className="text-2xl text-slate-300 font-bold text-center">{rutina.nombre}</h1>
+      </header>
+      <hr className="text-slate-300" />
+      <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
 
-        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.seriesCompletar}</p>
+      {/* Formatear la fecha */}
+      <p className="text-slate-300">
+        {rutina.date &&
+          new Date(rutina.date).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+      </p>
+      
+      <hr className="text-slate-300" />
 
-        <div className="d-flex justify-content-between">
-          <Button onClick={handlePausarReanudar}>
-            {isPausado ? 'Iniciar' : 'Pausar'}
-          </Button>
-          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
-            Reset
-          </Button>
-        </div>
+      {/* Barra de progreso */}
+      <div className="my-3">
+        <p className="text-slate-300">Progreso de la rutina:</p>
+        <ProgressBar now={progreso} label={`${Math.round(progreso)}%`} />
+        {progreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
+      <footer>
+        <div className="flex gap-x-2 items-center">
+          <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/inicar-ejercicios`)}>Iniciar Ejercicio</button>
+        </div>
+      </footer>
     </Card>
   );
 }

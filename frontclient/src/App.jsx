@@ -18,6 +18,7 @@ import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
 import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ResetpasswordPage from './pages/auth/resetpasswordPage';
+import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                     <Route path='/progreso' element={<ProgresoPage />} />
                     <Route path='/progreso/:id' element={<ProgresoPage />} />
 
+                    <Route path='/inicar-ejercicios' element={<IniciarejercicioPage />} />
                     <Route path='/ejercicios' element={<EjercicioPage />} />
                     <Route path='/add-ejercicios' element={<EjercicioForm />} />
                     <Route path='/ejercicio/:id' element={<EjercicioForm />} />
