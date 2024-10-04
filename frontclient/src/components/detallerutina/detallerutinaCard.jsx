@@ -31,7 +31,7 @@ export default function DetalleRutinaCard({ detalles }) {
       <footer>
         <div className="flex gap-x-2 items-center">
           <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
-          <button className="btn btn-primary" onClick={() => navigate(`/inicar-ejercicios`)}>Iniciar Ejercicio</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/iniciar-ejercicios`, { state: { ejercicio: detalles.ejercicio } })}>Iniciar Ejercicio</button>
         </div>
       </footer>
     </Card>

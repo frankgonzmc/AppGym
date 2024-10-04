@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useProgreso } from '../../context/progresocontext'; // Importamos el contexto de progreso
+import { useLocation } from 'react-router-dom'; // Importamos useLocation
 
-export default function IniciarejercicioPage({ detalles }) {
+export default function IniciarejercicioPage() {
+  const { state } = useLocation(); // Usamos useLocation para acceder a los datos pasados por navigate
+  const { detalles } = state || {}; // Obtenemos detalles del ejercicio de la navegación
+
+  // Si no hay detalles (caso de acceder directamente a la URL sin haber pasado datos):
+  if (!detalles) {
+    return <div>Error: No se han encontrado los detalles del ejercicio</div>;
+  }
+
   const { updateProgresoEjercicio } = useProgreso(); // Usamos la función para actualizar progreso
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
