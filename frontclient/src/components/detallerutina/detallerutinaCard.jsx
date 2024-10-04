@@ -33,7 +33,7 @@ export default function DetalleRutinaCard({ detalles }) {
           <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
           <button
             className="btn btn-primary"
-            onClick={() => navigate(`/inicar-ejercicios`, { state: { detalles } })} // Asegúrate de pasar detalles aquí
+            onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })} // Asegúrate de pasar detalles aquí
           >
             Iniciar Ejercicio
           </button>
