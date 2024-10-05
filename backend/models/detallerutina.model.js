@@ -15,7 +15,7 @@ const detallesrutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0, // Comienza en 0
     },
-    repeticionesProgreso: { // Nuevo campo
+    ejerciciosCompletados: { // Nuevo campo
         type: Number,
         default: 0, // Comienza en 0
     },

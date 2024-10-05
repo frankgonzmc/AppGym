@@ -6,6 +6,15 @@ export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
   const navigate = useNavigate();
 
+  const handleDelete = async () => {
+    try {
+      await deleteDetalleRutina(detalles.ejercicio._id); // Asegúrate de que el ID sea correcto
+    } catch (error) {
+      console.error("Error al eliminar el ejercicio:", error); // Manejo de errores
+      alert("Error al eliminar el ejercicio. Intenta nuevamente."); // Mensaje para el usuario
+    }
+  };
+
   return (
     <Card>
       <header className="flex justify-between">
@@ -21,11 +30,13 @@ export default function DetalleRutinaCard({ detalles }) {
       <hr className="text-slate-300" />
       <footer>
         <div className="flex gap-x-2 items-center">
-          <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
-          <button className="btn btn-primary" onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })}>
+          <button className="btn btn-danger" onClick={handleDelete}>
+            Delete
+          </button>
+          <button className="btn btn-success" onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })}>
             Iniciar Ejercicio
           </button>
-          <p className='flex justify-between text-2xl text-slate-300 font-bold'>Estado: {detalles.estado}</p>
+          <p className='text-slate-300 font-bold'>Estado: {detalles.estado}</p>
         </div>
       </footer>
     </Card>
