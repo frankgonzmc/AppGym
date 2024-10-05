@@ -55,3 +55,32 @@ export const deleteDetalleRutina = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar detalle", error });
     }
 };
+
+export const actualizarProgreso = async (req, res) => {
+    const { rutinaId, ejercicioId, series, repeticiones } = req.body;
+
+    try {
+        const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId });
+
+        if (!detalle) {
+            return res.status(404).json({ message: "Detalle no encontrado" });
+        }
+
+        detalle.seriesProgreso += series;
+        detalle.repeticionesProgreso += repeticiones;
+
+        if (detalle.seriesProgreso >= detalle.ejercicio.series && detalle.repeticionesProgreso >= detalle.ejercicio.repeticiones) {
+            detalle.estado = 'Completado';
+        } else if (detalle.seriesProgreso > 0 || detalle.repeticionesProgreso > 0) {
+            detalle.estado = 'En Progreso';
+        } else {
+            detalle.estado = 'Pendiente';
+        }
+
+        await detalle.save();
+
+        res.status(200).json(detalle);
+    } catch (error) {
+        res.status(500).json({ message: "Error actualizando el progreso", error });
+    }
+};

@@ -15,6 +15,10 @@ const rutinaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    estado: {
+        type: String,
+        default: 'Pendiente',
+    },
     date: {
         type: Date,
         default: Date.now,

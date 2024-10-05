@@ -50,14 +50,6 @@ const ejercicioSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    seriesCompletar: { // Nuevo campo
-        type: Number,
-        required: true,
-    },
-    seriesProgreso: { // Nuevo campo
-        type: Number,
-        default: 0, // Comienza en 0
-    },
 }, {
     timestamps: true,
 })

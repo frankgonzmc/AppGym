@@ -11,6 +11,18 @@ const detallesrutinaSchema = new mongoose.Schema({
         ref: 'Ejercicio',
         required: true,
     },
+    seriesProgreso: { // Nuevo campo
+        type: Number,
+        default: 0, // Comienza en 0
+    },
+    repeticionesProgreso: { // Nuevo campo
+        type: Number,
+        default: 0, // Comienza en 0
+    },
+    estado:{
+        type: String,
+        default: 'Pendiente', // Por defecto, todos los detalles de rutina están pendientes de completar
+    },
     fecha: {
         type: Date,
         default: Date.now,

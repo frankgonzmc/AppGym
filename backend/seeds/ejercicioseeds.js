@@ -9,7 +9,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Principiante",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -23,7 +22,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -37,7 +35,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Principiante",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -51,7 +48,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Cardio",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -65,7 +61,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -79,7 +74,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -93,7 +87,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Principiante",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -107,7 +100,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Cardio",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -121,7 +113,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -135,7 +126,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Cardio",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -149,7 +139,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -163,7 +152,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -177,7 +165,6 @@ const ejerciciosPredeterminados = [
         "nivel": "Intermedio",
         "categoria": "Fuerza",
         "series": 4,
-        "seriesCompletar": 4,
         "duracion": 20,
         "descanso": 10,
         "repeticiones": 10,
@@ -195,7 +182,6 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 10,
         "estado": "En proceso",
-        "seriesCompletar": 4,
         "imagen": "http://localhost:5000/uploads/pressmilitar.gif" // Agregar URL de la imagen
     },
     {
@@ -209,7 +195,6 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 10,
         "estado": "En proceso",
-        "seriesCompletar": 4,
         "imagen": "http://localhost:5000/uploads/elevacioneslaterales.gif" // Agregar URL de la imagen
     },
     {
@@ -223,7 +208,6 @@ const ejerciciosPredeterminados = [
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
-        "seriesCompletar": 1,
         "imagen": "http://localhost:5000/uploads/correr.gif" // Agregar URL de la imagen
     },
     {
@@ -237,7 +221,6 @@ const ejerciciosPredeterminados = [
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
-        "seriesCompletar": 1,
         "imagen": "http://localhost:5000/uploads/bicicletaestacionaria.gif" // Agregar URL de la imagen
     },
     {
@@ -251,7 +234,6 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 10,
         "estado": "En proceso",
-        "seriesCompletar": 4,
         "imagen": "http://localhost:5000/uploads/pressfrances.gif" // Agregar URL de la imagen
     },
     {
@@ -265,7 +247,6 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 10,
         "estado": "En proceso",
-        "seriesCompletar": 4,
         "imagen": "http://localhost:5000/uploads/curl-biceps-alterno-con-mancuernas.gif" // Agregar URL de la imagen
     },
     {
@@ -279,7 +260,6 @@ const ejerciciosPredeterminados = [
         "descanso": 10,
         "repeticiones": 10,
         "estado": "En proceso",
-        "seriesCompletar": 4,
         "imagen": "http://localhost:5000/uploads/Jumpingjacks.gif" // Agregar URL de la imagen
     }
 ];
