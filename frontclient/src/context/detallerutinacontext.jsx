@@ -57,30 +57,23 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     // Actualizar progreso del ejercicio dentro de DetalleRutina
-    const updateProgresoEjercicio = async (id, datos) => {
+    const updateProgresoEjercicio = async (ejercicioId, datos) => {
         try {
-            // Asegúrate de que rutinaId esté definido
             if (!datos.rutinaId) {
                 console.error("rutinaId no está definido");
                 return;
             }
 
             const updatedData = {
-                rutinaId: datos.rutinaId, // Asegúrate de que esto tenga un valor válido
-                ejercicioId: id,
-                series: datos.seriesCompletadas || 0, // Si seriesCompletadas no está definido, establece 0
-                ejerciciosCompletados: datos.ejerciciosCompletados || 0, // Si ejerciciosCompletados no está definido, establece 0
-                // aqui puedes agregar una comparación de cuando esten
+                rutina: datos.rutinaId,
+                ejercicio: ejercicioId,
+                seriesProgreso: datos.seriesCompletadas || 0,
+                estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso'
             };
 
-            console.log("Datos a enviar:", updatedData); // Para depuración
+            console.log("Datos a enviar:", updatedData);
 
-            const res = await updateDetalleRutinaRequest(id, updatedData);
-            setDetalles(prevDetalles =>
-                prevDetalles.map(detalle =>
-                    detalle.ejercicio === id ? { ...detalle, ...res.data } : detalle
-                )
-            );
+            const res = await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData);
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
         }

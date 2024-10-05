@@ -11,7 +11,7 @@ export default function IniciarejercicioPage() {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
 
-  const { updateProgresoEjercicio } = useDetallesRutina();
+  const { updateProgresoEjercicio } = useProgreso();
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesCompletadas || 0);
@@ -24,7 +24,10 @@ export default function IniciarejercicioPage() {
   // Guardar el progreso del ejercicio
   useEffect(() => {
     if (detalles && detalles._id) {
-      updateProgresoEjercicio(detalles.rutinaId, detalles.ejercicio._id.toString(), seriesCompletadas);
+      updateProgresoEjercicio(detalles.ejercicio._id.toString(), {
+        rutinaId: detalles.rutinaId,
+        seriesCompletadas,
+      });
     }
   }, [seriesCompletadas]);
 
