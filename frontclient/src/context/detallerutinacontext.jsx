@@ -63,7 +63,7 @@ export function DetalleRutinaProvider({ children }) {
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
                 ejerciciosCompletados: datos.ejerciciosCompletados, // Usamos el valor pasado desde la página
-                estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
+                estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
 
             console.log("Datos a enviar:", updatedData);
