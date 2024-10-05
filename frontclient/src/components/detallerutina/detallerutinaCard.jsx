@@ -8,17 +8,22 @@ export default function DetalleRutinaCard({ detalles }) {
 
   const handleDelete = async () => {
     try {
-      await deleteDetalleRutina(detalles._id); // Asegúrate de pasar el ID correcto
-      // Tal vez quieras hacer algo adicional después de eliminar, como mostrar un mensaje
+      await deleteDetalleRutina(detalles._id);
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
     }
   };
 
-  const handleStartExercise = async () => {
-    // Lógica para iniciar el ejercicio
-    await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1); // Asumiendo que inicias con 1 serie
-    navigate(`/iniciar-ejercicios`, { state: { detalles } });
+  const handleStartOrContinueExercise = async () => {
+    // Si ya hay progreso, continúa desde el progreso actual
+    if (detalles.seriesProgreso > 0) {
+      // Aquí podrías navegar con un estado que contenga el progreso actual
+      navigate(`/iniciar-ejercicios`, { state: { detalles, continuar: true } });
+    } else {
+      // Si no hay progreso, inicia el ejercicio
+      await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1);
+      navigate(`/iniciar-ejercicios`, { state: { detalles } });
+    }
   };
 
   return (
@@ -34,7 +39,7 @@ export default function DetalleRutinaCard({ detalles }) {
       <p className="text-slate-300">Repeticiones: {detalles.ejercicio.repeticiones}</p>
       <p className="text-slate-300">Descanso: {detalles.ejercicio.descanso}</p>
       <hr className="text-slate-300" />
-      <p className="text-slate-300">Series Completadas:{detalles.seriesProgreso} / {detalles.ejercicio.series}</p>
+      <p className="text-slate-300">Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}</p>
       <p className="text-slate-300">Estado: {detalles.estado}</p>
       <hr className="text-slate-300" />
       <footer>
@@ -42,8 +47,8 @@ export default function DetalleRutinaCard({ detalles }) {
           <button className="btn btn-danger" onClick={handleDelete}>
             Delete
           </button>
-          <button className="btn btn-success" onClick={handleStartExercise}>
-            Iniciar Ejercicio
+          <button className="btn btn-success" onClick={handleStartOrContinueExercise}>
+            {detalles.seriesProgreso > 0 ? "Continuar Ejercicio" : "Iniciar Ejercicio"}
           </button>
         </div>
       </footer>

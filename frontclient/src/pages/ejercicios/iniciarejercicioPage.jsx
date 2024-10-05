@@ -31,6 +31,7 @@ export default function IniciarejercicioPage() {
   }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles._id]);
 
   // Temporizador y lógica de descanso
+  // En el useEffect para el temporizador
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
       intervalRef.current = setInterval(() => {
@@ -50,12 +51,12 @@ export default function IniciarejercicioPage() {
             setSeriesCompletadas(prev => {
               const newSeries = prev + 1;
               if (newSeries >= detalles.ejercicio.series) {
-                clearInterval(intervalRef.current); // Detenemos el intervalo si se completan todas las series
+                clearInterval(intervalRef.current);
                 setEjercicioCompletado(true);
-                alert('¡Ejercicio completado!');
-                return newSeries; // No se incrementa más allá del máximo
+                // Cambia alert por un estado que muestre un mensaje en pantalla
+                return newSeries;
               }
-              return newSeries; // Incrementa el conteo de series completadas
+              return newSeries;
             });
           }
         }
