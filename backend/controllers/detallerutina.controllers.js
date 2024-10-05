@@ -45,15 +45,18 @@ export const updateDetalleRutina = async (req, res) => {
 
 // Eliminar un detalle de rutina existente
 export const deleteDetalleRutina = async (req, res) => {
+    const { id } = req.params;
     try {
-        const detalle = await DetallesRutina.findByIdAndDelete(req.params.id);
-        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado..." });
-
-        res.json({ message: "Detalle eliminado con éxito", detalle });
+        const result = await DetalleRutina.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).json({ message: "Detalle de rutina no encontrado" });
+        }
+        return res.status(204).send(); // Éxito, sin contenido
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar detalle", error });
+        return res.status(500).json({ message: "Error al eliminar el detalle de rutina" });
     }
 };
+
 // Actualizar el progreso del detalle de rutina existente
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, series, repeticiones } = req.body;
