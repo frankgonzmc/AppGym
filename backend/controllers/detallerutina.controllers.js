@@ -60,7 +60,7 @@ export const deleteDetalleRutina = async (req, res) => {
 
 // Actualizar el progreso del detalle de rutina existente
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { rutinaId, ejercicioId, series, repeticiones } = req.body;
+    const { rutinaId, ejercicioId, series } = req.body;
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId });
@@ -69,12 +69,14 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
             return res.status(404).json({ message: "Detalle no encontrado" });
         }
 
+        // Actualiza el progreso de series y repeticiones
         detalle.seriesProgreso += series;
-        detalle.repeticionesProgreso += repeticiones;
+        detalle.ejerciciosCompletados += series > 0 ? 1 : 0; // Incrementa los ejercicios completados solo si hay series progresadas
 
-        if (detalle.seriesProgreso >= detalle.ejercicio.series && detalle.repeticionesProgreso >= detalle.ejercicio.repeticiones) {
+        // Establecer el estado según el progreso
+        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
             detalle.estado = 'Completado';
-        } else if (detalle.seriesProgreso > 0 || detalle.repeticionesProgreso > 0) {
+        } else if (detalle.seriesProgreso > 0) {
             detalle.estado = 'En Progreso';
         } else {
             detalle.estado = 'Pendiente';

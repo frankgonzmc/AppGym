@@ -9,11 +9,16 @@ export default function DetalleRutinaCard({ detalles }) {
   const handleDelete = async () => {
     try {
       await deleteDetalleRutina(detalles._id); // Asegúrate de pasar el ID correcto
-      window.location.reload();
       // Tal vez quieras hacer algo adicional después de eliminar, como mostrar un mensaje
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
     }
+  };
+
+  const handleStartExercise = async () => {
+    // Lógica para iniciar el ejercicio
+    await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1, detalles.ejercicio.repeticiones); // Asumiendo que inicias con 1 serie
+    navigate(`/iniciar-ejercicios`, { state: { detalles } });
   };
 
   return (
@@ -37,7 +42,7 @@ export default function DetalleRutinaCard({ detalles }) {
           <button className="btn btn-danger" onClick={handleDelete}>
             Delete
           </button>
-          <button className="btn btn-success" onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })}>
+          <button className="btn btn-success" onClick={handleStartExercise}>
             Iniciar Ejercicio
           </button>
         </div>

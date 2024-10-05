@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEjercicios } from '../../context/ejercicioscontext';
-import { Button, ButtonLink, Card } from "../../components/ui";
+import { Card } from "../../components/ui";
 import { useEffect } from 'react';
 
 function ejercicioForm() {
