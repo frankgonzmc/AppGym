@@ -57,15 +57,10 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     // Actualizar progreso del ejercicio dentro de DetalleRutina
-    const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
+    const updateProgresoEjercicio = async (ejercicioId, datos) => {
         try {
-            if (!datos.rutinaId) {
-                console.error("rutinaId no está definido");
-                return;
-            }
-
+            
             const updatedData = {
-                rutina: rutinaId,
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
                 estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso'
