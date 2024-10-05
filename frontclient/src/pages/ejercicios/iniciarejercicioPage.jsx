@@ -8,7 +8,7 @@ export default function IniciaEjercicioPage() {
   const { detalles } = state || {};
 
   // Si no hay detalles:
-  if (!detalles) {
+  if (!detalles || !detalles.ejercicio) {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
 
@@ -24,11 +24,11 @@ export default function IniciaEjercicioPage() {
 
   // Actualizar progreso al iniciar el ejercicio
   useEffect(() => {
-    // Lógica para guardar el progreso al iniciar
     if (!isPausado && !ejercicioCompletado) {
-      updateProgresoEjercicio(detalles.ejercicioId, {
-        seriesCompletadas,
+      updateProgresoEjercicio(detalles.ejercicio._id, {
+        seriesCompletadas: seriesCompletadas,
         ejerciciosCompletados: ejercicioCompletado,
+        ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
       });
     }
   }, [isPausado, ejercicioCompletado, seriesCompletadas, updateProgresoEjercicio, detalles]);
@@ -59,18 +59,20 @@ export default function IniciaEjercicioPage() {
                 setEjercicioCompletado(true);
 
                 // Enviar los datos actualizados de progreso
-                updateProgresoEjercicio(detalles.ejercicioId, {
+                updateProgresoEjercicio(detalles.ejercicio._id, {
                   seriesCompletadas: newSeries,
-                  ejerciciosCompletados: true, // Marcamos el ejercicio como completado
+                  ejerciciosCompletados: true,
+                  ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
                 });
 
                 return newSeries;
               }
 
               // Enviar el progreso hasta el momento (antes de completar el ejercicio)
-              updateProgresoEjercicio(detalles.ejercicioId, {
+              updateProgresoEjercicio(detalles.ejercicio._id, {
                 seriesCompletadas: newSeries,
                 ejerciciosCompletados: false,
+                ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
               });
 
               return newSeries;
