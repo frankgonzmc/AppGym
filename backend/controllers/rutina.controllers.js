@@ -16,7 +16,7 @@ export const getRutinas = async (req, res) => {
 
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, detalles = [], progreso } = req.body;
+        const { nombre, descripcion, detalles = [], progreso, totalEjercicios } = req.body;
 
         // Validar campos requeridos
         if (!nombre || !descripcion) {
