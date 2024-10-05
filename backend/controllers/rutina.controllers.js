@@ -28,6 +28,7 @@ export const createRutinas = async (req, res) => {
             user: req.user.id,
             nombre,
             descripcion,
+            totalEjercicios: detalles.length, // Aquí asignamos el total de ejercicios
             date: new Date(),
         });
         const saveRutina = await newRutina.save();

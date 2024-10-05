@@ -9,7 +9,7 @@ export function RutinaCard({ rutina }) {
 
   // Calcular ejercicios completados basados en el progreso
   const ejerciciosCompletados = progreso[rutina._id]?.ejerciciosCompletados || 0;
-  const totalEjercicios = rutina.ejercicios ? rutina.ejercicios.length : 0;
+  const totalEjercicios = rutina.totalEjercicios || 0; // Usamos el totalEjercicios del backend
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
 
   return (
@@ -27,8 +27,7 @@ export function RutinaCard({ rutina }) {
         {porcentajeProgreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
 
-      
-      <p className="text-slate-300">Ejercicios Completados: {detalles.ejerciciosCompletados} / {rutina.totalEjercicios}</p>
+      <p className="text-slate-300">Ejercicios Completados: {ejerciciosCompletados} / {totalEjercicios}</p>
 
       <footer>
         <div className="flex gap-x-3 items-center">
