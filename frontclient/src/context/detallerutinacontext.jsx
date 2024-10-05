@@ -48,6 +48,7 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     const deleteDetalleRutina = async (id) => {
+        console.log("ID a eliminar:", id); // Agrega esta línea
         try {
             const res = await deleteDetalleRutinaRequest(id);
             if (res.status === 204) {
