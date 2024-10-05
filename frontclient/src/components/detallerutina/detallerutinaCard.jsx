@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "../ui";
+import { useProgreso } from "../../context/progresocontext";
 
 export default function DetalleRutinaCard({ detalles }) {
-  const { deleteDetalleRutina, updateProgresoEjercicio } = useDetallesRutina();
+  const { deleteDetalleRutina } = useDetallesRutina();
+  const { updateProgreso } = useProgreso();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
@@ -21,7 +23,7 @@ export default function DetalleRutinaCard({ detalles }) {
       navigate(`/iniciar-ejercicios`, { state: { detalles, continuar: true } });
     } else {
       // Si no hay progreso, inicia el ejercicio
-      await updateProgresoEjercicio(detalles.rutina._id, detalles.ejercicio._id, 1);
+      await updateProgreso(detalles.rutina._id, detalles.ejercicio._id, 1);
       navigate(`/iniciar-ejercicios`, { state: { detalles } });
     }
   };
