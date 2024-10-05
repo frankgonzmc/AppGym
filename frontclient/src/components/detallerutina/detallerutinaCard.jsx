@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "../ui";
-import { useProgreso } from "../../context/progresocontext";
 
 export default function DetalleRutinaCard({ detalles }) {
-  const { deleteDetalleRutina } = useDetallesRutina();
-  const { updateProgreso } = useProgreso();
+  const { deleteDetalleRutina, updateProgresoEjercicio } = useDetallesRutina();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
@@ -17,16 +15,21 @@ export default function DetalleRutinaCard({ detalles }) {
   };
 
   const handleStartOrContinueExercise = async () => {
+    // Verifica que los IDs estén definidos
+    if (!detalles.rutina?._id || !detalles.ejercicio?._id) {
+      console.error("No se pudo encontrar la rutina o el ejercicio.");
+      return;
+    }
+
     // Si ya hay progreso, continúa desde el progreso actual
     if (detalles.seriesProgreso > 0) {
-      // Aquí podrías navegar con un estado que contenga el progreso actual
       navigate(`/iniciar-ejercicios`, { state: { detalles, continuar: true } });
     } else {
-      // Si no hay progreso, inicia el ejercicio
-      await updateProgreso(detalles.rutina._id, detalles.ejercicio._id, 1);
+      await updateProgresoEjercicio(detalles.rutina._id, detalles.ejercicio._id, { seriesCompletadas: 1 });
       navigate(`/iniciar-ejercicios`, { state: { detalles } });
     }
   };
+
 
   return (
     <Card>
