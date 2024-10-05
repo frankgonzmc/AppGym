@@ -3,7 +3,7 @@ import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "../ui";
 
 export default function DetalleRutinaCard({ detalles }) {
-  const { deleteDetalleRutina, updateProgresoEjercicio } = useDetallesRutina();
+  const { deleteDetalleRutina } = useDetallesRutina();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
