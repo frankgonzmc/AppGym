@@ -24,12 +24,10 @@ export default function IniciarejercicioPage() {
 
   // Guardar el progreso del ejercicio
   useEffect(() => {
-    if (seriesCompletadas > 0) {
-      updateProgresoEjercicio(detalles._id, {
-        seriesCompletadas,
-        ejercicioCompletado,
-      });
-    }
+    updateProgresoEjercicio(detalles._id, {
+      seriesCompletadas,
+      ejercicioCompletado,
+    });
   }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles._id]);
 
   // Temporizador y lógica de descanso
@@ -49,19 +47,23 @@ export default function IniciarejercicioPage() {
           } else {
             setIsDescanso(false);
             setDuracionRestante(detalles.ejercicio.duracion);
-            setSeriesCompletadas(prev => prev + 1);
-            if (seriesCompletadas + 1 >= detalles.ejercicio.seriesCompletar) {
-              clearInterval(intervalRef.current);
-              setEjercicioCompletado(true);
-              alert('¡Ejercicio completado!');
-            }
+            setSeriesCompletadas(prev => {
+              const newSeries = prev + 1;
+              if (newSeries >= detalles.ejercicio.series) {
+                clearInterval(intervalRef.current); // Detenemos el intervalo si se completan todas las series
+                setEjercicioCompletado(true);
+                alert('¡Ejercicio completado!');
+                return newSeries; // No se incrementa más allá del máximo
+              }
+              return newSeries; // Incrementa el conteo de series completadas
+            });
           }
         }
       }, 1000);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
+  }, [isPausado, duracionRestante, descansoRestante, isDescanso, detalles.ejercicio.series, ejercicioCompletado]);
 
   // Control de pausa y reset
   const handlePausarReanudar = () => {

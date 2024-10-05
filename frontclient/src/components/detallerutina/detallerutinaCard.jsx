@@ -38,6 +38,7 @@ export default function DetalleRutinaCard({ detalles }) {
           <button className="btn btn-primary" onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })}>
             Iniciar Ejercicio
           </button>
+          <p className='flex justify-between text-2xl text-slate-300 font-bold'>Estado: {detalles.estado}</p>
         </div>
       </footer>
     </Card>

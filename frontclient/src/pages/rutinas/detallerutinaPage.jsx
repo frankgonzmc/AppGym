@@ -39,9 +39,6 @@ const DetallerutinaPage = () => {
           <EjercicioCard key={detalles._id} detalles={detalles} />
         ))}
       </div>
-      <footer>
-        <p className='text-white font-bold'>Estado: {detalles.estado}</p>
-      </footer>
     </div>
   );
 };
