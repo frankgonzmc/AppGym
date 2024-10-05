@@ -16,7 +16,7 @@ export default function DetalleRutinaCard({ detalles }) {
 
   const handleStartOrContinueExercise = async () => {
     // Verifica que los IDs estén definidos
-    if (!detalles || !detalles.rutina || !detalles.ejercicio) {
+    if (!detalles) {
       console.error("Detalles incompletos:", detalles);
       return;
     }

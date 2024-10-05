@@ -26,9 +26,9 @@ export default function IniciaEjercicioPage() {
   useEffect(() => {
     // Lógica para guardar el progreso al iniciar
     if (!isPausado && !ejercicioCompletado) {
-      updateProgresoEjercicio(detalles.rutinaId, detalles.ejercicioId, {
-        seriesCompletadas: seriesCompletadas,
-        ejercicioCompletado: ejercicioCompletado,
+      updateProgresoEjercicio(detalles.ejercicioId, {
+        seriesProgreso: seriesCompletadas,
+        ejerciciosCompletados: ejercicioCompletado,
       });
     }
   }, [isPausado, ejercicioCompletado, seriesCompletadas, updateProgresoEjercicio, detalles]);
