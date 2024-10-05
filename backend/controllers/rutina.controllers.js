@@ -14,138 +14,6 @@ export const getRutinas = async (req, res) => {
     }
 };
 
-// Crear una nueva rutina y asociar detalles de rutina y progreso
-/*
-export const createRutinas = async (req, res) => {
-    try {
-        const { nombre, descripcion, date, detalles, progreso, historial } = req.body;
-
-        // Validar campos requeridos
-        if (!nombre || !descripcion) {
-            return res.status(400).json({ message: "Los campos nombre y descripción son requeridos." });
-        }
-
-        // Crear la nueva rutina
-        const newRutina = new Rutinas({
-            user: req.user.id,
-            nombre,
-            descripcion,
-            date: new Date(), // Usa la fecha actual si no se proporciona
-        });
-        const saveRutina = await newRutina.save();
-        console.log("Rutina guardada:", saveRutina);
-
-        // Crear los detalles de la rutina asociados
-        if (detalles && detalles.length > 0) {
-            try {
-                for (const detalle of detalles) {
-                    const { rutina, ejercicio, duracion } = detalle;
-
-                    console.log("Guardando detalle:", detalle);
-
-                    const newDetalleRutina = new DetallesRutina({
-                        rutina,
-                        ejercicio,
-                        duracion
-                    });
-
-                    await newDetalleRutina.save();
-                    console.log("Detalle guardado:", newDetalleRutina);
-                }
-            } catch (error) {
-                console.error("Error al guardar los detalles de la rutina:", error);
-                return res.status(500).json({ message: "Error al guardar los detalles de la rutina", error });
-            }
-        } else {
-            console.log("No se proporcionaron detalles para guardar.");
-        }
-
-        // Crear el progreso asociado
-        if (progreso) {
-            try {
-                const { user, rutina, ejercicio, fecha, estado } = progreso;
-
-                const newProgreso = new Progreso({
-                    user,
-                    rutina,
-                    ejercicio,
-                    fecha,
-                    estado
-                });
-
-                await newProgreso.save();
-                console.log("Progreso guardado:", newProgreso);
-            } catch (error) {
-                console.log("Error")
-            }
-        } else {
-            console.log("No se proporcionaron progresos para guardar.");
-        }
-
-        // Crear el progreso asociado
-        if (historial) {
-            try {
-                const { user, rutina, fecha } = historial;
-
-                const newHistorial = new Historial({
-                    user,
-                    rutina,
-                    fecha
-                });
-
-                await newHistorial.save();
-                console.log("Historial guardado:", newHistorial);
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            console.log("No se proporcionaron historial para guardar.");
-        }
-
-        // Crear el progreso asociado
-        if (progreso) {
-            try {
-                console.log("Datos de progreso:", progreso); // Verifica lo que recibes
-                const newProgreso = new Progreso({
-                    user: req.user.id,
-                    rutina: saveRutina._id,
-                    ...progreso
-                });
-                const progresoGuardado = await newProgreso.save();
-                console.log("Progreso guardado:", progresoGuardado);
-            } catch (error) {
-                console.log(error)
-            }
-        } else {
-            console.log("No se proporcionaron progresos para guardar.");
-        }
-
-        // Crear el historial asociado
-        if (historial) {
-            try {
-                console.log("Datos de historial:", historial); // Verifica lo que recibes
-                const newHistorial = new Historial({
-                    user: req.user.id,
-                    rutina: saveRutina._id,
-                    ...historial
-                });
-                const historialGuardado = await newHistorial.save();
-                console.log("Historial guardado:", historialGuardado);
-            } catch (error) {
-                console.log(error)
-            }
-        } else {
-            console.log("No se proporcionaron historial para guardar.");
-        }
-
-        res.json(saveRutina);
-    } catch (error) {
-        console.error("Error al crear rutina:", error);
-        res.status(500).json({ message: "Error al crear rutina", error });
-    }
-};
-*/
-
 export const createRutinas = async (req, res) => {
     try {
         const { nombre, descripcion, detalles, progreso } = req.body;
@@ -214,18 +82,26 @@ export const getRutina = async (req, res) => {
 // Actualizar una rutina existente
 export const updateRutina = async (req, res) => {
     try {
-        // Validar que el ID es correcto
         const rutinaId = req.params.id;
         if (!rutinaId) return res.status(400).json({ message: "ID de rutina es requerido." });
 
-        // Validar campos requeridos
-        const { nombre, descripcion } = req.body;
+        const { nombre, descripcion, ejercicios } = req.body; // Asegúrate de obtener ejercicios también
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
 
+        // Actualiza la rutina
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+
+        // Aquí maneja los detalles de la rutina (ejercicios)
+        await DetallesRutina.deleteMany({ rutina: rutinaId }); // Elimina los detalles existentes
+        const detalles = ejercicios.map(ejercicioId => ({
+            rutina: rutinaId,
+            ejercicio: ejercicioId,
+            fecha: new Date(),
+        }));
+        await DetallesRutina.insertMany(detalles); // Inserta los nuevos detalles
 
         res.json(rutina);
     } catch (error) {

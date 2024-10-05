@@ -48,17 +48,11 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     const deleteDetalleRutina = async (id) => {
-        console.log("ID a eliminar:", id); // Agrega esta línea
         try {
-            const res = await deleteDetalleRutinaRequest(id);
-            if (res.status === 204) {
-                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id)); // Aquí usa detalle._id
-            } else {
-                throw new Error("No se pudo eliminar el ejercicio"); // Manejo de errores si no es 204
-            }
+            await deleteDetalleRutinaRequest(id); // Llama a tu API para eliminar
+            setDetallesRutina((prev) => prev.filter((detalle) => detalle._id !== id)); // Actualiza el estado
         } catch (error) {
-            console.log("Error al eliminar el detalle de rutina:", error);
-            throw error; // Lanza el error para manejarlo en el componente
+            console.error("Error al eliminar detalle de rutina:", error);
         }
     };
 
