@@ -61,7 +61,7 @@ export default function IniciaEjercicioPage() {
                 // Enviar los datos actualizados de progreso
                 updateProgresoEjercicio(detalles.ejercicio._id, {
                   seriesCompletadas: newSeries,
-                  ejerciciosCompletados: true,
+                  ejerciciosCompletados: 1,
                   ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
                 });
 
@@ -71,7 +71,7 @@ export default function IniciaEjercicioPage() {
               // Enviar el progreso hasta el momento (antes de completar el ejercicio)
               updateProgresoEjercicio(detalles.ejercicio._id, {
                 seriesCompletadas: newSeries,
-                ejerciciosCompletados: false,
+                ejerciciosCompletados: 0,
                 ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
               });
 
