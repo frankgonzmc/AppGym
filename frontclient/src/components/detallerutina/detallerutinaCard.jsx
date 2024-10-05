@@ -8,14 +8,13 @@ export default function DetalleRutinaCard({ detalles }) {
 
   const handleDelete = async () => {
     try {
-      console.log("ID a eliminar:", detalles.ejercicio._id); // Verificar el ID
       await deleteDetalleRutina(detalles.ejercicio._id);
+      // Actualiza el estado o realiza cualquier acción después de la eliminación
     } catch (error) {
       console.error("Error al eliminar el ejercicio:", error);
-      alert("Error al eliminar el ejercicio. Intenta nuevamente.");
+      alert("Error al eliminar el ejercicio. Inténtalo de nuevo más tarde.");
     }
   };
-
 
   return (
     <Card>

@@ -47,13 +47,14 @@ export const updateDetalleRutina = async (req, res) => {
 export const deleteDetalleRutina = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await DetallesRutina.findByIdAndDelete(id);
-        if (!result) {
-            return res.status(404).json({ message: "Detalle de rutina no encontrado" });
+        const detalle = await DetalleRutina.findByIdAndDelete(id);
+        if (!detalle) {
+            return res.status(404).json({ message: "Detalle no encontrado" });
         }
-        return res.status(204).send(); // Éxito, sin contenido
+        return res.status(204).send(); // Eliminar con éxito
     } catch (error) {
-        return res.status(500).json({ message: "Error al eliminar el detalle de rutina" });
+        console.error("Error al eliminar el detalle:", error);
+        return res.status(500).json({ message: "Error en el servidor" });
     }
 };
 

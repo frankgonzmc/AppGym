@@ -51,7 +51,7 @@ export function DetalleRutinaProvider({ children }) {
         try {
             const res = await deleteDetalleRutinaRequest(id);
             if (res.status === 204) {
-                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle.ejercicio._id !== id));
+                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id)); // Aquí usa detalle._id
             } else {
                 throw new Error("No se pudo eliminar el ejercicio"); // Manejo de errores si no es 204
             }
@@ -60,7 +60,6 @@ export function DetalleRutinaProvider({ children }) {
             throw error; // Lanza el error para manejarlo en el componente
         }
     };
-
 
     // Actualizar progreso del ejercicio dentro de DetalleRutina
     const updateProgresoEjercicio = async (id, updatedData) => {
