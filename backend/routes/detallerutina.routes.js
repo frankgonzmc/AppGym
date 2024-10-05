@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToken.js';
-import { getDetallesRutina, createDetalleRutina, updateDetalleRutina, deleteDetalleRutina } from '../controllers/detallerutina.controllers.js';
+import { getDetallesRutina, createDetalleRutina, updateDetalleRutina, deleteDetalleRutina, actualizarProgresoDetalleRutina } from '../controllers/detallerutina.controllers.js';
 
 const router = Router();
 
-router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina)
+router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina);
+
+// Actualizar el progreso de un detalle de rutina existente
+router.put('/detalles-rutinas/progresos', authRequired, actualizarProgresoDetalleRutina);
 
 router.post('/detalles-rutinas', authRequired, createDetalleRutina);
 

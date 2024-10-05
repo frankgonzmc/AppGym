@@ -8,17 +8,6 @@ import {
 
 const DetalleRutinaContext = createContext();
 
-
-// Obtener detalles de rutina
-export const fetchDetallesRutina = async (id) => {
-    try {
-        const response = await getDetalleRutinaRequest(id);
-        return response.data; // Devuelve los detalles obtenidos
-    } catch (error) {
-        console.error("Error al obtener detalles de rutina:", error);
-    }
-};
-
 export const useDetallesRutina = () => {
     const context = useContext(DetalleRutinaContext);
     if (!context) throw new Error("useDetallesRutina debe estar dentro de un DetalleRutinaProvider");
@@ -50,10 +39,11 @@ export function DetalleRutinaProvider({ children }) {
     const createDetalleRutina = async (detalle) => {
         try {
             const res = await createDetalleRutinaRequest(detalle);
-            console.log(res.data);
+            setDetalles(prevDetalles => [...prevDetalles, res.data]); // Agregar nuevo detalle al estado
             return res.data;
         } catch (error) {
             console.error('Error al crear detalle de rutina:', error.response ? error.response.data : error.message);
+            throw error; // Lanza el error para manejarlo más arriba si es necesario
         }
     };
 
@@ -68,12 +58,17 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    const updateDetalleRutina = async (id, detalle) => {
+    // Actualizar progreso del ejercicio dentro de DetalleRutina
+    const updateProgresoEjercicio = async (id, updatedData) => {
         try {
-            const response = await updateDetalleRutinaRequest(id, detalle);
-            return response.data; // Devuelve el detalle actualizado
+            const res = await updateDetalleRutinaRequest(id, updatedData);
+            setDetalles(prevDetalles =>
+                prevDetalles.map(detalle =>
+                    detalle._id === id ? { ...detalle, ...updatedData } : detalle
+                )
+            );
         } catch (error) {
-            console.error("Error al actualizar detalle de rutina:", error);
+            console.error("Error al actualizar progreso del ejercicio:", error);
         }
     };
 
@@ -85,7 +80,7 @@ export function DetalleRutinaProvider({ children }) {
                 deleteDetalleRutina,
                 getDetalleRutina,
                 fetchDetallesRutina,
-                updateDetalleRutina,
+                updateProgresoEjercicio, // Añadido para manejar el progreso
             }}>
             {children}
         </DetalleRutinaContext.Provider>

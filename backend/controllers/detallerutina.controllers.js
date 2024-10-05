@@ -14,7 +14,6 @@ export const getDetallesRutina = async (req, res) => {
     }
 };
 
-
 export const createDetalleRutina = async (req, res) => {
     try {
         const { rutina, ejercicio, fecha } = req.body;
@@ -55,8 +54,8 @@ export const deleteDetalleRutina = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar detalle", error });
     }
 };
-
-export const actualizarProgreso = async (req, res) => {
+// Actualizar el progreso del detalle de rutina existente
+export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, series, repeticiones } = req.body;
 
     try {

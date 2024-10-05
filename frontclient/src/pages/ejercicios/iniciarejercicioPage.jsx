@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
-import { useProgreso } from '../../context/progresocontext'; // Importamos el contexto de progreso
 import { useLocation } from 'react-router-dom'; // Importamos useLocation
+import { useDetallesRutina } from '../../context/detallerutinacontext'; // Usamos el contexto de detalles de rutina
 
 export default function IniciarejercicioPage() {
   const { state } = useLocation(); // Usamos useLocation para acceder a los datos pasados por navigate
@@ -12,25 +12,25 @@ export default function IniciarejercicioPage() {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
 
-  const { updateProgresoEjercicio } = useProgreso(); // Usamos la función para actualizar progreso
+  const { updateProgresoEjercicio } = useDetallesRutina(); // Usamos la función para actualizar progreso
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
-  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.ejercicio.seriesProgreso || 0);
+  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesCompletadas || 0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(detalles.ejercicioCompletado || false);
 
   const intervalRef = useRef(null);
 
   // Guardar el progreso del ejercicio
   useEffect(() => {
     if (seriesCompletadas > 0) {
-      updateProgresoEjercicio(detalles.ejercicio._id, {
+      updateProgresoEjercicio(detalles._id, {
         seriesCompletadas,
         ejercicioCompletado,
       });
     }
-  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles.ejercicio._id]);
+  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles._id]);
 
   // Temporizador y lógica de descanso
   useEffect(() => {

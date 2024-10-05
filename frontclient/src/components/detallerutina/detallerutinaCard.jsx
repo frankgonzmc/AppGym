@@ -1,10 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
+import { useProgreso } from "../../context/progresocontext"; // Importamos el contexto de progreso
 import { Card } from "../ui";
 
 export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
+  const { updateProgreso } = useProgreso(); // Importamos la función para actualizar progreso
   const navigate = useNavigate();
+
+  const handleCompleteEjercicio = async () => {
+    try {
+      await updateProgreso(detalles.rutina._id, detalles.ejercicio._id, true); // Actualizamos el progreso
+      alert('¡Ejercicio completado!');
+    } catch (error) {
+      console.error('Error actualizando progreso:', error);
+    }
+  };
 
   return (
     <Card>
@@ -18,23 +29,13 @@ export default function DetalleRutinaCard({ detalles }) {
       <p className="text-slate-300">Series: {detalles.ejercicio.series}</p>
       <p className="text-slate-300">Repeticiones: {detalles.ejercicio.repeticiones}</p>
       <p className="text-slate-300">Descanso: {detalles.ejercicio.descanso}</p>
-      <p className="text-slate-300">
-        {detalles.createdAt &&
-          new Date(detalles.createdAt).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-      </p>
       <hr className="text-slate-300" />
       <footer>
         <div className="flex gap-x-2 items-center">
-          <button className="btn btn-primary" onClick={() => deleteDetalleRutina(detalles.ejercicio._id)}>Delete</button>
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })} // Asegúrate de pasar detalles aquí
-          >
+          <button className="btn btn-primary" onClick={handleCompleteEjercicio}>
+            Completar Ejercicio
+          </button>
+          <button className="btn btn-primary" onClick={() => navigate(`/iniciar-ejercicios`, { state: { detalles } })}>
             Iniciar Ejercicio
           </button>
         </div>
