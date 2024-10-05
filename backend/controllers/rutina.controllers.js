@@ -16,11 +16,16 @@ export const getRutinas = async (req, res) => {
 
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, detalles, progreso } = req.body;
+        const { nombre, descripcion, detalles = [], progreso } = req.body;
 
         // Validar campos requeridos
         if (!nombre || !descripcion) {
             return res.status(400).json({ message: "Los campos nombre y descripción son requeridos." });
+        }
+
+        // Validar si detalles es un array
+        if (!Array.isArray(detalles)) {
+            return res.status(400).json({ message: "El campo detalles debe ser un array." });
         }
 
         // Crear la nueva rutina
