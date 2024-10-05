@@ -47,7 +47,7 @@ export const updateDetalleRutina = async (req, res) => {
 export const deleteDetalleRutina = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await DetalleRutina.findByIdAndDelete(id);
+        const result = await DetallesRutina.findByIdAndDelete(id);
         if (!result) {
             return res.status(404).json({ message: "Detalle de rutina no encontrado" });
         }
