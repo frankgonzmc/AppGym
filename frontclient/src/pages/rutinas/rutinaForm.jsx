@@ -20,8 +20,6 @@ const RutinaForm = () => {
 
   const [selectedEjercicios, setSelectedEjercicios] = useState([]);
   const [ejercicios, setEjercicios] = useState([]);
-  const totalEjercicios = detalles.length; // Calcula correctamente el total de ejercicios
-
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -52,7 +50,7 @@ const RutinaForm = () => {
 
 
   const onSubmit = handleSubmit(async (data) => {
-    const { nombre, descripcion } = data;
+    const { nombre, descripcion, totalEjercicios } = data;
 
     if (!nombre || !descripcion || selectedEjercicios.length === 0) {
       console.error("Faltan datos requeridos");
@@ -73,7 +71,7 @@ const RutinaForm = () => {
           descripcion,
           totalEjercicios,// Enviar los ejercicios seleccionados
         };
-        
+
         const rutinaCreada = await createRutina(nuevaRutina);
 
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
