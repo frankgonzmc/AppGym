@@ -27,7 +27,7 @@ export function RutinaCard({ rutina }) {
         {porcentajeProgreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
 
-      <p className="text-slate-300">Ejercicios Completados: {ejerciciosCompletados} / {totalEjercicios}</p>
+      <p className="text-slate-300">Ejercicios Completados: {rutina.ejerciciosCompletados} / {rutina.totalEjercicios}</p>
 
       <footer>
         <div className="flex gap-x-3 items-center">

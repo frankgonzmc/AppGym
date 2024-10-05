@@ -9,6 +9,7 @@ export default function DetalleRutinaCard({ detalles }) {
   const handleDelete = async () => {
     try {
       await deleteDetalleRutina(detalles._id); // Asegúrate de pasar el ID correcto
+      window.location.reload();
       // Tal vez quieras hacer algo adicional después de eliminar, como mostrar un mensaje
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
