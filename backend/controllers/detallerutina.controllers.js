@@ -63,15 +63,26 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, series } = req.body;
 
     try {
-        const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId });
+        const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
 
         if (!detalle) {
             return res.status(404).json({ message: "Detalle no encontrado" });
         }
 
+        // Validación adicional para evitar errores si no se encuentran series en el ejercicio
+        if (!detalle.ejercicio || !detalle.ejercicio.series) {
+            return res.status(400).json({ message: "El ejercicio no tiene series definidas." });
+        }
+
+        // Asegurar que las series ingresadas sean un número válido
+        const seriesProgresadas = parseInt(series, 10);
+        if (isNaN(seriesProgresadas) || seriesProgresadas <= 0) {
+            return res.status(400).json({ message: "Número de series inválido." });
+        }
+
         // Actualiza el progreso de series y repeticiones
-        detalle.seriesProgreso += series;
-        detalle.ejerciciosCompletados += series > 0 ? 1 : 0; // Incrementa los ejercicios completados solo si hay series progresadas
+        detalle.seriesProgreso += seriesProgresadas;
+        detalle.ejerciciosCompletados += seriesProgresadas > 0 ? 1 : 0; // Incrementa los ejercicios completados solo si hay series progresadas
 
         // Establecer el estado según el progreso
         if (detalle.seriesProgreso >= detalle.ejercicio.series) {
