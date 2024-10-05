@@ -11,12 +11,12 @@ export function Inicio() {
     return (
         <div className="inicio-container">
             <Row>
-                <Col md={10}>
+                <Col md={3}>
                     <div className="panel-elements">
                         <PanelElements />
                     </div>
                 </Col>
-                <Col md={4}>
+                <Col md={9}>
                     <div className="panel-ejercicios">
                         <PanelEjercicios />
                     </div>
