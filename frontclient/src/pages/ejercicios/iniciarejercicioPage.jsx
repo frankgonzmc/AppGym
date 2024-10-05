@@ -25,7 +25,7 @@ export default function IniciaEjercicioPage() {
   // Actualizar progreso al iniciar el ejercicio
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
-      updateProgresoEjercicio(detalles.ejercicio._id, {
+      updateProgresoEjercicio(detalles._id, {
         seriesCompletadas: seriesCompletadas,
         ejerciciosCompletados: ejercicioCompletado,
         ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
