@@ -1,37 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom'; // Importamos useLocation
-import { useDetallesRutina } from '../../context/detallerutinacontext'; // Usamos el contexto de detalles de rutina
+import { useLocation } from 'react-router-dom';
+import { useDetallesRutina } from '../../context/detallerutinacontext';
 
-export default function IniciarejercicioPage() {
-  const { state } = useLocation(); // Usamos useLocation para acceder a los datos pasados por navigate
-  const { detalles } = state || {}; // Obtenemos detalles del ejercicio de la navegación
+export default function IniciaEjercicioPage() {
+  const { state } = useLocation();
+  const { detalles } = state || {};
 
-  // Si no hay detalles (caso de acceder directamente a la URL sin haber pasado datos):
+  // Si no hay detalles:
   if (!detalles) {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
 
-  const { updateProgresoEjercicio } = useDetallesRutina(); // Usamos la función para actualizar progreso
+  const { updateProgresoEjercicio } = useDetallesRutina();
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
-  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesCompletadas || 0);
+  const [seriesCompletadas, setSeriesCompletadas] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState(detalles.ejercicioCompletado || false);
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
 
   const intervalRef = useRef(null);
 
-  // Guardar el progreso del ejercicio
+  // Actualizar progreso al iniciar el ejercicio
   useEffect(() => {
-    updateProgresoEjercicio(detalles.rutinaId, detalles.ejercicioId, {
-      seriesCompletadas,
-      ejercicioCompletado,
-    });
-  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles]);
+    // Lógica para guardar el progreso al iniciar
+    if (!isPausado && !ejercicioCompletado) {
+      updateProgresoEjercicio(detalles.rutinaId, detalles.ejercicioId, {
+        seriesCompletadas: seriesCompletadas,
+        ejercicioCompletado: ejercicioCompletado,
+      });
+    }
+  }, [isPausado, ejercicioCompletado, seriesCompletadas, updateProgresoEjercicio, detalles]);
 
   // Temporizador y lógica de descanso
-  // En el useEffect para el temporizador
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
       intervalRef.current = setInterval(() => {
@@ -53,7 +55,6 @@ export default function IniciarejercicioPage() {
               if (newSeries >= detalles.ejercicio.series) {
                 clearInterval(intervalRef.current);
                 setEjercicioCompletado(true);
-                // Cambia alert por un estado que muestre un mensaje en pantalla
                 return newSeries;
               }
               return newSeries;
@@ -100,7 +101,7 @@ export default function IniciarejercicioPage() {
           <Button onClick={handlePausarReanudar}>
             {isPausado ? 'Iniciar' : 'Pausar'}
           </Button>
-          <Button variant="danger" onClick={handleReset}>
+          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
             Reset
           </Button>
         </div>
