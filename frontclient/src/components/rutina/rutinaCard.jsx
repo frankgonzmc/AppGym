@@ -28,7 +28,7 @@ export function RutinaCard({ rutina }) {
       </div>
 
       <p className="text-slate-300">Ejercicios Completados: {rutina.ejerciciosCompletados} / {rutina.totalEjercicios}</p>
-
+      <p className="text-slate-300">Estado: {rutina.estado}</p>
       <footer>
         <div className="flex gap-x-3 items-center">
           <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Editar</button>

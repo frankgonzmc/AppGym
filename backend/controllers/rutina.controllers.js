@@ -91,10 +91,11 @@ export const updateRutina = async (req, res) => {
         const rutinaId = req.params.id;
         if (!rutinaId) return res.status(400).json({ message: "ID de rutina es requerido." });
 
-        const { nombre, descripcion, ejercicios } = req.body; // Asegúrate de obtener ejercicios también
+        const { nombre, descripcion, ejercicios, totalEjercicios } = req.body; // Asegúrate de obtener totalEjercicios también
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
+        if (totalEjercicios) updateData.totalEjercicios = totalEjercicios; // Actualizar totalEjercicios
 
         // Actualiza la rutina
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
