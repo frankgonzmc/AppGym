@@ -2,19 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom'; // Importamos useLocation
 import { useDetallesRutina } from '../../context/detallerutinacontext'; // Usamos el contexto de detalles de rutina
-import { useProgreso } from '../../context/progresocontext'; 
 
 export default function IniciarejercicioPage() {
-  const { state } = useLocation(); 
-  const { detalles } = state || {}; 
+  const { state } = useLocation(); // Usamos useLocation para acceder a los datos pasados por navigate
+  const { detalles } = state || {}; // Obtenemos detalles del ejercicio de la navegación
 
+  // Si no hay detalles (caso de acceder directamente a la URL sin haber pasado datos):
   if (!detalles) {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
 
-  const { updateProgresoEjercicio } = useProgreso(); 
-  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion);
-  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso);
+  const { updateProgresoEjercicio } = useDetallesRutina(); // Usamos la función para actualizar progreso
+  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
+  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
+
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesCompletadas || 0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
@@ -24,13 +25,11 @@ export default function IniciarejercicioPage() {
 
   // Guardar el progreso del ejercicio
   useEffect(() => {
-    if (detalles && detalles._id) {
-      updateProgresoEjercicio(detalles.ejercicio._id.toString(), {
-        rutinaId: detalles.rutinaId,
-        seriesCompletadas,
-      });
-    }
-  }, [seriesCompletadas]);
+    updateProgresoEjercicio(detalles.rutinaId, detalles.ejercicioId, {
+      seriesCompletadas,
+      ejercicioCompletado,
+    });
+  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles]);
 
   // Temporizador y lógica de descanso
   // En el useEffect para el temporizador
