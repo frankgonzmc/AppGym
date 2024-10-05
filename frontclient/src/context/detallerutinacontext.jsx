@@ -30,7 +30,7 @@ export function DetalleRutinaProvider({ children }) {
     const fetchDetallesRutina = async (id) => {
         try {
             const response = await getDetalleRutinaRequest(id);
-            return response.data; // Devuelve los detalles obtenidos
+            setDetalles(response.data); // Asegúrate de que esto esté configurando el estado correctamente
         } catch (error) {
             console.error("Error al obtener detalles de rutina:", error);
         }
@@ -63,17 +63,17 @@ export function DetalleRutinaProvider({ children }) {
                 console.error("rutinaId no está definido");
                 return;
             }
-    
+
             const updatedData = {
                 rutina: rutinaId,
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
                 estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso'
             };
-    
+
             console.log("Datos a enviar:", updatedData);
-    
-            await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData); 
+
+            await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData);
             return res.data; // Puedes retornar los datos actualizados si es necesario
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);

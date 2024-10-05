@@ -16,8 +16,8 @@ export default function DetalleRutinaCard({ detalles }) {
 
   const handleStartOrContinueExercise = async () => {
     // Verifica que los IDs estén definidos
-    if (!detalles.rutina?._id || !detalles.ejercicio?._id) {
-      console.error("No se pudo encontrar la rutina o el ejercicio.");
+    if (!detalles || !detalles.rutina || !detalles.ejercicio) {
+      console.error("Detalles incompletos:", detalles);
       return;
     }
 
