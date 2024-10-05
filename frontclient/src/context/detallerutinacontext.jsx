@@ -57,23 +57,23 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     // Actualizar progreso del ejercicio dentro de DetalleRutina
-    const updateProgresoEjercicio = async (ejercicioId, datos) => {
+    const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
         try {
             if (!datos.rutinaId) {
                 console.error("rutinaId no está definido");
                 return;
             }
-
+    
             const updatedData = {
-                rutina: datos.rutinaId,
+                rutina: rutinaId,
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
                 estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso'
             };
-
+    
             console.log("Datos a enviar:", updatedData);
-
-            const res = await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData);
+    
+            const res = await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData); 
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
         }
