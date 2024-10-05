@@ -52,11 +52,27 @@ export default function IniciaEjercicioPage() {
             setDuracionRestante(detalles.ejercicio.duracion);
             setSeriesCompletadas(prev => {
               const newSeries = prev + 1;
+
+              // Verificar si se ha completado el ejercicio
               if (newSeries >= detalles.ejercicio.series) {
                 clearInterval(intervalRef.current);
                 setEjercicioCompletado(true);
+
+                // Enviar los datos actualizados de progreso
+                updateProgresoEjercicio(detalles.ejercicioId, {
+                  seriesCompletadas: newSeries,
+                  ejerciciosCompletados: true, // Marcamos el ejercicio como completado
+                });
+
                 return newSeries;
               }
+
+              // Enviar el progreso hasta el momento (antes de completar el ejercicio)
+              updateProgresoEjercicio(detalles.ejercicioId, {
+                seriesCompletadas: newSeries,
+                ejerciciosCompletados: false,
+              });
+
               return newSeries;
             });
           }

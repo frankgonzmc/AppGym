@@ -59,16 +59,17 @@ export function DetalleRutinaProvider({ children }) {
     // Actualizar progreso del ejercicio dentro de DetalleRutina
     const updateProgresoEjercicio = async (ejercicioId, datos) => {
         try {
-            
+
             const updatedData = {
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
+                ejerciciosCompletados: ejercicioCompletado,
                 estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso'
             };
 
             console.log("Datos a enviar:", updatedData);
 
-            await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData);
+            await updateDetalleRutinaRequest(ejercicioId, updatedData);
             return res.data; // Puedes retornar los datos actualizados si es necesario
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
