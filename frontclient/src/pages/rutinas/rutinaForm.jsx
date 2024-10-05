@@ -20,6 +20,8 @@ const RutinaForm = () => {
 
   const [selectedEjercicios, setSelectedEjercicios] = useState([]);
   const [ejercicios, setEjercicios] = useState([]);
+  const totalEjercicios = detalles.length; // Calcula correctamente el total de ejercicios
+
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -69,8 +71,9 @@ const RutinaForm = () => {
           user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length // Enviar los ejercicios seleccionados
+          totalEjercicios,// Enviar los ejercicios seleccionados
         };
+        
         const rutinaCreada = await createRutina(nuevaRutina);
 
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
