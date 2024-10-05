@@ -69,7 +69,7 @@ const RutinaForm = () => {
           user: user._id,
           nombre,
           descripcion,
-          detalles: selectedEjercicios // Enviar los ejercicios seleccionados
+          totalEjercicios: selectedEjercicios // Enviar los ejercicios seleccionados
         };
         const rutinaCreada = await createRutina(nuevaRutina);
 
