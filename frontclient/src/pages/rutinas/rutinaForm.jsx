@@ -60,9 +60,23 @@ const RutinaForm = () => {
     try {
       if (params.id) {
 
+        // Actualización de rutina existente
+        const rutinaActualizada = {
+          user: user._id,
+          nombre,
+          descripcion,
+          totalEjercicios: selectedEjercicios.length, // Asegurarte de enviar totalEjercicios
+          ejercicios: selectedEjercicios,
+        };
+
+        await updateRutina(params.id, rutinaActualizada);
+        console.log('Rutina actualizada:', rutinaActualizada);
+        navigate('/rutinas');
+        /*
         await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
         console.log(params.id, { ...data, ejercicios: selectedEjercicios });
         navigate('/rutinas');
+        */
 
       } else {
         const nuevaRutina = {
@@ -71,7 +85,7 @@ const RutinaForm = () => {
           descripcion,
           totalEjercicios: selectedEjercicios.length,// Enviar los ejercicios seleccionados
         };
-
+        console.log("Nueva rutina:", nuevaRutina); // Agrega esto para depurar
         const rutinaCreada = await createRutina(nuevaRutina);
 
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
