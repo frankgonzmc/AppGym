@@ -73,7 +73,8 @@ export function DetalleRutinaProvider({ children }) {
     
             console.log("Datos a enviar:", updatedData);
     
-            const res = await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData); 
+            await updateDetalleRutinaRequest(datos.rutinaId, ejercicioId, updatedData); 
+            return res.data; // Puedes retornar los datos actualizados si es necesario
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
         }
