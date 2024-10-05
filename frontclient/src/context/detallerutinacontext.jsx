@@ -57,9 +57,9 @@ export function DetalleRutinaProvider({ children }) {
     };
 
     // Actualizar progreso del ejercicio dentro de DetalleRutina
-    const updateProgresoEjercicio = async (rutinaId, ejercicioId, series, repeticiones) => {
+    const updateProgresoEjercicio = async (rutinaId, ejercicioId, series) => {
         try {
-            const updatedData = { rutinaId, ejercicioId, series, repeticiones };
+            const updatedData = { rutinaId, ejercicioId, series };
             const res = await updateDetalleRutinaRequest(ejercicioId, updatedData);
             setDetalles(prevDetalles =>
                 prevDetalles.map(detalle =>

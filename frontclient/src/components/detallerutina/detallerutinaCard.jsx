@@ -17,7 +17,7 @@ export default function DetalleRutinaCard({ detalles }) {
 
   const handleStartExercise = async () => {
     // Lógica para iniciar el ejercicio
-    await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1, detalles.ejercicio.repeticiones); // Asumiendo que inicias con 1 serie
+    await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1); // Asumiendo que inicias con 1 serie
     navigate(`/iniciar-ejercicios`, { state: { detalles } });
   };
 
