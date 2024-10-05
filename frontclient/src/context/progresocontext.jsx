@@ -25,20 +25,20 @@ export function ProgresoProvider({ children }) {
         try {
             const progreso = await getProgresoRequest(id);
             const rutina = await getRutinaRequest(id);
+            const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
 
-            // Si 'rutina' o 'detalles' no existen, devuelve un array vacío
-            const ejercicios = rutina?.detalles?.length
-                ? rutina.detalles.map(detalle => detalle.ejercicio)
-                : [];
+            // Actualiza el estado global con el progreso
+            setProgreso((prev) => ({
+                ...prev,
+                [id]: { ...progreso, ejerciciosCompletados },
+            }));
 
-            return { progreso, ejercicios };
+            return { progreso, ejerciciosCompletados };
         } catch (error) {
             console.error("Error al obtener progreso o rutina:", error);
             return { progreso: null, ejercicios: [] };
         }
     };
-
-
 
     const createProgreso = async (progreso) => {
         try {
@@ -69,10 +69,13 @@ export function ProgresoProvider({ children }) {
         }
     };
 
-    const updateProgresoEjercicio = (id, progresoEjercicio) => {
+    const updateProgresoEjercicio = (rutinaId, ejercicioId, seriesCompletadas) => {
         setProgreso((prevProgreso) => ({
             ...prevProgreso,
-            [id]: progresoEjercicio, // actualizar progreso de un ejercicio en específico
+            [rutinaId]: {
+                ...prevProgreso[rutinaId],
+                ejerciciosCompletados: seriesCompletadas,
+            },
         }));
     };
 
