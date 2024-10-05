@@ -59,13 +59,18 @@ const RutinaForm = () => {
 
     try {
       if (params.id) {
-        
+
         await updateRutina(params.id, { ...data, ejercicios: selectedEjercicios });
         console.log(params.id, { ...data, ejercicios: selectedEjercicios });
         navigate('/rutinas');
 
       } else {
-        const nuevaRutina = { user: user._id, nombre, descripcion };
+        const nuevaRutina = {
+          user: user._id,
+          nombre,
+          descripcion,
+          detalles: selectedEjercicios // Enviar los ejercicios seleccionados
+        };
         const rutinaCreada = await createRutina(nuevaRutina);
 
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
