@@ -29,7 +29,6 @@ export default function DetalleRutinaCard({ detalles }) {
       <p className="text-slate-300">Descanso: {detalles.ejercicio.descanso}</p>
       <hr className="text-slate-300" />
       <p className="text-slate-300">Series Completadas:{detalles.seriesProgreso} / {detalles.ejercicio.series}</p>
-      <p className="text-slate-300">Ejercicios Completados: {detalles.ejerciciosCompletados} / {detalles.totalEjercicios}</p>
       <p className="text-slate-300">Estado: {detalles.estado}</p>
       <hr className="text-slate-300" />
       <footer>

@@ -27,6 +27,9 @@ export function RutinaCard({ rutina }) {
         {porcentajeProgreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
 
+      
+      <p className="text-slate-300">Ejercicios Completados: {detalles.ejerciciosCompletados} / {rutina.totalEjercicios}</p>
+
       <footer>
         <div className="flex gap-x-3 items-center">
           <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Editar</button>
