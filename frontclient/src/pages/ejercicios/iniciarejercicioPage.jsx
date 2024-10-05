@@ -27,7 +27,7 @@ export default function IniciaEjercicioPage() {
     // Lógica para guardar el progreso al iniciar
     if (!isPausado && !ejercicioCompletado) {
       updateProgresoEjercicio(detalles.ejercicioId, {
-        seriesProgreso: seriesCompletadas,
+        seriesCompletadas,
         ejerciciosCompletados: ejercicioCompletado,
       });
     }
