@@ -21,7 +21,7 @@ export default function DetalleRutinaCard({ detalles }) {
       navigate(`/iniciar-ejercicios`, { state: { detalles, continuar: true } });
     } else {
       // Si no hay progreso, inicia el ejercicio
-      await updateProgresoEjercicio(detalles.rutina, detalles.ejercicio._id, 1);
+      await updateProgresoEjercicio(detalles.rutina._id, detalles.ejercicio._id, 1);
       navigate(`/iniciar-ejercicios`, { state: { detalles } });
     }
   };
