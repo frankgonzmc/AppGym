@@ -18,7 +18,7 @@ export default function IniciaEjercicioPage() {
   const [seriesCompletadas, setSeriesCompletadas] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState();
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(0);
 
   const intervalRef = useRef(null);
 
