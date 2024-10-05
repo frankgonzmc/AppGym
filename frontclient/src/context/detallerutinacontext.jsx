@@ -50,7 +50,7 @@ export function DetalleRutinaProvider({ children }) {
     const deleteDetalleRutina = async (id) => {
         try {
             await deleteDetalleRutinaRequest(id); // Llama a tu API para eliminar
-            setDetallesRutina((prev) => prev.filter((detalle) => detalle._id !== id)); // Actualiza el estado
+            setDetalles((prev) => prev.filter((detalle) => detalle._id !== id)); // Actualiza el estado
         } catch (error) {
             console.error("Error al eliminar detalle de rutina:", error);
         }
