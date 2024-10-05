@@ -86,7 +86,7 @@ export default function IniciarejercicioPage() {
         {isDescanso && (
           <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} label={`Descanso: ${descansoRestante}s`} />
         )}
-        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.seriesCompletar}</p>
+        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
 
         <div className="d-flex justify-content-between">
           <Button onClick={handlePausarReanudar}>
