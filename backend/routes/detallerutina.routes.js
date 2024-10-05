@@ -7,7 +7,7 @@ const router = Router();
 router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina);
 
 // Actualizar el progreso de un detalle de rutina existente
-router.put('/detalles-rutinas/progresos', authRequired, actualizarProgresoDetalleRutina);
+router.put('/detalles-rutinas/:id', authRequired, actualizarProgresoDetalleRutina);
 
 router.post('/detalles-rutinas', authRequired, createDetalleRutina);
 
