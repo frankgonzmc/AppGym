@@ -86,6 +86,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         res.status(200).json(detalle);
     } catch (error) {
+        console.error('Error actualizando el progreso:', error);
         res.status(500).json({ message: "Error actualizando el progreso", error });
     }
 };

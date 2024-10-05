@@ -23,12 +23,15 @@ export default function IniciarejercicioPage() {
   const intervalRef = useRef(null);
 
   // Guardar el progreso del ejercicio
+  // Guardar el progreso del ejercicio
   useEffect(() => {
-    updateProgresoEjercicio(detalles._id, {
-      seriesCompletadas,
-      ejercicioCompletado,
-    });
-  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles._id]);
+    if (detalles && detalles._id) { // Asegúrate de que detalles._id esté presente
+      updateProgresoEjercicio(detalles._id.toString(), {
+        seriesCompletadas,
+        ejercicioCompletado,
+      });
+    }
+  }, [seriesCompletadas, ejercicioCompletado, updateProgresoEjercicio, detalles]);
 
   // Temporizador y lógica de descanso
   // En el useEffect para el temporizador
