@@ -50,7 +50,7 @@ const RutinaForm = () => {
 
 
   const onSubmit = handleSubmit(async (data) => {
-    const { nombre, descripcion, totalEjercicios } = data;
+    const { nombre, descripcion } = data;
 
     if (!nombre || !descripcion || selectedEjercicios.length === 0) {
       console.error("Faltan datos requeridos");
