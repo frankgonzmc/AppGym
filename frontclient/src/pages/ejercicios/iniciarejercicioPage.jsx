@@ -82,6 +82,11 @@ export default function IniciarejercicioPage() {
   return (
     <Card>
       <div className="exercise-card">
+        <div>
+          {detalles.ejercicio.imagen && (
+            <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-auto h-auto" />
+          )}
+        </div>
         <h1 className='text-2xl text-black font-bold text-center'>{detalles.ejercicio.nombre}</h1>
         <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
         {isDescanso && (
