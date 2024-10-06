@@ -60,7 +60,7 @@ export const deleteDetalleRutina = async (req, res) => {
 
 // Actualizar el progreso del detalle de rutina existente
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
+    const { rutinaId, ejercicioId, seriesCompletadas, ejerciciosCompletados } = req.body;
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
@@ -70,7 +70,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         }
 
         detalle.seriesProgreso += seriesCompletadas;
-        detalle.ejerciciosCompletados += seriesCompletadas > 0 ? 1 : 0;
+        detalle.ejerciciosCompletados += ejerciciosCompletados > 0 ? 1 : 0;
 
         // Actualiza el estado
         if (detalle.seriesProgreso >= detalle.ejercicio.series) {

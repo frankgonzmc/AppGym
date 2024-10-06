@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest, updateEjerciciosCompletadosRequest } from '../../api/detallerutina'; // Importar funciones API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -34,10 +34,13 @@ export default function IniciaEjercicioPage() {
     await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
     // Verificar si se completan todas las series
     if (nuevasSeries >= detalles.ejercicio.series) {
+      console.log(detalles)
       setEjercicioCompletado(true);
       await updateEstadoRutinaRequest(detalles._id, 'Completado');
-      await updateEjerciciosCompletadosRequest(detalles.rutinaId._id); // Actualizar los ejercicios completados de la rutina
+      await updateCompletadosEjercicioRequest(detalles._id, 1);
       clearInterval(intervalRef.current);
+    } else{
+      await updateCompletadosEjercicioRequest(detalles._id, 0);
     }
   };
 

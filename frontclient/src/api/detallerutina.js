@@ -12,6 +12,10 @@ export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => 
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });
 };
 
+export const updateCompletadosEjercicioRequest = (detalleId, ejerciciosCompletos) => {
+    return axios.put(`/detalles-rutinas/${detalleId}`, { ejerciciosCompletados: ejerciciosCompletos });
+};
+
 export const updateEstadoRutinaRequest = (detalleId, estado) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { estado });
 };
@@ -19,7 +23,3 @@ export const updateEstadoRutinaRequest = (detalleId, estado) => {
 export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => {
     return axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
 };
-
-// Nueva función para actualizar el número de ejercicios completados en la tabla Rutina
-export const updateEjerciciosCompletadosRequest = (rutinaId) => 
-    axios.put(`/rutinas/${rutinaId}/ejercicios-completados`);
