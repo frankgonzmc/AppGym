@@ -31,7 +31,6 @@ export default function IniciaEjercicioPage() {
 
   // Función para actualizar el progreso de la serie en la base de datos
   const actualizarProgresoSerie = async (nuevasSeries) => {
-    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
     // Verificar si se completan todas las series
     if (nuevasSeries >= detalles.ejercicio.series) {
