@@ -20,4 +20,6 @@ export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => {
     return axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
 };
 
-
+// Nueva función para actualizar el número de ejercicios completados en la tabla Rutina
+export const updateEjerciciosCompletadosRequest = (rutinaId) => 
+    axios.put(`/rutinas/${rutinaId}/ejercicios-completados`);

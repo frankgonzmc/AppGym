@@ -81,7 +81,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         await detalle.save();
         // Actualizar rutina
-        await actualizandoLosDetallesRutinas(rutinaId); // Llama a la nueva función para actualizar la rutina
+        await actualizandoEstadosDetallesRutinas(rutinaId); // Llama a la nueva función para actualizar la rutina
 
         res.status(200).json(detalle);
     } catch (error) {
@@ -91,7 +91,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 };
 
 // Nueva función para actualizar la rutina
-export const actualizandoLosDetallesRutinas = async (rutinaId) => {
+export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;

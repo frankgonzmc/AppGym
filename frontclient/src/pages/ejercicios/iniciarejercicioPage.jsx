@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest, updateEjerciciosCompletadosRequest  } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -37,7 +37,11 @@ export default function IniciaEjercicioPage() {
     if (nuevasSeries >= detalles.ejercicio.series) {
       setEjercicioCompletado(true);
       await updateEstadoRutinaRequest(detalles._id, 'Completado');
+      await updateEjerciciosCompletadosRequest(detalles.rutinaId); // Actualizar los ejercicios completados de la rutina
+      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
       clearInterval(intervalRef.current);
+    } else{
+      await updateProgresoEjercicioRequest(detalles._id, 0);
     }
   };
 
@@ -114,7 +118,7 @@ export default function IniciaEjercicioPage() {
         <p>{detalles.ejercicio.descripcion}</p>
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
-          label={`${duracionRestante}s`}
+          label={`Duración: ${duracionRestante}s`}
           style={{ height: '40px' }} // Ajusta la altura aquí
         />
         {isDescanso && (
