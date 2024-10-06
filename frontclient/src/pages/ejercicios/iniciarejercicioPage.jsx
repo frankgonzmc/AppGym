@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, ProgressBar } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar las funciones de API
 
