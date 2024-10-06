@@ -94,7 +94,7 @@ export default function IniciaEjercicioPage() {
               src={reposo}
               alt="Descanso"
               className="w-auto h-auto mt-2 my-2"
-              style={{ maxWidth: '60%', height: 'auto' }}
+              style={{ maxWidth: '100%', height: 'auto' }}
             />
           ) : (
             // Imagen del ejercicio
@@ -103,7 +103,7 @@ export default function IniciaEjercicioPage() {
                 src={detalles.ejercicio.imagen}
                 alt={detalles.ejercicio.nombre}
                 className="w-auto h-auto mt-2 my-2"
-                style={{ maxWidth: '60%', height: 'auto' }}
+                style={{ maxWidth: '100%', height: 'auto' }}
               />
             )
           )}
@@ -115,16 +115,16 @@ export default function IniciaEjercicioPage() {
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
           label={`Duración: ${duracionRestante}s`}
-          className='mt-2 my-2'
-          style={{ height: '40px' }} // Ajusta la altura aquí
+          className='mt-2'
+          style={{ height: '40px', maxWidth: 'auto', }} // Ajusta la altura aquí
         />
         {isDescanso && (
           <ProgressBar
             variant="info"
             now={(descansoRestante / detalles.ejercicio.descanso) * 100}
-            className='mt-2 my-2'
+            className='mt-2'
             label={`Descanso: ${descansoRestante}s`}
-            style={{ height: '40px' }} // Ajusta la altura aquí también
+            style={{ height: '40px', maxWidth: 'auto', }} // Ajusta la altura aquí también
           />
         )}
         <p>
