@@ -15,11 +15,7 @@ const detallesrutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0, // Comienza en 0
     },
-    ejerciciosCompletados: { // Nuevo campo
-        type: Number,
-        default: 0, // Comienza en 0
-    },
-    estado:{
+    estado: {
         type: String,
         default: 'Pendiente', // Por defecto, todos los detalles de rutina están pendientes de completar
     },

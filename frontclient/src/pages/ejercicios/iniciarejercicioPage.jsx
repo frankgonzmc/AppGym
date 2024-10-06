@@ -37,10 +37,7 @@ export default function IniciaEjercicioPage() {
       console.log(detalles)
       setEjercicioCompletado(true);
       await updateEstadoRutinaRequest(detalles._id, 'Completado');
-      await updateCompletadosEjercicioRequest(detalles._id, 1);
       clearInterval(intervalRef.current);
-    } else{
-      await updateCompletadosEjercicioRequest(detalles._id, 0);
     }
   };
 
