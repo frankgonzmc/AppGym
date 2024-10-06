@@ -112,7 +112,6 @@ export default function IniciaEjercicioPage() {
       <Card.Body>
         <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
-
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
           label={`${duracionRestante}s`}
@@ -126,8 +125,6 @@ export default function IniciaEjercicioPage() {
             style={{ height: '60px' }} // Ajusta la altura aquí también
           />
         )}
-
-
         <p>
           Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}
         </p>
