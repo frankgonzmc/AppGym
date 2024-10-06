@@ -87,13 +87,13 @@ export default function IniciaEjercicioPage() {
   return (
     <Card className="text-center">
       <Card.Header>
-        <div className="flex h-[calc(100vh-100px)] items-center justify-center">
+        <div className="flex h-[calc(80vh-80px)] items-center justify-center">
           {isDescanso ? (
             // Imagen para el descanso
             <img
               src={reposo}
               alt="Descanso"
-              className="w-auto h-auto mt-2 my-2"
+              className="w-450 h-450 mt-2 my-2"
               style={{ maxWidth: '100%', height: 'auto' }}
             />
           ) : (
@@ -102,7 +102,7 @@ export default function IniciaEjercicioPage() {
               <img
                 src={detalles.ejercicio.imagen}
                 alt={detalles.ejercicio.nombre}
-                className="w-auto h-auto mt-2 my-2"
+                className="w-450 h-450 mt-2 my-2"
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             )
