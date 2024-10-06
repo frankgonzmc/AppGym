@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import axios from "axios";
 import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
@@ -116,6 +117,8 @@ export function DetalleRutinaProvider({ children }) {
                 deleteDetalleRutina,
                 getDetalleRutina,
                 fetchDetallesRutina,
+                updateDetalleRutinaRequest,
+                updateRutinaProgress,
                 updateProgresoEjercicio, // Añadido para manejar el progreso
             }}>
             {children}
