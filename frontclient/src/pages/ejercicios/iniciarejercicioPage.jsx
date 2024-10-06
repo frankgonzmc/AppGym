@@ -78,7 +78,7 @@ export default function IniciaEjercicioPage() {
 
   return (
     <Card>
-      <div className="flex h-[calc(70vh-70px)] items-center justify-center">
+      <div className="items-center justify-center">
         {detalles.ejercicio.imagen && (
           <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-full h-auto" />
         )}
