@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from "react";
-import axios from '../api/axios';
 import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
-    updateDetalleRutinaRequest, // Cambié el nombre de la importación para no confundir con la función que defines más abajo
-    updateRutinaProgressRequest, // Asegúrate de que esto esté exportado correctamente
-} from "../api/detallerutina"; // Verifica que esta ruta sea correcta
+    updateProgresoEjercicioRequest,
+    updateDetalleRutinaRequest,
+    updateRutinaProgressRequest,
+} from "../api/detallerutina";
 
 const DetalleRutinaContext = createContext();
 
@@ -25,11 +25,10 @@ export function DetalleRutinaProvider({ children }) {
             return res.data;
         } catch (error) {
             console.error("Error al obtener detalle de rutina:", error);
-            throw error; // Lanza el error para que se maneje en otro lugar si es necesario
+            throw error;
         }
     };
 
-    // Obtener detalles de rutina
     const fetchDetallesRutina = async (id) => {
         try {
             const response = await getDetalleRutinaRequest(id);
@@ -45,7 +44,7 @@ export function DetalleRutinaProvider({ children }) {
             setDetalles(prevDetalles => [...prevDetalles, res.data]);
             return res.data;
         } catch (error) {
-            console.error('Error al crear detalle de rutina:', error.response ? error.response.data : error.message);
+            console.error('Error al crear detalle de rutina:', error.response?.data || error.message);
             throw error;
         }
     };
@@ -59,9 +58,9 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    const updateDetalleRutina = async (id, data) => { // Renombré a updateDetalleRutina para evitar confusión
+    const updateDetalleRutina = async (id, data) => {
         try {
-            const response = await axios.put(`/detalles-rutinas/${id}`, data);
+            const response = await updateDetalleRutinaRequest(id, data);
             return response.data;
         } catch (error) {
             console.error('Error al actualizar detalle:', error);
@@ -69,7 +68,6 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
-    // Actualizar progreso del ejercicio dentro de DetalleRutina
     const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
         try {
             const updatedData = {
@@ -81,25 +79,22 @@ export function DetalleRutinaProvider({ children }) {
 
             console.log("Datos a enviar:", updatedData);
 
-            // Actualizar detalle de rutina
-            const detalleActualizado = await updateDetalleRutinaRequest(ejercicioId, updatedData); // Cambié a la función renombrada
+            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
 
-            // Lógica para actualizar el estado de la rutina
-            const rutinaActualizada = await updateRutinaProgressRequest(rutinaId);
+            const rutinaActualizada = await updateRutinaProgress(rutinaId);
 
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
-            console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
+            console.error("Error al actualizar progreso del ejercicio:", error.response?.data || error);
         }
     };
 
-    // Nueva función para actualizar la rutina
     const updateRutinaProgress = async (rutinaId) => {
         try {
-            const detallesResponse = await getDetalleRutinaRequest(rutinaId); // Cambié el nombre de la variable para mayor claridad
+            const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
 
-            const res = await axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
+            const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);

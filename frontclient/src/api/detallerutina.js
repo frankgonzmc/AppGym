@@ -8,10 +8,14 @@ export const deleteDetalleRutinaRequest = (id) => axios.delete(`/detalles-rutina
 
 export const updateDetalleRutinaRequest = (id, detalles) => axios.put(`/detalles-rutinas/${id}`, detalles);
 
-export const updateProgresoEjercicioRequest = async (detalleId, seriesCompletadas) => {
+export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });
 };
 
-export const updateEstadoRutinaRequest = async (detalleId, estado) => {
+export const updateEstadoRutinaRequest = (detalleId, estado) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { estado });
+};
+
+export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => {
+    return axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
 };
