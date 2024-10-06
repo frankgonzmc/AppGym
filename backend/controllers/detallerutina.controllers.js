@@ -58,28 +58,9 @@ export const deleteDetalleRutina = async (req, res) => {
     }
 };
 
-// Actualizar un detalle de rutina existente
-export const actualizandoLosDetallesRutinas = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateData = req.body;
-
-        // Suponiendo que tienes un modelo de DetalleRutina
-        const updatedDetail = await DetalleRutina.findByIdAndUpdate(id, updateData, { new: true });
-
-        if (!updatedDetail) {
-            return res.status(404).json({ message: 'Detalle no encontrado' });
-        }
-
-        res.json(updatedDetail);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 // Actualizar el progreso del detalle de rutina existente
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { rutinaId, ejercicioId, series } = req.body;
+    const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
@@ -88,35 +69,37 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
             return res.status(404).json({ message: "Detalle no encontrado" });
         }
 
-        // Validación adicional para evitar errores si no se encuentran series en el ejercicio
-        if (!detalle.ejercicio || !detalle.ejercicio.series) {
-            return res.status(400).json({ message: "El ejercicio no tiene series definidas." });
-        }
+        detalle.seriesProgreso += seriesCompletadas;
+        detalle.ejerciciosCompletados += seriesCompletadas > 0 ? 1 : 0;
 
-        // Asegurar que las series ingresadas sean un número válido
-        const seriesProgresadas = parseInt(series, 10);
-        if (isNaN(seriesProgresadas) || seriesProgresadas <= 0) {
-            return res.status(400).json({ message: "Número de series inválido." });
-        }
-
-        // Actualiza el progreso de series y repeticiones
-        detalle.seriesProgreso += seriesProgresadas;
-        detalle.ejerciciosCompletados += seriesProgresadas > 0 ? 1 : 0; // Incrementa los ejercicios completados solo si hay series progresadas
-
-        // Establecer el estado según el progreso
+        // Actualiza el estado
         if (detalle.seriesProgreso >= detalle.ejercicio.series) {
             detalle.estado = 'Completado';
-        } else if (detalle.seriesProgreso > 0) {
-            detalle.estado = 'En Progreso';
         } else {
-            detalle.estado = 'Pendiente';
+            detalle.estado = 'En Progreso';
         }
 
         await detalle.save();
+
+        // Actualizar rutina
+        await actualizarRutina(rutinaId); // Llama a la nueva función para actualizar la rutina
 
         res.status(200).json(detalle);
     } catch (error) {
         console.error('Error actualizando el progreso:', error);
         res.status(500).json({ message: "Error actualizando el progreso", error });
+    }
+};
+
+// Nueva función para actualizar la rutina
+const actualizarRutina = async (rutinaId) => {
+    try {
+        const detalles = await DetallesRutina.find({ rutina: rutinaId });
+        const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
+
+        await Rutinas.findByIdAndUpdate(rutinaId, { ejerciciosCompletos }, { new: true });
+    } catch (error) {
+        console.error("Error actualizando la rutina:", error);
+        throw error;
     }
 };

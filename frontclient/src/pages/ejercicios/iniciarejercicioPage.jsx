@@ -25,13 +25,14 @@ export default function IniciaEjercicioPage() {
   // Actualizar progreso al iniciar el ejercicio
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
-      updateProgresoEjercicio(detalles.ejercicio._id, {
+      updateProgresoEjercicio(detalles.rutina._id, detalles.ejercicio._id, {
         seriesCompletadas: seriesCompletadas,
         ejerciciosCompletados: ejercicioCompletado,
         ejercicio: detalles.ejercicio // Asegúrate de pasar el ejercicio completo
       });
     }
   }, [isPausado, ejercicioCompletado, seriesCompletadas, updateProgresoEjercicio, detalles]);
+
 
   // Temporizador y lógica de descanso
   useEffect(() => {

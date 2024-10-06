@@ -67,24 +67,47 @@ export function DetalleRutinaProvider({ children }) {
     };
     
     // Actualizar progreso del ejercicio dentro de DetalleRutina
-    const updateProgresoEjercicio = async (ejercicioId, datos) => {
+    const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
         try {
             const updatedData = {
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
-                ejerciciosCompletados: datos.ejerciciosCompletados, // Usamos el valor pasado desde la página
-                estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
+                ejerciciosCompletados: datos.ejerciciosCompletados,
+                estado: (datos.seriesCompletadas >= detalles.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
-
+    
             console.log("Datos a enviar:", updatedData);
-
-            const res = await updateDetalleRutinaRequest(ejercicioId, updatedData);
-            return res.data; // Retornar los datos actualizados si es necesario
+    
+            // Actualizar detalle de rutina
+            const detalleActualizado = await updateDetalleRutinaRequest(ejercicioId, updatedData);
+    
+            // Lógica para actualizar el estado de la rutina
+            const rutinaActualizada = await updateRutinaProgress(rutinaId); // Nueva función para actualizar la rutina
+    
+            return { detalleActualizado, rutinaActualizada }; // Retornar los datos actualizados si es necesario
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
         }
     };
-
+    
+    // Nueva función para actualizar la rutina
+    const updateRutinaProgress = async (rutinaId) => {
+        try {
+            // Obtener todos los detalles de rutina
+            const detalles = await getDetalleRutinaRequest(rutinaId); // Obtener detalles de la rutina
+    
+            // Contar cuántos ejercicios están completos
+            const ejerciciosCompletos = detalles.data.filter(detalle => detalle.estado === 'Completado').length;
+    
+            // Actualizar la rutina con el número de ejercicios completados
+            const res = await axios.put(`http://localhost:5000/api/rutinas/${rutinaId}`, { ejerciciosCompletos });
+            return res.data;
+        } catch (error) {
+            console.error("Error al actualizar rutina:", error);
+            throw error;
+        }
+    };
+    
     return (
         <DetalleRutinaContext.Provider
             value={{
