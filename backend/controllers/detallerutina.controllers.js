@@ -80,9 +80,8 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         }
 
         await detalle.save();
-
         // Actualizar rutina
-        await actualizarRutina(rutinaId); // Llama a la nueva función para actualizar la rutina
+        await actualizandoLosDetallesRutinas(rutinaId); // Llama a la nueva función para actualizar la rutina
 
         res.status(200).json(detalle);
     } catch (error) {

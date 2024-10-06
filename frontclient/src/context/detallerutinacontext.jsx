@@ -5,7 +5,7 @@ import {
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
     updateDetalleRutinaRequest, // Cambié el nombre de la importación para no confundir con la función que defines más abajo
-    updateRutinaProgress, // Asegúrate de que esto esté exportado correctamente
+    updateRutinaProgressRequest, // Asegúrate de que esto esté exportado correctamente
 } from "../api/detallerutina"; // Verifica que esta ruta sea correcta
 
 const DetalleRutinaContext = createContext();
@@ -85,7 +85,7 @@ export function DetalleRutinaProvider({ children }) {
             const detalleActualizado = await updateDetalleRutinaRequest(ejercicioId, updatedData); // Cambié a la función renombrada
 
             // Lógica para actualizar el estado de la rutina
-            const rutinaActualizada = await updateRutinaProgress(rutinaId);
+            const rutinaActualizada = await updateRutinaProgressRequest(rutinaId);
 
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
