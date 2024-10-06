@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import axios from '../../api/axios';
+import axios from '../api/axios';
 import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
