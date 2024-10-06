@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import reposo from "../imagenes/reposo.webp";
+import reposo from "../../imagenes/reposo.webp";
 import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
