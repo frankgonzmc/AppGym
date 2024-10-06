@@ -58,9 +58,9 @@ export const deleteDetalleRutina = async (req, res) => {
     }
 };
 
-// Actualizar el progreso del detalle de rutina existente
+// Actualizar progreso y estado de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { rutinaId, ejercicioId, seriesCompletadas, ejerciciosCompletados } = req.body;
+    const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
@@ -70,7 +70,6 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         }
 
         detalle.seriesProgreso += seriesCompletadas;
-        detalle.ejerciciosCompletados += ejerciciosCompletados > 0 ? 1 : 0;
 
         // Actualiza el estado
         if (detalle.seriesProgreso >= detalle.ejercicio.series) {
@@ -81,7 +80,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         await detalle.save();
         // Actualizar rutina
-        await actualizandoEstadosDetallesRutinas(rutinaId); // Llama a la nueva función para actualizar la rutina
+        await actualizandoEstadosDetallesRutinas(rutinaId);
 
         res.status(200).json(detalle);
     } catch (error) {
@@ -96,7 +95,16 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
-        await Rutinas.findByIdAndUpdate(rutinaId, { ejerciciosCompletos }, { new: true });
+        const totalEjercicios = detalles.length;
+
+        let estadoRutina = 'Pendiente';
+        if (ejerciciosCompletos === totalEjercicios) {
+            estadoRutina = 'Completado';
+        } else if (ejerciciosCompletos > 0) {
+            estadoRutina = 'En Progreso';
+        }
+
+        await Rutinas.findByIdAndUpdate(rutinaId, { ejerciciosCompletos, estado: estadoRutina }, { new: true });
     } catch (error) {
         console.error("Error actualizando la rutina:", error);
         throw error;

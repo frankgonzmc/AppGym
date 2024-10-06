@@ -13,7 +13,7 @@ export function RutinaCard({ rutina }) {
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
 
   // Actualizar el estado de la rutina basado en el progreso
-  const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
+  const estadoRutina = rutina.estado || 'Pendiente'; // Asegúrate de que el estado se esté pasando correctamente
 
   return (
     <Card>
