@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import reposo from "../imagenes/reposo.webp";
 import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
@@ -90,7 +91,7 @@ export default function IniciaEjercicioPage() {
           {isDescanso ? (
             // Imagen para el descanso
             <img
-              src="/imagenes/reposo.webp"
+              src={reposo}
               alt="Descanso"
               className="w-auto h-auto"
               style={{ maxWidth: '60%', height: 'auto' }}
