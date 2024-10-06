@@ -78,15 +78,18 @@ export default function IniciaEjercicioPage() {
 
   return (
     <Card className="text-center">
-      <Card.Body>
+      <Card.Header>
         {detalles.ejercicio.imagen && (
           <img
             src={detalles.ejercicio.imagen}
             alt={detalles.ejercicio.nombre}
-            className="w-75 h-auto" // Ajusta el tamaño de la imagen aquí
-            style={{ maxWidth: '60%', height: 'auto' }} // Estilo adicional para la imagen
+            className="w-auto h-auto" // Ajusta el tamaño de la imagen aquí
+            style={{ maxWidth: '30%', height: 'auto' }} // Estilo adicional para la imagen
           />
         )}
+      </Card.Header>
+      <Card.Body>
+
         <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
 
