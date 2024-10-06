@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from "react";
-import axios from '../../api/axios'
+import axios from '../../api/axios';
 import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
-    updateRutinaProgress,
-    updateDetalleRutinaRequest,
-} from "../api/detallerutina"; // Asegúrate de crear este archivo en api/
+    updateDetalleRutinaRequest, // Cambié el nombre de la importación para no confundir con la función que defines más abajo
+    updateRutinaProgress, // Asegúrate de que esto esté exportado correctamente
+} from "../api/detallerutina"; // Verifica que esta ruta sea correcta
 
 const DetalleRutinaContext = createContext();
 
@@ -24,7 +24,8 @@ export function DetalleRutinaProvider({ children }) {
             const res = await getDetalleRutinaRequest(id);
             return res.data;
         } catch (error) {
-            console.error(error);
+            console.error("Error al obtener detalle de rutina:", error);
+            throw error; // Lanza el error para que se maneje en otro lugar si es necesario
         }
     };
 
@@ -32,7 +33,7 @@ export function DetalleRutinaProvider({ children }) {
     const fetchDetallesRutina = async (id) => {
         try {
             const response = await getDetalleRutinaRequest(id);
-            setDetalles(response.data); // Asegúrate de que esto esté configurando el estado correctamente
+            setDetalles(response.data);
         } catch (error) {
             console.error("Error al obtener detalles de rutina:", error);
         }
@@ -41,33 +42,33 @@ export function DetalleRutinaProvider({ children }) {
     const createDetalleRutina = async (detalle) => {
         try {
             const res = await createDetalleRutinaRequest(detalle);
-            setDetalles(prevDetalles => [...prevDetalles, res.data]); // Agregar nuevo detalle al estado
+            setDetalles(prevDetalles => [...prevDetalles, res.data]);
             return res.data;
         } catch (error) {
             console.error('Error al crear detalle de rutina:', error.response ? error.response.data : error.message);
-            throw error; // Lanza el error para manejarlo más arriba si es necesario
+            throw error;
         }
     };
 
     const deleteDetalleRutina = async (id) => {
         try {
-            await deleteDetalleRutinaRequest(id); // Llama a tu API para eliminar
-            setDetalles((prev) => prev.filter((detalle) => detalle._id !== id)); // Actualiza el estado
+            await deleteDetalleRutinaRequest(id);
+            setDetalles(prev => prev.filter(detalle => detalle._id !== id));
         } catch (error) {
             console.error("Error al eliminar detalle de rutina:", error);
         }
     };
-    
-    const updateDetalleRutinaRequest = async (id, data) => {
+
+    const updateDetalleRutina = async (id, data) => { // Renombré a updateDetalleRutina para evitar confusión
         try {
             const response = await axios.put(`/detalles-rutinas/${id}`, data);
             return response.data;
         } catch (error) {
             console.error('Error al actualizar detalle:', error);
-            throw error; // Para manejar el error en el contexto
+            throw error;
         }
     };
-    
+
     // Actualizar progreso del ejercicio dentro de DetalleRutina
     const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
         try {
@@ -77,31 +78,27 @@ export function DetalleRutinaProvider({ children }) {
                 ejerciciosCompletados: datos.ejerciciosCompletados,
                 estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
-    
+
             console.log("Datos a enviar:", updatedData);
-    
+
             // Actualizar detalle de rutina
-            const detalleActualizado = await updateDetalleRutinaRequest(ejercicioId, updatedData);
-    
+            const detalleActualizado = await updateDetalleRutinaRequest(ejercicioId, updatedData); // Cambié a la función renombrada
+
             // Lógica para actualizar el estado de la rutina
-            const rutinaActualizada = await updateRutinaProgress(rutinaId); // Nueva función para actualizar la rutina
-    
-            return { detalleActualizado, rutinaActualizada }; // Retornar los datos actualizados si es necesario
+            const rutinaActualizada = await updateRutinaProgress(rutinaId);
+
+            return { detalleActualizado, rutinaActualizada };
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response ? error.response.data : error);
         }
     };
-    
+
     // Nueva función para actualizar la rutina
     const updateRutinaProgress = async (rutinaId) => {
         try {
-            // Obtener todos los detalles de rutina
-            const detalles = await getDetalleRutinaRequest(rutinaId); // Obtener detalles de la rutina
-    
-            // Contar cuántos ejercicios están completos
-            const ejerciciosCompletos = detalles.data.filter(detalle => detalle.estado === 'Completado').length;
-    
-            // Actualizar la rutina con el número de ejercicios completados
+            const detallesResponse = await getDetalleRutinaRequest(rutinaId); // Cambié el nombre de la variable para mayor claridad
+            const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
+
             const res = await axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
             return res.data;
         } catch (error) {
@@ -109,7 +106,7 @@ export function DetalleRutinaProvider({ children }) {
             throw error;
         }
     };
-    
+
     return (
         <DetalleRutinaContext.Provider
             value={{
@@ -118,9 +115,9 @@ export function DetalleRutinaProvider({ children }) {
                 deleteDetalleRutina,
                 getDetalleRutina,
                 fetchDetallesRutina,
-                updateDetalleRutinaRequest,
+                updateDetalleRutina,
+                updateProgresoEjercicio,
                 updateRutinaProgress,
-                updateProgresoEjercicio, // Añadido para manejar el progreso
             }}>
             {children}
         </DetalleRutinaContext.Provider>
