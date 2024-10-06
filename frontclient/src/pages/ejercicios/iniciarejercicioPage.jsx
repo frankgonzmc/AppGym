@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import { useDetallesRutina } from '../../context/detallerutinacontext';
 import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar las funciones de API
 
 export default function IniciaEjercicioPage() {
@@ -58,7 +59,7 @@ export default function IniciaEjercicioPage() {
         <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
 
         <div className="d-flex justify-content-between">
-          <Button onClick={handlePausarReanudar}>
+          <Button onClick={handleCompleteSerie}>
             {isPausado ? 'Iniciar' : 'Pausar'}
           </Button>
           <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
@@ -70,9 +71,8 @@ export default function IniciaEjercicioPage() {
   );
 }
 
-
-
-/*import React, { useState, useEffect, useRef } from 'react';
+/*
+import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useDetallesRutina } from '../../context/detallerutinacontext';
@@ -201,5 +201,4 @@ export default function IniciaEjercicioPage() {
       </div>
     </Card>
   );
-}
-*/
+}*/
