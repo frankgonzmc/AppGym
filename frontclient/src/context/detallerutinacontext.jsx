@@ -55,7 +55,17 @@ export function DetalleRutinaProvider({ children }) {
             console.error("Error al eliminar detalle de rutina:", error);
         }
     };
-
+    
+    const updateDetalleRutinaRequest = async (id, data) => {
+        try {
+            const response = await axios.put(`http://localhost:5000/api/detalles-rutinas/${id}`, data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al actualizar detalle:', error);
+            throw error; // Para manejar el error en el contexto
+        }
+    };
+    
     // Actualizar progreso del ejercicio dentro de DetalleRutina
     const updateProgresoEjercicio = async (ejercicioId, datos) => {
         try {
