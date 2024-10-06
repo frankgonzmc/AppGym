@@ -77,12 +77,17 @@ export default function IniciaEjercicioPage() {
   };
 
   return (
-    <Card>
-      <div className="items-center justify-center">
+    <Card className="text-center">
+      <Card.Body>
         {detalles.ejercicio.imagen && (
-          <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-full h-auto" />
+          <img
+            src={detalles.ejercicio.imagen}
+            alt={detalles.ejercicio.nombre}
+            className="w-75 h-auto" // Ajusta el tamaño de la imagen aquí
+            style={{ maxWidth: '60%', height: 'auto' }} // Estilo adicional para la imagen
+          />
         )}
-        <h1 className="text-2xl text-black font-bold text-center">{detalles.ejercicio.nombre}</h1>
+        <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
 
         <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
@@ -100,7 +105,7 @@ export default function IniciaEjercicioPage() {
             Reiniciar
           </Button>
         </div>
-      </div>
+      </Card.Body>
     </Card>
   );
 }
