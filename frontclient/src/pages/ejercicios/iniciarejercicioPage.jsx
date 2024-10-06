@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useDetallesRutina } from '../../context/detallerutinacontext';
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallesrutina'; // Importar las funciones de API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../../api/detallerutina'; // Importar las funciones de API
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
