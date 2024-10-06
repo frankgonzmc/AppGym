@@ -1,59 +1,110 @@
-import { useState, useEffect } from 'react';
-import { Button, ProgressBar } from 'react-bootstrap';
+import { useState, useEffect, useRef } from 'react';
+import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar las funciones de API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
   const { detalles } = state || {};
-  
+
+  // Si no hay detalles:
+  if (!detalles || !detalles.ejercicio) {
+    return <div>Error: No se han encontrado los detalles del ejercicio</div>;
+  }
+
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
+  const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesProgreso || 0);
   const [isPausado, setIsPausado] = useState(true);
+  const [isDescanso, setIsDescanso] = useState(false);
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
 
-  // Función para manejar la finalización de una serie
-  const handleCompleteSerie = async () => {
-    if (seriesCompletadas < detalles.ejercicio.series) {
-      const nuevasSeries = seriesCompletadas + 1;
-      setSeriesCompletadas(nuevasSeries);
-      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries); // Actualizar el progreso en el backend
+  const intervalRef = useRef(null);
 
-      // Verificar si se completan todas las series
-      if (nuevasSeries === detalles.ejercicio.series) {
-        // Actualizar estado del ejercicio a "Completado"
-        await updateEstadoRutinaRequest(detalles._id, 'Completado');
-      }
+  // Función para actualizar el progreso de la serie en la base de datos
+  const actualizarProgresoSerie = async (nuevasSeries) => {
+    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+
+    // Verificar si se completan todas las series
+    if (nuevasSeries >= detalles.ejercicio.series) {
+      setEjercicioCompletado(true);
+      await updateEstadoRutinaRequest(detalles._id, 'Completado');
+      clearInterval(intervalRef.current);
     }
   };
 
+  // Efecto para manejar el temporizador y el descanso
   useEffect(() => {
-    let intervalId;
-
-    if (!isPausado && duracionRestante > 0) {
-      intervalId = setInterval(() => {
-        setDuracionRestante((prev) => prev - 1);
+    if (!isPausado && !ejercicioCompletado) {
+      intervalRef.current = setInterval(() => {
+        if (!isDescanso) {
+          if (duracionRestante > 0) {
+            setDuracionRestante((prev) => prev - 1);
+          } else {
+            setIsDescanso(true);
+            setDescansoRestante(detalles.ejercicio.descanso);
+          }
+        } else {
+          if (descansoRestante > 0) {
+            setDescansoRestante((prev) => prev - 1);
+          } else {
+            setIsDescanso(false);
+            setDuracionRestante(detalles.ejercicio.duracion);
+            const nuevasSeries = seriesCompletadas + 1;
+            setSeriesCompletadas(nuevasSeries);
+            actualizarProgresoSerie(nuevasSeries);
+          }
+        }
       }, 1000);
-    } else if (duracionRestante === 0) {
-      handleCompleteSerie();
-      setIsPausado(true);
     }
 
-    return () => clearInterval(intervalId);
-  }, [isPausado, duracionRestante]);
+    return () => clearInterval(intervalRef.current);
+  }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
+
+  // Función para pausar o reanudar
+  const handlePausarReanudar = () => {
+    setIsPausado((prev) => !prev);
+  };
+
+  // Función para reiniciar el ejercicio
+  const handleReset = () => {
+    setDuracionRestante(detalles.ejercicio.duracion);
+    setDescansoRestante(detalles.ejercicio.descanso);
+    setSeriesCompletadas(0);
+    setIsPausado(true);
+    setIsDescanso(false);
+    setEjercicioCompletado(false);
+  };
 
   return (
-    <div>
-      <h1>{detalles.ejercicio.nombre}</h1>
-      <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} />
-      <p>Tiempo restante: {duracionRestante} segundos</p>
-      <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
+    <Card>
+      <div className="exercise-card">
+        {detalles.ejercicio.imagen && (
+          <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-full h-auto" />
+        )}
+        <h1 className="text-2xl text-black font-bold text-center">{detalles.ejercicio.nombre}</h1>
+        <p>{detalles.ejercicio.descripcion}</p>
 
-      <Button onClick={() => setIsPausado(!isPausado)}>
-        {isPausado ? 'Iniciar' : 'Pausar'}
-      </Button>
-    </div>
+        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
+        {isDescanso && (
+          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} label={`Descanso: ${descansoRestante}s`} />
+        )}
+
+        <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
+
+        <div className="d-flex justify-content-between">
+          <Button onClick={handlePausarReanudar}>
+            {isPausado ? 'Iniciar' : 'Pausar'}
+          </Button>
+          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
+            Reiniciar
+          </Button>
+        </div>
+      </div>
+    </Card>
   );
 }
+
 
 
 
