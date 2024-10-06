@@ -1,3 +1,4 @@
+// Rutas de Detalles de Rutina
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToken.js';
 import { getDetallesRutina, createDetalleRutina, updateDetalleRutina, deleteDetalleRutina, actualizarProgresoDetalleRutina } from '../controllers/detallerutina.controllers.js';
@@ -5,16 +6,9 @@ import { getDetallesRutina, createDetalleRutina, updateDetalleRutina, deleteDeta
 const router = Router();
 
 router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina);
-
-// Actualizar el progreso de un detalle de rutina existente
-router.put('/detalles-rutinas/:id', authRequired, actualizarProgresoDetalleRutina);
-
 router.post('/detalles-rutinas', authRequired, createDetalleRutina);
-
-// Actualizar un detalle de rutina existente
 router.put('/detalles-rutinas/:id', authRequired, updateDetalleRutina);
-
-// Eliminar un detalle de rutina existente
 router.delete('/detalles-rutinas/:id', authRequired, deleteDetalleRutina);
+router.put('/detalles-rutinas/:id/progreso', authRequired, actualizarProgresoDetalleRutina);
 
 export default router;
