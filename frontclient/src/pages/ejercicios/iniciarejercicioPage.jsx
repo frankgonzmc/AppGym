@@ -115,14 +115,14 @@ export default function IniciaEjercicioPage() {
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
           label={`${duracionRestante}s`}
-          style={{ height: '60px' }} // Ajusta la altura aquí
+          style={{ height: '40px' }} // Ajusta la altura aquí
         />
         {isDescanso && (
           <ProgressBar
             variant="info"
             now={(descansoRestante / detalles.ejercicio.descanso) * 100}
             label={`Descanso: ${descansoRestante}s`}
-            style={{ height: '60px' }} // Ajusta la altura aquí también
+            style={{ height: '40px' }} // Ajusta la altura aquí también
           />
         )}
         <p>
