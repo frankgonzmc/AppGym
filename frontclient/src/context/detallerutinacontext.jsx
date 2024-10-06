@@ -95,12 +95,23 @@ export function DetalleRutinaProvider({ children }) {
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
 
             const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
+
+            // Aquí actualizas el estado en el contexto
+            setProgreso((prev) => ({
+                ...prev,
+                [rutinaId]: {
+                    ...prev[rutinaId],
+                    estado: ejerciciosCompletos === detallesResponse.data.length ? 'Completado' : 'Pendiente',
+                },
+            }));
+
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
             throw error;
         }
     };
+
 
     return (
         <DetalleRutinaContext.Provider

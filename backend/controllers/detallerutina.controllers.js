@@ -100,7 +100,9 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         let estadoRutina = 'Pendiente';
         if (ejerciciosCompletos === totalEjercicios) {
             estadoRutina = 'Completado';
-        } else if (ejerciciosCompletos > 0) {
+        } else if (ejerciciosCompletos === 0) {
+            estadoRutina = 'En Progreso';
+        } else if (ejerciciosCompletos >= 1) {
             estadoRutina = 'En Progreso';
         }
 
