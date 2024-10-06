@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest, updateEjerciciosCompletadosRequest  } from '../../api/detallerutina'; // Importar funciones API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest, updateEjerciciosCompletadosRequest } from '../../api/detallerutina'; // Importar funciones API
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -31,16 +31,13 @@ export default function IniciaEjercicioPage() {
 
   // Función para actualizar el progreso de la serie en la base de datos
   const actualizarProgresoSerie = async (nuevasSeries) => {
-
+    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
     // Verificar si se completan todas las series
     if (nuevasSeries >= detalles.ejercicio.series) {
       setEjercicioCompletado(true);
       await updateEstadoRutinaRequest(detalles._id, 'Completado');
       await updateEjerciciosCompletadosRequest(detalles.rutinaId); // Actualizar los ejercicios completados de la rutina
-      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
       clearInterval(intervalRef.current);
-    } else{
-      await updateProgresoEjercicioRequest(detalles._id, 0);
     }
   };
 
@@ -96,7 +93,7 @@ export default function IniciaEjercicioPage() {
             <img
               src={reposo}
               alt="Descanso"
-              className="w-auto h-auto"
+              className="w-auto h-auto mt-2 my-2"
               style={{ maxWidth: '60%', height: 'auto' }}
             />
           ) : (
@@ -105,7 +102,7 @@ export default function IniciaEjercicioPage() {
               <img
                 src={detalles.ejercicio.imagen}
                 alt={detalles.ejercicio.nombre}
-                className="w-auto h-auto"
+                className="w-auto h-auto mt-2 my-2"
                 style={{ maxWidth: '60%', height: 'auto' }}
               />
             )
@@ -118,12 +115,14 @@ export default function IniciaEjercicioPage() {
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
           label={`Duración: ${duracionRestante}s`}
+          className='mt-2 my-2'
           style={{ height: '40px' }} // Ajusta la altura aquí
         />
         {isDescanso && (
           <ProgressBar
             variant="info"
             now={(descansoRestante / detalles.ejercicio.descanso) * 100}
+            className='mt-2 my-2'
             label={`Descanso: ${descansoRestante}s`}
             style={{ height: '40px' }} // Ajusta la altura aquí también
           />

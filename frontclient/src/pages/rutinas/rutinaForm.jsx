@@ -62,7 +62,7 @@ const RutinaForm = () => {
 
         // Actualización de rutina existente
         const rutinaActualizada = {
-          user: params.user._id,
+          user: user._id,
           nombre,
           descripcion,
           totalEjercicios: selectedEjercicios.length, // Asegurarte de enviar totalEjercicios
