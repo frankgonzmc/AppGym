@@ -1,4 +1,79 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Button, ProgressBar } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
+import { useDetallesRutina } from '../../context/detallerutinacontext';
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallesrutina'; // Importar las funciones de API
+
+export default function IniciaEjercicioPage() {
+  const { state } = useLocation();
+  const { detalles } = state || {};
+
+  const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
+  const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesProgreso || 0);
+  const [isPausado, setIsPausado] = useState(true);
+
+  // Función para manejar la finalización de una serie
+  const handleCompleteSerie = async () => {
+    if (seriesCompletadas < detalles.ejercicio.series) {
+      const nuevasSeries = seriesCompletadas + 1;
+      setSeriesCompletadas(nuevasSeries);
+      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries); // Actualizar el progreso en el backend
+
+      // Verificar si se completan todas las series
+      if (nuevasSeries === detalles.ejercicio.series) {
+        // Actualizar estado del ejercicio a "Completado"
+        await updateEstadoRutinaRequest(detalles._id, 'Completado');
+      }
+    }
+  };
+
+  useEffect(() => {
+    let intervalId;
+
+    if (!isPausado && duracionRestante > 0) {
+      intervalId = setInterval(() => {
+        setDuracionRestante((prev) => prev - 1);
+      }, 1000);
+    } else if (duracionRestante === 0) {
+      handleCompleteSerie();
+      setIsPausado(true);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isPausado, duracionRestante]);
+
+  return (
+    <Card>
+      <div className="exercise-card">
+        <div>
+          {detalles.ejercicio.imagen && (
+            <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-full h-auto" />
+          )}
+        </div>
+        <h1 className='text-2xl text-black font-bold text-center'>{detalles.ejercicio.nombre}</h1>
+        <p>{detalles.ejercicio.descripcion}</p>
+        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`${duracionRestante}s`} />
+        {isDescanso && (
+          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} label={`Descanso: ${descansoRestante}s`} />
+        )}
+        <p>Series completadas: {seriesCompletadas}/{detalles.ejercicio.series}</p>
+
+        <div className="d-flex justify-content-between">
+          <Button onClick={handlePausarReanudar}>
+            {isPausado ? 'Iniciar' : 'Pausar'}
+          </Button>
+          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>
+            Reset
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+
+
+/*import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useDetallesRutina } from '../../context/detallerutinacontext';
@@ -128,3 +203,4 @@ export default function IniciaEjercicioPage() {
     </Card>
   );
 }
+*/

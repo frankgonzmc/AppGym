@@ -13,7 +13,7 @@ const DetallerutinaPage = () => {
     const fetchRutina = async () => {
       setLoading(true);
       try {
-        const res = await getRutinaRequest(id);
+        const res = await getRutinaRequest(id); // Solicitar datos de la rutina
         setRutina(res.data.rutina);
         setDetalles(res.data.detalles);
       } catch (error) {
@@ -23,13 +23,11 @@ const DetallerutinaPage = () => {
       }
     };
     fetchRutina();
-  }, []);
+  }, [id]);
 
   if (loading) return <div>Cargando...</div>;
 
-
   return (
-
     <div className="container mx-auto p-4">
       <h2 className="text-3xl font-bold">{rutina.nombre}</h2>
       <p className="text-lg">{rutina.descripcion}</p>
