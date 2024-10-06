@@ -1,9 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
+import axios from '../../api/axios'
 import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
+    updateRutinaProgress,
     updateDetalleRutinaRequest,
 } from "../api/detallerutina"; // Asegúrate de crear este archivo en api/
 
@@ -59,7 +60,7 @@ export function DetalleRutinaProvider({ children }) {
     
     const updateDetalleRutinaRequest = async (id, data) => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/detalles-rutinas/${id}`, data);
+            const response = await axios.put(`/detalles-rutinas/${id}`, data);
             return response.data;
         } catch (error) {
             console.error('Error al actualizar detalle:', error);
@@ -101,7 +102,7 @@ export function DetalleRutinaProvider({ children }) {
             const ejerciciosCompletos = detalles.data.filter(detalle => detalle.estado === 'Completado').length;
     
             // Actualizar la rutina con el número de ejercicios completados
-            const res = await axios.put(`http://localhost:5000/api/rutinas/${rutinaId}`, { ejerciciosCompletos });
+            const res = await axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
