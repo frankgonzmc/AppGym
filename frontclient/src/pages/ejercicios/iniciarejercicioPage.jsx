@@ -86,7 +86,7 @@ export default function IniciaEjercicioPage() {
 
   return (
     <Card className="text-center">
-      <Card.Body>
+      <Card.Header>
         <div className="flex h-[calc(100vh-100px)] items-center justify-center">
           {isDescanso ? (
             // Imagen para el descanso
@@ -108,21 +108,25 @@ export default function IniciaEjercicioPage() {
             )
           )}
         </div>
-
+      </Card.Header>
+      <Card.Body>
         <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
 
         <ProgressBar
           now={(duracionRestante / detalles.ejercicio.duracion) * 100}
           label={`${duracionRestante}s`}
+          style={{ height: '60px' }} // Ajusta la altura aquí
         />
         {isDescanso && (
           <ProgressBar
             variant="info"
             now={(descansoRestante / detalles.ejercicio.descanso) * 100}
             label={`Descanso: ${descansoRestante}s`}
+            style={{ height: '60px' }} // Ajusta la altura aquí también
           />
         )}
+
 
         <p>
           Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}
