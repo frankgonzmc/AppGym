@@ -92,7 +92,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 };
 
 // Nueva función para actualizar la rutina
-const actualizarRutina = async (rutinaId) => {
+export const actualizandoLosDetallesRutinas = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
