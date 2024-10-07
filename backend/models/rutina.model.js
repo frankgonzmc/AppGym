@@ -19,6 +19,10 @@ const rutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    ejerciciosCompletados: {  // Nuevo atributo
+        type: Number,
+        default: 0,
+    },
     estado: {
         type: String,
         default: 'Pendiente',
