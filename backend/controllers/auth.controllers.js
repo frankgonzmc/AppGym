@@ -145,6 +145,34 @@ export const checkEmail = async (req, res) => {
     res.status(200).json({ message: "Email disponible." });
 };
 
+export const updatePerfil = async (req, res) => {
+    const userId = req.user.id;
+    const { username, email, edad, estatura, peso } = req.body;
+
+    try {
+        // Aquí podrías hacer una validación para verificar si el email ya existe
+        const existingUser = await User.findOne({ email });
+        if (existingUser && existingUser._id.toString() !== userId) {
+            return res.status(409).json({ message: "El email ya está en uso." });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { username, email, edad, estatura, peso },
+            { new: true } // Devuelve el nuevo objeto del usuario
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "Usuario no encontrado." });
+        }
+
+        res.status(200).json({ message: "Perfil actualizado con éxito.", user: updatedUser });
+    } catch (error) {
+        console.error("Error al actualizar el perfil:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
