@@ -13,7 +13,7 @@ router.post('/login', validateSchema(loginSchema), login);
 router.post('/update-password', authRequired, updatePassword);
 router.post('/logout', authRequired, logout);
 router.get('/profile', authRequired, profile);
-router.put('/api/update-perfil', upload.single('profileImage'), updatePerfil);
+router.put('/update-perfil', upload.single('profileImage'), updatePerfil);
 router.get('/check-email', authRequired, checkEmail);
 router.get('/verify', verifityToken);
 router.post('/forgot-password', forgotPassword);
