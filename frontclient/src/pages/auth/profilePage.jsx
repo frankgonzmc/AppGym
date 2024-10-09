@@ -1,14 +1,29 @@
 import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
+import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword } = useAuth(); // Agregamos una función para obtener los ejercicios del usuario
+  const { user, updatePassword, checkEmailExists, updatePerfil } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [nombreCompleto, setNombreCompleto] = useState(user?.username || "");
+  const [edad, setEdad] = useState(user?.edad || "");
+  const [estatura, setEstatura] = useState(user?.estatura || "");
+  const [peso, setPeso] = useState(user?.peso || "");
+  const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
+  const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
+  const [newProfileImage, setNewProfileImage] = useState(null); // Estado para la nueva imagen
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError("");
+      setSuccess("");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error, success]);
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
@@ -20,7 +35,6 @@ function ProfilePage() {
     try {
       await updatePassword(password, newPassword);
       setSuccess("Contraseña actualizada con éxito");
-      setError("");
       setPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -29,74 +43,149 @@ function ProfilePage() {
     }
   };
 
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+
+    // Validar que los campos no estén vacíos
+    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail) {
+      setError("Todos los campos deben estar completos.");
+      return;
+    }
+
+    // Verificar si hay cambios en el perfil
+    const isEmailChanged = nuevoEmail !== user.email;
+    const isProfileChanged =
+      nombreCompleto !== user.username ||
+      edad !== user.edad ||
+      estatura !== user.estatura ||
+      peso !== user.peso;
+
+    if (!isEmailChanged && !isProfileChanged && !newProfileImage) {
+      setError("No hay cambios para actualizar.");
+      return;
+    }
+
+    // Si el email ha cambiado, verificar si ya existe
+    if (isEmailChanged) {
+      const emailExists = await checkEmailExists(nuevoEmail);
+      if (emailExists) {
+        setError("El email no está disponible. Por favor, elige otro.");
+        return;
+      }
+    }
+
+    const formData = new FormData();
+    formData.append('username', nombreCompleto);
+    formData.append('email', nuevoEmail);
+    formData.append('edad', edad);
+    formData.append('estatura', estatura);
+    formData.append('peso', peso);
+    if (newProfileImage) {
+      formData.append('profileImage', newProfileImage); // Agregar la nueva imagen
+    }
+
+    try {
+      await updatePerfil(formData); // Llama a la función definida en auth.js
+      setSuccess("Perfil actualizado con éxito");
+    } catch (error) {
+      setError("Error al actualizar el perfil");
+      console.error(error);
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImg(reader.result);
+        setNewProfileImage(file); // Guarda el archivo para enviarlo
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6">
       {/* Sección de Perfil */}
       <section className="bg-zinc-800 p-6 rounded-md shadow-lg flex items-center justify-between mb-8">
-        <div className="flex-1 text-white">
-          <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-gray-400">Nombre completo:</label>
-              <input
-                type="text"
-                value={user.username}
-                readOnly
-                className="w-full p-2 border border-gray-400 rounded-md text-black"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-400">Email:</label>
-              <input
-                type="email"
-                value={user.email}
-                readOnly
-                className="w-full p-2 border border-gray-400 rounded-md text-black"
-              />
-            </div>
-
-            <div className="flex space-x-4">
-              <div>
-                <label className="block text-gray-400">Edad:</label>
-                <input
-                  type="number"
-                  value={user.edad}
-                  readOnly
-                  className="p-2 border border-gray-400 rounded-md text-black"
-                />
+        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
+          <div className="flex-1 text-white">
+            <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
+            <form onSubmit={handleUpdateProfile}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-gray-400">Nombre completo:</label>
+                  <input
+                    type="text"
+                    value={nombreCompleto}
+                    onChange={(e) => setNombreCompleto(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded-md text-black"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400">Nuevo Email:</label>
+                  <input
+                    type="email"
+                    value={nuevoEmail}
+                    onChange={(e) => setNuevoEmail(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded-md text-black"
+                  />
+                </div>
+                <div className="flex space-x-4">
+                  <div>
+                    <label className="block text-gray-400">Edad:</label>
+                    <input
+                      type="number"
+                      value={edad}
+                      onChange={(e) => setEdad(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400">Estatura:</label>
+                    <input
+                      type="number"
+                      value={estatura}
+                      onChange={(e) => setEstatura(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400">Peso:</label>
+                    <input
+                      type="number"
+                      value={peso}
+                      onChange={(e) => setPeso(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-gray-400">Estatura:</label>
-                <input
-                  type="number"
-                  value={user.estatura}
-                  readOnly
-                  className="p-2 border border-gray-400 rounded-md text-black"
-                />
-              </div>
+              {error && <p className="text-red-500">{error}</p>}
+              {success && <p className="text-green-500">{success}</p>}
 
-              <div>
-                <label className="block text-gray-400">Peso:</label>
-                <input
-                  type="number"
-                  value={user.peso}
-                  readOnly
-                  className="p-2 border border-gray-400 rounded-md text-black"
-                />
-              </div>
-            </div>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              >
+                Actualizar Perfil
+              </button>
+            </form>
           </div>
-        </div>
-        {/* Imagen de perfil 
-        <div className="w-32 h-32">
-          <img
-            src={user.profileImage || "/default-profile.png"}
-            alt="Profile"
-            className="w-full h-full object-cover rounded-full"
-          />
-        </div>*/}
+        </section>
+        {/* Imagen de perfil */}
+        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
+          <div className="w-32 h-32">
+            <img
+              src={profileImg}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+            <input type="file" onChange={handleImageUpload} className="mt-2" />
+          </div>
+        </section>
       </section>
 
       {/* Sección de Actualización de Contraseña */}

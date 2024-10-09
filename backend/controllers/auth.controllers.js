@@ -48,6 +48,7 @@ export const register = async (req, res) => {
     }
 };
 
+
 export const login = async (req, res) => {
     const { email, password } = req.body
 
@@ -80,6 +81,7 @@ export const login = async (req, res) => {
     }
 };
 
+//eliminar token por lo tanto cierra sesión para el usuario
 export const logout = (req, res) => {
     res.cookie('token', "", {
         expires: new Date(0)
@@ -87,6 +89,7 @@ export const logout = (req, res) => {
     return res.sendStatus(200);
 }
 
+//seleccionar el perfil del usuario
 export const profile = async (req, res) => {
     const userEncontrado = await User.findById(req.user.id)
 
@@ -103,6 +106,7 @@ export const profile = async (req, res) => {
     });
 }
 
+//verificacion de token
 export const verifityToken = async (req, res) => {
     const { token } = req.cookies
     if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
@@ -125,6 +129,52 @@ export const verifityToken = async (req, res) => {
     })
 }
 
+// Ruta para verificar si el email existe
+export const checkEmail = async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: "Email es requerido." });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.status(409).json({ message: "El email ya está en uso." });
+    }
+
+    res.status(200).json({ message: "Email disponible." });
+};
+
+export const updatePerfil = async (req, res) => {
+
+    const userId = req.user.id; // Obtén el ID del usuario autenticado
+    const { username, email, edad, estatura, peso } = req.body;
+    const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
+    console.log('Petición recibida:', req.body);
+    console.log('Archivo recibido:', req.file);
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+        // Actualiza solo los campos que se han modificado
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (edad) user.edad = edad;
+        if (estatura) user.estatura = estatura;
+        if (peso) user.peso = peso;
+        if (profileImage) user.profileImage = profileImage; // Asigna la nueva imagen si se proporciona
+
+        // Guarda los cambios en la base de datos
+        await user.save();
+        return res.status(200).json({ message: "Perfil actualizado correctamente", user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error al actualizar el perfil" });
+    }
+};
+
+//Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
     const userId = req.user.id;

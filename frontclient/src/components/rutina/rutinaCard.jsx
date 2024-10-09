@@ -2,38 +2,18 @@ import { Card } from "../ui";
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
 import { useProgreso } from "../../context/progresocontext";
-import { useEffect, useState } from "react";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
-  const { progreso, getProgreso } = useProgreso(); // Asegúrate de que getProgreso está disponible
-  const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
+  const { progreso } = useProgreso();
 
-  useEffect(() => {
-    // Función para actualizar el progreso
-    const actualizarProgreso = async () => {
-      await getProgreso(rutina._id); // Obtiene el progreso actualizado
-      const ejerciciosCompletados = progreso[rutina._id]?.ejerciciosCompletados || 0;
-      setEjerciciosCompletados(ejerciciosCompletados);
-    };
-
-    // Ejecutar la función al montar el componente
-    actualizarProgreso();
-
-    // Configurar el intervalo para actualizar cada 5 segundos
-    const interval = setInterval(() => {
-      actualizarProgreso();
-    }, 1000);
-
-    // Limpiar el intervalo al desmontar el componente
-    return () => clearInterval(interval);
-  }, [rutina._id, progreso, getProgreso]); // Agregar dependencias necesarias
-
+  // Calcular ejercicios completados basados en el progreso
+  const ejerciciosCompletados = progreso[rutina._id]?.ejerciciosCompletados || 0;
   const totalEjercicios = rutina.totalEjercicios || 0;
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
 
   // Actualizar el estado de la rutina basado en el progreso
-  const estadoRutina = rutina.estado || 'Pendiente'; // Asegúrate de que el estado se esté pasando correctamente
+  const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
 
   return (
     <Card>

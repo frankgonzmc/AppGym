@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 0,  // Puedes establecer un límite mínimo
     },
+    profileImage: {
+        type: String,
+        default: null,
+    },
     nivel: {
         type: String,
         required: true,
