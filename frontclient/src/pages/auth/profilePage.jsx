@@ -1,9 +1,10 @@
 import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
+import axios from "axios"; // Asegúrate de importar axios
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, updatePerfil } = useAuth();
+  const { user, updatePassword } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -76,20 +77,24 @@ function ProfilePage() {
 
     const formData = new FormData();
     formData.append('username', nombreCompleto);
+    formData.append('email', nuevoEmail);
     formData.append('edad', edad);
     formData.append('estatura', estatura);
     formData.append('peso', peso);
-    formData.append('email', nuevoEmail);
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage); // Agregar la nueva imagen
     }
 
     try {
-      await updatePerfil(formData);
-      console.log(formData)
+      await axios.put('/api/update-perfil', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
+      console.error(error);
     }
   };
 

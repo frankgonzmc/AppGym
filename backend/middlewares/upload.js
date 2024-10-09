@@ -1,5 +1,12 @@
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
+
+// Crear carpeta uploads si no existe
+const dir = './uploads';
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
@@ -11,7 +18,7 @@ const storage = multer.diskStorage({
     }
 });
 
-// Filtro para asegurarse de que solo se suban imágenes GIF
+// Filtro para asegurarse de que solo se suban imágenes
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
         cb(null, true);
@@ -21,7 +28,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 // Crear instancia de multer con almacenamiento y filtro
-export const upload = multer({ 
+export const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
 });
