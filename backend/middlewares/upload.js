@@ -2,16 +2,16 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Crear carpeta uploads si no existe
-const dir = './uploads';
+// Crear carpeta uploads/perfil si no existe
+const dir = './uploads/perfil';
 if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+    fs.mkdirSync(dir, { recursive: true }); // Crea la carpeta recursivamente
 }
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Carpeta donde se guardarán las imágenes
+        cb(null, dir); // Carpeta donde se guardarán las imágenes de perfil
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)); // Renombrar el archivo con la fecha actual
