@@ -166,6 +166,10 @@ export const updatePerfil = async (req, res) => {
         // Guarda los cambios en la base de datos
         await user.save();
 
+        console.log(req.body);
+        console.log(req.file);
+        console.log(user);
+
         res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
         console.error(error);
