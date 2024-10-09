@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
-import profileImage from "../../imagenes/profile.png";
+import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
   const { user, updatePassword, updatePerfil, checkEmailExists } = useAuth();
