@@ -80,79 +80,78 @@ function ProfilePage() {
     <div className="container mx-auto p-6">
       {/* Sección de Perfil */}
       <section className="bg-zinc-800 p-6 rounded-md shadow-lg flex items-center justify-between mb-8">
-        <div className="flex-1 text-white">
-          <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
-          <form onSubmit={handleUpdateProfile}>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-gray-400">Nombre completo:</label>
-                <input
-                  type="text"
-                  value={nombreCompleto}
-                  onChange={(e) => setNombreCompleto(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded-md text-black"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-400">Nuevo Email:</label>
-                <input
-                  type="email"
-                  value={nuevoEmail}
-                  onChange={(e) => setNuevoEmail(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded-md text-black"
-                />
-              </div>
-              <div className="flex space-x-4">
+        <section>
+          <div className="flex-1 text-white">
+            <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
+            <form onSubmit={handleUpdateProfile}>
+              <div className="space-y-4">
                 <div>
-                  <label className="block text-gray-400">Edad:</label>
+                  <label className="block text-gray-400">Nombre completo:</label>
                   <input
-                    type="number"
-                    value={edad}
-                    onChange={(e) => setEdad(e.target.value)}
-                    className="p-2 border border-gray-400 rounded-md text-black"
+                    type="text"
+                    value={nombreCompleto}
+                    onChange={(e) => setNombreCompleto(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded-md text-black"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400">Estatura:</label>
+                  <label className="block text-gray-400">Nuevo Email:</label>
                   <input
-                    type="number"
-                    value={estatura}
-                    onChange={(e) => setEstatura(e.target.value)}
-                    className="p-2 border border-gray-400 rounded-md text-black"
+                    type="email"
+                    value={nuevoEmail}
+                    onChange={(e) => setNuevoEmail(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded-md text-black"
                   />
                 </div>
-                <div>
-                  <label className="block text-gray-400">Peso:</label>
-                  <input
-                    type="number"
-                    value={peso}
-                    onChange={(e) => setPeso(e.target.value)}
-                    className="p-2 border border-gray-400 rounded-md text-black"
-                  />
+                <div className="flex space-x-4">
+                  <div>
+                    <label className="block text-gray-400">Edad:</label>
+                    <input
+                      type="number"
+                      value={edad}
+                      onChange={(e) => setEdad(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400">Estatura:</label>
+                    <input
+                      type="number"
+                      value={estatura}
+                      onChange={(e) => setEstatura(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400">Peso:</label>
+                    <input
+                      type="number"
+                      value={peso}
+                      onChange={(e) => setPeso(e.target.value)}
+                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
+              {error && <p className="text-red-500">{error}</p>}
+              {success && <p className="text-green-500">{success}</p>}
 
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Actualizar Perfil
-            </button>
-          </form>
-        </div>
-        {/* Imagen de perfil */}
-        <div className="w-32 h-32">
-          <img
-            src={profileImg}
-            alt="Profile"
-            className="w-full h-full object-cover rounded-full"
-          />
-          <input type="file" onChange={handleImageUpload} className="mt-2" />
-        </div>
+              <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">Actualizar Perfil</button>
+            </form>
+          </div>
+        </section>
+        <section>
+          {/* Imagen de perfil */}
+          <div className="w-32 h-32">
+            <img
+              src={profileImg}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+            <input type="file" onChange={handleImageUpload} className="mt-2" />
+          </div>
+        </section>
       </section>
 
       {/* Sección de Actualización de Contraseña */}
