@@ -2,11 +2,9 @@ import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
 import axios from "axios"; // Asegúrate de importar axios
 import profileImage from "../../imagenes/profileicono.png";
-import checkEmailExists from '../../context/authcontext'
-
 
 function ProfilePage() {
-  const { user, updatePassword } = useAuth();
+  const { user, updatePassword, checkEmailExists } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
