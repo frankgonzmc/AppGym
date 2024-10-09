@@ -2,6 +2,8 @@ import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
 import axios from "axios"; // Asegúrate de importar axios
 import profileImage from "../../imagenes/profileicono.png";
+import checkEmailExists from '../../context/authcontext'
+
 
 function ProfilePage() {
   const { user, updatePassword } = useAuth();
@@ -86,7 +88,7 @@ function ProfilePage() {
     }
 
     try {
-      await axios.put('/api/update-perfil', formData, {
+      await axios.put('/update-perfil', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
