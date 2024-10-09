@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { upload } from '../middlewares/upload.js';
 import { login, logout, profile, register, verifityToken, updatePassword, forgotPassword, resetPassword, checkEmail, updatePerfil } from "../controllers/auth.controllers.js";
 import { authRequired } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js'
@@ -12,7 +13,7 @@ router.post('/login', validateSchema(loginSchema), login);
 router.post('/update-password', authRequired, updatePassword);
 router.post('/logout', authRequired, logout);
 router.get('/profile', authRequired, profile);
-router.put('/update-perfil', authRequired, updatePerfil);
+router.put('/api/update-perfil', upload.single('profileImage'), updatePerfil);
 router.get('/check-email', authRequired, checkEmail);
 router.get('/verify', verifityToken);
 router.post('/forgot-password', forgotPassword);

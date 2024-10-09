@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await updatePerfilRequest(datos);
             console.log('Perfil actualizado con éxito', res.data);
-            // Actualiza el usuario en el contexto si es necesario
+            setUser(res.data); // Actualiza el usuario en el contexto
         } catch (error) {
             console.log('Error al actualizar el perfil', error.response.data);
             throw new Error('No se pudo actualizar el perfil.');

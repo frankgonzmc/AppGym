@@ -13,10 +13,10 @@ const storage = multer.diskStorage({
 
 // Filtro para asegurarse de que solo se suban imágenes GIF
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/gif') {
+    if (file.mimetype.startsWith('image/')) {
         cb(null, true);
     } else {
-        cb(new Error('Only GIF images are allowed'), false);
+        cb(new Error('Solo se permiten imágenes'), false);
     }
 };
 

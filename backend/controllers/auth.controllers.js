@@ -149,6 +149,8 @@ export const updatePerfil = async (req, res) => {
     const userId = req.user.id; // Obtén el ID del usuario autenticado
     const { username, email, edad, estatura, peso } = req.body;
     const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
+    console.log(req.body); // Verifica que recibes los datos del formulario
+    console.log(req.file); // Verifica que recibes el archivo de imagen
 
     try {
         // Busca al usuario
@@ -165,10 +167,6 @@ export const updatePerfil = async (req, res) => {
 
         // Guarda los cambios en la base de datos
         await user.save();
-
-        console.log(req.body);
-        console.log(req.file);
-        console.log(user);
 
         res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
