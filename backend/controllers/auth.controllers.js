@@ -129,6 +129,22 @@ export const verifityToken = async (req, res) => {
     })
 }
 
+// Ruta para verificar si el email existe
+export const checkEmail = async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: "Email es requerido." });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.status(409).json({ message: "El email ya está en uso." });
+    }
+
+    res.status(200).json({ message: "Email disponible." });
+};
+
 //Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;

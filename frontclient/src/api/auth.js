@@ -13,3 +13,7 @@ export const forgotPasswordRequest = (email) => axios.post('/forgot-password', {
 export const updatePasswordRequest = (currentPassword, newPassword) => {
     return axios.post('/update-password', { currentPassword, newPassword });
 };
+
+export const updatePerfilRequest = (datos) => axios.put('/update-perfil', { datos });
+
+export const checkEmailRequest = (email) => axios.get(`/check-email?email=${email}`);

@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, verifityTokenRequest, updatePasswordRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifityTokenRequest, updatePasswordRequest, updatePerfilRequest, checkEmailRequest } from "../api/auth";
 import Cookies from 'js-cookie';
 
 export const AuthContext = createContext()
@@ -52,6 +52,29 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.log('Error al actualizar la contraseña', error.response.data);
             throw new Error('No se pudo actualizar la contraseña.');
+        }
+    };
+
+    const updatePerfil = async (datos) => {
+        try {
+            const res = await updatePerfilRequest(datos);
+            console.log('Perfil actualizado con éxito', res.data);
+            // Actualiza el usuario en el contexto si es necesario
+        } catch (error) {
+            console.log('Error al actualizar el perfil', error.response.data);
+            throw new Error('No se pudo actualizar el perfil.');
+        }
+    };
+
+    const checkEmailExists = async (email) => {
+        try {
+            await checkEmailRequest(email);
+            return false; // El email está disponible
+        } catch (error) {
+            if (error.response && error.response.status === 409) {
+                return true; // El email ya está en uso
+            }
+            throw error; // Manejar otros errores
         }
     };
 
@@ -108,6 +131,8 @@ export const AuthProvider = ({ children }) => {
                 signin,
                 logout,
                 updatePassword,
+                updatePerfil,
+                checkEmailExists,
                 loading,
                 user,
                 isAuthenticated,
