@@ -3,17 +3,26 @@ import { useState, useEffect } from "react";
 import profileImage from "../../imagenes/profile.png";
 
 function ProfilePage() {
-  const { user, updatePassword, updatePerfil } = useAuth(); // Agregamos la función para actualizar el perfil
+  const { user, updatePassword, updatePerfil, checkEmailExists } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [nombreCompleto, setNombreCompleto] = useState(user?.username || ""); // Estado para nombre completo
-  const [edad, setEdad] = useState(user?.edad || ""); // Estado para edad
-  const [estatura, setEstatura] = useState(user?.estatura || ""); // Estado para estatura
-  const [peso, setPeso] = useState(user?.peso || ""); // Estado para peso
+  const [nombreCompleto, setNombreCompleto] = useState(user?.username || "");
+  const [edad, setEdad] = useState(user?.edad || "");
+  const [estatura, setEstatura] = useState(user?.estatura || "");
+  const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
+  const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError("");
+      setSuccess("");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error, success]);
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
@@ -25,7 +34,6 @@ function ProfilePage() {
     try {
       await updatePassword(password, newPassword);
       setSuccess("Contraseña actualizada con éxito");
-      setError("");
       setPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -37,7 +45,6 @@ function ProfilePage() {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
-    // Validar que los campos no estén vacíos
     if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail) {
       setError("Todos los campos deben estar completos.");
       return;
@@ -46,16 +53,26 @@ function ProfilePage() {
     // Verificar si el nuevo email ya existe
     const emailExists = await checkEmailExists(nuevoEmail);
     if (emailExists) {
-      setError("El email* no disponible. Por favor, elige otro.");
+      setError("El email no está disponible. Por favor, elige otro.");
       return;
     }
 
     try {
       await updatePerfil({ username: nombreCompleto, edad, estatura, peso, email: nuevoEmail });
       setSuccess("Perfil actualizado con éxito");
-      setError("");
     } catch (error) {
       setError("Error al actualizar el perfil");
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImg(reader.result); // Actualiza la imagen de perfil
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -72,7 +89,7 @@ function ProfilePage() {
                 <input
                   type="text"
                   value={nombreCompleto}
-                  onChange={(e) => setNombreCompleto(e.target.value)} // Cambia el estado
+                  onChange={(e) => setNombreCompleto(e.target.value)}
                   className="w-full p-2 border border-gray-400 rounded-md text-black"
                 />
               </div>
@@ -91,7 +108,7 @@ function ProfilePage() {
                   <input
                     type="number"
                     value={edad}
-                    onChange={(e) => setEdad(e.target.value)} // Cambia el estado
+                    onChange={(e) => setEdad(e.target.value)}
                     className="p-2 border border-gray-400 rounded-md text-black"
                   />
                 </div>
@@ -100,17 +117,16 @@ function ProfilePage() {
                   <input
                     type="number"
                     value={estatura}
-                    onChange={(e) => setEstatura(e.target.value)} // Cambia el estado
+                    onChange={(e) => setEstatura(e.target.value)}
                     className="p-2 border border-gray-400 rounded-md text-black"
                   />
                 </div>
-
                 <div>
                   <label className="block text-gray-400">Peso:</label>
                   <input
                     type="number"
                     value={peso}
-                    onChange={(e) => setPeso(e.target.value)} // Cambia el estado
+                    onChange={(e) => setPeso(e.target.value)}
                     className="p-2 border border-gray-400 rounded-md text-black"
                   />
                 </div>
@@ -131,10 +147,11 @@ function ProfilePage() {
         {/* Imagen de perfil */}
         <div className="w-32 h-32">
           <img
-            src={user.profileImage || { profileImage }}
+            src={profileImg}
             alt="Profile"
             className="w-full h-full object-cover rounded-full"
           />
+          <input type="file" onChange={handleImageUpload} className="mt-2" />
         </div>
       </section>
 
