@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, checkEmailExists, updatePerfil } = useAuth();
+  const { user, updatePassword, checkEmailExists, updatePerfilRequest } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -85,7 +85,7 @@ function ProfilePage() {
     }
 
     try {
-      await updatePerfil(formData); // Llama a la función definida en auth.js
+      await updatePerfilRequest(formData); // Llama a la función definida en auth.js
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
