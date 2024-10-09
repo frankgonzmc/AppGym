@@ -48,6 +48,7 @@ export const register = async (req, res) => {
     }
 };
 
+
 export const login = async (req, res) => {
     const { email, password } = req.body
 
@@ -80,6 +81,7 @@ export const login = async (req, res) => {
     }
 };
 
+//eliminar token por lo tanto cierra sesión para el usuario
 export const logout = (req, res) => {
     res.cookie('token', "", {
         expires: new Date(0)
@@ -87,6 +89,7 @@ export const logout = (req, res) => {
     return res.sendStatus(200);
 }
 
+//seleccionar el perfil del usuario
 export const profile = async (req, res) => {
     const userEncontrado = await User.findById(req.user.id)
 
@@ -103,6 +106,7 @@ export const profile = async (req, res) => {
     });
 }
 
+//verificacion de token
 export const verifityToken = async (req, res) => {
     const { token } = req.cookies
     if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
@@ -125,6 +129,7 @@ export const verifityToken = async (req, res) => {
     })
 }
 
+//Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
     const userId = req.user.id;
