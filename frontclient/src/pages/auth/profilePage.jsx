@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, checkEmailExists, updatePerfilRequest } = useAuth();
+  const { user, updatePassword, checkEmailExists, updatePerfil } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -85,7 +85,7 @@ function ProfilePage() {
     }
 
     try {
-      await updatePerfilRequest(formData); // Llama a la función definida en auth.js
+      await updatePerfil(formData); // Llama a la función definida en auth.js
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
@@ -109,7 +109,7 @@ function ProfilePage() {
     <div className="container mx-auto p-6">
       {/* Sección de Perfil */}
       <section className="bg-zinc-800 p-6 rounded-md shadow-lg flex items-center justify-between mb-8">
-        <section>
+        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
           <div className="flex-1 text-white">
             <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
             <form onSubmit={handleUpdateProfile}>
@@ -176,7 +176,7 @@ function ProfilePage() {
           </div>
         </section>
         {/* Imagen de perfil */}
-        <section>
+        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
           <div className="w-32 h-32">
             <img
               src={profileImg}
