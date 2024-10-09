@@ -1,10 +1,9 @@
 import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
-import axios from "axios"; // Asegúrate de importar axios
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, checkEmailExists } = useAuth();
+  const { user, updatePassword, checkEmailExists, updatePerfilRequest } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -86,11 +85,7 @@ function ProfilePage() {
     }
 
     try {
-      await axios.put('/update-perfil', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      await updatePerfilRequest(formData); // Llama a la función definida en auth.js
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
