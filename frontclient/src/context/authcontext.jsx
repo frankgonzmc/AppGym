@@ -61,8 +61,17 @@ export const AuthProvider = ({ children }) => {
             console.log('Perfil actualizado con éxito', res.data);
             setUser(res.data); // Actualiza el usuario en el contexto
         } catch (error) {
-            console.log('Error al actualizar el perfil', error.response.data);
-            throw new Error('No se pudo actualizar el perfil.');
+            // Manejo de errores mejorado
+            if (error.response) {
+                console.error('Error al actualizar el perfil', error.response.data);
+                throw new Error('No se pudo actualizar el perfil: ' + (error.response.data.message || 'Error desconocido.'));
+            } else if (error.request) {
+                console.error('No se recibió respuesta del servidor', error.request);
+                throw new Error('No se recibió respuesta del servidor.');
+            } else {
+                console.error('Error en la configuración de la solicitud', error.message);
+                throw new Error('Error en la configuración de la solicitud: ' + error.message);
+            }
         }
     };
 
