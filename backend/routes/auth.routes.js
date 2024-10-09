@@ -5,8 +5,6 @@ import { authRequired } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js'
 import { registerSchema, loginSchema } from '../validator/auth.schema.js'
 
-const upload = multer({ dest: 'uploads/perfil/' }); // Configura el destino para las imágenes
-
 const router = Router();
 
 router.post('/register', validateSchema(registerSchema), register);
