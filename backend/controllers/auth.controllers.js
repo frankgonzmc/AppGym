@@ -146,30 +146,30 @@ export const checkEmail = async (req, res) => {
 };
 
 export const updatePerfil = async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.user.id; // Obtén el ID del usuario autenticado
     const { username, email, edad, estatura, peso } = req.body;
+    const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
 
     try {
-        // Aquí podrías hacer una validación para verificar si el email ya existe
-        const existingUser = await User.findOne({ email });
-        if (existingUser && existingUser._id.toString() !== userId) {
-            return res.status(409).json({ message: "El email ya está en uso." });
-        }
+        // Busca al usuario
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { username, email, edad, estatura, peso },
-            { new: true } // Devuelve el nuevo objeto del usuario
-        );
+        // Actualiza solo los campos que se han modificado
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (edad) user.edad = edad;
+        if (estatura) user.estatura = estatura;
+        if (peso) user.peso = peso;
+        if (profileImage) user.profileImage = profileImage; // Asigna la nueva imagen si se proporciona
 
-        if (!updatedUser) {
-            return res.status(404).json({ message: "Usuario no encontrado." });
-        }
+        // Guarda los cambios en la base de datos
+        await user.save();
 
-        res.status(200).json({ message: "Perfil actualizado con éxito.", user: updatedUser });
+        res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
-        console.error("Error al actualizar el perfil:", error);
-        res.status(500).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ message: "Error al actualizar el perfil" });
     }
 };
 

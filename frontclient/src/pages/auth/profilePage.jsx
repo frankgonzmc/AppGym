@@ -15,6 +15,7 @@ function ProfilePage() {
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
   const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
+  const [newProfileImage, setNewProfileImage] = useState(null); // Estado para la nueva imagen
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,7 +60,7 @@ function ProfilePage() {
       estatura !== user.estatura ||
       peso !== user.peso;
 
-    if (!isEmailChanged && !isProfileChanged) {
+    if (!isEmailChanged && !isProfileChanged && !newProfileImage) {
       setError("No hay cambios para actualizar.");
       return;
     }
@@ -73,14 +74,18 @@ function ProfilePage() {
       }
     }
 
+    const formData = new FormData();
+    formData.append('username', nombreCompleto);
+    formData.append('edad', edad);
+    formData.append('estatura', estatura);
+    formData.append('peso', peso);
+    formData.append('email', nuevoEmail);
+    if (newProfileImage) {
+      formData.append('profileImage', newProfileImage); // Agregar la nueva imagen
+    }
+
     try {
-      await updatePerfil({
-        username: nombreCompleto,
-        edad,
-        estatura,
-        peso,
-        email: nuevoEmail,
-      });
+      await updatePerfil(formData);
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
@@ -93,6 +98,7 @@ function ProfilePage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImg(reader.result);
+        setNewProfileImage(file); // Guarda el archivo para enviarlo
       };
       reader.readAsDataURL(file);
     }
