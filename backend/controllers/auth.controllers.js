@@ -146,10 +146,11 @@ export const checkEmail = async (req, res) => {
 };
 
 export const updatePerfil = async (req, res) => {
-    const userId = req.user.id; // Obtén el ID del usuario autenticado
-    
     try {
+        // Verifica que req.user esté definido
+        if (!req.user) return res.status(401).json({ message: "Usuario no autenticado" });
 
+        const userId = req.user.id; // Obtén el ID del usuario autenticado
         const { username, email, edad, estatura, peso } = req.body;
         const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
 
@@ -170,11 +171,10 @@ export const updatePerfil = async (req, res) => {
 
         res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
-        console.error(error);
+        console.error("Error en updatePerfil:", error); // Para depuración
         res.status(500).json({ message: "Error al actualizar el perfil" });
     }
 };
-
 
 //Actualizar Password
 export const updatePassword = async (req, res) => {
