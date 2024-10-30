@@ -74,15 +74,7 @@ export function EjercicioCard({ ejercicio }) {
       {ejercicio.imagen && (
         <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-full h-auto" />
       )}
-      <p className="text-slate-300">
-        {ejercicio.date &&
-          new Date(ejercicio.date).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-      </p>
+
       <footer>
         <div className="flex gap-x-2 items-center">
           {/*<button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Delete</button>*/}
