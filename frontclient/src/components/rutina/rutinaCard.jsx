@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
 import { useProgreso } from "../../context/progresocontext";
 import { useEffect, useState } from "react";
+import { getDetallesRutina } from "../../api/detallerutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
@@ -24,10 +25,28 @@ export function RutinaCard({ rutina }) {
     setTotalEjercicios(rutina.totalEjercicios || 0);
   }, [rutina.totalEjercicios]);
 
+  // Nueva función para verificar el progreso de los ejercicios
+  useEffect(() => {
+    const fetchDetalles = async () => {
+      try {
+        const detalles = await getDetallesRutina(rutina._id); // Obtén los detalles de la rutina
+        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length; // Cuenta los ejercicios completados
+        setEjerciciosCompletados(completados); // Actualiza el estado con la cantidad de ejercicios completados
+      } catch (error) {
+        console.error("Error al obtener detalles de la rutina:", error);
+      }
+    };
+
+    fetchDetalles();
+  }, [rutina._id]); // Dependencia en el id de la rutina
+
   return (
     <Card>
       <header className="flex justify-between">
         <h1 className="text-2xl text-slate-300 font-bold text-center">{rutina.nombre}</h1>
+        {ejerciciosCompletados === totalEjercicios && (
+          <span className="bg-green-500 text-white px-2 py-1 rounded">Completado</span>
+        )}
       </header>
       <hr className="text-slate-300" />
       <p className="text-slate-300">Descripción: {rutina.descripcion}</p>
