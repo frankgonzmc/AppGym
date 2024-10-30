@@ -20,24 +20,8 @@ function ProgresoPage() {
   return (
     <div className="progreso-page-container">
       <h2>Progreso de Rutinas</h2>
-      {rutinas.map((rutina, index) => (
-        <div key={index} className="rutina-container">
-          <h3>{rutina.rutina}</h3>
-          {rutina.ejercicios.map((ejercicio, i) => (
-            <div key={i} className="progress-bar-container">
-              <span className="progress-label">
-                {ejercicio.nombre} (de {rutina.rutina})
-              </span>
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${ejercicio.progreso}%` }}
-                ></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ))}
+      
+      
     </div>
   );
 }

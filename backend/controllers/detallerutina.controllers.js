@@ -14,6 +14,7 @@ export const getDetallesRutina = async (req, res) => {
     }
 };
 
+
 export const createDetalleRutina = async (req, res) => {
     try {
         const { rutina, ejercicio, fecha } = req.body;

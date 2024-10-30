@@ -9,19 +9,17 @@ export function Inicio() {
     console.log(user);
 
     return (
-        <div className="inicio-container">
-            <Row>
-                <Col md={6}>
-                    <div className="panel-elements">
-                        <PanelElements />
-                    </div>
-                </Col>
-                <Col md={6}>
-                    <div className="panel-ejercicios">
-                        <PanelEjercicios />
-                    </div>
-                </Col>
+        <Container className="inicio-container">
+            <Row className="mb-3">
+                <div className="panel-elements">
+                    <PanelElements />
+                </div>
             </Row>
-        </div >
+            <Row>
+                <div className="panel-ejercicios">
+                    <PanelEjercicios />
+                </div>
+            </Row>
+        </Container>
     );
 }

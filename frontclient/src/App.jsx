@@ -53,6 +53,8 @@ function App() {
 
                     <Route path='/detalles-rutinas/:id' element={<DetallerutinaPage />} />
 
+                    <Route path='/ml' element={<MlPage />} />
+
                     <Route path='/calendar' element={<CalendarPage />} />
                   </Route>
                 </Routes>

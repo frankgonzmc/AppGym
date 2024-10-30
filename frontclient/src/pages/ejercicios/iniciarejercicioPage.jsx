@@ -25,7 +25,7 @@ export default function IniciaEjercicioPage() {
   // Verificar el estado del ejercicio al cargar la página
   useEffect(() => {
     if (seriesCompletadas >= detalles.ejercicio.series) {
-      setEjercicioCompletado(true); // Habilitar el botón si las series están completas
+      setEjercicioCompletado(true); // habilita el botón si las series están completas
     }
   }, [seriesCompletadas, detalles.ejercicio.series]);
 
