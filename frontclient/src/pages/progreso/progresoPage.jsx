@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart } from './GraCharts.js';
-import { useAuth } from '../context/authcontext';
+import { useAuth } from "../../context/authcontext";
 import axios from '../../api/axios'
 import '../../css/progresoPage.css';
 
