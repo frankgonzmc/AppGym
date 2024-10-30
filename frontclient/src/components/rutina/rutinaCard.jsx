@@ -29,8 +29,7 @@ export function RutinaCard({ rutina }) {
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const response = await getDetallesRutina(rutina._id); // Asegúrate de que esta función devuelve los detalles correctamente
-        const detalles = response.data; // Suponiendo que la respuesta es un objeto con un campo `data`
+        const detalles = await getDetallesRutina(rutina._id); // Usa getDetallesRutina aquí
 
         // Verifica que detalles sea un array
         if (!Array.isArray(detalles)) {
@@ -48,6 +47,7 @@ export function RutinaCard({ rutina }) {
         console.error("Error al obtener detalles de la rutina:", error);
       }
     };
+
     fetchDetalles();
   }, [rutina._id]); // Dependencia en el id de la rutina
 
