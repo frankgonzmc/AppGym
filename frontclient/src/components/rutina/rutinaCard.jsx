@@ -29,14 +29,25 @@ export function RutinaCard({ rutina }) {
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const detalles = await getDetallesRutina(rutina._id); // Obtén los detalles de la rutina
-        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length; // Cuenta los ejercicios completados
-        setEjerciciosCompletados(completados); // Actualiza el estado con la cantidad de ejercicios completados
+        const response = await getDetallesRequest(rutina._id); // Asegúrate de que esta función devuelve los detalles correctamente
+        const detalles = response.data; // Suponiendo que la respuesta es un objeto con un campo `data`
+
+        // Verifica que detalles sea un array
+        if (!Array.isArray(detalles)) {
+          console.error("La respuesta de detalles no es un array:", detalles);
+          return; // Salir si no es un array
+        }
+
+        // Filtrar los detalles de rutina que estén completos (4/4)
+        const ejerciciosCompletos = detalles.filter(detalle =>
+          detalle.seriesProgreso >= 4 && detalle.estado === 'Completado'
+        );
+
+        setEjerciciosCompletados(ejerciciosCompletos.length);
       } catch (error) {
         console.error("Error al obtener detalles de la rutina:", error);
       }
     };
-
     fetchDetalles();
   }, [rutina._id]); // Dependencia en el id de la rutina
 
