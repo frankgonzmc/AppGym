@@ -10,7 +10,7 @@ export default function DetalleRutinaCard({ detalles }) {
     try {
       await deleteDetalleRutina(detalles._id);
 
-      Window.location.reload();
+      navigate("/");
 
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
