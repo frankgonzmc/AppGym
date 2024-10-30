@@ -29,7 +29,7 @@ export function RutinaCard({ rutina }) {
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const response = await getDetallesRequest(rutina._id); // Asegúrate de que esta función devuelve los detalles correctamente
+        const response = await getDetallesRutina(rutina._id); // Asegúrate de que esta función devuelve los detalles correctamente
         const detalles = response.data; // Suponiendo que la respuesta es un objeto con un campo `data`
 
         // Verifica que detalles sea un array
