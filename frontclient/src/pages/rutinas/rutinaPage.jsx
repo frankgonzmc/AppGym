@@ -8,7 +8,13 @@ export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
 
   useEffect(() => {
-    getRutinas();
+    const fetchRutinas = async () => {
+      await getRutinas();
+      rutinas.forEach(rutina => {
+        getProgreso(rutina._id); // Obtener progreso para cada rutina
+      });
+    };
+    fetchRutinas();
   }, []);
 
   return (

@@ -17,7 +17,7 @@ export function RutinaCard({ rutina }) {
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
     }
-  }, [progreso, rutina._id]);
+  }, [progreso[rutina._id]]); // Cambiar la dependencia
 
   // Efecto para actualizar el total de ejercicios cuando la rutina cambie
   useEffect(() => {

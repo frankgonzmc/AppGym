@@ -19,12 +19,10 @@ export const useProgreso = () => {
 
 export function ProgresoProvider({ children }) {
     const [progreso, setProgreso] = useState([]);
-    const [errors, setErrors] = useState([]);
 
     const getProgreso = async (id) => {
         try {
             const progreso = await getProgresoRequest(id);
-            const rutina = await getRutinaRequest(id);
             const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
 
             // Actualiza el estado global con el progreso
