@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { useEjercicios } from "../../context/ejercicioscontext";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../context/authcontext";
-import { Card } from "../ui";
-import axios from "../../api/axios";
+import { Button, ButtonLink, Card } from "../ui";
 
 export function EjercicioCard({ ejercicio }) {
   const { user } = useAuth();
