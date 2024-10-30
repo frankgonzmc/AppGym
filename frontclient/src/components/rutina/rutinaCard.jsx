@@ -29,7 +29,14 @@ export function RutinaCard({ rutina }) {
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const detalles = await getDetallesRutina(rutina._id); // Obtén los detalles de la rutina
+        const { detalles } = await getDetallesRutina(rutina._id); // Accede a 'detalles' en la respuesta
+
+        // Verifica si 'detalles' es un array
+        if (!Array.isArray(detalles)) {
+          console.error("La respuesta de detalles no es un array:", detalles);
+          return; // Salir si no es un array
+        }
+
         const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length; // Cuenta los ejercicios completados
         setEjerciciosCompletados(completados); // Actualiza el estado con la cantidad de ejercicios completados
       } catch (error) {
