@@ -19,6 +19,7 @@ import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ResetpasswordPage from './pages/auth/resetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
+import MlPage from './pages/ml/mlPage';
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
 
                     <Route path='/detalles-rutinas/:id' element={<DetallerutinaPage />} />
 
-                    <Route path='/ml' element={<MlPage />} />
+                    <Route path='/maching-learning' element={<MlPage />} />
 
                     <Route path='/calendar' element={<CalendarPage />} />
                   </Route>
