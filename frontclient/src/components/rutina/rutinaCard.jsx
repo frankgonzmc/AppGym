@@ -2,18 +2,27 @@ import { Card } from "../ui";
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
 import { useProgreso } from "../../context/progresocontext";
+import { useEffect, useState } from "react";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
   const { progreso } = useProgreso();
-
-  // Calcular ejercicios completados basados en el progreso
-  const ejerciciosCompletados = progreso[rutina._id]?.ejerciciosCompletados || 0;
-  const totalEjercicios = rutina.totalEjercicios || 0;
+  const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
+  const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
-
-  // Actualizar el estado de la rutina basado en el progreso
   const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
+
+  useEffect(() => {
+    const progresoRutina = progreso[rutina._id];
+    if (progresoRutina) {
+      setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
+    }
+  }, [progreso, rutina._id]);
+
+  // Efecto para actualizar el total de ejercicios cuando la rutina cambie
+  useEffect(() => {
+    setTotalEjercicios(rutina.totalEjercicios || 0);
+  }, [rutina.totalEjercicios]);
 
   return (
     <Card>
