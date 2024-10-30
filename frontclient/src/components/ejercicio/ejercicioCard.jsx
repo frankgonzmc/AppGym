@@ -44,19 +44,28 @@ export function EjercicioCard({ ejercicio }) {
   const isRecommended = ejercicio.nivel === user.nivel;
 
   return (
-    <Card className={isRecommended ? "bg-green-200" : ""}>
+    <Card className={isRecommended ? "bg-green-200" : "bg-red-200"}>
       <header className="flex justify-between items-center">
-        <h1 className="text-2xl text-slate-300 font-bold text-center">{ejercicio.nombre}</h1>
-        {isRecommended && (
+        <h1
+          className="text-2xl text-slate-300 font-bold text-center"
+          title={!isRecommended ? "Este ejercicio no es recomendado para tu nivel." : ""}
+        >
+          {ejercicio.nombre}
+        </h1>
+        {isRecommended ? (
           <span className="text-white bg-green-500 px-2 py-1 rounded-lg text-sm">
             Recomendado
+          </span>
+        ) : (
+          <span className="text-white bg-red-500 px-2 py-1 rounded-lg text-sm">
+            No recomendado
           </span>
         )}
       </header>
       <hr className="text-slate-300" />
       <p className="text-slate-300">Descripción: {ejercicio.descripcion}</p>
       <p className="text-slate-300">Nivel: {ejercicio.nivel}</p>
-      <p className="text-slate-300">Categoria: {ejercicio.categoria}</p>
+      <p className="text-slate-300">Categoría: {ejercicio.categoria}</p>
       <hr className="text-slate-300" />
       <p className="text-slate-300">Series: {ejercicio.series}</p>
       <p className="text-slate-300">Repeticiones: {ejercicio.repeticiones}</p>
@@ -76,8 +85,8 @@ export function EjercicioCard({ ejercicio }) {
       </p>
       <footer>
         <div className="flex gap-x-2 items-center">
-          <button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Delete</button>
-          <button className="btn btn-primary" onClick={() => navigate(`/ejercicio/${ejercicio._id}`)}>Editar Ejercicio</button>
+          {/*<button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Delete</button>*/}
+          {/*<button className="btn btn-primary" onClick={() => navigate(`/ejercicio/${ejercicio._id}`)}>Editar Ejercicio</button>*/}
         </div>
       </footer>
     </Card>
