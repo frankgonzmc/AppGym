@@ -1,16 +1,57 @@
+import { useEffect, useState } from "react";
 import { useEjercicios } from "../../context/ejercicioscontext";
 import { useNavigate } from 'react-router-dom';
-import { Button, ButtonLink, Card } from "../ui";
-
+import { useAuth } from "../context/authcontext";
+import { Card } from "../ui";
+import axios from "../../api/axios";
 
 export function EjercicioCard({ ejercicio }) {
+  const { user } = useAuth();
   const { deleteEjercicio } = useEjercicios();
   const navigate = useNavigate();
+  const [exercises, setExercises] = useState([]);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+
+  const fetchExercises = async () => {
+    try {
+      const response = await axios.get(`/api/ejercicios/${user.nivel}`);
+      setExercises(response.data);
+    } catch (error) {
+      console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.nivel) {
+      fetchExercises();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (exercises.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentExerciseIndex((prevIndex) => (prevIndex + 1) % exercises.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [exercises]);
+
+  if (exercises.length === 0) {
+    return <p>No hay ejercicios disponibles para tu nivel.</p>;
+  }
+
+  const currentExercise = exercises[currentExerciseIndex];
+  const isRecommended = ejercicio.nivel === user.nivel;
 
   return (
-    <Card>
-      <header className="flex justify-between">
+    <Card className={isRecommended ? "bg-green-200" : ""}>
+      <header className="flex justify-between items-center">
         <h1 className="text-2xl text-slate-300 font-bold text-center">{ejercicio.nombre}</h1>
+        {isRecommended && (
+          <span className="text-white bg-green-500 px-2 py-1 rounded-lg text-sm">
+            Recomendado
+          </span>
+        )}
       </header>
       <hr className="text-slate-300" />
       <p className="text-slate-300">Descripción: {ejercicio.descripcion}</p>
