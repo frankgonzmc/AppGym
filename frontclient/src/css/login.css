@@ -11,8 +11,8 @@
 }
 
 .img-logo {
-  width: 15%; /* Ajusta el tamaño del logo */
-  margin-bottom: 1em; /* Espaciado debajo del logo */
+  width: 45%; /* Ajusta el tamaño del logo */
+  margin-bottom: 3em; /* Espaciado debajo del logo */
 }
 
 /* FORMULARIO */
@@ -117,10 +117,10 @@
 /* Responsive */
 @media (max-width: 600px) {
   .img-logo {
-    width: 35%;
+    width: 65%;
   }
 
   .form {
-    width: 90%; /* Ancho adaptado para móviles */
+    width: 100%; /* Ancho adaptado para móviles */
   }
 }
