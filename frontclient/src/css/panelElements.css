@@ -35,7 +35,7 @@
 
 .paneles-img {
     height: 120px;
-    width: auto;
+    width: 120px;
     object-fit: cover;
     padding: 5px;
     border-radius: 6px;
