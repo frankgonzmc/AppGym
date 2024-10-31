@@ -9,7 +9,7 @@ export function Inicio() {
     const { user } = useAuth();
 
     return (
-        <Container fluid className="body">
+        <Container fluid className="body-inicio">
             <Row className="text-center mb-4">
                 <Col>
                     <h1>Bienvenido a App Gym</h1>
