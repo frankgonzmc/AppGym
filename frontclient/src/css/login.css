@@ -10,9 +10,6 @@
   text-align: center;
   width: 100%; /* Ocupar todo el ancho disponible */
   margin: 0; /* Eliminar márgenes */
-  padding: 1em; /* Agregar un poco de padding si lo deseas */
-  background-color: #1c1c1c; /* Color de fondo para que destaque */
-  color: #c7a200; /* Color de texto */
 }
 
 .img-logo {
