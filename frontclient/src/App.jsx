@@ -12,6 +12,7 @@ import RegistroUsuario from './pages/auth/registerPage';
 import RutinaPage from './pages/rutinas/rutinaPage';
 import RutinaForm from './pages/rutinas/rutinaForm';
 import Navbar from './components/navbar';
+import Footer from './components/footerPage';
 import ProgresoPage from './pages/progreso/progresoPage';
 import EjercicioForm from './pages/ejercicios/ejercicioForm';
 import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
@@ -59,6 +60,7 @@ function App() {
                     <Route path='/calendar' element={<CalendarPage />} />
                   </Route>
                 </Routes>
+                <Footer />
               </BrowserRouter>
             </EjercicioProvider>
           </ProgresoProvider>
