@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/authcontext";
-import fondo from "../../imagenes/magym.png";
+import fondo from "../../imagenes/fondoregister.webp";
 import '../../css/register.css';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
