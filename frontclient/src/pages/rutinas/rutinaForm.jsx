@@ -5,6 +5,7 @@ import { useRutinas } from '../../context/rutinascontext';
 import { useProgreso } from '../../context/progresocontext';
 import { getEjerciciosRequest } from '../../api/ejercicio';
 import { useAuth } from '../../context/authcontext';
+import '../../css/rutinaPage.css'; // Tu propio archivo CSS para personalizar el calendario
 import { useDetallesRutina } from '../../context/detallerutinacontext';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 
@@ -111,7 +112,7 @@ const RutinaForm = () => {
   const filteredEjercicios = ejercicios.filter(ejercicio => ejercicio.nivel === user.nivel);
 
   return (
-    <Container className="py-4">
+    <Container className="seccion py-4">
       <Row className="justify-content-center">
         <Col md={8} lg={6}>
           <Card className="shadow-lg border-0">

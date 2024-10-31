@@ -23,7 +23,7 @@ export default function RutinaPage() {
   }, [getRutinas, rutinas, getProgreso]); // Agregar dependencias al efecto
 
   return (
-    <Container className="seccion py-4">
+    <Container className="seccion">
       {!rutinas || rutinas.length === 0 ? ( // Cambiar && por ?
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
