@@ -10,7 +10,7 @@ export function Inicio() {
     //console.log(user);
 
     return (
-        <section className="inicio-container">
+        <section className="body">
             <Row className="mb-3">
                 <section>
                     <div className="panel-elements">

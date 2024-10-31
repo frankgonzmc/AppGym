@@ -1,18 +1,18 @@
-.inicio-container {
+.body {
     display: flex;
     flex-direction: column;
     /* Asegúrate de que el contenido esté en una columna */
-    height: 100vh;
+    height: auto;
     background: #7e1cff;
     padding: 20px;
     /* Añade padding si quieres separar los bordes */
 }
 
 .panel-elements {
-    background-color: white;
+    background-color: rgb(90, 6, 6);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 15px rgba(28, 0, 128, 0.1);
     width: 100%;
     /* Cambiado de 60% a 100% para ocupar todo el ancho del contenedor */
     max-width: 1920px;
