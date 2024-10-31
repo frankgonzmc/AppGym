@@ -29,10 +29,10 @@ export default function DetalleRutinaCard({ detalles }) {
   };
 
   return (
-    <Card className="text-white bg-dark">
+    <Card className="text-white bg-primary">
       <Card.Body>
         <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted text-center">Descripción: {detalles.ejercicio.descripcion}</Card.Subtitle>
+        <Card.Subtitle className="mb-2 text-black text-center">Descripción: {detalles.ejercicio.descripcion}</Card.Subtitle>
         <Card.Text>
           <div>Categoría: {detalles.ejercicio.categoria}</div>
           <div>Duración: {detalles.ejercicio.duracion} segundos</div>
