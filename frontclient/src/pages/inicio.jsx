@@ -11,40 +11,43 @@ export function Inicio() {
 
     return (
         <section className="body">
-            <section>
-                <h1>Bienvenido a App Gym</h1>
-                <div>
-                    <p>Conoce las recomendaciones de ejercicios para mejorar tus habilidades</p>
-                    <p>Aprende a mejorar tus habilidades y mejorar tu vida diaria</p>
-                    <p>¡Empieza a explorar las recomendaciones de ejercicios!</p>
-                    <p>¡Disfruta de la experiencia de App Gym!</p>
-                    <p>¡No te pierdas la oportunidad de mejorar tus habilidades!</p>
-                    <p>¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!</p>
-                </div>
+            <section className="seccion">
                 <section>
+                    <h1>Bienvenido a App Gym</h1>
+                    <div className="card">
+                        <p>Conoce las recomendaciones de ejercicios para mejorar tus habilidades</p>
+                        <p>Aprende a mejorar tus habilidades y mejorar tu vida diaria</p>
+                        <p>¡Empieza a explorar las recomendaciones de ejercicios!</p>
+                        <p>¡Disfruta de la experiencia de App Gym!</p>
+                        <p>¡No te pierdas la oportunidad de mejorar tus habilidades!</p>
+                        <p>¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!</p>
+                    </div>
                     <div className="card">
                         <p>Nivel: ${user.nivel} </p>
                     </div>
                 </section>
-            </section>
-            <section>
-                <div className="card">
-                    <div className="panel-elements">
-                        <PanelElements />
-                    </div>
-                    <footer>
-                        <div>
-                            <Link to="/machine-learning" >Conoce mas sobre tus recomendaciones</Link>
+                <section>
+                    <div className="card">
+                        <div className="panel-elements">
+                            <PanelElements />
                         </div>
-                    </footer>
-                </div>
+                        <footer>
+                            <div>
+                                <Link to="/machine-learning" >Conoce mas sobre tus recomendaciones</Link>
+                            </div>
+                        </footer>
+                    </div>
+                </section>
+                <section>
+                    <div className="card">
+                        <div className="panel-ejercicios">
+                            <PanelEjercicios />
+                        </div>
+                    </div>
+                </section>
             </section>
             <section>
-                <div className="card">
-                    <div className="panel-ejercicios">
-                        <PanelEjercicios />
-                    </div>
-                </div>
+
             </section>
         </section>
     );
