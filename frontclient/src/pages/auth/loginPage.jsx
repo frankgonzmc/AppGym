@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export function Inicio() {
   return (
-    <div className="container1">
+    <div className="container1 items-center justify-center">
       <h1 className="container1-title">APP GYM</h1>
       <img src={logo} alt="Logo" className="img-logo" />
     </div>
