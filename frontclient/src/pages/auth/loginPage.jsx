@@ -1,6 +1,4 @@
 import { useForm } from "react-hook-form";
-
-//Importar archivos CSS
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,47 +15,53 @@ export function Inicio() {
 }
 
 export function FormularioSesion() {
-
-  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { signin, isAuthenticated, errors: signinErrors } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
-  })
+  });
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/inicio')
-  }, [isAuthenticated])
+    if (isAuthenticated) navigate('/inicio');
+  }, [isAuthenticated]);
 
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
-        {
-          signinErrors.map((error, i) => (
-            <div className="bg-red-500 p-2 text-white my-2" key={i}>
-              {error}
-            </div>
-          ))
-        }
-        <form onSubmit={onSubmit} className="form-register">
-          <label
-            className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Ingrese el Email" className="info-childs-input" />
+      <div className="form">
+        {signinErrors.map((error, i) => (
+          <div className="error-message" key={i}>
+            {error}
+          </div>
+        ))}
+        <form onSubmit={onSubmit}>
+          <label className="form-label">
+            <input
+              type="email"
+              {...register('email', { required: true })}
+              placeholder="Ingrese el Email"
+              className="container2-input"
+            />
           </label>
-          {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
-          <label
-            className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Ingrese el Password" className="info-childs-input" />
-          </label>
-          {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
+          {errors.email && (<p className="text-red-500">Email es Necesario!</p>)}
 
-          <button type="submit" className="btn btn-primary mt-4 my-4">Iniciar Sesion</button>
-          <br />
+          <label className="form-label">
+            <input
+              type="password"
+              {...register('password', { required: true })}
+              placeholder="Ingrese el Password"
+              className="container3-input"
+            />
+          </label>
+          {errors.password && (<p className="text-red-500">Password es Necesario!</p>)}
+
+          <button type="submit" className="container4-button1">Iniciar Sesion</button>
           <p className="flex gap-x-2 justify-between">
-            <Link to="/forgot-password">olvidaste tu contraseña?</Link>
+            <Link to="/forgot-password" className="text-sky-500">Olvidaste tu contraseña?</Link>
           </p>
         </form>
         <hr className="text-white" />
-        <br />
         <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
@@ -65,7 +69,6 @@ export function FormularioSesion() {
     </div>
   );
 }
-
 
 export const LoginPage = () => {
   return (

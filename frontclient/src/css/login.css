@@ -1,60 +1,58 @@
+/* Global Styles */
 body {
-  color: #c7a200;
+  background-color: #aa8b00; /* Fondo oscuro */
+  color: #000000; /* Color del texto */
+  font-family: 'Arial', sans-serif; /* Fuente más moderna */
+  margin: 0;
+  padding: 0;
 }
 
 .container1 {
-  margin-top: 3%;
+  margin-top: 2%;
   text-align: center;
 }
 
 .img-logo {
-  width: 20%;
-  display: inline;
+  width: 15%; /* Ajusta el tamaño del logo */
+  margin-bottom: 1em; /* Espaciado debajo del logo */
 }
 
-/*FORMULARIO*/
+/* FORMULARIO */
 .container-u {
-  margin-left: 36%;
+  margin: 0 auto; /* Centrar contenedor */
 }
 
 .form {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-bottom: 0.4em;
-  background-color: #171717;
-  border-radius: 25px;
-  transition: .4s ease-in-out;
+  max-width: 400px; /* Ancho máximo */
+  margin: 0 auto; /* Centrar el formulario */
+  padding: 2em;
+  background-color: #252525; /* Fondo del formulario */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Sombra */
+  transition: transform 0.3s ease; /* Transición */
 }
 
 .form:hover {
-  transform: scale(1.05);
-  border: 1px solid black;
+  transform: scale(1.02); /* Efecto de hover */
 }
 
 #heading {
   text-align: center;
   margin: 1em;
-  color: rgb(255, 255, 255);
-  font-size: 2em;
+  color: #ffffff; /* Color de encabezado */
+  font-size: 2.5em; /* Tamaño de fuente */
 }
 
+/* Contenedores de input */
 .container2,
 .container3 {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  border-radius: 25px;
+  border-radius: 5px;
   padding: 0.6em;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: #ffffff;
-  box-shadow: inset 2px 5px 10px rgb(255, 255, 255);
+  border: 1px solid #d3d3d3; /* Borde claro */
 }
 
 .container2-input,
@@ -63,7 +61,7 @@ body {
   border: none;
   outline: none;
   width: 100%;
-  color: #d3d3d3;
+  color: #ffffff; /* Color de texto en input */
 }
 
 .form .container4 {
@@ -73,102 +71,58 @@ body {
   margin-top: 2.5em;
 }
 
-.container4-button1 {
-  padding: 0.5em;
-  padding-left: 1.1em;
-  padding-right: 1.1em;
+/* Botones */
+.container4-button1,
+.container4-button2,
+.button3 {
+  padding: 0.7em 1.5em; /* Padding de botones */
   border-radius: 5px;
-  margin-right: 0.5em;
   border: none;
   outline: none;
-  transition: .4s ease-in-out;
-  background-color: #252525;
-  color: white;
+  transition: background-color 0.3s ease; /* Transición de color */
   cursor: pointer;
+}
+
+.container4-button1 {
+  background-color: #4CAF50; /* Color de botón primario */
 }
 
 .container4-button1:hover {
-  background-color: rgb(48, 247, 9);
-  color: white;
+  background-color: #45a049; /* Hover */
 }
 
 .container4-button2 {
-  padding: 0.5em;
-  padding-left: 2.3em;
-  padding-right: 2.3em;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-color: #252525;
-  color: white;
-  cursor: pointer;
+  background-color: #f39c12; /* Color de botón secundario */
 }
 
 .container4-button2:hover {
-  background-color: rgb(235, 173, 30);
-  color: white;
+  background-color: #e67e22; /* Hover */
 }
 
 .button3 {
-  margin-bottom: 3em;
-  padding: 0.5em;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-color: #252525;
-  color: white;
-  cursor: pointer;
+  background-color: #e74c3c; /* Botón de acción */
 }
 
 .button3:hover {
-  background-color: #ff0000;
-  color: white;
+  background-color: #c0392b; /* Hover */
 }
 
-/*RESPONSIVE*/
-@media (max-width: 970px) {
+/* Estilos para mensajes de error */
+.error-message {
+  background-color: #e74c3c; /* Fondo rojo */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
   .img-logo {
     width: 35%;
   }
 
   .form {
-    width: 40%;
-  }
-}
-
-@media (max-width: 960px) {
-  .form {
-    width: 50%;
-  }
-}
-
-@media (max-width: 700px) {
-  .form {
-    width: 60%;
-  }
-}
-
-
-@media (max-width: 600px) {
-  .container1 {
-    display: none;
-  }
-
-  .container-u {
-    margin-left: 2%;
-    margin-top: 40%;
-  }
-}
-
-@media (max-width: 550px) {
-  .form {
-    width: 80%;
-  }
-
-  .container-u {
-    margin-left: 0.1%;
-    margin-right: 0.1%;
+    width: 90%; /* Ancho adaptado para móviles */
   }
 }
