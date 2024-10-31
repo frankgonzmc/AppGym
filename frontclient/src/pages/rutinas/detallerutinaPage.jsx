@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getRutinaRequest } from '../../api/rutina'; // Asegúrate de que esta función esté definida
-import EjercicioCard from '../../components/detallerutina/detallerutinaCard'; // Importa tu componente EjercicioCard
+import { getRutinaRequest } from '../../api/rutina';
+import DetalleRutinaCard from '../../components/detallerutina/detallerutinaCard';
 
 const DetallerutinaPage = () => {
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ const DetallerutinaPage = () => {
     const fetchRutina = async () => {
       setLoading(true);
       try {
-        const res = await getRutinaRequest(id); // Solicitar datos de la rutina
+        const res = await getRutinaRequest(id);
         setRutina(res.data.rutina);
         setDetalles(res.data.detalles);
       } catch (error) {
@@ -25,16 +25,18 @@ const DetallerutinaPage = () => {
     fetchRutina();
   }, [id]);
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <div className="text-center">Cargando...</div>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold">{rutina.nombre}</h2>
-      <p className="text-lg">{rutina.descripcion}</p>
-      <h3 className="text-2xl mt-4">Ejercicios Asociados</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="container my-4">
+      <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
+      <p className="text-center lead">{rutina.descripcion}</p>
+      <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
+      <div className="row">
         {detalles.map(detalles => (
-          <EjercicioCard key={detalles._id} detalles={detalles} />
+          <div className="col-md-4 mb-4" key={detalles._id}>
+            <DetalleRutinaCard detalles={detalles} />
+          </div>
         ))}
       </div>
     </div>
