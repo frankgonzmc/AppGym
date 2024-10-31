@@ -4,7 +4,7 @@ import { useProgreso } from "../../context/progresocontext"; // Importar el cont
 import { RutinaCard } from "../../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
@@ -22,32 +22,29 @@ export default function RutinaPage() {
   }, [getRutinas, rutinas, getProgreso]); // Agregar dependencias al efecto
 
   return (
-    <>
+    <Container className="py-4">
       {!rutinas || rutinas.length === 0 ? ( // Cambiar && por ?
-        <Card>
-          <div className="flex justify-center items-center p-10">
-            <div>
-              <ImFileEmpty className="text-6xl text-gray-400 m-auto my-2" />
-              <h1 className="font-bold text-xl">
-                No hay Rutinas por el momento, agrega una...
-              </h1>
-              <p className="flex gap-x-2 justify-between">
-                <Link to="/add-rutinas"> CREAR RUTINA</Link>
-              </p>
-            </div>
-          </div>
-        </Card>
+        <Row className="justify-content-center">
+          <Col md={6} className="text-center">
+            <Card className="p-4">
+              <ImFileEmpty className="text-6xl text-gray-400 mb-3" />
+              <h1 className="font-bold">No hay Rutinas por el momento</h1>
+              <p className="mb-4">Agrega una nueva rutina para empezar.</p>
+              <Link to="/add-rutinas" className="btn btn-primary">
+                CREAR RUTINA
+              </Link>
+            </Card>
+          </Col>
+        </Row>
       ) : (
-        <section>
-          <Card>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-              {rutinas.map((rutina) => (
-                <RutinaCard rutina={rutina} key={rutina._id} />
-              ))}
-            </div>
-          </Card>
-        </section>
+        <Row className="g-4">
+          {rutinas.map((rutina) => (
+            <Col md={6} lg={4} key={rutina._id}>
+              <RutinaCard rutina={rutina} />
+            </Col>
+          ))}
+        </Row>
       )}
-    </>
+    </Container>
   );
 }
