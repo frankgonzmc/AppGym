@@ -11,8 +11,24 @@ export function Inicio() {
 
     return (
         <section className="body">
-            <Row className="mb-3">
+            <section>
+                <h1>Bienvenido a App Gym</h1>
+                <div>
+                    <p>Conoce las recomendaciones de ejercicios para mejorar tus habilidades</p>
+                    <p>Aprende a mejorar tus habilidades y mejorar tu vida diaria</p>
+                    <p>¡Empieza a explorar las recomendaciones de ejercicios!</p>
+                    <p>¡Disfruta de la experiencia de App Gym!</p>
+                    <p>¡No te pierdas la oportunidad de mejorar tus habilidades!</p>
+                    <p>¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!</p>
+                </div>
                 <section>
+                    <div className="card">
+                        <p>Nivel: ${user.nivel} </p>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <div className="card">
                     <div className="panel-elements">
                         <PanelElements />
                     </div>
@@ -21,13 +37,15 @@ export function Inicio() {
                             <Link to="/machine-learning" >Conoce mas sobre tus recomendaciones</Link>
                         </div>
                     </footer>
-                </section>
-            </Row>
-            <Row>
-                <div className="panel-ejercicios">
-                    <PanelEjercicios />
                 </div>
-            </Row>
+            </section>
+            <section>
+                <div className="card">
+                    <div className="panel-ejercicios">
+                        <PanelEjercicios />
+                    </div>
+                </div>
+            </section>
         </section>
     );
 }
