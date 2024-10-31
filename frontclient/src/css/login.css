@@ -54,7 +54,7 @@
 }
 
 .form {
-  max-width: 800px;
+  width: 600px;
   /* Ancho máximo */
   margin: 0 auto;
   /* Centrar el formulario */
