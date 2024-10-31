@@ -4,7 +4,7 @@ import { useProgreso } from "../../context/progresocontext"; // Importar el cont
 import { RutinaCard } from "../../components/rutina/rutinaCard";
 import { ImFileEmpty } from "react-icons/im";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
@@ -27,7 +27,7 @@ export default function RutinaPage() {
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
             <Card className="p-4">
-              <ImFileEmpty className="text-6xl text-gray-400 mb-3" />
+              <ImFileEmpty className="text-center text-6xl text-gray-400 mb-3" />
               <h1 className="font-bold">No hay Rutinas por el momento</h1>
               <p className="mb-4">Agrega una nueva rutina para empezar.</p>
               <Link to="/add-rutinas" className="btn btn-primary">
