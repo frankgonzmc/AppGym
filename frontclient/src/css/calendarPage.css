@@ -1,60 +1,54 @@
 /* calendarPage.css */
 .calendar-page-container {
   background-color: #f8f9fa;
-  /* Fondo claro */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Sombra para profundidad */
   max-width: 600px;
-  /* Limitar ancho para mejor presentación */
   margin: auto;
-  /* Centrar el contenedor */
 }
 
 .calendar-title {
   text-align: center;
   color: #333;
-  /* Color oscuro para el título */
   margin-bottom: 20px;
-  /* Espacio debajo del título */
 }
 
 .calendar-component {
   border: 1px solid #dee2e6;
-  /* Borde claro para el calendario */
   border-radius: 8px;
-  /* Bordes redondeados */
+  transition: box-shadow 0.3s ease;
+  /* Añadir una transición */
+}
+
+.calendar-component:hover {
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+  /* Efecto hover */
 }
 
 .calendar-selected-date {
   margin-top: 20px;
   text-align: center;
-  /* Centrar el texto */
   font-weight: bold;
   color: #007bff;
-  /* Color azul para la fecha seleccionada */
 }
 
-/* Asegúrate de que el texto del calendario sea visible */
-.react-calendar {
-  color: #495057;
-  /* Color oscuro para los números */
+.event-list {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
 }
 
-.react-calendar__month-view__days__day {
-  background-color: white;
-  /* Fondo blanco para los días */
+.event-list ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-.react-calendar__tile {
+.event-list li {
+  background-color: #fff;
+  padding: 8px;
+  margin: 5px 0;
   border-radius: 4px;
-  /* Bordes redondeados para los días */
-}
-
-.react-calendar__tile--active {
-  background-color: #007bff;
-  /* Color azul para el día activo */
-  color: white;
-  /* Texto blanco para el día activo */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
