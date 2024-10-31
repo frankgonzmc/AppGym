@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRutinaRequest } from '../../api/rutina';
 import DetalleRutinaCard from '../../components/detallerutina/detallerutinaCard';
+import { Card } from 'react-bootstrap';
 
 const DetallerutinaPage = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const DetallerutinaPage = () => {
   if (loading) return <div className="text-center">Cargando...</div>;
 
   return (
-    <div className="card">
+    <Card className="shadow-lg border-4 mt-4">
       <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
       <p className="text-center lead">{rutina.descripcion}</p>
       <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
@@ -39,7 +40,7 @@ const DetallerutinaPage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 
