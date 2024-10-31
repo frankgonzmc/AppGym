@@ -26,9 +26,9 @@ function RegistroUsuario() {
       <div className="container-form">
         <div className="information">
           <div className="info-childs">
-            <img src={fondo} alt="Fondo de Registro" className="info-image" />
-            <h2>Bienvenido</h2>
-            <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
+            <h2 className="item-center">BIENVENIDO</h2>
+            <img src={fondo} alt="Fondo de Registro" className="info-image item-center w-full mt-2" />
+            <p className="item-center mt-2">Para unirte a nuestra comunidad, por favor regístrate.</p>
           </div>
         </div>
 
