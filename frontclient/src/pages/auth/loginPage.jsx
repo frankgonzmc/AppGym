@@ -30,7 +30,7 @@ export function FormularioSesion() {
   }, [isAuthenticated]);
 
   return (
-    <div className="items-center justify-center">
+    <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
         {signinErrors.map((error, i) => (
           <div className="error-message" key={i}>
