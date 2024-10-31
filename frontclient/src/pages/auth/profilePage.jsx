@@ -85,7 +85,7 @@ function ProfilePage() {
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
-      console.error(error);
+      console.error(error); // Esto se puede eliminar en producción
     }
   };
 
