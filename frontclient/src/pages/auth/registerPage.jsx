@@ -7,90 +7,77 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 
-
 function RegistroUsuario() {
-
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
-  const navegar = useNavigate();
-  const nivel = "Principiante"; // Define el nivel por defecto
+  const navigate = useNavigate();
+  const nivel = "Principiante";
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navegar("/inicio")
-    }
-  }, [isAuthenticated])
+    if (isAuthenticated) navigate("/inicio");
+  }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {
     signup(values);
-  })
+  });
 
   return (
     <section className="section-register">
       <div className="container-form">
         <div className="information">
           <div className="info-childs">
-            <img src={fondo} alt="Fondo" />
-            <h2 className="info-childs-h2">Bienvenido</h2>
-            <p className="info-childs-p">Para unirte a nuestra comunidad por favor Registrate.</p>
+            <img src={fondo} alt="Fondo de Registro" className="info-image" />
+            <h2>Bienvenido</h2>
+            <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
           </div>
         </div>
+
         <div className="form-information">
           <div className="form-information-childs">
-            <h2 className="form-information-childs-h2">Crear una Cuenta</h2>
-            {
-              registerErrors.map((error, i) => (
-                <div className="bg-red-500 p-2 text-while" key={i}>
-                  {error}
-                </div>
-              ))
-            }
+            <h2>Crear una Cuenta</h2>
+            {registerErrors.map((error, i) => (
+              <div key={i} className="error-message">
+                {error}
+              </div>
+            ))}
             <Form onSubmit={onSubmit} className="form-register">
-              <label
-                className="form-label"> <input type="text" {...register('username', { required: true })} placeholder="Nombre Completo" className="w-full text-black px-4 py-2 rounded-md my-2" />
+              <label className="form-label">
+                <input type="text" {...register('username', { required: "Nombre Completo es necesario" })} placeholder="Nombre Completo" />
+                {errors.username && <span className="error-text">{errors.username.message}</span>}
               </label>
-              {errors.username && (<p className="text-red-500">El Nombre Completo es Necesario!</p>)}
-              <label
-                className="form-label"><input type="email" {...register('email', { required: true })} placeholder="Email" className="w-full text-black px-4 py-2 rounded-md my-2" />
-              </label>
-              {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
-              <label
-                className="form-label"><input type="password" {...register('password', { required: true })} placeholder="Password" className="w-full text-black px-4 py-2 rounded-md my-2" />
-              </label>
-              {errors.password && (<p className="text-red-500"> Password es Necesario! </p>)}
-              <label
-                className="form-label"><input type="number" {...register('edad', { required: true })} placeholder="Edad" className="w-full text-black px-4 py-2 rounded-md my-2" />
-              </label>
-              {errors.edad && (<p className="text-red-500"> Edad es Necesario! </p>)}
 
-              <label
-                className="form-label"><input type="number" {...register('estatura', { required: true })} placeholder="Estatura" className="w-full text-black px-4 py-2 rounded-md my-2" step="0.01" />
+              <label className="form-label">
+                <input type="email" {...register('email', { required: "Email es necesario" })} placeholder="Email" />
+                {errors.email && <span className="error-text">{errors.email.message}</span>}
               </label>
-              {errors.estatura && (
-                <p className="text-red-500">
-                  {errors.estatura.type === "required" && "Estatura es Necesario!"}
-                  {errors.estatura.type === "min" && "La estatura no puede ser negativa!"}
-                  {errors.estatura.type === "max" && "La estatura debe ser menor a 3 metros!"}
-                </p>
-              )}
 
-              <label
-                className="form-label"><input type="number" {...register('peso', { required: true })} placeholder="Peso" className="info-childs-input text-black" step="0.01" />
+              <label className="form-label">
+                <input type="password" {...register('password', { required: "Password es necesario" })} placeholder="Password" />
+                {errors.password && <span className="error-text">{errors.password.message}</span>}
               </label>
-              {errors.peso && (
-                <p className="text-red-500">
-                  {errors.peso.type === "required" && "Peso es Necesario!"}
-                  {errors.peso.type === "min" && "El Peso no puede ser negativo!"}
-                  {errors.peso.type === "max" && "El Peso debe ser menor a 120 kg!"}
-                </p>
-              )}
+
+              <label className="form-label">
+                <input type="number" {...register('edad', { required: "Edad es necesario" })} placeholder="Edad" />
+                {errors.edad && <span className="error-text">{errors.edad.message}</span>}
+              </label>
+
+              <label className="form-label">
+                <input type="number" {...register('estatura', { required: "Estatura es necesaria", min: 0.5, max: 3 })} placeholder="Estatura" step="0.01" />
+                {errors.estatura && <span className="error-text">{errors.estatura.message}</span>}
+              </label>
+
+              <label className="form-label">
+                <input type="number" {...register('peso', { required: "Peso es necesario", min: 1, max: 120 })} placeholder="Peso" step="0.01" />
+                {errors.peso && <span className="error-text">{errors.peso.message}</span>}
+              </label>
 
               <input type="hidden" {...register('nivel')} value={nivel} />
-              <button type="submit" className="btn btn-success mt-2 my-2">Continuar Registrar</button>
+
+              <button type="submit" className="btn btn-success">Continuar Registro</button>
             </Form>
 
-            <p className="flex gap-x-2 justify-between text-white mt-2 my-2">
-              Ya tienes una cuenta? <Link to="/login" className="text-sky-500">ve a Iniciar Sesión</Link>
+            <p className="footer-text">
+              ¿Ya tienes una cuenta? <Link to="/login" className="link-login">Inicia sesión</Link>
             </p>
           </div>
         </div>
@@ -100,78 +87,3 @@ function RegistroUsuario() {
 }
 
 export default RegistroUsuario;
-
-
-/*
-
-import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
-
-function RegistroUsuario() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
-  const navegar = useNavigate();
-  const nivel = "Principiante";
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navegar("/inicio");
-    }
-  }, [isAuthenticated]);
-
-  const onSubmit = handleSubmit(async (values) => {
-    signup(values);
-  });
-
-  return (
-    <Container className="section-register">
-      <Row>
-        <Col md={6} className="information">
-          <img src={fondo} alt="Fondo" className="img-fluid" />
-          <h2>Bienvenido</h2>
-          <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
-        </Col>
-        <Col md={6} className="form-information">
-          <h2>Crear una Cuenta</h2>
-          {registerErrors.map((error, i) => (
-            <Alert variant="danger" key={i}>{error}</Alert>
-          ))}
-          <Form onSubmit={onSubmit} className="form-register">
-            <Form.Group controlId="username">
-              <Form.Control type="text" placeholder="Nombre Completo" {...register('username', { required: true })} />
-              {errors.username && <Form.Text className="text-danger">El Nombre Completo es Necesario!</Form.Text>}
-            </Form.Group>
-            <Form.Group controlId="email">
-              <Form.Control type="email" placeholder="Email" {...register('email', { required: true })} />
-              {errors.email && <Form.Text className="text-danger">Email es Necesario!</Form.Text>}
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Control type="password" placeholder="Password" {...register('password', { required: true })} />
-              {errors.password && <Form.Text className="text-danger">Password es Necesario!</Form.Text>}
-            </Form.Group>
-            <Form.Group controlId="edad">
-              <Form.Control type="number" placeholder="Edad" {...register('edad', { required: true })} />
-              {errors.edad && <Form.Text className="text-danger">Edad es Necesario!</Form.Text>}
-            </Form.Group>
-            <Form.Group controlId="estatura">
-              <Form.Control type="number" placeholder="Estatura" {...register('estatura', { required: true })} step="0.01" />
-              {errors.estatura && <Form.Text className="text-danger">Estatura es Necesario!</Form.Text>}
-            </Form.Group>
-            <Form.Group controlId="peso">
-              <Form.Control type="number" placeholder="Peso" {...register('peso', { required: true })} step="0.01" />
-              {errors.peso && <Form.Text className="text-danger">Peso es Necesario!</Form.Text>}
-            </Form.Group>
-            <input type="hidden" {...register('nivel')} value={nivel} />
-            <Button type="submit" className="btn btn-success">Continuar Registrar</Button>
-          </Form>
-          <p className="mt-3">
-            ¿Ya tienes una cuenta? <Link to="/login" className="text-sky-500">Ve a Iniciar Sesión</Link>
-          </p>
-        </Col>
-      </Row>
-    </Container>
-  );
-}
-
-export default RegistroUsuario;
-
-*/
