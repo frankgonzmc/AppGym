@@ -38,3 +38,10 @@ a:hover {
     color: #0056b3;
     text-decoration: underline;
 }
+
+.footer {
+    clear: both;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
