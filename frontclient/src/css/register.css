@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: auto;
+    height: 100%;
     width: auto;
     background-color: #ee9037;
     background-size: cover;
