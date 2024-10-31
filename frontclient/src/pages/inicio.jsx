@@ -38,6 +38,8 @@ export function Inicio() {
                         </footer>
                     </div>
                 </section>
+            </section>
+            <section className="seccion2">
                 <section>
                     <div className="card">
                         <div className="panel-ejercicios">
@@ -45,9 +47,6 @@ export function Inicio() {
                         </div>
                     </div>
                 </section>
-            </section>
-            <section>
-
             </section>
         </section>
     );
