@@ -8,12 +8,12 @@
 
 .container1 {
   text-align: center;
-  margin: 5px;
+  width: 100%;
 }
 
 .img-logo {
-  width: 45%; /* Ajusta el tamaño del logo */
-  margin-bottom: 3em; /* Espaciado debajo del logo */
+  width: 15%; /* Ajusta el tamaño del logo */
+  margin-bottom: 1em; /* Espaciado debajo del logo */
 }
 
 /* FORMULARIO */
