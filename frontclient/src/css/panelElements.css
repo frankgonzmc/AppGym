@@ -35,8 +35,10 @@
 
 .paneles-img {
     height: 120px;
+    width: auto;
     object-fit: cover;
-    padding: 15px;
+    padding: 5px;
+    border-radius: 6px;
 }
 
 .paneles-item .card-title {
