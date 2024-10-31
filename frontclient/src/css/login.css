@@ -27,6 +27,17 @@
   /* Altura para centrar en toda la vista */
 }
 
+.container1-title {
+  text-align: center;
+  font-size: 3rem;
+  margin: 0;
+  color: #000000;
+  align-items: center;
+  /* Centrar elementos hijos */
+  justify-content: center;
+  width: 100%;
+}
+
 .img-logo {
   width: 15%;
   /* Ajusta el tamaño del logo */
