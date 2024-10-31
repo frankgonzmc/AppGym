@@ -23,7 +23,7 @@
   /* Centrar elementos hijos */
   justify-content: center;
   /* Centrar verticalmente */
-  height: calc(100vh - 100px);
+  height: 40%;
   /* Altura para centrar en toda la vista */
 }
 
