@@ -1,6 +1,7 @@
 import { PanelElements } from "../components/panelElements.jsx";
 import { PanelEjercicios } from "../components/panelEjercicios.jsx";
 import { useAuth } from "../context/authcontext";
+import { Link } from "react-router-dom";
 import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import '../css/inicio.css';
 
@@ -17,7 +18,7 @@ export function Inicio() {
                     </div>
                     <footer>
                         <div>
-                            <p to='/machine-learning' >Conoce más sobre tus recomendaciones</p>
+                            <Link to="/machine-learning" >Conoce mas sobre tus recomendaciones</Link>
                         </div>
                     </footer>
                 </section>
