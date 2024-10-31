@@ -7,10 +7,10 @@ import '../css/inicio.css';
 
 export function Inicio() {
     const { user } = useAuth();
-    console.log(user);
+    //console.log(user);
 
     return (
-        <Container className="inicio-container">
+        <section className="inicio-container">
             <Row className="mb-3">
                 <section>
                     <div className="panel-elements">
@@ -28,6 +28,6 @@ export function Inicio() {
                     <PanelEjercicios />
                 </div>
             </Row>
-        </Container>
+        </section>
     );
 }
