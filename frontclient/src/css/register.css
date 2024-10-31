@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: auto;
     width: auto;
     background-color: #ee9037;
     background-size: cover;
@@ -17,8 +17,8 @@
 .container-form {
     display: flex;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    max-width: 1200px;
-    width: 100%;
+    width: 1200px;
+    height: 950px;
     border-radius: 20px;
     overflow: hidden;
     transition: all 0.5s ease;
@@ -116,15 +116,17 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width: 768px) {
     .container-form {
         flex-direction: column;
-        height: auto;
+        height: 65%;
+        width: 65%;
     }
 
     .information,
     .form-information {
-        width: 100%;
+        height: 65%;
+        width: 65%;
         padding: 2rem;
     }
 }
