@@ -5,17 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
 
-export function Inicio() {
-  return (
-    <section className="items-center">
-      <h1 className="container1-title">APP GYM</h1>
-      <div className="container1">
-        <img src={logo} alt="Logo" className="img-logo" />
-      </div>
-    </section>
-  );
-}
-
 export function FormularioSesion() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signin, isAuthenticated, errors: signinErrors } = useAuth();
@@ -31,6 +20,14 @@ export function FormularioSesion() {
 
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
+
+      <section className="items-center">
+        <h1 className="container1-title">APP GYM</h1>
+        <div className="container1">
+          <img src={logo} alt="Logo" className="img-logo" />
+        </div>
+      </section>
+
       <div className="form">
         {signinErrors.map((error, i) => (
           <div className="error-message" key={i}>
@@ -75,7 +72,6 @@ export function FormularioSesion() {
 export const LoginPage = () => {
   return (
     <section className="body">
-      <Inicio />
       <FormularioSesion />
     </section>
   );

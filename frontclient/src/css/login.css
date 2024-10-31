@@ -39,12 +39,10 @@
 }
 
 .img-logo {
-  width: 15%;
+  width: 35%;
   /* Ajusta el tamaño del logo */
-  max-width: 200px;
+  max-width: 400px;
   /* Limitar el tamaño máximo para dispositivos pequeños */
-  margin-bottom: 1em;
-  /* Espaciado debajo del logo */
 }
 
 /* FORMULARIO */
