@@ -40,6 +40,15 @@
     justify-content: center;
 }
 
+.footer {
+    clear: both;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*
 .card {
     background-color: #ffffff;
