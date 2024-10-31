@@ -41,7 +41,8 @@ a:hover {
 
 .footer {
     clear: both;
+    background-color: #1a202c;
     align-items: center;
     justify-content: center;
-    padding: 5px;
+    padding: 15px;
 }

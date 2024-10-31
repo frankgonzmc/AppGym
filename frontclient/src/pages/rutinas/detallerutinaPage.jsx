@@ -28,7 +28,7 @@ const DetallerutinaPage = () => {
   if (loading) return <div className="text-center">Cargando...</div>;
 
   return (
-    <div className="container my-4">
+    <div className="card">
       <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
       <p className="text-center lead">{rutina.descripcion}</p>
       <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
