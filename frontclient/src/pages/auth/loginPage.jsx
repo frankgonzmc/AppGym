@@ -21,13 +21,10 @@ export function FormularioSesion() {
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
-        <section className="items-center">
-          <h1 className="container1-title">APP GYM</h1>
-          <div className="container1">
-            <img src={logo} alt="Logo" className="img-logo" />
-          </div>
-        </section>
-
+        <h1 className="container1-title">APP GYM</h1>
+        <div className="container1">
+          <img src={logo} alt="Logo" className="img-logo" />
+        </div>
         {signinErrors.map((error, i) => (
           <div className="error-message" key={i}>
             {error}
