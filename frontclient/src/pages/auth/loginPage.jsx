@@ -7,12 +7,12 @@ import { useEffect } from "react";
 
 export function Inicio() {
   return (
-    <div className="flex h-[calc(50vh-50px)] items-center">
+    <section className="items-center justify-center">
       <h1 className="container1-title">APP GYM</h1>
       <div className="container1">
         <img src={logo} alt="Logo" className="img-logo" />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -30,7 +30,7 @@ export function FormularioSesion() {
   }, [isAuthenticated]);
 
   return (
-    <div className="flex h-[calc(50vh-50px)] items-center justify-center">
+    <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
         {signinErrors.map((error, i) => (
           <div className="error-message" key={i}>
