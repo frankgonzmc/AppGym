@@ -12,6 +12,7 @@
 
 .img-logo {
   width: 45%; /* Ajusta el tamaño del logo */
+  align-items: center;
   margin-bottom: 3em; /* Espaciado debajo del logo */
 }
 
