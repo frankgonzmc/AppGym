@@ -1,5 +1,6 @@
 .body {
   height: auto;
+  width: auto;
   background-color: #ee9037;
   /* Fondo oscuro */
   color: #000000;
@@ -169,11 +170,11 @@
 /* Responsive */
 @media (max-width: 600px) {
   .img-logo {
-    width: 65%;
+    width: 45%;
   }
 
   .form {
-    width: 100%;
+    width: 80%;
     /* Ancho adaptado para móviles */
   }
 }
