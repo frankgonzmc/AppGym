@@ -11,9 +11,16 @@ export function Inicio() {
     return (
         <Container className="inicio-container">
             <Row className="mb-3">
-                <div className="panel-elements">
-                    <PanelElements />
-                </div>
+                <section>
+                    <div className="panel-elements">
+                        <PanelElements />
+                    </div>
+                    <footer>
+                        <div>
+                            <p to='/machine-learning' >Conoce más sobre tus recomendaciones</p>
+                        </div>
+                    </footer>
+                </section>
             </Row>
             <Row>
                 <div className="panel-ejercicios">

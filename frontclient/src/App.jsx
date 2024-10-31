@@ -54,7 +54,7 @@ function App() {
 
                     <Route path='/detalles-rutinas/:id' element={<DetallerutinaPage />} />
 
-                    <Route path='/maching-learning' element={<MlPage />} />
+                    <Route path='/machine-learning' element={<MlPage />} />
 
                     <Route path='/calendar' element={<CalendarPage />} />
                   </Route>
