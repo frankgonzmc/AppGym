@@ -103,7 +103,7 @@ function ProfilePage() {
 
   return (
     <section className="seccion">
-      <Container className="mt-5">
+      <Container className="py-4">
         <Row className="justify-content-center">
           <Col md={8}>
             <Card className="mb-4">
