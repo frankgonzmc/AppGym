@@ -104,7 +104,7 @@ function ProfilePage() {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
-        <Col md={8} lg={6}>
+        <Col md={8}>
           <Card className="mb-4">
             <Card.Header className="text-center bg-primary text-white">
               <h4>Perfil de Usuario</h4>
@@ -174,6 +174,8 @@ function ProfilePage() {
               </Form>
             </Card.Body>
           </Card>
+        </Col>
+        <Col md={4}>
           <Card>
             <Card.Header className="text-center bg-secondary text-white">
               <h4>Actualizar Contraseña</h4>

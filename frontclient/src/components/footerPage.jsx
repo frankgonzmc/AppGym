@@ -4,7 +4,7 @@ import '../css/inicio.css';
 function footerPage() {
   return (
     <footer className="footer">
-        <p>Copyright © App Gym 2024</p>
+        <div>Copyright © App Gym 2024</div>
     </footer>
   )
 }
