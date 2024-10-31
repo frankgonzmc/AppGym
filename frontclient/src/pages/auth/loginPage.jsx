@@ -56,7 +56,7 @@ export function FormularioSesion() {
             <Link to="/forgot-password">olvidaste tu contraseña?</Link>
           </p>
         </form>
-        <hr className="text-white"/>
+        <hr className="text-white" />
         <br />
         <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
@@ -69,9 +69,9 @@ export function FormularioSesion() {
 
 export const LoginPage = () => {
   return (
-    <div>
+    <section className="body">
       <Inicio />
       <FormularioSesion />
-    </div>
+    </section>
   );
 };
