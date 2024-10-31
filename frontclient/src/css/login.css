@@ -1,5 +1,4 @@
-/* Global Styles */
-body {
+.body {
   background-color: #aa8b00; /* Fondo oscuro */
   color: #000000; /* Color del texto */
   font-family: 'Arial', sans-serif; /* Fuente más moderna */
@@ -23,7 +22,7 @@ body {
 }
 
 .form {
-  max-width: 400px; /* Ancho máximo */
+  max-width: 600px; /* Ancho máximo */
   margin: 0 auto; /* Centrar el formulario */
   padding: 2em;
   background-color: #252525; /* Fondo del formulario */
@@ -61,7 +60,7 @@ body {
   border: none;
   outline: none;
   width: 100%;
-  color: #ffffff; /* Color de texto en input */
+  color: #000000; /* Color de texto en input */
 }
 
 .form .container4 {
