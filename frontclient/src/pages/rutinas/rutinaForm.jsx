@@ -6,7 +6,7 @@ import { useProgreso } from '../../context/progresocontext';
 import { getEjerciciosRequest } from '../../api/ejercicio';
 import { useAuth } from '../../context/authcontext';
 import { useDetallesRutina } from '../../context/detallerutinacontext';
-import { Card } from '../../components/ui';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
@@ -66,7 +66,6 @@ const RutinaForm = () => {
         };
 
         await updateRutina(params.id, rutinaActualizada);
-        console.log('Rutina actualizada:', rutinaActualizada);
         navigate('/rutinas');
       } else {
         const nuevaRutina = {
@@ -76,7 +75,6 @@ const RutinaForm = () => {
           totalEjercicios: selectedEjercicios.length,
         };
 
-        console.log("Nueva rutina:", nuevaRutina);
         const rutinaCreada = await createRutina(nuevaRutina);
 
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
@@ -95,7 +93,6 @@ const RutinaForm = () => {
         };
 
         await createProgreso(progresoData);
-
         navigate('/rutinas');
       }
     } catch (error) {
@@ -111,63 +108,80 @@ const RutinaForm = () => {
     }
   };
 
-  // Filtrar ejercicios por nivel
   const filteredEjercicios = ejercicios.filter(ejercicio => ejercicio.nivel === user.nivel);
 
   return (
-    <Card>
-      <div className="flex justify-center items-center p-5">
-        <div className='bg-zinc-800 max-w-md w-full p-15 rounded-md'>
-          <form onSubmit={onSubmit}>
-            <h3 className='text-center text-white'>Crea tu Rutina</h3>
+    <Container className="py-4">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
+          <Card className="shadow-lg border-0">
+            <Card.Body>
+              <h3 className="text-center mb-4">Crea tu Rutina</h3>
+              <Form onSubmit={onSubmit}>
+                <Form.Group className="mb-3" controlId="nombre">
+                  <Form.Label>Nombre de la rutina</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Nombre de la rutina"
+                    {...register('nombre')}
+                    required
+                  />
+                </Form.Group>
 
-            <input
-              type="text"
-              className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-              placeholder="Nombre de la rutina" {...register('nombre')}
-              required
-            />
+                <Form.Group className="mb-3" controlId="descripcion">
+                  <Form.Label>Descripción</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Descripción"
+                    {...register('descripcion')}
+                    required
+                  />
+                </Form.Group>
 
-            <textarea
-              placeholder="Descripción" {...register('descripcion')}
-              className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-              required
-            />
+                <Form.Label className="mb-2">Selecciona Ejercicios (Nivel: {user.nivel})</Form.Label>
+                <div className="mb-3">
+                  {filteredEjercicios.map((ejercicio) => (
+                    <Form.Check
+                      key={ejercicio._id}
+                      type="checkbox"
+                      label={ejercicio.nombre}
+                      value={ejercicio._id}
+                      checked={selectedEjercicios.includes(ejercicio._id)}
+                      onChange={() => handleCheckboxChange(ejercicio._id)}
+                      className="text-muted"
+                    />
+                  ))}
+                </div>
 
-            <h3 className='text-white'>Selecciona Ejercicios (Nivel: {user.nivel})</h3>
-            {filteredEjercicios.map((ejercicio) => (
-              <div className="ejercicio-item text-white" key={ejercicio._id}>
-                <input
-                  type="checkbox"
-                  value={ejercicio._id}
-                  checked={selectedEjercicios.includes(ejercicio._id)}
-                  onChange={() => handleCheckboxChange(ejercicio._id)}
-                />
-                <label className='text-white'>{ejercicio.nombre}</label>
-              </div>
-            ))}
+                <Alert variant="info" className="mt-4">
+                  <strong>Ejercicios Seleccionados:</strong>
+                  <ul className="m-0">
+                    {selectedEjercicios.length === 0 ? (
+                      <li>No has seleccionado ejercicios.</li>
+                    ) : (
+                      selectedEjercicios.map((id) => {
+                        const ejercicioSeleccionado = ejercicios.find(ej => ej._id === id);
+                        return (
+                          <li key={id}>
+                            {ejercicioSeleccionado.nombre} - Nivel: {ejercicioSeleccionado.nivel}
+                          </li>
+                        );
+                      })
+                    )}
+                  </ul>
+                </Alert>
 
-            <h3 className='text-white mt-4'>Ejercicios Seleccionados</h3>
-            <div className="selected-ejercicios text-white">
-              {selectedEjercicios.length === 0 ? (
-                <p>No has seleccionado ejercicios.</p>
-              ) : (
-                selectedEjercicios.map((id) => {
-                  const ejercicioSeleccionado = ejercicios.find(ej => ej._id === id);
-                  return (
-                    <div key={id} className="ejercicio-seleccionado">
-                      <p>{ejercicioSeleccionado.nombre} - Nivel: {ejercicioSeleccionado.nivel}</p>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            <button className="btn btn-primary rounded-md my-2" type="submit">Guardar Rutina</button>
-          </form>
-        </div>
-      </div>
-    </Card>
+                <div className="d-grid">
+                  <Button type="submit" variant="primary" className="rounded-pill mt-3">
+                    Guardar Rutina
+                  </Button>
+                </div>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
