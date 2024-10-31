@@ -21,12 +21,14 @@ export function Inicio() {
                         <Card.Body>
                             <Card.Title>Recomendaciones de Ejercicios</Card.Title>
                             <Card.Text>
-                                <div>Conoce las recomendaciones de ejercicios para mejorar tus habilidades</div>
-                                <div>Aprende a mejorar tus habilidades y mejorar tu vida diaria</div>
-                                <div>¡Empieza a explorar las recomendaciones de ejercicios!</div>
-                                <div>¡Disfruta de la experiencia de App Gym!</div>
-                                <div>¡No te pierdas la oportunidad de mejorar tus habilidades!</div>
-                                <div>¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!</div>
+                                <p>
+                                    Conoce las recomendaciones de ejercicios para mejorar tus habilidades.
+                                    Aprende a mejorar tus habilidades y mejorar tu vida diaria.
+                                    ¡Empieza a explorar las recomendaciones de ejercicios!
+                                    ¡Disfruta de la experiencia de App Gym!
+                                    ¡No te pierdas la oportunidad de mejorar tus habilidades!
+                                    ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
+                                </p>
                             </Card.Text>
                         </Card.Body>
                     </Card>

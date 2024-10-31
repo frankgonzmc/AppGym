@@ -1,5 +1,6 @@
 import { useAuth } from "../../context/authcontext";
 import { useState, useEffect } from "react";
+import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
@@ -15,7 +16,7 @@ function ProfilePage() {
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
   const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
-  const [newProfileImage, setNewProfileImage] = useState(null); // Estado para la nueva imagen
+  const [newProfileImage, setNewProfileImage] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,7 +32,6 @@ function ProfilePage() {
       setError("Las contraseñas no coinciden");
       return;
     }
-
     try {
       await updatePassword(password, newPassword);
       setSuccess("Contraseña actualizada con éxito");
@@ -45,14 +45,11 @@ function ProfilePage() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-
-    // Validar que los campos no estén vacíos
     if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail) {
       setError("Todos los campos deben estar completos.");
       return;
     }
 
-    // Verificar si hay cambios en el perfil
     const isEmailChanged = nuevoEmail !== user.email;
     const isProfileChanged =
       nombreCompleto !== user.username ||
@@ -65,7 +62,6 @@ function ProfilePage() {
       return;
     }
 
-    // Si el email ha cambiado, verificar si ya existe
     if (isEmailChanged) {
       const emailExists = await checkEmailExists(nuevoEmail);
       if (emailExists) {
@@ -81,11 +77,11 @@ function ProfilePage() {
     formData.append('estatura', estatura);
     formData.append('peso', peso);
     if (newProfileImage) {
-      formData.append('profileImage', newProfileImage); // Agregar la nueva imagen
+      formData.append('profileImage', newProfileImage);
     }
 
     try {
-      await updatePerfil(formData); // Llama a la función definida en auth.js
+      await updatePerfil(formData);
       setSuccess("Perfil actualizado con éxito");
     } catch (error) {
       setError("Error al actualizar el perfil");
@@ -99,144 +95,127 @@ function ProfilePage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImg(reader.result);
-        setNewProfileImage(file); // Guarda el archivo para enviarlo
+        setNewProfileImage(file);
       };
       reader.readAsDataURL(file);
     }
   };
 
   return (
-    <div className="container mx-auto p-6">
-      {/* Sección de Perfil */}
-      <section className="bg-zinc-800 p-6 rounded-md shadow-lg flex items-center justify-between mb-8">
-        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
-          <div className="flex-1 text-white">
-            <h2 className="text-3xl font-bold mb-4">Perfil de Usuario</h2>
-            <form onSubmit={handleUpdateProfile}>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-gray-400">Nombre completo:</label>
-                  <input
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
+          <Card className="mb-4">
+            <Card.Header className="text-center bg-primary text-white">
+              <h4>Perfil de Usuario</h4>
+            </Card.Header>
+            <Card.Body>
+              {error && <Alert variant="danger">{error}</Alert>}
+              {success && <Alert variant="success">{success}</Alert>}
+              <Form onSubmit={handleUpdateProfile}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Nombre Completo</Form.Label>
+                  <Form.Control
                     type="text"
                     value={nombreCompleto}
                     onChange={(e) => setNombreCompleto(e.target.value)}
-                    className="w-full p-2 border border-gray-400 rounded-md text-black"
                   />
-                </div>
-                <div>
-                  <label className="block text-gray-400">Nuevo Email:</label>
-                  <input
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
                     type="email"
                     value={nuevoEmail}
                     onChange={(e) => setNuevoEmail(e.target.value)}
-                    className="w-full p-2 border border-gray-400 rounded-md text-black"
                   />
-                </div>
-                <div className="flex space-x-4">
-                  <div>
-                    <label className="block text-gray-400">Edad:</label>
-                    <input
+                </Form.Group>
+                <Row className="mb-3">
+                  <Col>
+                    <Form.Label>Edad</Form.Label>
+                    <Form.Control
                       type="number"
                       value={edad}
                       onChange={(e) => setEdad(e.target.value)}
-                      className="p-2 border border-gray-400 rounded-md text-black"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-gray-400">Estatura:</label>
-                    <input
+                  </Col>
+                  <Col>
+                    <Form.Label>Estatura (cm)</Form.Label>
+                    <Form.Control
                       type="number"
                       value={estatura}
                       onChange={(e) => setEstatura(e.target.value)}
-                      className="p-2 border border-gray-400 rounded-md text-black"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-gray-400">Peso:</label>
-                    <input
+                  </Col>
+                  <Col>
+                    <Form.Label>Peso (kg)</Form.Label>
+                    <Form.Control
                       type="number"
                       value={peso}
                       onChange={(e) => setPeso(e.target.value)}
-                      className="p-2 border border-gray-400 rounded-md text-black"
+                    />
+                  </Col>
+                </Row>
+                <Form.Group className="text-center">
+                  <Form.Label>Cambiar Foto de Perfil</Form.Label>
+                  <div className="mb-3">
+                    <img
+                      src={profileImg}
+                      alt="Profile"
+                      className="rounded-circle mb-2"
+                      width="100"
+                      height="100"
                     />
                   </div>
-                </div>
-              </div>
-
-              {error && <p className="text-red-500">{error}</p>}
-              {success && <p className="text-green-500">{success}</p>}
-
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Actualizar Perfil
-              </button>
-            </form>
-          </div>
-        </section>
-        {/* Imagen de perfil */}
-        <section className="bg-zinc-500 p-6 rounded-md shadow-lg flex justify-between mb-4">
-          <div className="w-32 h-32">
-            <img
-              src={profileImg}
-              alt="Profile"
-              className="w-full h-full object-cover rounded-full"
-            />
-            <input type="file" onChange={handleImageUpload} className="mt-2" />
-          </div>
-        </section>
-      </section>
-
-      {/* Sección de Actualización de Contraseña */}
-      <section className="bg-gray-700 p-6 rounded-md shadow-lg">
-        <h2 className="text-2xl font-bold text-white mb-4">Actualizar Contraseña</h2>
-        <form onSubmit={handlePasswordUpdate}>
-          <div className="mb-6">
-            <label className="block text-white">Contraseña actual:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md text-black"
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-white">Nueva contraseña:</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md text-black"
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-white">Confirmar nueva contraseña:</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md text-black"
-              required
-            />
-          </div>
-
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">{success}</p>}
-
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Actualizar Contraseña
-          </button>
-        </form>
-      </section>
-    </div>
+                  <Form.Control type="file" onChange={handleImageUpload} />
+                </Form.Group>
+                <Button type="submit" variant="primary" className="w-100">
+                  Actualizar Perfil
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Header className="text-center bg-secondary text-white">
+              <h4>Actualizar Contraseña</h4>
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={handlePasswordUpdate}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Contraseña Actual</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Nueva Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Confirmar Nueva Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Button type="submit" variant="secondary" className="w-100">
+                  Actualizar Contraseña
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
