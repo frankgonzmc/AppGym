@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRutinas } from "../../context/rutinascontext";
 import { useProgreso } from "../../context/progresocontext"; // Importar el contexto de progreso
 import { RutinaCard } from "../../components/rutina/rutinaCard";
+import "../../css/rutinaPage.css";
 import { ImFileEmpty } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card } from 'react-bootstrap';
@@ -22,7 +23,7 @@ export default function RutinaPage() {
   }, [getRutinas, rutinas, getProgreso]); // Agregar dependencias al efecto
 
   return (
-    <Container className="py-4">
+    <Container className="seccion py-4">
       {!rutinas || rutinas.length === 0 ? ( // Cambiar && por ?
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
