@@ -102,122 +102,124 @@ function ProfilePage() {
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-center">
-        <Col md={8}>
-          <Card className="mb-4">
-            <Card.Header className="text-center bg-primary text-white">
-              <h4>Perfil de Usuario</h4>
-            </Card.Header>
-            <Card.Body>
-              {error && <Alert variant="danger">{error}</Alert>}
-              {success && <Alert variant="success">{success}</Alert>}
-              <Form onSubmit={handleUpdateProfile}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Nombre Completo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={nombreCompleto}
-                    onChange={(e) => setNombreCompleto(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={nuevoEmail}
-                    onChange={(e) => setNuevoEmail(e.target.value)}
-                  />
-                </Form.Group>
-                <Row className="mb-3">
-                  <Col>
-                    <Form.Label>Edad</Form.Label>
+    <section className="seccion">
+      <Container className="mt-5">
+        <Row className="justify-content-center">
+          <Col md={8}>
+            <Card className="mb-4">
+              <Card.Header className="text-center bg-primary text-white">
+                <h4>Perfil de Usuario</h4>
+              </Card.Header>
+              <Card.Body>
+                {error && <Alert variant="danger">{error}</Alert>}
+                {success && <Alert variant="success">{success}</Alert>}
+                <Form onSubmit={handleUpdateProfile}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Nombre Completo</Form.Label>
                     <Form.Control
-                      type="number"
-                      value={edad}
-                      onChange={(e) => setEdad(e.target.value)}
+                      type="text"
+                      value={nombreCompleto}
+                      onChange={(e) => setNombreCompleto(e.target.value)}
                     />
-                  </Col>
-                  <Col>
-                    <Form.Label>Estatura (cm)</Form.Label>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
-                      type="number"
-                      value={estatura}
-                      onChange={(e) => setEstatura(e.target.value)}
+                      type="email"
+                      value={nuevoEmail}
+                      onChange={(e) => setNuevoEmail(e.target.value)}
                     />
-                  </Col>
-                  <Col>
-                    <Form.Label>Peso (kg)</Form.Label>
+                  </Form.Group>
+                  <Row className="mb-3">
+                    <Col>
+                      <Form.Label>Edad</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={edad}
+                        onChange={(e) => setEdad(e.target.value)}
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Label>Estatura (cm)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={estatura}
+                        onChange={(e) => setEstatura(e.target.value)}
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Label>Peso (kg)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={peso}
+                        onChange={(e) => setPeso(e.target.value)}
+                      />
+                    </Col>
+                  </Row>
+                  <Form.Group className="text-center">
+                    <Form.Label>Cambiar Foto de Perfil</Form.Label>
+                    <div className="mb-3">
+                      <img
+                        src={profileImg}
+                        alt="Profile"
+                        className="rounded-circle mb-2"
+                        width="100"
+                        height="100"
+                      />
+                    </div>
+                    <Form.Control type="file" onChange={handleImageUpload} />
+                  </Form.Group>
+                  <Button type="submit" variant="primary" className="w-100">
+                    Actualizar Perfil
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card>
+              <Card.Header className="text-center bg-secondary text-white">
+                <h4>Actualizar Contraseña</h4>
+              </Card.Header>
+              <Card.Body>
+                <Form onSubmit={handlePasswordUpdate}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Contraseña Actual</Form.Label>
                     <Form.Control
-                      type="number"
-                      value={peso}
-                      onChange={(e) => setPeso(e.target.value)}
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                     />
-                  </Col>
-                </Row>
-                <Form.Group className="text-center">
-                  <Form.Label>Cambiar Foto de Perfil</Form.Label>
-                  <div className="mb-3">
-                    <img
-                      src={profileImg}
-                      alt="Profile"
-                      className="rounded-circle mb-2"
-                      width="100"
-                      height="100"
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Nueva Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
                     />
-                  </div>
-                  <Form.Control type="file" onChange={handleImageUpload} />
-                </Form.Group>
-                <Button type="submit" variant="primary" className="w-100">
-                  Actualizar Perfil
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <Card.Header className="text-center bg-secondary text-white">
-              <h4>Actualizar Contraseña</h4>
-            </Card.Header>
-            <Card.Body>
-              <Form onSubmit={handlePasswordUpdate}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Contraseña Actual</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Nueva Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Confirmar Nueva Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                <Button type="submit" variant="secondary" className="w-100">
-                  Actualizar Contraseña
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Confirmar Nueva Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <Button type="submit" variant="secondary" className="w-100">
+                    Actualizar Contraseña
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </section>
   );
 }
 
