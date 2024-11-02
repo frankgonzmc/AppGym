@@ -29,7 +29,8 @@ function RegistroUsuario() {
             <img src={fondo} alt="Fondo de Registro" className="info-image mb-2" />
             <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
           </Col>
-
+        </Row>
+        <Row>
           <Col md={6} className="form-information d-flex flex-column justify-content-center text-white p-4">
             <h2>Crear una Cuenta</h2>
             {registerErrors.map((error, i) => (
