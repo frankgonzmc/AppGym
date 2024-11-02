@@ -47,7 +47,7 @@ function ProfilePage() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail || genero) {
+    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail || !genero) {
       setError("Todos los campos deben estar completos.");
       return;
     }
@@ -172,19 +172,21 @@ function ProfilePage() {
                       />
                     </Col>
                   </Row>
-                  <Form.Group className="text-center">
-                    <Form.Label>Cambiar Foto de Perfil</Form.Label>
-                    <div className="mb-3">
-                      <img
-                        src={profileImg}
-                        alt="Profile"
-                        className="rounded-circle mb-2"
-                        width="100"
-                        height="100"
-                      />
-                    </div>
-                    <Form.Control type="file" onChange={handleImageUpload} />
-                  </Form.Group>
+                  <Card.Body>
+                    <Form.Group className="text-center">
+                      <Form.Label>Foto de Perfil</Form.Label>
+                      <div className="mb-3 mt-3 d-flex justify-content-center">
+                        <img
+                          src={profileImg}
+                          alt="Profile"
+                          className="rounded-circle mb-2"
+                          width="100"
+                          height="100"
+                        />
+                      </div>
+                      <Form.Control type="file" onChange={handleImageUpload} />
+                    </Form.Group>
+                  </Card.Body>
                   <Button type="submit" variant="primary" className="w-100">
                     Actualizar Perfil
                   </Button>
