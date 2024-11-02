@@ -55,8 +55,8 @@ function RegistroUsuario() {
               <Form.Group>
                 <Form.Select {...register('genero', { required: "Género es necesario" })}>
                   <option value="">Seleccionar Género</option>
-                  <option value="varon">Masculino</option>
-                  <option value="mujer">Femenino</option>
+                  <option value="varon">Varon</option>
+                  <option value="mujer">Mujer</option>
                   <option value="otro">Otro</option>
                 </Form.Select>
                 {errors.genero && <span className="error-text">{errors.genero.message}</span>}

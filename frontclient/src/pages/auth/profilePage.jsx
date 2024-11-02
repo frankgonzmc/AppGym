@@ -158,9 +158,9 @@ function ProfilePage() {
                         onChange={(e) => setGenero(e.target.value)}
                       >
                         <option value="">Seleccionar</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
-                        <option value="Otro">Otro</option>
+                        <option value="varon">Varon</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="otro">Otro</option>
                       </Form.Select>
                     </Col>
                     <Col>
