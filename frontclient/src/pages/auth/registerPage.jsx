@@ -31,7 +31,7 @@ function RegistroUsuario() {
           </Col>
         </Row>
         <Row>
-          <Col md={6} className="form-information d-flex flex-column justify-content-center text-white p-4">
+          <Col md={6}>
             <h2>Crear una Cuenta</h2>
             {registerErrors.map((error, i) => (
               <div key={i} className="error-message mb-2">{error}</div>
