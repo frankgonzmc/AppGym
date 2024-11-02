@@ -57,6 +57,11 @@ function RegistroUsuario() {
               </label>
 
               <label className="form-label">
+                <></>
+
+              </label>
+
+              <label className="form-label">
                 <input type="number" {...register('edad', { required: "Edad es necesario" })} placeholder="Edad" />
                 {errors.edad && <span className="error-text">{errors.edad.message}</span>}
               </label>

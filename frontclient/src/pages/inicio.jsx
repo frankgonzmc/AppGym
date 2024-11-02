@@ -60,11 +60,11 @@ export function Inicio() {
                     <Card className="info-card mt-3">
                         <Card.Body>
                             {user.profileImage}
-                            Nivel: {user.nivel}
+                            Nombre: {user.username}
                             Peso: {user.peso}
-                            Altura: {user.altura}
+                            Altura: {user.estatura}
                             Edad: {user.edad}
-                            Sexo: {user.sexo}
+                            Sexo: {user.genero}
                         </Card.Body>
                     </Card>
                     <Card className="exercise-card">

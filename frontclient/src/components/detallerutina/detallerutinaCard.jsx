@@ -34,13 +34,13 @@ export default function DetalleRutinaCard({ detalles }) {
         <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
         <Card.Subtitle className="mb-2 text-black text-center">Descripción: {detalles.ejercicio.descripcion}</Card.Subtitle>
         <Card.Text>
-          <div>Categoría: {detalles.ejercicio.categoria}</div>
-          <div>Duración: {detalles.ejercicio.duracion} segundos</div>
-          <div>Series: {detalles.ejercicio.series}</div>
-          <div>Repeticiones: {detalles.ejercicio.repeticiones}</div>
-          <div>Descanso: {detalles.ejercicio.descanso}</div>
-          <div>Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}</div>
-          <div>Estado: {detalles.estado}</div>
+          Categoría: {detalles.ejercicio.categoria}
+          Duración: {detalles.ejercicio.duracion} segundos
+          Series: {detalles.ejercicio.series}
+          Repeticiones: {detalles.ejercicio.repeticiones}
+          Descanso: {detalles.ejercicio.descanso}
+          Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}
+          Estado: {detalles.estado}
         </Card.Text>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-between">
