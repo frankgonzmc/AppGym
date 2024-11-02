@@ -56,12 +56,14 @@ export function Inicio() {
                     </Card>
                     <Card className="info-card mt-3">
                         <Card.Body>
+                            <div className="card">
+                                <p>{user.profileImage}</p>
+                            </div>
                             <p>Nivel: {user.nivel}</p>
                             <p>Peso: {user.peso}</p>
                             <p>Altura: {user.altura}</p>
                             <p>Edad: {user.edad}</p>
                             <p>Sexo: {user.sexo}</p>
-                            
                         </Card.Body>
                     </Card>
                     <Card className="info-card mt-3">
