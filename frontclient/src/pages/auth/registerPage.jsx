@@ -57,10 +57,15 @@ function RegistroUsuario() {
               </label>
 
               <label className="form-label">
-                <></>
-
+                <Form.Select {...register('genero', { required: "Género es necesario" })}>
+                  <option value="">Seleccionar Género</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Otro">Otro</option>
+                </Form.Select>
+                {errors.genero && <span className="error-text">{errors.genero.message}</span>}
               </label>
-
+              
               <label className="form-label">
                 <input type="number" {...register('edad', { required: "Edad es necesario" })} placeholder="Edad" />
                 {errors.edad && <span className="error-text">{errors.edad.message}</span>}

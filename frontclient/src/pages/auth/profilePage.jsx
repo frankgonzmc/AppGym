@@ -17,6 +17,8 @@ function ProfilePage() {
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
   const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
   const [newProfileImage, setNewProfileImage] = useState(null);
+  const [genero, setGenero] = useState(user?.genero || ""); // Nuevo estado para el género
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,7 +47,7 @@ function ProfilePage() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail) {
+    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail || genero) {
       setError("Todos los campos deben estar completos.");
       return;
     }
@@ -55,7 +57,8 @@ function ProfilePage() {
       nombreCompleto !== user.username ||
       edad !== user.edad ||
       estatura !== user.estatura ||
-      peso !== user.peso;
+      peso !== user.peso ||
+      genero !== user.genero;
 
     if (!isEmailChanged && !isProfileChanged && !newProfileImage) {
       setError("No hay cambios para actualizar.");
@@ -76,6 +79,7 @@ function ProfilePage() {
     formData.append('edad', edad);
     formData.append('estatura', estatura);
     formData.append('peso', peso);
+    formData.append('genero', genero);
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
     }
@@ -146,6 +150,18 @@ function ProfilePage() {
                         value={estatura}
                         onChange={(e) => setEstatura(e.target.value)}
                       />
+                    </Col>
+                    <Col>
+                      <Form.Label>Género</Form.Label>
+                      <Form.Select
+                        value={genero}
+                        onChange={(e) => setGenero(e.target.value)}
+                      >
+                        <option value="">Seleccionar</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                      </Form.Select>
                     </Col>
                     <Col>
                       <Form.Label>Peso (kg)</Form.Label>
