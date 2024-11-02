@@ -35,6 +35,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
+    genero:{
+        type: String,
+        required: true,
+        enum: ['varon', 'mujer'],
+    },
     nivel: {
         type: String,
         required: true,

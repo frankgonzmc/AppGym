@@ -29,7 +29,7 @@ export function Inicio() {
                                 ¡No te pierdas la oportunidad de mejorar tus habilidades!
                                 ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
                             </Card.Text>
-                            <Button variant="primary" className="mt-3">
+                            <Button variant="primary text-white" className="mt-3">
                                 <Link to="/about">Conoce más sobre nosotros y nuestro programa</Link>
                             </Button>
                         </Card.Body>
@@ -51,10 +51,15 @@ export function Inicio() {
                         </Card.Body>
                     </Card>
                     <Card className="info-card mt-3">
+                        <Card.Body className="panel-elements">
+                            <PanelElements />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="info-card mt-3">
                         <Card.Body>
-                            <div className="card">
-                                {user.profileImage}
-                            </div>
+                            {user.profileImage}
                             Nivel: {user.nivel}
                             Peso: {user.peso}
                             Altura: {user.altura}
@@ -62,13 +67,6 @@ export function Inicio() {
                             Sexo: {user.sexo}
                         </Card.Body>
                     </Card>
-                    <Card className="info-card mt-3">
-                        <Card.Body className="panel-elements">
-                            <PanelElements />
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4}>
                     <Card className="exercise-card">
                         <Card.Body>
                             <PanelEjercicios />
