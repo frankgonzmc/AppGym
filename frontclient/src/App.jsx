@@ -21,6 +21,7 @@ import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ResetpasswordPage from './pages/auth/resetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
 import MlPage from './pages/ml/mlPage';
+import AboutPage from './aboutPage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                     <Route path='/' element={<Inicio />} />
                     <Route path='/profile' element={<ProfilePage />} />
                     <Route path='/inicio' element={<Inicio />} />
+                    <Route path='/about' element={<AboutPage />} />
 
                     <Route path='/rutinas' element={<RutinaPage />} />
                     <Route path='/add-rutinas' element={<RutinaForm />} />
@@ -56,6 +58,8 @@ function App() {
                     <Route path='/detalles-rutinas/:id' element={<DetallerutinaPage />} />
 
                     <Route path='/machine-learning' element={<MlPage />} />
+
+                    <Route path='/calendario' element={<CalendarPage />} />
 
                     <Route path='/calendar' element={<CalendarPage />} />
                   </Route>
