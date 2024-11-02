@@ -57,7 +57,7 @@ export function Inicio() {
                     </Card>
                 </Col>
                 <Col md={4}>
-                    <Card className="info-card mt-3">
+                    <Card className="info-card">
                         <Card.Body>
                             <div className="card">
                                 <p>{user.profileImage}</p>
@@ -69,7 +69,7 @@ export function Inicio() {
                             <p>Sexo: {user.sexo}</p>
                         </Card.Body>
                     </Card>
-                    <Card className="exercise-card">
+                    <Card className="exercise-card mt-3">
                         <Card.Body>
                             <PanelEjercicios />
                         </Card.Body>
