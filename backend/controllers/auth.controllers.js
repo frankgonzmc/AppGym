@@ -150,12 +150,9 @@ export const checkEmail = async (req, res) => {
 };
 
 export const updatePerfil = async (req, res) => {
-
     const userId = req.user.id; // Obtén el ID del usuario autenticado
     const { username, email, edad, estatura, peso, genero } = req.body;
     const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
-    console.log('Petición recibida:', req.body);
-    console.log('Archivo recibido:', req.file);
 
     try {
         const user = await User.findById(userId);
@@ -174,7 +171,7 @@ export const updatePerfil = async (req, res) => {
         await user.save();
         return res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
-        console.error("Error al actualizar perfil:", error); // Mensaje más claro
+        console.error("Error al actualizar perfil:", error);
         return res.status(500).json({ message: "Error al actualizar el perfil" });
     }
 };
