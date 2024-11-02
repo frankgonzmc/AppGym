@@ -26,15 +26,19 @@ function Navbar() {
       <div className="nav-links">
         <Nav className="justify-content-center" style={{ width: "100%" }}>
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          <Nav.Link as={Link} to="/rutinas">Rutinas</Nav.Link>
-          <Nav.Link as={Link} to="/progreso">Progreso</Nav.Link>
+          <NavDropdown title="Rutinas" id="nav-dropdown" show={dropdownOpen} onToggle={toggleDropdown}>
+            <NavDropdown.Item as={Link} to="/rutinas">Mis Rutinas</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/add-rutinas">Crear Rutina</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/calendar">Calendario</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/progreso">Panel de Progresos</NavDropdown.Item>
+          </NavDropdown>
           <Nav.Link as={Link} to="/ejercicios">Ejercicios</Nav.Link>
-          <Nav.Link as={Link} to="/progreso">Progreso</Nav.Link>
+          <Nav.Link as={Link} to="/about">Nosotros</Nav.Link>
         </Nav>
         {isAuthenticated ? (
           <NavDropdown
             title={`Bienvenido: ${user.username}`}
-            id="nav-dropdown"
+            id="nav-dropdown-user"
             show={dropdownOpen}
             onToggle={toggleDropdown}
           >
@@ -53,14 +57,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
-/*
-
-{ to: "/calendar", img: calendar, title: "Calendario" },
-        { to: "/rutinas", img: muscle, title: "Mis Rutinas" },
-        { to: "/progreso", img: control, title: "Panel de Progresos" },
-        { to: "/add-rutinas", img: tab, title: "Crear Rutina" },
-        { to: "/ejercicios", img: body, title: "Ver Ejercicios" }
-
-*/
