@@ -14,10 +14,17 @@ function Navbar() {
 
   useEffect(() => {
     if (dropdownOpen) {
-      const timer = setTimeout(() => setDropdownOpen(false), 5000);
+      const timer = setTimeout(() => setDropdownOpen(false), 2000);
       return () => clearTimeout(timer);
     }
   }, [dropdownOpen]);
+
+  useEffect(() => {
+    if (dropdownOpenRutina) {
+      const timer = setTimeout(() => setDropdownOpenRutina(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [dropdownOpenRutina]);
 
   return (
     <nav className="navbar-container">
