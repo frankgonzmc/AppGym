@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { username, email, password, edad, estatura, peso, nivel } = req.body
+    const { username, email, password, edad, estatura, peso, nivel, genero } = req.body
 
     try {
         const userFound = await User.findOne({ email })
@@ -22,6 +22,7 @@ export const register = async (req, res) => {
             password: passwordHash,
             edad,
             estatura,
+            genero,
             peso,
             nivel,
         });
@@ -37,6 +38,7 @@ export const register = async (req, res) => {
             edad: userSaved.edad,
             estatura: userSaved.estatura,
             peso: userSaved.peso,
+            genero: userSaved.genero,
             nivel: userSaved.nivel,
             createdAt: userSaved.createdAt,
             updatedAt: userSaved.updatedAt,
@@ -70,6 +72,7 @@ export const login = async (req, res) => {
             email: userEncontrado.email,
             peso: userEncontrado.peso,
             edad: userEncontrado.edad,
+            genero: userEncontrado.genero,
             estatura: userEncontrado.estatura,
             nivel: userEncontrado.nivel,
             createdAt: userEncontrado.createdAt,
@@ -100,6 +103,7 @@ export const profile = async (req, res) => {
         username: userEncontrado.username,
         email: userEncontrado.email,
         edad: userEncontrado.edad,
+        genero: userEncontrado.genero,
         estatura: userEncontrado.estatura,
         peso: userEncontrado.peso,
         nivel: userEncontrado.nivel,
@@ -148,7 +152,7 @@ export const checkEmail = async (req, res) => {
 export const updatePerfil = async (req, res) => {
 
     const userId = req.user.id; // Obtén el ID del usuario autenticado
-    const { username, email, edad, estatura, peso } = req.body;
+    const { username, email, edad, estatura, peso, genero } = req.body;
     const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
     console.log('Petición recibida:', req.body);
     console.log('Archivo recibido:', req.file);
@@ -163,6 +167,7 @@ export const updatePerfil = async (req, res) => {
         if (edad) user.edad = edad;
         if (estatura) user.estatura = estatura;
         if (peso) user.peso = peso;
+        if (genero) user.genero = genero; // Asigna el nuevo género si se proporciona
         if (profileImage) user.profileImage = profileImage; // Asigna la nueva imagen si se proporciona
 
         // Guarda los cambios en la base de datos
