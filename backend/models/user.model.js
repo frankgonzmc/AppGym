@@ -35,10 +35,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
-    genero:{
+    genero: {
         type: String,
-        required: true,
-        enum: ['varon', 'mujer'],
+        enum: ['Masculino', 'Femenino', 'Otro'], // Añade los valores válidos aquí
+        required: true
     },
     nivel: {
         type: String,
