@@ -51,6 +51,13 @@ export function Inicio() {
                         </Card.Body>
                     </Card>
                     <Card className="info-card mt-3">
+                        <Card.Body className="panel-elements">
+                            <PanelElements />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="info-card mt-3">
                         <Card.Body>
                             <div className="card">
                                 <p>{user.profileImage}</p>
@@ -62,13 +69,6 @@ export function Inicio() {
                             <p>Sexo: {user.sexo}</p>
                         </Card.Body>
                     </Card>
-                    <Card className="info-card mt-3">
-                        <Card.Body className="panel-elements">
-                            <PanelElements />
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4}>
                     <Card className="exercise-card">
                         <Card.Body>
                             <PanelEjercicios />
