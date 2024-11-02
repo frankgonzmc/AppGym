@@ -7,7 +7,8 @@ import '../css/nav.css';
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
-  const [dropdownOpen, dropdownOpenRutina, setDropdownOpen, setDropdownOpenRutina] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpenRutina, setDropdownOpenRutina] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleDropdownRutina = () => setDropdownOpenRutina(!dropdownOpenRutina);
