@@ -7,9 +7,10 @@ import '../css/nav.css';
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, dropdownOpenRutina, setDropdownOpen, setDropdownOpenRutina] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleDropdownRutina = () => setDropdownOpenRutina(!dropdownOpenRutina);
 
   useEffect(() => {
     if (dropdownOpen) {
@@ -26,7 +27,7 @@ function Navbar() {
       <div className="nav-links">
         <Nav className="justify-content-center" style={{ width: "100%" }}>
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          <NavDropdown title="Rutinas" id="nav-dropdown" show={dropdownOpen} onToggle={toggleDropdown}>
+          <NavDropdown title="Rutinas" id="nav-dropdown" show={dropdownOpenRutina} onToggle={toggleDropdownRutina}>
             <NavDropdown.Item as={Link} to="/rutinas">Mis Rutinas</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/add-rutinas">Crear Rutina</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/calendar">Calendario</NavDropdown.Item>
