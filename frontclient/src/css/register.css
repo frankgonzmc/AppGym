@@ -1,34 +1,27 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 .section-register {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: auto;
-    width: auto;
+    min-height: 100vh;
+    width: 100%;
     background-color: #ee9037;
     background-size: cover;
 }
 
 .container-form {
     display: flex;
+    flex-direction: row;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    width: 1200px;
-    height: 950px;
+    max-width: 1200px;
+    width: 100%;
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.5s ease;
 }
 
 .information,
 .form-information {
-    flex: 1;
     display: flex;
-    margin: 5px;
+    flex: 1;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -46,21 +39,10 @@
     margin-bottom: 1rem;
 }
 
-.info-childs {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .form-information {
     background-color: #1f1f1f;
     color: #fff;
     flex-direction: column;
-}
-
-.form-information h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
 }
 
 .form-register {
@@ -71,69 +53,22 @@
     gap: 1rem;
 }
 
-.form-label {
-    position: relative;
-}
-
-.form-label input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #333;
-    border-radius: 10px;
-    background: #fff;
-    color: #333;
-    font-size: 1rem;
-}
-
-.form-label input:focus {
-    border-color: #ee9037;
-    outline: none;
-}
-
-.error-text {
+.error-text,
+.error-message,
+.footer-text {
     color: #ff4d4d;
     font-size: 0.875rem;
-    margin-top: 0.5rem;
-    display: block;
 }
 
-.error-message {
-    background-color: #ff4d4d;
-    color: #fff;
-    padding: 0.5rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-    text-align: center;
-}
-
-.footer-text {
-    margin-top: 1.5rem;
-    color: #fff;
-    font-size: 0.875rem;
-}
-
-.link-login {
-    color: #00b0ff;
-    text-decoration: none;
-}
-
-.link-login:hover {
-    text-decoration: underline;
-}
-
-/* Responsive */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .container-form {
         flex-direction: column;
-        height: 65%;
-        width: 65%;
+        max-width: 90%;
     }
 
     .information,
     .form-information {
-        height: 65%;
-        width: 65%;
-        padding: 2rem;
+        padding: 1rem;
     }
 }
