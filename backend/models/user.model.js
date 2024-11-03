@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 0,  // mínimo
     },
+    objetivos: {
+        type: String,
+        default: "",
+        unique: true,
+    },
     estatura: {
         type: Number,
         required: true,

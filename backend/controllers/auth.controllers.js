@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { username, email, password, edad, estatura, peso, nivel, genero } = req.body;
+    const { username, email, password, edad, objetivos, estatura, peso, nivel, genero } = req.body;
 
     try {
         const userFound = await User.findOne({ email });
@@ -22,6 +22,7 @@ export const register = async (req, res) => {
             password: passwordHash,
             edad,
             estatura,
+            objetivos,
             genero,
             peso,
             nivel,
@@ -37,6 +38,7 @@ export const register = async (req, res) => {
             email: userSaved.email,
             edad: userSaved.edad,
             estatura: userSaved.estatura,
+            objetivos: userSaved.objetivos,
             peso: userSaved.peso,
             genero: userSaved.genero,
             nivel: userSaved.nivel,
@@ -72,6 +74,7 @@ export const login = async (req, res) => {
             peso: userEncontrado.peso,
             edad: userEncontrado.edad,
             genero: userEncontrado.genero,
+            objetivos: userEncontrado.objetivos,
             estatura: userEncontrado.estatura,
             nivel: userEncontrado.nivel,
             createdAt: userEncontrado.createdAt,
@@ -104,6 +107,7 @@ export const profile = async (req, res) => {
             email: userEncontrado.email,
             edad: userEncontrado.edad,
             genero: userEncontrado.genero,
+            objetivos: userEncontrado.objetivos,
             profileImage: userEncontrado.profileImage,
             estatura: userEncontrado.estatura,
             peso: userEncontrado.peso,
@@ -132,6 +136,7 @@ export const verifityToken = async (req, res) => {
                 email: userFound.email,
                 edad: userFound.edad,
                 estatura: userFound.estatura,
+                objetivos: userFound.objetivos,
                 genero: userFound.genero,
                 profileImage: userFound.profileImage,
                 peso: userFound.peso,
@@ -167,7 +172,7 @@ export const checkEmail = async (req, res) => {
 export const updatePerfil = async (req, res) => {
     try {
         const userId = req.user.id; // Obtén el ID del usuario autenticado
-        const { username, email, edad, estatura, peso, genero } = req.body;
+        const { username, email, edad, estatura, peso, objetivos, genero } = req.body;
         const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
 
         const user = await User.findById(userId);
@@ -177,6 +182,7 @@ export const updatePerfil = async (req, res) => {
         if (username) user.username = username;
         if (email) user.email = email;
         if (edad) user.edad = edad;
+        if (objetivos) user.objetivos = objetivos;
         if (estatura) user.estatura = estatura;
         if (peso) user.peso = peso;
         if (genero) user.genero = genero; // Asigna el nuevo género si se proporciona

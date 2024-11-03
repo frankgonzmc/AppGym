@@ -10,7 +10,7 @@ export default function mlPage() {
         <Container>
             <Row>
                 <Col className="text-center">
-                    <Card className="info-card mt-3">
+                    <Card className="info-card mt-3 my-3">
                         <Card.Body>
                             <Card.Title>¿recomendaciones de rutinas para ejercicios?</Card.Title>
                             <p>
