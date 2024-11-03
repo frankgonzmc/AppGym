@@ -9,7 +9,7 @@ function ProfilePage() {
     password: "",
     newPassword: "",
     confirmPassword: "",
-    nombreCompleto: user?.username || "",
+    username: user?.username || "",
     edad: user?.edad || "",
     estatura: user?.estatura || "",
     peso: user?.peso || "",
