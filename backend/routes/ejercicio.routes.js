@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authRequired } from '../middlewares/validateToken.js';
 import { getEjercicio, getEjercicios, createEjercicios, updateEjercicios, deleteEjercicios, getNivelEjercicio } from '../controllers/ejercicio.controllers.js';
-import { upload } from '../middlewares/upload.js';  // Importamos multer
+import { upload } from '../middlewares/uploads.js';  // Importamos multer
 
 
 const router = Router();

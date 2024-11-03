@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { upload } from '../middlewares/upload.js';
+import { upload } from '../middlewares/uploads.js';
 import { login, logout, profile, register, verifityToken, updatePassword, forgotPassword, resetPassword, checkEmail, updatePerfil } from "../controllers/auth.controllers.js";
 import { authRequired } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js'
