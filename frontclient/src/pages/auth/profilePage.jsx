@@ -29,6 +29,20 @@ function ProfilePage() {
     return () => clearTimeout(timer);
   }, [error, success]);
 
+  useEffect(() => {
+    if (user) {
+      setNombreCompleto(user.username || "");
+      setEdad(user.edad || "");
+      setObjetivos(user.objetivos || "");
+      setNivelActividad(user.nivelActividad || "");
+      setEstatura(user.estatura || "");
+      setPeso(user.peso || "");
+      setNuevoEmail(user.email || "");
+      setProfileImg(user.profileImage || profileImage);
+      setGenero(user.genero || "");
+    }
+  }, [user]);
+
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
@@ -91,6 +105,9 @@ function ProfilePage() {
 
     try {
       await updatePerfil(formData);
+      // Aquí podrías agregar una llamada para refrescar los datos del usuario
+      const updatedUser = await fetchUser(); // Suponiendo que fetchUser es una función que recupera los datos del usuario
+      setUser(updatedUser); // Actualiza el contexto con el nuevo usuario
       setSuccess("Perfil actualizado con éxito");
       setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
