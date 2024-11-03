@@ -106,18 +106,16 @@ function ProfilePage() {
 
     try {
       await updatePerfil(formData);
-      // Si fetchUser no está definido, simplemente maneja los datos aquí.
-      // Si fetchUser está disponible, úsalo para obtener el usuario actualizado.
-      if (fetchUser) {
-        const updatedUser = await fetchUser();
-        setUser(updatedUser); // Aquí asumo que tienes setUser definido
-      }
+      // Supongamos que tu backend devuelve el usuario actualizado.
+      const updatedUser = await fetchUser(); // Asegúrate de que fetchUser devuelva los datos correctos
+      setUser(updatedUser); // Actualiza el contexto
       setSuccess("Perfil actualizado con éxito");
       setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
     }
+
   };
 
   const handleImageUpload = (e) => {
