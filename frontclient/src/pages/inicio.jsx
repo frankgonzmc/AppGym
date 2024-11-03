@@ -19,6 +19,7 @@ export function Inicio() {
     const calcularTMB = () => {
         const peso = user.peso || 0;
         const altura = user.estatura || 0;
+        const nivelActividad = user.nivelActividad || '';
         const edad = user.edad || 0;
         const genero = user.genero || '';
 
@@ -36,7 +37,7 @@ export function Inicio() {
 
         // Validar nivel de actividad
         let multiplicador;
-        switch (user.nivelActividad) {
+        switch (nivelActividad) {
             case "Sedentario":
                 multiplicador = 1.2;
                 break;
@@ -131,7 +132,7 @@ export function Inicio() {
                                 {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                                 {tmb !== null && (
                                     <Alert variant="success" className="mt-3">
-                                        Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día ya multiplicado por el nivel de actividad actual que tienes.
+                                        Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día, ya multiplicado por el nivel de actividad actual que tienes.
                                     </Alert>
                                 )}
                             </Card.Footer>
