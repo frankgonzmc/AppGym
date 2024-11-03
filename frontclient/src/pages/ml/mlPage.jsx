@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from "../../context/authcontext";
-import { Container, Form, Row, Col, Card, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Row, Col, Card, Button, Alert, Table } from 'react-bootstrap';
 
 export default function mlPage() {
 
