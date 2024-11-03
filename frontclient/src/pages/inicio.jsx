@@ -112,7 +112,7 @@ export function Inicio() {
                 </Col>
             </Row>
             <Row>
-                <Col md={8} className="mb-4">
+                <Col md={6} className="mb-4">
                     <Card className="info-card">
                         <Card.Body>
                             <Card.Title>¿Qué es App Gym?</Card.Title>
@@ -145,6 +145,13 @@ export function Inicio() {
                     </Card>
                 </Col>
                 <Col md={4}>
+                    <Card className="exercise-card mt-3">
+                        <Card.Body>
+                            <PanelEjercicios />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={2}>
                     <Card className="info-card">
                         <Card.Body>
                             <div className="text-center">
@@ -171,11 +178,6 @@ export function Inicio() {
                                     </Alert>
                                 )}
                             </Card.Footer>
-                        </Card.Body>
-                    </Card>
-                    <Card className="exercise-card mt-3">
-                        <Card.Body>
-                            <PanelEjercicios />
                         </Card.Body>
                     </Card>
                 </Col>
