@@ -1,44 +1,30 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-
-// Obtener el directorio actual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Mapa de campos de archivos a sus respectivos directorios
-const uploadDirectories = {
-    profileImage: () => path.join(__dirname, 'uploads', 'perfil'),
-    imagen: () => path.join(__dirname, 'uploads', 'ejercicios'),
-};
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname]() : null;
+        const dir = path.join(__dirname, 'uploads', 'perfil');
 
-        if (dir) {
-            console.log(`Intentando crear el directorio: ${dir}`);
-            // Asegúrate de que el directorio se crea
-            fs.mkdir(dir, { recursive: true }, (err) => {
-                if (err) {
-                    console.error('Error al crear el directorio:', err.message);
-                    return cb(new Error('Error al crear el directorio de destino'));
-                }
-                cb(null, dir); // Usamos la carpeta 'uploads/perfil' como destino
-            });
-        } else {
-            console.error('Campo de archivo no soportado:', file.fieldname);
-            cb(new Error('Campo de archivo no soportado'), false);
-        }
+        console.log(`Intentando crear el directorio: ${dir}`);
+        // Crea el directorio si no existe
+        fs.mkdir(dir, { recursive: true }, (err) => {
+            if (err) {
+                console.error('Error al crear el directorio:', err.message);
+                return cb(new Error('Error al crear el directorio de destino'));
+            }
+            console.log(`Directorio creado: ${dir}`); // Confirma que el directorio se ha creado
+            cb(null, dir);
+        });
     },
     filename: function (req, file, cb) {
         const timestamp = Date.now();
-        const userId = req.user.id;
+        const extension = path.extname(file.originalname);
+        const userId = req.user.id; // Asegúrate de que estás obteniendo el ID del usuario autenticado
 
         // Genera un nombre único para el archivo
-        const uniqueFilename = `profile_${userId}_${timestamp}${path.extname(file.originalname)}`;
+        const uniqueFilename = `profile_${userId}_${timestamp}${extension}`;
 
         cb(null, uniqueFilename);
     }
