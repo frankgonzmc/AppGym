@@ -28,9 +28,9 @@ export default function mlPage() {
         setError("");
     };
 
-    const calcularNutrientes = () => {
+    const calcularNutrientesDefinir = () => {
         if (tmb) {
-            const totalCalorias = tmb; // tmb es el resultado calculado
+            const totalCalorias = tmb - 500; // tmb es el resultado calculado
             const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
             const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
             const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
@@ -44,7 +44,24 @@ export default function mlPage() {
         return null;
     };
 
-    const nutrientes = calcularNutrientes();
+    const calcularNutrientesVolumen = () => {
+        if (tmb) {
+            const totalCalorias = tmb + 500; // tmb es el resultado calculado
+            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
+            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
+            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+
+            return {
+                proteinas: proteinas.toFixed(2),
+                grasas: grasas.toFixed(2),
+                hidratos: hidratos.toFixed(2)
+            };
+        }
+        return null;
+    };
+
+    const nutrientedefinir = calcularNutrientesDefinir();
+    const nutrientesVolumen = calcularNutrientesVolumen();
 
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
@@ -250,22 +267,47 @@ export default function mlPage() {
                     </Card>
                     <Card className="info-card mt-3">
                         <Card.Body>
-                            <Card.Title>Recomendaciones de Alimentaciones</Card.Title>
+                            <Card.Title>Recomendaciones de Alimentaciones para *DEFINIR*</Card.Title>
                             {tmb ? (
                                 <>
                                     <p>
                                         Tus Kcal/día son: {tmb.toFixed(2)} Kcal
                                     </p>
-                                    {nutrientes && (
+                                    {nutrientedefinir && (
                                         <>
                                             <p>
-                                                Proteínas: {nutrientes.proteinas} g
+                                                Proteínas: {nutrientedefinir.proteinas} g
                                             </p>
                                             <p>
-                                                Grasas: {nutrientes.grasas} g
+                                                Grasas: {nutrientedefinir.grasas} g
                                             </p>
                                             <p>
-                                                Hidratos de carbono: {nutrientes.hidratos} g
+                                                Hidratos de carbono: {nutrientedefinir.hidratos} g
+                                            </p>
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <p>Por favor, calcula primero tu TMB.</p>
+                            )}
+                        </Card.Body>
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Alimentaciones para *VOLUMEN*</Card.Title>
+                            {tmb ? (
+                                <>
+                                    <p>
+                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
+                                    </p>
+                                    {nutrientesVolumen && (
+                                        <>
+                                            <p>
+                                                Proteínas: {nutrientesVolumen.proteinas} g
+                                            </p>
+                                            <p>
+                                                Grasas: {nutrientesVolumen.grasas} g
+                                            </p>
+                                            <p>
+                                                Hidratos de carbono: {nutrientesVolumen.hidratos} g
                                             </p>
                                         </>
                                     )}
