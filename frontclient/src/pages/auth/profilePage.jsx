@@ -12,6 +12,7 @@ function ProfilePage() {
   const [success, setSuccess] = useState("");
   const [nombreCompleto, setNombreCompleto] = useState(user?.username || "");
   const [edad, setEdad] = useState(user?.edad || "");
+  const [objetivos, setObjetivos] = useState(user?.objetivos || "");
   const [estatura, setEstatura] = useState(user?.estatura || "");
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user?.email || "");
@@ -47,7 +48,7 @@ function ProfilePage() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail || !genero) {
+    if (!nombreCompleto || !edad || !objetivos || !estatura || !peso || !nuevoEmail || !genero) {
       setError("Todos los campos deben estar completos.");
       return;
     }
@@ -57,6 +58,7 @@ function ProfilePage() {
       nombreCompleto !== user.username ||
       edad !== user.edad ||
       estatura !== user.estatura ||
+      objetivos !== user.objetivos ||
       peso !== user.peso ||
       genero !== user.genero;
 
@@ -78,6 +80,7 @@ function ProfilePage() {
     formData.append('email', nuevoEmail);
     formData.append('edad', edad);
     formData.append('estatura', estatura);
+    formData.append('objetivos', objetivos);
     formData.append('peso', peso);
     formData.append('genero', genero);
     if (newProfileImage) {
@@ -104,6 +107,14 @@ function ProfilePage() {
       reader.readAsDataURL(file);
     }
   };
+
+  const objetivosOptions = [
+    "Perder peso",
+    "Ganar músculo",
+    "Mantener peso",
+    "Mejorar resistencia",
+    "Aumentar flexibilidad"
+  ];
 
   return (
     <section className="seccion">
@@ -151,6 +162,7 @@ function ProfilePage() {
                         onChange={(e) => setEstatura(e.target.value)}
                       />
                     </Col>
+
                     <Col>
                       <Form.Label className="text-black">Género</Form.Label>
                       <Form.Select
@@ -172,6 +184,18 @@ function ProfilePage() {
                       />
                     </Col>
                   </Row>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="text-black">Objetivos</Form.Label>
+                    <Form.Select
+                      value={objetivos}
+                      onChange={(e) => setObjetivos(e.target.value)}
+                    >
+                      <option value="">Seleccionar Objetivo</option>
+                      {objetivosOptions.map((objetivo, index) => (
+                        <option key={index} value={objetivo}>{objetivo}</option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
                   <Card.Body>
                     <Form.Group className="text-center">
                       <Form.Label className="text-black">Foto de Perfil</Form.Label>

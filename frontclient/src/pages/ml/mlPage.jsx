@@ -19,6 +19,11 @@ export default function mlPage() {
                             </p>
 
                             <p> esta es tu predicción en base a tus objetivos () seleccionados  para tus rutinas de ejercicios y rutina de alimentación: </p>
+                            <p>
+                                {user.objetivos.map((objetivo, index) => (
+                                    <span key={index}>{objetivo} </span>
+                                ))}
+                            </p>
                         </Card.Body>
                     </Card>
                 </Col>
