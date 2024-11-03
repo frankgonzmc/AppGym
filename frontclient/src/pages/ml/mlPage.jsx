@@ -28,6 +28,24 @@ export default function mlPage() {
         setError("");
     };
 
+    const calcularNutrientes = () => {
+        if (tmb) {
+            const totalCalorias = tmb.total; // Suponiendo que tmb.total ya está calculado
+            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
+            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
+            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+
+            return {
+                proteinas: proteinas.toFixed(2),
+                grasas: grasas.toFixed(2),
+                hidratos: hidratos.toFixed(2)
+            };
+        }
+        return null;
+    };
+
+    // Dentro de tu render, puedes usar:
+    const nutrientes = calcularNutrientes();
 
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
@@ -234,19 +252,37 @@ export default function mlPage() {
                     <Card className="info-card mt-3">
                         <Card.Body>
                             <Card.Title>Recomendaciones de Alimentaciones</Card.Title>
-                            <p>
-                                Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal
-                            </p>
-                            <p>
-                                Proteinas * 70kg = 175gr
-                                Total =
-                            </p>
-                            <p>
-                                Grasas -
-                            </p>
-                            <p>
-                                Hidratos -
-                            </p>
+                            {tmb ? (
+                                <>
+                                    <p>
+                                        Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal
+                                    </p>
+                                    {(() => {
+                                        const totalCalorias = tmb.total; // Asumimos que esto ya está calculado
+                                        const peso = 70; // Cambia esto por el peso real del usuario si es necesario
+
+                                        const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
+                                        const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
+                                        const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+
+                                        return (
+                                            <>
+                                                <p>
+                                                    Proteínas: {proteinas.toFixed(2)} g
+                                                </p>
+                                                <p>
+                                                    Grasas: {grasas.toFixed(2)} g
+                                                </p>
+                                                <p>
+                                                    Hidratos de carbono: {hidratos.toFixed(2)} g
+                                                </p>
+                                            </>
+                                        );
+                                    })()}
+                                </>
+                            ) : (
+                                <p>Por favor, calcula primero tu TMB.</p>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
