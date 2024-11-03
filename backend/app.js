@@ -19,6 +19,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'uploads'));
+
 app.use(cors({
     origin: FRONTEND_URL,
     credentials: true
