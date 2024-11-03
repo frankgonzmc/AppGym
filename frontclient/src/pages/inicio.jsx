@@ -142,7 +142,7 @@ export function Inicio() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={7} className="mb-4">
+                <Col md={6} className="mb-4">
                     <Card className="info-card">
                         <Card.Body>
                             <Card.Title>¿Qué es App Gym?</Card.Title>
@@ -174,7 +174,7 @@ export function Inicio() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={2}>
+                <Col md={3}>
                     <Card className="exercise-card">
                         <Card.Body>
                             <PanelEjercicios />
