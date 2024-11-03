@@ -35,6 +35,6 @@ app.use("/api", detallerutinaRoutes);
 
 // Configurar ruta estática para acceder a las imágenes subidas
 app.use('/uploads-perfil', express.static(path.join(__dirname, 'uploads/perfil')));
-app.use('/uploads-ejercicios', express.static(path.join(__dirname, 'uploads/ejercicios')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 export default app;
