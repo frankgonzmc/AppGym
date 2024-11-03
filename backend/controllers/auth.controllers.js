@@ -176,7 +176,9 @@ export const updatePerfil = async (req, res) => {
     const userId = req.user.id; // Obtén el ID del usuario autenticado
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
-
+    console.log(req.file);
+    console.log(req.body);
+    console.log("LLEGO HASTA AQUI");
     try {
         const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero } = req.body;
         const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
