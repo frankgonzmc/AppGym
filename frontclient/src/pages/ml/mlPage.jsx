@@ -231,6 +231,24 @@ export default function mlPage() {
                             </Table>
                         </Card.Body>
                     </Card>
+                    <Card className="info-card mt-3">
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Alimentaciones</Card.Title>
+                            <p>
+                                Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal
+                            </p>
+                            <p>
+                                Proteinas * 70kg = 175gr
+                                Total =
+                            </p>
+                            <p>
+                                Grasas -
+                            </p>
+                            <p>
+                                Hidratos -
+                            </p>
+                        </Card.Body>
+                    </Card>
                 </Col>
             </Row>
         </Container>

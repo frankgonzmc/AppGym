@@ -2,7 +2,7 @@ import { PanelElements } from "../components/panelElements.jsx";
 import { PanelEjercicios } from "../components/panelEjercicios.jsx";
 import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
@@ -11,7 +11,8 @@ export function Inicio() {
     const { user } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const [multiplicador, setMultiplicador] = useState(null); // Agregar estado para multiplicador
+    const [multiplicador, setMultiplicador] = useState(null);
+    const [estado, setEstado] = useState("");
 
     const profileImageUrl = user.profileImage
         ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}`
@@ -61,9 +62,48 @@ export function Inicio() {
 
         const tdee = resultado * newMultiplicador; // TDEE total
         setTmb({ basal: resultado, total: tdee });
-        setMultiplicador(newMultiplicador); // Guardar el multiplicador en el estado
+        setMultiplicador(newMultiplicador);
         setError("");
     };
+
+    const calcularEstado = () => {
+        const peso = user.peso || 0;
+        const altura = user.estatura || 0;
+
+        if (peso === 0 || altura === 0) {
+            setEstado("Por favor, proporciona un peso y altura válidos.");
+            return;
+        }
+
+        const alturaEnMetros = altura / 100;
+        const imc = peso / (alturaEnMetros * alturaEnMetros);
+
+        let nuevoEstado;
+
+        if (imc < 16.00) {
+            nuevoEstado = "Delgadez (desnutrición) severa";
+        } else if (imc < 17.00) {
+            nuevoEstado = "Delgadez (desnutrición) moderada";
+        } else if (imc < 18.50) {
+            nuevoEstado = "Delgadez (desnutrición) leve";
+        } else if (imc < 25.00) {
+            nuevoEstado = "Normal";
+        } else if (imc < 30.00) {
+            nuevoEstado = "Sobrepeso";
+        } else if (imc < 35.00) {
+            nuevoEstado = "Obesidad grado 1";
+        } else if (imc < 40.00) {
+            nuevoEstado = "Obesidad grado 2";
+        } else {
+            nuevoEstado = "Obesidad grado 3";
+        }
+
+        setEstado(nuevoEstado);
+    };
+
+    useEffect(() => {
+        calcularEstado();
+    }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
 
     return (
         <Container fluid className="body-inicio">
@@ -88,13 +128,14 @@ export function Inicio() {
                     </Card>
                     <Card className="info-card mt-3">
                         <Card.Body>
-                            <Card.Title>Recomendaciones de Ejercicios</Card.Title>
+                            <Card.Title>Recomendaciones de Rutinas y Alimentación</Card.Title>
                             <p>
                                 Mejora tus habilidades físicas con nuestras recomendaciones personalizadas.
+                                ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
                                 ¡No te pierdas la oportunidad de alcanzar tus objetivos!
                             </p>
                             <Card.Footer className="text-center">
-                                <Link to="/machine-learning">Conoce más sobre tus recomendaciones</Link>
+                                <Link to="/machine-learning">Conoce más sobre tus recomendaciones de Ejercicios</Link>
                             </Card.Footer>
                         </Card.Body>
                     </Card>
@@ -117,6 +158,8 @@ export function Inicio() {
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
                             <p>Nivel de Actividad: {user.nivelActividad}</p>
+                            <p>Estado (IMC): {estado}</p>
+                            <p>Indice de Masa Corporal</p>
                             <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB
