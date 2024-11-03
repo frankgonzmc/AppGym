@@ -100,6 +100,41 @@ export function Inicio() {
         setEstado(nuevoEstado);
     };
 
+    const calcularNutrientesDefinir = () => {
+        if (tmb) {
+            const totalCalorias = tmb - 500; // tmb es el resultado calculado
+            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
+            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
+            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+
+            return {
+                proteinas: proteinas.toFixed(2),
+                grasas: grasas.toFixed(2),
+                hidratos: hidratos.toFixed(2)
+            };
+        }
+        return null;
+    };
+
+    const calcularNutrientesVolumen = () => {
+        if (tmb) {
+            const totalCalorias = tmb + 500; // tmb es el resultado calculado
+            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
+            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
+            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+
+            return {
+                proteinas: proteinas.toFixed(2),
+                grasas: grasas.toFixed(2),
+                hidratos: hidratos.toFixed(2)
+            };
+        }
+        return null;
+    };
+
+    const nutrientedefinir = calcularNutrientesDefinir();
+    const nutrientesVolumen = calcularNutrientesVolumen();
+
     useEffect(() => {
         calcularEstado();
     }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
@@ -139,6 +174,58 @@ export function Inicio() {
                                     </Alert>
                                 )}
                             </Card.Footer>
+                        </Card.Body>
+                    </Card>
+                    <Card className="info-card mt-2 mb-4">
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Alimentaciones para *DEFINIR*</Card.Title>
+                            {tmb ? (
+                                <>
+                                    <p>
+                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
+                                    </p>
+                                    {nutrientedefinir && (
+                                        <>
+                                            <p>
+                                                Proteínas: {nutrientedefinir.proteinas} g
+                                            </p>
+                                            <p>
+                                                Grasas: {nutrientedefinir.grasas} g
+                                            </p>
+                                            <p>
+                                                Hidratos de carbono: {nutrientedefinir.hidratos} g
+                                            </p>
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <p>Por favor, calcula primero tu TMB.</p>
+                            )}
+                        </Card.Body>
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Alimentaciones para *VOLUMEN*</Card.Title>
+                            {tmb ? (
+                                <>
+                                    <p>
+                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
+                                    </p>
+                                    {nutrientesVolumen && (
+                                        <>
+                                            <p>
+                                                Proteínas: {nutrientesVolumen.proteinas} g
+                                            </p>
+                                            <p>
+                                                Grasas: {nutrientesVolumen.grasas} g
+                                            </p>
+                                            <p>
+                                                Hidratos de carbono: {nutrientesVolumen.hidratos} g
+                                            </p>
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <p>Por favor, calcula primero tu TMB.</p>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
