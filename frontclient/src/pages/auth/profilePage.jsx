@@ -206,8 +206,7 @@ function ProfilePage() {
                         <option key={index} value={objetivo}>{objetivo}</option>
                       ))}
                     </Form.Select>
-                  </Form.Group>
-                  <Form.Group className="mb-3 mt-3">
+
                     <Form.Label className="text-black">Nivel de Actividad</Form.Label>
                     <Form.Select
                       value={nivelActividad}
