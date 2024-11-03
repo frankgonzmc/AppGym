@@ -30,7 +30,7 @@ export default function mlPage() {
 
     const calcularNutrientes = () => {
         if (tmb) {
-            const totalCalorias = tmb.total; // Suponiendo que tmb.total ya está calculado
+            const totalCalorias = tmb; // tmb es el resultado calculado
             const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
             const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
             const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
@@ -44,7 +44,6 @@ export default function mlPage() {
         return null;
     };
 
-    // Dentro de tu render, puedes usar:
     const nutrientes = calcularNutrientes();
 
     const prediccion = "* Mejorar resistencia cardiovascular *";
