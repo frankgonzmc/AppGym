@@ -5,6 +5,29 @@ import { Container, Form, Row, Col, Card, Button, Alert } from 'react-bootstrap'
 export default function mlPage() {
 
     const { user } = useAuth();
+    const [peso, setPeso] = useState(user.peso || "");
+    const [altura, setAltura] = useState(user.estatura || "");
+    const [edad, setEdad] = useState(user.edad || "");
+    const [genero, setGenero] = useState(user.genero || "");
+    const [tmb, setTmb] = useState(null);
+    const [error, setError] = useState("");
+
+    const calcularTMB = () => {
+        let resultado;
+
+        if (genero === 'mujer') {
+            resultado = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);
+        } else if (genero === 'varon') {
+            resultado = 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad);
+        } else {
+            setError("Por favor, selecciona un género válido.");
+            return;
+        }
+
+        setTmb(resultado);
+        setError("");
+    };
+
 
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
@@ -114,7 +137,7 @@ export default function mlPage() {
                             <Card.Title>Calculadora de Tasa de Metabolismo Basal (TMB)</Card.Title>
                             <Form>
                                 <Form.Group controlId="peso">
-                                    <Form.Label>Peso (kg)</Form.Label>
+                                    <Form.Label className='text-black'>Peso (kg)</Form.Label>
                                     <Form.Control
                                         type="number"
                                         value={peso}
@@ -124,7 +147,7 @@ export default function mlPage() {
                                 </Form.Group>
 
                                 <Form.Group controlId="altura">
-                                    <Form.Label>Altura (cm)</Form.Label>
+                                    <Form.Label className='text-black'>Altura (cm)</Form.Label>
                                     <Form.Control
                                         type="number"
                                         value={altura}
@@ -134,7 +157,7 @@ export default function mlPage() {
                                 </Form.Group>
 
                                 <Form.Group controlId="edad">
-                                    <Form.Label>Edad (años)</Form.Label>
+                                    <Form.Label className='text-black'>Edad (años)</Form.Label>
                                     <Form.Control
                                         type="number"
                                         value={edad}
@@ -144,7 +167,7 @@ export default function mlPage() {
                                 </Form.Group>
 
                                 <Form.Group controlId="genero">
-                                    <Form.Label>Sexo</Form.Label>
+                                    <Form.Label className='text-black'>Genero</Form.Label>
                                     <Form.Select
                                         value={genero}
                                         onChange={(e) => setGenero(e.target.value)}
