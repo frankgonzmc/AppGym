@@ -24,14 +24,14 @@ function RegistroUsuario() {
     <section className="section-register">
       <Container className="container-form shadow-lg rounded">
         <Row>
-          <Col md={4} className="information d-flex flex-column align-items-center justify-content-center text-center text-white p-4">
+          <Col md={4} className="information text-white p-4">
             <h2>BIENVENIDO</h2>
             <img src={fondo} alt="Fondo de Registro" className="info-image mb-2" />
             <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
           </Col>
         </Row>
         <Row>
-          <Col md={8} className="form-information d-flex flex-column align-items-center justify-content-center text-center text-white p-4">
+          <Col md={8} className="form-information text-white p-4">
             <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
             {registerErrors.map((error, i) => (
               <div key={i} className="error-message mb-2">{error}</div>
