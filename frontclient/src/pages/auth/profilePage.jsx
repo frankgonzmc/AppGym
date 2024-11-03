@@ -19,8 +19,7 @@ function ProfilePage() {
   const [nuevoEmail, setNuevoEmail] = useState(user?.email || "");
   const [profileImg, setProfileImg] = useState(user?.profileImage || profileImage);
   const [newProfileImage, setNewProfileImage] = useState(null);
-  const [genero, setGenero] = useState(user?.genero || ""); // Nuevo estado para el género
-
+  const [genero, setGenero] = useState(user?.genero || "");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,7 +58,7 @@ function ProfilePage() {
       nombreCompleto !== user.username ||
       edad !== user.edad ||
       estatura !== user.estatura ||
-      nivelActividad === user.nivelActividad ||
+      nivelActividad !== user.nivelActividad ||
       objetivos !== user.objetivos ||
       peso !== user.peso ||
       genero !== user.genero;
@@ -93,9 +92,9 @@ function ProfilePage() {
     try {
       await updatePerfil(formData);
       setSuccess("Perfil actualizado con éxito");
+      setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
       setError("Error al actualizar el perfil");
-      //console.error(error); // Esto se puede eliminar en producción
     }
   };
 
