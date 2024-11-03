@@ -1,34 +1,90 @@
-body {
-  height: 100vh;
-  margin: 0;
+.body {
+  height: auto;
+  width: 100%;
   background-color: #ee9037;
 }
 
-.container {
+.container1 {
+  text-align: center;
+  width: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+  height: 40%;
+}
+
+.container1-title {
+  font-size: 3rem;
+  margin: 0;
+  color: #000000;
 }
 
 .img-logo {
-  width: 25%;
-  /* Ajusta el tamaño de la imagen según tus necesidades */
-  max-width: 250px;
-  /* Limita el tamaño máximo */
+  width: 30%;
+  /* Ajusta el tamaño del logo */
+  max-width: 300px;
+  /* Limitar el tamaño máximo para dispositivos pequeños */
 }
 
+/* FORMULARIO */
 .form {
   width: 100%;
   max-width: 400px;
+  /* Ancho máximo para formularios */
+  margin: 0 auto;
   padding: 2em;
   background-color: #252525;
-  /* Mantiene el fondo oscuro */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
 }
 
+.form:hover {
+  transform: scale(1.02);
+}
+
+.form-label {
+  display: block;
+  color: #ffffff;
+  /* Color de las etiquetas */
+  margin-bottom: 0.5em;
+}
+
+.container2,
+.container3 {
+  margin-bottom: 1em;
+  /* Espacio entre inputs */
+}
+
+.container2-input,
+.container3-input {
+  background: #ffffff;
+  /* Color de fondo de los inputs */
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  padding: 0.5em;
+  width: 100%;
+  color: #000000;
+}
+
+.container4-button1 {
+  width: 100%;
+  padding: 0.7em;
+  border-radius: 5px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container4-button1:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para mensajes de error */
 .error-message {
   background-color: #e74c3c;
   color: white;
@@ -37,9 +93,13 @@ body {
   margin: 10px 0;
 }
 
+/* Responsive */
 @media (max-width: 600px) {
   .img-logo {
-    width: 50%;
-    /* Reduce el tamaño en pantallas pequeñas */
+    width: 60%;
+  }
+
+  .form {
+    width: 90%;
   }
 }

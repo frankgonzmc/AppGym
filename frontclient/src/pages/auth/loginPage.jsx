@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
+import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
-import { Container, Form, Button } from "react-bootstrap";
 
 export function Inicio() {
   return (
-    <Container className="text-center my-4">
+    <section className="items-center justify-center">
       <h1 className="container1-title">APP GYM</h1>
-      <img src={logo} alt="Logo" className="img-logo" />
-    </Container>
+      <div className="container1">
+        <img src={logo} alt="Logo" className="img-logo" />
+      </div>
+    </section>
   );
 }
 
@@ -28,51 +30,47 @@ export function FormularioSesion() {
   }, [isAuthenticated]);
 
   return (
-    <Container className="d-flex justify-content-center align-items-center h-100">
+    <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
         {signinErrors.map((error, i) => (
           <div className="error-message" key={i}>
             {error}
           </div>
         ))}
-        <Form onSubmit={onSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
+        <form onSubmit={onSubmit}>
+          <label className="form-label">
+            Email
+            <input
               type="email"
               {...register('email', { required: true })}
               placeholder="Ingrese el Email"
-              isInvalid={!!errors.email}
+              className="container2-input"
             />
-            <Form.Control.Feedback type="invalid">
-              Email es necesario!
-            </Form.Control.Feedback>
-          </Form.Group>
+          </label>
+          {errors.email && (<p className="text-red-500">Email es Necesario!</p>)}
 
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          <label className="form-label">
+            Password
+            <input
               type="password"
               {...register('password', { required: true })}
               placeholder="Ingrese el Password"
-              isInvalid={!!errors.password}
+              className="container3-input"
             />
-            <Form.Control.Feedback type="invalid">
-              Password es necesario!
-            </Form.Control.Feedback>
-          </Form.Group>
+          </label>
+          {errors.password && (<p className="text-red-500">Password es Necesario!</p>)}
 
-          <Button type="submit" variant="success" className="w-100">Iniciar Sesión</Button>
-          <p className="mt-3">
+          <button type="submit" className="container4-button1">Iniciar Sesión</button>
+          <p className="flex gap-x-2 justify-between">
             <Link to="/forgot-password" className="text-sky-500">Olvidaste tu contraseña?</Link>
           </p>
-        </Form>
+        </form>
         <hr className="text-white" />
-        <p className="text-white">
+        <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
         </p>
       </div>
-    </Container>
+    </div>
   );
 }
 
