@@ -100,25 +100,22 @@ function ProfilePage() {
     formData.append('peso', peso);
     formData.append('genero', genero);
 
-    // Solo agrega la nueva imagen si está disponible
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
     }
 
-    // Para depuración, imprime el contenido de formData
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
     try {
       await updatePerfil(formData);
-      // Aquí podrías agregar una llamada para refrescar los datos del usuario
-      const updatedUser = await fetchUser(); // Suponiendo que fetchUser es una función que recupera los datos del usuario
-      setUser(updatedUser); // Actualiza el contexto con el nuevo usuario
+      // Si fetchUser no está definido, simplemente maneja los datos aquí.
+      // Si fetchUser está disponible, úsalo para obtener el usuario actualizado.
+      if (fetchUser) {
+        const updatedUser = await fetchUser();
+        setUser(updatedUser); // Aquí asumo que tienes setUser definido
+      }
       setSuccess("Perfil actualizado con éxito");
       setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
-      console.error("Error al actualizar el perfil:", error); // Agrega más información de error
+      console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
     }
   };
