@@ -45,7 +45,7 @@ export function Inicio() {
             case "Ejercicio Leve":
                 newMultiplicador = 1.375;
                 break;
-            case "Ejercicio Moderado":
+            case "Ejercicio Media":
                 newMultiplicador = 1.55;
                 break;
             case "Ejercicio Fuerte":
