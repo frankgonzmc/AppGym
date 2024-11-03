@@ -33,6 +33,15 @@ export function PanelEjercicios() {
         }
     }, [exercises]);
 
+    const goToNextExercise = () => {
+        setCurrentExerciseIndex((prevIndex) => (prevIndex + 1) % exercises.length);
+    };
+
+    const goToPreviousExercise = () => {
+        setCurrentExerciseIndex((prevIndex) => (prevIndex - 1 + exercises.length) % exercises.length);
+    };
+
+
     if (exercises.length === 0) {
         return <p>No hay ejercicios disponibles para tu nivel.</p>;
     }
@@ -57,6 +66,10 @@ export function PanelEjercicios() {
                     <p className="text-white mb-2">Descanso: {currentExercise?.descanso || "N/A"} segundos</p>
                     <p className="text-white mb-2">Repeticiones: {currentExercise?.repeticiones || "N/A"}</p>
                     <img src={currentExercise?.imagen} alt={currentExercise?.nombre} className="w-auto h-auto object-cover mt-4 rounded-md" />
+                </div>
+                <div className="flex justify-between mt-4">
+                    <button onClick={goToPreviousExercise} className="bg-blue-500 text-white p-2 rounded-md">Anterior</button>
+                    <button onClick={goToNextExercise} className="bg-blue-500 text-white p-2 rounded-md">Siguiente</button>
                 </div>
             </section>
         </div>
