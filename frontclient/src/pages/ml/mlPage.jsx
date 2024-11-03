@@ -188,9 +188,44 @@ export default function mlPage() {
                             {tmb !== null && (
                                 <Alert variant="success" className="mt-3">
                                     Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día
-                                    Si quieres sacar tu Gasto Energetico Total(GET) es: {tmb.toFixed(2) } Kcal/día deberás multiplicarlo por el nivel de actividad actual que tienes.
+                                    Si quieres sacar tu Gasto Energetico Total(GET) es: {tmb.toFixed(2)} Kcal/día deberás multiplicarlo por el nivel de actividad actual que tienes.
                                 </Alert>
                             )}
+                        </Card.Body>
+
+                        {/* Tabla de 2x6 */}
+                        <Card.Body>
+                            <Card.Title>TABLA DE NIVEL DE ACTIVIDAD</Card.Title>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Factor de actividad Multiplicador</th>
+                                        <th>Nivel de Actividad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1.2</td>
+                                        <td>Información sobre la tasa de metabolismo basal.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.375</td>
+                                        <td>Importancia de la actividad física diaria.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.55</td>
+                                        <td>Consejos para una dieta equilibrada.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.725</td>
+                                        <td>Beneficios de mantenerse hidratado.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.9</td>
+                                        <td>Recomendaciones para mejorar la salud mental.</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
                         </Card.Body>
                     </Card>
                 </Col>
