@@ -104,6 +104,7 @@ export const profile = async (req, res) => {
         email: userEncontrado.email,
         edad: userEncontrado.edad,
         genero: userEncontrado.genero,
+        profileImage: userEncontrado.profileImage,
         estatura: userEncontrado.estatura,
         peso: userEncontrado.peso,
         nivel: userEncontrado.nivel,
@@ -126,6 +127,8 @@ export const verifityToken = async (req, res) => {
             email: userFound.email,
             edad: userFound.edad,
             estatura: userFound.estatura,
+            genero: userFound.genero,
+            profileImage: userFound.profileImage,
             peso: userFound.peso,
             nivel: userFound.nivel,
         })

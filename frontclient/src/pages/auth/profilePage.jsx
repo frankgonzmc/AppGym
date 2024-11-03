@@ -15,7 +15,7 @@ function ProfilePage() {
   const [estatura, setEstatura] = useState(user?.estatura || "");
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
-  const [profileImg, setProfileImg] = useState(user.profileImage || "");
+  const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [genero, setGenero] = useState(user?.genero || ""); // Nuevo estado para el género
 
