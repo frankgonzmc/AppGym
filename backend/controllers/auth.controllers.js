@@ -190,8 +190,11 @@ export const updatePerfil = async (req, res) => {
         if (estatura) user.estatura = estatura;
         if (peso) user.peso = peso;
         if (genero) user.genero = genero; // Asigna el nuevo género si se proporciona
-        if (profileImage) user.profileImage = profileImage; // Asigna la nueva imagen si se proporciona
-
+        if (profileImage) {
+            user.profileImage = profileImage;
+            console.log(`Imagen guardada en: ${profileImage}`);
+        }
+        
         // Guarda los cambios en la base de datos
         await user.save();
         return res.status(200).json(user); // Asegúrate de devolver el objeto del usuario actualizado
