@@ -22,7 +22,6 @@ export const register = async (req, res) => {
             password: passwordHash,
             edad,
             estatura,
-            objetivos,
             genero,
             peso,
             nivel,
@@ -39,6 +38,7 @@ export const register = async (req, res) => {
             edad: userSaved.edad,
             estatura: userSaved.estatura,
             objetivos: userSaved.objetivos,
+            nivelActividad: userSaved.nivelActividad,
             peso: userSaved.peso,
             genero: userSaved.genero,
             nivel: userSaved.nivel,
@@ -75,6 +75,7 @@ export const login = async (req, res) => {
             edad: userEncontrado.edad,
             genero: userEncontrado.genero,
             objetivos: userEncontrado.objetivos,
+            nivelActividad: userEncontrado.nivelActividad,
             estatura: userEncontrado.estatura,
             nivel: userEncontrado.nivel,
             createdAt: userEncontrado.createdAt,
@@ -108,6 +109,7 @@ export const profile = async (req, res) => {
             edad: userEncontrado.edad,
             genero: userEncontrado.genero,
             objetivos: userEncontrado.objetivos,
+            nivelActividad: userEncontrado.nivelActividad,
             profileImage: userEncontrado.profileImage,
             estatura: userEncontrado.estatura,
             peso: userEncontrado.peso,
@@ -137,6 +139,7 @@ export const verifityToken = async (req, res) => {
                 edad: userFound.edad,
                 estatura: userFound.estatura,
                 objetivos: userFound.objetivos,
+                nivelActividad: userFound.nivelActividad,
                 genero: userFound.genero,
                 profileImage: userFound.profileImage,
                 peso: userFound.peso,
@@ -172,7 +175,7 @@ export const checkEmail = async (req, res) => {
 export const updatePerfil = async (req, res) => {
     try {
         const userId = req.user.id; // Obtén el ID del usuario autenticado
-        const { username, email, edad, estatura, peso, objetivos, genero } = req.body;
+        const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero } = req.body;
         const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
 
         const user = await User.findById(userId);
@@ -183,6 +186,7 @@ export const updatePerfil = async (req, res) => {
         if (email) user.email = email;
         if (edad) user.edad = edad;
         if (objetivos) user.objetivos = objetivos;
+        if (nivelActividad) user.nivelActividad = nivelActividad;
         if (estatura) user.estatura = estatura;
         if (peso) user.peso = peso;
         if (genero) user.genero = genero; // Asigna el nuevo género si se proporciona

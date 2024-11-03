@@ -13,6 +13,7 @@ function ProfilePage() {
   const [nombreCompleto, setNombreCompleto] = useState(user?.username || "");
   const [edad, setEdad] = useState(user?.edad || "");
   const [objetivos, setObjetivos] = useState(user?.objetivos || "");
+  const [nivelActividad, setNivelActividad] = useState(user?.nivelActividad || "");
   const [estatura, setEstatura] = useState(user?.estatura || "");
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user?.email || "");
@@ -48,7 +49,7 @@ function ProfilePage() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    if (!nombreCompleto || !edad || !objetivos || !estatura || !peso || !nuevoEmail || !genero) {
+    if (!nombreCompleto || !edad || !objetivos || !nivelActividad || !estatura || !peso || !nuevoEmail || !genero) {
       setError("Todos los campos deben estar completos.");
       return;
     }
@@ -58,6 +59,7 @@ function ProfilePage() {
       nombreCompleto !== user.username ||
       edad !== user.edad ||
       estatura !== user.estatura ||
+      nivelActividad === user.nivelActividad ||
       objetivos !== user.objetivos ||
       peso !== user.peso ||
       genero !== user.genero;
@@ -81,6 +83,7 @@ function ProfilePage() {
     formData.append('edad', edad);
     formData.append('estatura', estatura);
     formData.append('objetivos', objetivos);
+    formData.append('nivelActividad', nivelActividad);
     formData.append('peso', peso);
     formData.append('genero', genero);
     if (newProfileImage) {
