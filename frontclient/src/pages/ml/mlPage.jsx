@@ -188,6 +188,7 @@ export default function mlPage() {
                             {tmb !== null && (
                                 <Alert variant="success" className="mt-3">
                                     Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día
+                                    Si quieres sacar tu Gasto Energetico Total(GET) es: {tmb.toFixed(2) } Kcal/día deberás multiplicarlo por el nivel de actividad actual que tienes.
                                 </Alert>
                             )}
                         </Card.Body>

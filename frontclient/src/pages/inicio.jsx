@@ -3,7 +3,7 @@ import { PanelEjercicios } from "../components/panelEjercicios.jsx";
 import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
 
