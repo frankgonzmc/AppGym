@@ -19,6 +19,10 @@
 
 .information,
 .form-information {
+    display: flex;
+    flex: 1;
+    /* Asegura que cada sección ocupe el mismo espacio */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -26,8 +30,9 @@
 }
 
 .information {
-    background-color: #0004ff;
+    background-color: #1f1f1f;
     color: #fff;
+    height: auto;
 }
 
 .info-image {
@@ -37,8 +42,10 @@
 }
 
 .form-information {
-    background-color: #ff0000;
+    background-color: #1f1f1f;
     color: #fff;
+    flex-direction: column;
+    height: auto;
 }
 
 .form-register {
