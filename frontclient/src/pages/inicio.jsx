@@ -112,47 +112,8 @@ export function Inicio() {
                 </Col>
             </Row>
             <Row>
-                <Col md={6} className="mb-4">
-                    <Card className="info-card">
-                        <Card.Body>
-                            <Card.Title>¿Qué es App Gym?</Card.Title>
-                            <p>
-                                App Gym es una aplicación web que te ayuda a mejorar tus habilidades y llevar una vida más saludable.
-                                Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
-                            </p>
-                            <Button variant="primary" className="mt-3">
-                                <Link to="/about">Conoce más sobre nosotros y nuestro programa</Link>
-                            </Button>
-                        </Card.Body>
-                    </Card>
-                    <Card className="info-card mt-3">
-                        <Card.Body>
-                            <Card.Title>Recomendaciones de Rutinas y Alimentación</Card.Title>
-                            <p>
-                                Mejora tus habilidades físicas con nuestras recomendaciones personalizadas.
-                                ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
-                                ¡No te pierdas la oportunidad de alcanzar tus objetivos!
-                            </p>
-                            <Card.Footer className="text-center">
-                                <Link to="/machine-learning">Conoce más sobre tus recomendaciones de Ejercicios</Link>
-                            </Card.Footer>
-                        </Card.Body>
-                    </Card>
-                    <Card className="info-card mt-3">
-                        <Card.Body className="panel-elements">
-                            <PanelElements />
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4}>
-                    <Card className="exercise-card mt-3">
-                        <Card.Body>
-                            <PanelEjercicios />
-                        </Card.Body>
-                    </Card>
-                </Col>
                 <Col md={2}>
-                    <Card className="info-card">
+                    <Card className="info-card mb-4">
                         <Card.Body>
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
@@ -178,6 +139,45 @@ export function Inicio() {
                                     </Alert>
                                 )}
                             </Card.Footer>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={6} className="mb-4">
+                    <Card className="info-card">
+                        <Card.Body>
+                            <Card.Title>¿Qué es App Gym?</Card.Title>
+                            <p>
+                                App Gym es una aplicación web que te ayuda a mejorar tus habilidades y llevar una vida más saludable.
+                                Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
+                            </p>
+                            <Button variant="primary" className="mt-3">
+                                <Link to="/about">Conoce más sobre nosotros y nuestro programa</Link>
+                            </Button>
+                        </Card.Body>
+                    </Card>
+                    <Card className="info-card mt-3 mb-4">
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Rutinas y Alimentación</Card.Title>
+                            <p>
+                                Mejora tus habilidades físicas con nuestras recomendaciones personalizadas.
+                                ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
+                                ¡No te pierdas la oportunidad de alcanzar tus objetivos!
+                            </p>
+                            <Card.Footer className="text-center">
+                                <Link to="/machine-learning">Conoce más sobre tus recomendaciones de Ejercicios</Link>
+                            </Card.Footer>
+                        </Card.Body>
+                    </Card>
+                    <Card className="info-card mt-3 mb-4">
+                        <Card.Body className="panel-elements">
+                            <PanelElements />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="exercise-card">
+                        <Card.Body>
+                            <PanelEjercicios />
                         </Card.Body>
                     </Card>
                 </Col>
