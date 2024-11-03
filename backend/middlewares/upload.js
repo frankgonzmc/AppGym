@@ -25,6 +25,7 @@ const storage = multer.diskStorage({
 
             cb(null, dir);
         } catch (error) {
+            console.error('Error al crear el directorio de destino:', error);
             cb(new Error('Error al crear el directorio de destino'), null);
         }
     },

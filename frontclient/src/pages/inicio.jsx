@@ -4,9 +4,12 @@ import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import '../css/inicio.css';
+import profileImage from '../imagenes/profileicono.png';
 
 export function Inicio() {
     const { user } = useAuth();
+    const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads-perfil/${user.id}/${user.profileImage}` : profileImage;
+
 
     return (
         <Container fluid className="body-inicio">
