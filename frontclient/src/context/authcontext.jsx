@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
             if (res.data) {
                 setUser(res.data); // Actualiza el usuario en el contexto
                 console.log(res.data);
+                return res.data;
             } else {
                 throw new Error('No se recibió una respuesta válida.');
             }
