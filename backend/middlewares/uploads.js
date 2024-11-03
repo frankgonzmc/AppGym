@@ -9,15 +9,14 @@ const __dirname = path.dirname(__filename);
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => path.join(__dirname, 'uploads', 'perfil', userId),
-    imagen: path.join(__dirname, 'uploads', 'ejercicios')
+    profileImage: () => path.join(__dirname, 'uploads', 'perfil'),
+    imagen: () => path.join(__dirname, 'uploads', 'ejercicios'),
 };
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const userId = req.user.id; // Asegúrate de que estás obteniendo el ID del usuario autenticado
-        const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname](userId) : null;
+        const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname]() : null;
 
         if (dir) {
             console.log(`Intentando crear el directorio: ${dir}`);
@@ -27,24 +26,19 @@ const storage = multer.diskStorage({
                     console.error('Error al crear el directorio:', err.message);
                     return cb(new Error('Error al crear el directorio de destino'));
                 }
-                console.log(`Directorio creado: ${dir}`); // Confirmación de creación
-                cb(null, dir);
+                cb(null, dir); // Usamos la carpeta 'uploads/perfil' como destino
             });
         } else {
             console.error('Campo de archivo no soportado:', file.fieldname);
             cb(new Error('Campo de archivo no soportado'), false);
         }
-
     },
     filename: function (req, file, cb) {
         const timestamp = Date.now();
-        const extension = path.extname(file.originalname);
         const userId = req.user.id;
 
         // Genera un nombre único para el archivo
-        const uniqueFilename = file.fieldname === 'profileImage'
-            ? `profile_${userId}_${timestamp}${extension}`
-            : `${timestamp}${extension}`;
+        const uniqueFilename = `profile_${userId}_${timestamp}${path.extname(file.originalname)}`;
 
         cb(null, uniqueFilename);
     }
