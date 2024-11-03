@@ -32,7 +32,6 @@ export function Inicio() {
         setError("");
     };
 
-
     return (
         <Container fluid className="body-inicio">
             <Row className="text-center mb-4">
