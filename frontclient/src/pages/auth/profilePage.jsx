@@ -80,7 +80,6 @@ function ProfilePage() {
     formData.append('estatura', estatura);
     formData.append('peso', peso);
     formData.append('genero', genero);
-    formData.append('profileImage', newProfileImage);
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
     }
