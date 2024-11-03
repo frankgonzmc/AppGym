@@ -4,9 +4,10 @@ import fs from 'fs';
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => `./perfilImage/${userId}`,
-    imagen: './uploads/ejercicios'
+    profileImage: (userId) => path.join(__dirname, 'uploads', 'perfil', userId),
+    imagen: path.join(__dirname, 'uploads', 'ejercicios')
 };
+
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
@@ -16,18 +17,20 @@ const storage = multer.diskStorage({
 
         if (dir) {
             console.log(`Intentando crear el directorio: ${dir}`);
-            // Crea el directorio si no existe
+            // Asegúrate de que el directorio se crea
             fs.mkdir(dir, { recursive: true }, (err) => {
                 if (err) {
                     console.error('Error al crear el directorio:', err.message);
                     return cb(new Error('Error al crear el directorio de destino'));
                 }
-                console.log(`Directorio creado: ${dir}`); // Confirma que el directorio se ha creado
+                console.log(`Directorio creado: ${dir}`); // Confirmación de creación
                 cb(null, dir);
             });
         } else {
+            console.error('Campo de archivo no soportado:', file.fieldname);
             cb(new Error('Campo de archivo no soportado'), false);
         }
+
     },
     filename: function (req, file, cb) {
         const timestamp = Date.now();
