@@ -119,7 +119,7 @@ function ProfilePage() {
                 {success && <Alert variant="success">{success}</Alert>}
                 <Form onSubmit={handleUpdateProfile}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Nombre Completo</Form.Label>
+                    <Form.Label className="text-black">Nombre Completo</Form.Label>
                     <Form.Control
                       type="text"
                       value={nombreCompleto}
@@ -127,7 +127,7 @@ function ProfilePage() {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label className="text-black">Email</Form.Label>
                     <Form.Control
                       type="email"
                       value={nuevoEmail}
@@ -136,7 +136,7 @@ function ProfilePage() {
                   </Form.Group>
                   <Row className="mb-3">
                     <Col>
-                      <Form.Label>Edad</Form.Label>
+                      <Form.Label className="text-black">Edad</Form.Label>
                       <Form.Control
                         type="number"
                         value={edad}
@@ -144,7 +144,7 @@ function ProfilePage() {
                       />
                     </Col>
                     <Col>
-                      <Form.Label>Estatura (cm)</Form.Label>
+                      <Form.Label className="text-black">Estatura (cm)</Form.Label>
                       <Form.Control
                         type="number"
                         value={estatura}
@@ -152,7 +152,7 @@ function ProfilePage() {
                       />
                     </Col>
                     <Col>
-                      <Form.Label>Género</Form.Label>
+                      <Form.Label className="text-black">Género</Form.Label>
                       <Form.Select
                         value={genero}
                         onChange={(e) => setGenero(e.target.value)}
@@ -164,7 +164,7 @@ function ProfilePage() {
                       </Form.Select>
                     </Col>
                     <Col>
-                      <Form.Label>Peso (kg)</Form.Label>
+                      <Form.Label className="text-black">Peso (kg)</Form.Label>
                       <Form.Control
                         type="number"
                         value={peso}
@@ -174,7 +174,7 @@ function ProfilePage() {
                   </Row>
                   <Card.Body>
                     <Form.Group className="text-center">
-                      <Form.Label>Foto de Perfil</Form.Label>
+                      <Form.Label className="text-black">Foto de Perfil</Form.Label>
                       <div className="mb-3 mt-3 d-flex justify-content-center">
                         <img
                           src={profileImg}
@@ -202,7 +202,7 @@ function ProfilePage() {
               <Card.Body>
                 <Form onSubmit={handlePasswordUpdate}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Contraseña Actual</Form.Label>
+                    <Form.Label className="text-black">Contraseña Actual</Form.Label>
                     <Form.Control
                       type="password"
                       value={password}
@@ -211,7 +211,7 @@ function ProfilePage() {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3">
-                    <Form.Label>Nueva Contraseña</Form.Label>
+                    <Form.Label className="text-black">Nueva Contraseña</Form.Label>
                     <Form.Control
                       type="password"
                       value={newPassword}
@@ -220,7 +220,7 @@ function ProfilePage() {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3">
-                    <Form.Label>Confirmar Nueva Contraseña</Form.Label>
+                    <Form.Label className="text-black">Confirmar Nueva Contraseña</Form.Label>
                     <Form.Control
                       type="password"
                       value={confirmPassword}
