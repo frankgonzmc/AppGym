@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap'
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, checkEmailExists, updatePerfil, fetchUser } = useAuth();
+  const { user, updatePassword, checkEmailExists, updatePerfil, fetchUser, setUser } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -106,8 +106,7 @@ function ProfilePage() {
 
     try {
       await updatePerfil(formData);
-      // Si fetchUser no está definido, simplemente maneja los datos aquí.
-      // Si fetchUser está disponible, úsalo para obtener el usuario actualizado.
+
       if (fetchUser) {
         const updatedUser = await fetchUser();
         setUser(updatedUser); // Aquí asumo que tienes setUser definido
