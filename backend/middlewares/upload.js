@@ -5,32 +5,24 @@ import fs from 'fs';
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        try {
-            let dir;
+        const userId = req.user.id; // Asegúrate de que estás obteniendo el ID del usuario autenticado
+        let dir;
 
-            // Comprueba el tipo de imagen para determinar el directorio
-            if (file.fieldname === 'profileImage') {
-                
-                const dir = `./uploads/perfil/${userId}`;
-                console.log(`Intentando crear el directorio: ${dir}`); // Verifica qué ruta se está creando
-
-            } else if (file.fieldname === 'imagen') {
-                // Imágenes de ejercicios
-                dir = './uploads/ejercicios';
-            }
-
-            // Crea el directorio si no existe
-            fs.mkdir(dir, { recursive: true }, (err) => {
-                if (err) {
-                    console.error('Error al crear el directorio:', err);
-                    return cb(new Error('Error al crear el directorio de destino'));
-                }
-                cb(null, dir);
-            });
-        } catch (error) {
-            console.error('Error al crear el directorio de destino:', error);
-            cb(new Error('Error al crear el directorio de destino'), null);
+        if (file.fieldname === 'profileImage') {
+            dir = `./uploads/perfil/${userId}`;
+            console.log(`Intentando crear el directorio: ${dir}`);
+        } else if (file.fieldname === 'imagen') {
+            dir = './uploads/ejercicios';
         }
+
+        // Crea el directorio si no existe
+        fs.mkdir(dir, { recursive: true }, (err) => {
+            if (err) {
+                console.error('Error al crear el directorio:', err);
+                return cb(new Error('Error al crear el directorio de destino'));
+            }
+            cb(null, dir);
+        });
     },
     filename: function (req, file, cb) {
         const timestamp = Date.now();
