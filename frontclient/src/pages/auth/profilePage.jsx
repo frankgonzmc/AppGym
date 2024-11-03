@@ -106,8 +106,14 @@ function ProfilePage() {
 
     try {
       await updatePerfil(formData);
-      // Actualiza la URL de la imagen en el estado
-      setProfileImg(`/uploads/perfil/${user.id}.jpg`);
+      // Si fetchUser no está definido, simplemente maneja los datos aquí.
+      // Si fetchUser está disponible, úsalo para obtener el usuario actualizado.
+      if (fetchUser) {
+        const updatedUser = await fetchUser();
+        setUser(updatedUser); // Aquí asumo que tienes setUser definido
+      }
+      setSuccess("Perfil actualizado con éxito");
+      setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
@@ -119,8 +125,8 @@ function ProfilePage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImg(reader.result); // Muestra la imagen seleccionada
-        setNewProfileImage(file); // Guarda el archivo para la subida
+        setProfileImg(reader.result);
+        setNewProfileImage(file);
       };
       reader.readAsDataURL(file);
     }
@@ -245,7 +251,7 @@ function ProfilePage() {
                           height="350"
                         />
                       </div>
-                      <Form.Control type="file" name="profileImage" onChange={handleImageUpload} />
+                      <Form.Control type="file" onChange={handleImageUpload} />
                     </Form.Group>
                   </Card.Body>
                   <Button type="submit" variant="success" className="w-100">
