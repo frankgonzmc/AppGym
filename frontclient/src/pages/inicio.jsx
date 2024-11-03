@@ -11,7 +11,7 @@ export function Inicio() {
     const { user } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const [multiplicador, setMultiplicador] = useState(null);
+    const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
 
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;

@@ -250,7 +250,7 @@ function ProfilePage() {
                           height="350"
                         />
                       </div>
-                      <Form.Control type="file" onChange={handleImageUpload} />
+                      <Form.Control type="file" name="profileImage" onChange={handleImageUpload} />
                     </Form.Group>
                   </Card.Body>
                   <Button type="submit" variant="success" className="w-100">
