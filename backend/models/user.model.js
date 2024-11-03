@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema({
     },
     profileImage: {
         type: String,
-        default: '', // o puedes establecer un valor por defecto si es necesario
     },
     genero: {
         type: String,
