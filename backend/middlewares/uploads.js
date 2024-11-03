@@ -21,8 +21,13 @@ const storage = multer.diskStorage({
         if (dir) {
             const directoryPath = path.dirname(dir);
             console.log(`Intentando crear el directorio: ${directoryPath}`);
-            if (!fs.existsSync(directoryPath)) {
-                fs.mkdirSync(directoryPath, { recursive: true });
+            try {
+                if (!fs.existsSync(directoryPath)) {
+                    fs.mkdirSync(directoryPath, { recursive: true });
+                }
+            } catch (error) {
+                console.error('Error al crear el directorio:', error);
+                return cb(new Error('Error al crear el directorio'));
             }
             cb(null, directoryPath);
         } else {
@@ -32,6 +37,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const userId = req.user.id;
         const uniqueFilename = `${userId}.jpg`;
+        console.log(`Guardando archivo como: ${uniqueFilename}`);
         cb(null, uniqueFilename);
     }
 });
