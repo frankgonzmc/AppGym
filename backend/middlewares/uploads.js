@@ -4,7 +4,7 @@ import fs from 'fs';
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => `./uploads/perfil/${userId}`,
+    profileImage: (userId) => `./perfilImage/${userId}`,
     imagen: './uploads/ejercicios'
 };
 
