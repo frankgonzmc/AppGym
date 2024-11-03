@@ -59,7 +59,8 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await updatePerfilRequest(datos);
             if (res.data) {
-                setUser(res.data); // Actualiza el usuario en el contexto
+                //setUser(res.data); // Actualiza el usuario en el contexto
+                console.log(res.data);
             } else {
                 throw new Error('No se recibió una respuesta válida.');
             }
@@ -68,6 +69,8 @@ export const AuthProvider = ({ children }) => {
             throw new Error('No se pudo actualizar el perfil');
         }
     };
+
+
 
     const checkEmailExists = async (email) => {
         try {
