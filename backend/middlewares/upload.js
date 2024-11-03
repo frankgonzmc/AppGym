@@ -18,12 +18,13 @@ const storage = multer.diskStorage({
     }
 });
 
-// Filtro para asegurarse de que solo se suban imágenes
+// Filtro para asegurarse de que solo se suban imágenes con las extensiones permitidas
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+    if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error('Solo se permiten imágenes'), false);
+        cb(new Error('Solo se permiten imágenes en formato JPG, JPEG, PNG y WEBP'), false);
     }
 };
 
