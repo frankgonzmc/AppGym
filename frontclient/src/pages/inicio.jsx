@@ -157,8 +157,7 @@ export function Inicio() {
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
                             <p>Nivel de Actividad: {user.nivelActividad}</p>
-                            <p>Estado (IMC): {estado}</p>
-                            <p>Indice de Masa Corporal</p>
+                            <p>Estado (IMC): {estado}  |  *Indice de Masa Corporal*</p>
                             <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB
