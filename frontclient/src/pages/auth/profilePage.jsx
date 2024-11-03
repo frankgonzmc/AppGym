@@ -99,8 +99,15 @@ function ProfilePage() {
     formData.append('nivelActividad', nivelActividad);
     formData.append('peso', peso);
     formData.append('genero', genero);
+
+    // Solo agrega la nueva imagen si está disponible
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
+    }
+
+    // Para depuración, imprime el contenido de formData
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
     }
 
     try {
@@ -111,6 +118,7 @@ function ProfilePage() {
       setSuccess("Perfil actualizado con éxito");
       setProfileImg(newProfileImage ? URL.createObjectURL(newProfileImage) : profileImg);
     } catch (error) {
+      console.error("Error al actualizar el perfil:", error); // Agrega más información de error
       setError("Error al actualizar el perfil");
     }
   };
