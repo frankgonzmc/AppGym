@@ -255,30 +255,21 @@ export default function mlPage() {
                             {tmb ? (
                                 <>
                                     <p>
-                                        Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal
+                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
                                     </p>
-                                    {(() => {
-                                        const totalCalorias = tmb.total; // Asumimos que esto ya está calculado
-                                        const peso = 70; // Cambia esto por el peso real del usuario si es necesario
-
-                                        const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
-                                        const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
-                                        const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
-
-                                        return (
-                                            <>
-                                                <p>
-                                                    Proteínas: {proteinas.toFixed(2)} g
-                                                </p>
-                                                <p>
-                                                    Grasas: {grasas.toFixed(2)} g
-                                                </p>
-                                                <p>
-                                                    Hidratos de carbono: {hidratos.toFixed(2)} g
-                                                </p>
-                                            </>
-                                        );
-                                    })()}
+                                    {nutrientes && (
+                                        <>
+                                            <p>
+                                                Proteínas: {nutrientes.proteinas} g
+                                            </p>
+                                            <p>
+                                                Grasas: {nutrientes.grasas} g
+                                            </p>
+                                            <p>
+                                                Hidratos de carbono: {nutrientes.hidratos} g
+                                            </p>
+                                        </>
+                                    )}
                                 </>
                             ) : (
                                 <p>Por favor, calcula primero tu TMB.</p>
