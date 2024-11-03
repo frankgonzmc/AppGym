@@ -14,7 +14,7 @@ export function Inicio() {
     const [multiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
 
-    const profileImageUrl = user.profileImage ? `./public/uploads/perfil/${user._id}` : profileImage;
+    const profileImageUrl = user.profileImage ? `./uploads/perfil/${user._id}` : profileImage;
 
     const calcularTMB = () => {
         const peso = user.peso || 0;
