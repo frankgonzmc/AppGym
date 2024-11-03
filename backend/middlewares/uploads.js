@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
         if (dir) {
             const directoryPath = path.dirname(dir);
-
+            console.log(`Intentando crear el directorio: ${directoryPath}`);
             // Crea el directorio si no existe
             if (!fs.existsSync(directoryPath)) {
                 try {
