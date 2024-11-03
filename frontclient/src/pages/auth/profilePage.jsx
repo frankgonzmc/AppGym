@@ -106,14 +106,8 @@ function ProfilePage() {
 
     try {
       await updatePerfil(formData);
-      // Si fetchUser no está definido, simplemente maneja los datos aquí.
-      // Si fetchUser está disponible, úsalo para obtener el usuario actualizado.
-      if (fetchUser) {
-        const updatedUser = await fetchUser();
-        setUser(updatedUser); // Aquí asumo que tienes setUser definido
-      }
-      setSuccess("Perfil actualizado con éxito");
-      setProfileImg(newProfileImage ? `/uploads/perfil/${user.id}.jpg` : profileImg);
+      // Actualiza la URL de la imagen en el estado
+      setProfileImg(`public/uploads/perfil/${user.id}.jpg`);
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
@@ -125,8 +119,8 @@ function ProfilePage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImg(reader.result);
-        setNewProfileImage(file);
+        setProfileImg(reader.result); // Muestra la imagen seleccionada
+        setNewProfileImage(file); // Guarda el archivo para la subida
       };
       reader.readAsDataURL(file);
     }
