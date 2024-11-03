@@ -67,9 +67,12 @@ export function Inicio() {
                             </div>
                             <p>Nivel: {user.nivel}</p>
                             <p>Peso: {user.peso}</p>
-                            <p>Altura: {user.altura}</p>
+                            <p>Altura: {user.estatura}</p>
                             <p>Edad: {user.edad}</p>
                             <p>Sexo: {user.genero}</p>
+                            <p>Objetivos: {user.objetivos}</p>
+                            <p>Nivel de Actividad: {user.nivelActividad}</p>
+
                         </Card.Body>
                     </Card>
                     <Card className="exercise-card mt-3">
