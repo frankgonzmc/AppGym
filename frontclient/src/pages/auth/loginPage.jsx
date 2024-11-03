@@ -3,11 +3,11 @@ import { useAuth } from "../../context/authcontext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 
 export function Inicio() {
   return (
-    <Container className="text-center">
+    <Container className="text-center my-4">
       <h1 className="container1-title">APP GYM</h1>
       <img src={logo} alt="Logo" className="img-logo" />
     </Container>

@@ -13,8 +13,10 @@ body {
 }
 
 .img-logo {
-  width: 35%;
-  max-width: 400px;
+  width: 25%;
+  /* Ajusta el tamaño de la imagen según tus necesidades */
+  max-width: 250px;
+  /* Limita el tamaño máximo */
 }
 
 .form {
@@ -22,6 +24,7 @@ body {
   max-width: 400px;
   padding: 2em;
   background-color: #252525;
+  /* Mantiene el fondo oscuro */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
@@ -36,10 +39,7 @@ body {
 
 @media (max-width: 600px) {
   .img-logo {
-    width: 65%;
-  }
-
-  .form {
-    width: 80%;
+    width: 50%;
+    /* Reduce el tamaño en pantallas pequeñas */
   }
 }
