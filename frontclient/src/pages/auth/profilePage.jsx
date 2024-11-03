@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap'
 import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
-  const { user, updatePassword, checkEmailExists, updatePerfil } = useAuth();
+  const { user, updatePassword, checkEmailExists, updatePerfil, fetchUser } = useAuth();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
