@@ -8,7 +8,29 @@ import profileImage from '../imagenes/profileicono.png';
 
 export function Inicio() {
     const { user } = useAuth();
+    const [peso, setPeso] = useState(user.peso || "");
+    const [altura, setAltura] = useState(user.estatura || "");
+    const [edad, setEdad] = useState(user.edad || "");
+    const [genero, setGenero] = useState(user.genero || "");
+    const [tmb, setTmb] = useState(null);
+    const [error, setError] = useState("");
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}` : profileImage;
+
+    const calcularTMB = () => {
+        let resultado;
+
+        if (genero === 'mujer') {
+            resultado = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);
+        } else if (genero === 'varon') {
+            resultado = 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad);
+        } else {
+            setError("Por favor, selecciona un género válido.");
+            return;
+        }
+
+        setTmb(resultado);
+        setError("");
+    };
 
 
     return (
@@ -72,7 +94,10 @@ export function Inicio() {
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
                             <p>Nivel de Actividad: {user.nivelActividad}</p>
-
+                            <hr className="text-black my-4 mt-4" />
+                            <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
+                                Calcular TMB
+                            </Button>
                         </Card.Body>
                     </Card>
                     <Card className="exercise-card mt-3">
