@@ -74,12 +74,9 @@ function ProfilePage() {
     }
 
     const formData = new FormData();
-    formData.append('username', nombreCompleto);
-    formData.append('email', nuevoEmail);
-    formData.append('edad', edad);
-    formData.append('estatura', estatura);
-    formData.append('peso', peso);
-    formData.append('genero', genero);
+    for (let key in userData) {
+      formData.append(key, userData[key]);
+    }
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
     }
