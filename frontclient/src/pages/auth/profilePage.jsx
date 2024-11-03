@@ -233,7 +233,7 @@ function ProfilePage() {
                       <Form.Control type="file" onChange={handleImageUpload} />
                     </Form.Group>
                   </Card.Body>
-                  <Button type="submit" variant="primary" className="w-100">
+                  <Button type="submit" variant="success" className="w-100">
                     Actualizar Perfil
                   </Button>
                 </Form>
