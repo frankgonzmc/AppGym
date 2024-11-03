@@ -34,7 +34,7 @@ export function Inicio() {
             return;
         }
 
-        // Multiplicador basado en el nivel de actividad
+        // Validar nivel de actividad
         let multiplicador;
         switch (user.nivelActividad) {
             case "Sedentario":
@@ -53,8 +53,8 @@ export function Inicio() {
                 multiplicador = 1.9;
                 break;
             default:
-                multiplicador = 1.2; // Asignar un valor por defecto
-                break;
+                setError("Por favor, dirígete a tu perfil y actualiza tu nivel de actividad para poder calcular tu TMB.");
+                return;
         }
 
         const tdee = resultado * multiplicador; // TDEE total
