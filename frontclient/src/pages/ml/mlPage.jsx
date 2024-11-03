@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../../context/authcontext";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 export default function mlPage() {
