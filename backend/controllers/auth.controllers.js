@@ -7,14 +7,14 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { username, email, password, edad, estatura, peso, nivel, genero } = req.body
+    const { username, email, password, edad, estatura, peso, nivel, genero } = req.body;
 
     try {
-        const userFound = await User.findOne({ email })
+        const userFound = await User.findOne({ email });
         if (userFound)
-            return res.status(400).json({ message: ["El email no es valido, o  ya existe!"] })
+            return res.status(400).json({ message: ["El email no es valido, o ya existe!"] });
 
-        const passwordHash = await bcrypt.hash(password, 10)
+        const passwordHash = await bcrypt.hash(password, 10);
 
         const newUser = new User({
             username,
@@ -50,18 +50,17 @@ export const register = async (req, res) => {
     }
 };
 
-
 export const login = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
         const userEncontrado = await User.findOne({ email });
 
         if (!userEncontrado) return res.status(400).json({ message: "Usuario no encontrado..." });
 
-        const isMacth = await bcrypt.compare(password, userEncontrado.password);
+        const isMatch = await bcrypt.compare(password, userEncontrado.password);
 
-        if (!isMacth) return res.status(400).json({ message: "Credenciales Incorrectas" });
+        if (!isMatch) return res.status(400).json({ message: "Credenciales Incorrectas" });
 
         const token = await createAccessToken({ id: userEncontrado._id });
 
@@ -84,56 +83,64 @@ export const login = async (req, res) => {
     }
 };
 
-//eliminar token por lo tanto cierra sesión para el usuario
+// Eliminar token y cerrar sesión
 export const logout = (req, res) => {
     res.cookie('token', "", {
         expires: new Date(0)
-    })
+    });
     return res.sendStatus(200);
 }
 
-//seleccionar el perfil del usuario
+// Seleccionar el perfil del usuario
 export const profile = async (req, res) => {
-    const userEncontrado = await User.findById(req.user.id)
+    try {
+        const userEncontrado = await User.findById(req.user.id);
 
-    if (!userEncontrado) return res.status(400).json({ message: "Usuario no encontrado..." })
-
-    return res.json({
-        id: userEncontrado.id,
-        username: userEncontrado.username,
-        email: userEncontrado.email,
-        edad: userEncontrado.edad,
-        genero: userEncontrado.genero,
-        profileImage: userEncontrado.profileImage,
-        estatura: userEncontrado.estatura,
-        peso: userEncontrado.peso,
-        nivel: userEncontrado.nivel,
-    });
-}
-
-//verificacion de token
-export const verifityToken = async (req, res) => {
-    const { token } = req.cookies
-    if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
-    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-        if (err) return res.status(401).json({ message: "NO AUTORIZADO" })
-
-        const userFound = await User.findById(user.id)
-        if (!userFound) return res.status(401).json({ message: "NO ATORIZADO" })
+        if (!userEncontrado) return res.status(400).json({ message: "Usuario no encontrado..." });
 
         return res.json({
-            id: userFound._id,
-            username: userFound.username,
-            email: userFound.email,
-            edad: userFound.edad,
-            estatura: userFound.estatura,
-            genero: userFound.genero,
-            profileImage: userFound.profileImage,
-            peso: userFound.peso,
-            nivel: userFound.nivel,
-        })
+            id: userEncontrado.id,
+            username: userEncontrado.username,
+            email: userEncontrado.email,
+            edad: userEncontrado.edad,
+            genero: userEncontrado.genero,
+            profileImage: userEncontrado.profileImage,
+            estatura: userEncontrado.estatura,
+            peso: userEncontrado.peso,
+            nivel: userEncontrado.nivel,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
-    })
+// Verificación de token
+export const verifityToken = async (req, res) => {
+    const { token } = req.cookies;
+    if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
+
+    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+        if (err) return res.status(401).json({ message: "NO AUTORIZADO" });
+
+        try {
+            const userFound = await User.findById(user.id);
+            if (!userFound) return res.status(401).json({ message: "NO AUTORIZADO" });
+
+            return res.json({
+                id: userFound._id,
+                username: userFound.username,
+                email: userFound.email,
+                edad: userFound.edad,
+                estatura: userFound.estatura,
+                genero: userFound.genero,
+                profileImage: userFound.profileImage,
+                peso: userFound.peso,
+                nivel: userFound.nivel,
+            });
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    });
 }
 
 // Ruta para verificar si el email existe
@@ -144,12 +151,17 @@ export const checkEmail = async (req, res) => {
         return res.status(400).json({ message: "Email es requerido." });
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-        return res.status(409).json({ message: "El email ya está en uso." });
-    }
+    try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ message: "El email ya está en uso." });
+        }
 
-    res.status(200).json({ message: "Email disponible." });
+        res.status(200).json({ message: "Email disponible." });
+    } catch (error) {
+        console.error("Error al verificar email:", error);
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const updatePerfil = async (req, res) => {
@@ -179,7 +191,7 @@ export const updatePerfil = async (req, res) => {
     }
 };
 
-//Actualizar Password
+// Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
     const userId = req.user.id;
@@ -204,7 +216,6 @@ export const updatePassword = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-    console.log(req.body); // Asegúrate de ver qué estás recibiendo
     const { email } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -235,28 +246,30 @@ export const forgotPassword = async (req, res) => {
         res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
     } catch (error) {
         console.error("Error en forgotPassword:", error); // Para ver errores en el backend
-        if (!res.headersSent) {
-            res.status(500).json({ message: error.message });
-        }
+        res.status(500).json({ message: error.message });
     }
 };
 
 export const resetPassword = async (req, res) => {
     const { token } = req.params;
-    const { newPassword } = req.body;
+    const { password } = req.body;
 
     try {
-        const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } });
-        if (!user) return res.status(400).json({ message: "Token inválido o expirado" });
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
 
-        // Actualizar la contraseña
-        user.password = await bcrypt.hash(newPassword, 10);
-        user.resetPasswordToken = undefined; // Limpiar el token
-        user.resetPasswordExpires = undefined; // Limpiar la expiración
+        if (!user) return res.status(400).json({ message: "Token no válido o ha expirado." });
+
+        user.password = await bcrypt.hash(password, 10);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
         await user.save();
 
-        res.status(200).json({ message: "Contraseña actualizada correctamente" });
+        res.status(200).json({ message: "Contraseña restablecida correctamente." });
     } catch (error) {
+        console.error("Error en resetPassword:", error); // Para ver errores en el backend
         res.status(500).json({ message: error.message });
     }
 };
