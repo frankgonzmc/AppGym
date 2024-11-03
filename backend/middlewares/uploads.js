@@ -4,8 +4,8 @@ import fs from 'fs';
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => `./public/uploads/perfil/${userId}.jpg`,
-    imagen: './public/uploads/ejercicios'
+    profileImage: (userId) => `./uploads/perfil/${userId}.jpg`,
+    imagen: './uploads/ejercicios'
 };
 
 // Configuración de almacenamiento para multer
