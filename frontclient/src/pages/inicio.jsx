@@ -102,7 +102,7 @@ export function Inicio() {
 
     const calcularNutrientesDefinir = () => {
         if (tmb) {
-            const totalCalorias = tmb - 500; // tmb es el resultado calculado
+            const totalCalorias = tmb.total - 500; // tmb es el resultado calculado
             const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
             const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
             const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
@@ -113,12 +113,16 @@ export function Inicio() {
                 hidratos: hidratos.toFixed(2)
             };
         }
-        return null;
+        return {
+            proteinas: "0.00",
+            grasas: "0.00",
+            hidratos: "0.00"
+        };
     };
 
     const calcularNutrientesVolumen = () => {
         if (tmb) {
-            const totalCalorias = tmb + 500; // tmb es el resultado calculado
+            const totalCalorias = tmb.total + 500; // tmb es el resultado calculado
             const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
             const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
             const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
@@ -129,7 +133,11 @@ export function Inicio() {
                 hidratos: hidratos.toFixed(2)
             };
         }
-        return null;
+        return {
+            proteinas: "0.00",
+            grasas: "0.00",
+            hidratos: "0.00"
+        };
     };
 
     const nutrientedefinir = calcularNutrientesDefinir();
@@ -182,7 +190,7 @@ export function Inicio() {
                             {tmb ? (
                                 <>
                                     <p>
-                                        Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal // Cambia aquí
+                                        Tus calorias por días son: {tmb.total.toFixed(2)} Kcal/día
                                     </p>
                                     {nutrientedefinir && (
                                         <>
@@ -207,7 +215,7 @@ export function Inicio() {
                             {tmb ? (
                                 <>
                                     <p>
-                                        Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal // Cambia aquí
+                                        Tus calorias por días son: {tmb.total.toFixed(2)} Kcal/día
                                     </p>
                                     {nutrientesVolumen && (
                                         <>
