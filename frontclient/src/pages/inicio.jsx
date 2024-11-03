@@ -2,7 +2,7 @@ import { PanelElements } from "../components/panelElements.jsx";
 import { PanelEjercicios } from "../components/panelEjercicios.jsx";
 import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
@@ -11,6 +11,7 @@ export function Inicio() {
     const { user } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
+    const [multiplicador, setMultiplicador] = useState(null); // Agregar estado para multiplicador
 
     const profileImageUrl = user.profileImage
         ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}`
@@ -36,30 +37,31 @@ export function Inicio() {
         }
 
         // Validar nivel de actividad
-        let multiplicador;
+        let newMultiplicador;
         switch (nivelActividad) {
             case "Sedentario":
-                multiplicador = 1.2;
+                newMultiplicador = 1.2;
                 break;
             case "Ejercicio Leve":
-                multiplicador = 1.375;
+                newMultiplicador = 1.375;
                 break;
             case "Ejercicio Moderado":
-                multiplicador = 1.55;
+                newMultiplicador = 1.55;
                 break;
             case "Ejercicio Fuerte":
-                multiplicador = 1.725;
+                newMultiplicador = 1.725;
                 break;
             case "Ejercicio Extra Fuerte":
-                multiplicador = 1.9;
+                newMultiplicador = 1.9;
                 break;
             default:
                 setError("Por favor, dirígete a tu perfil y actualiza tu nivel de actividad para poder calcular tu TMB.");
                 return;
         }
 
-        const tdee = resultado * multiplicador; // TDEE total
+        const tdee = resultado * newMultiplicador; // TDEE total
         setTmb({ basal: resultado, total: tdee });
+        setMultiplicador(newMultiplicador); // Guardar el multiplicador en el estado
         setError("");
     };
 
@@ -76,13 +78,8 @@ export function Inicio() {
                         <Card.Body>
                             <Card.Title>¿Qué es App Gym?</Card.Title>
                             <p>
-                                App Gym es una aplicación web que te ayuda a mejorar tus habilidades y mejorar tu vida diaria.
-                                Conoce las recomendaciones de ejercicios para mejorar tus habilidades.
-                                Aprende a mejorar tus habilidades y mejorar tu vida diaria.
-                                ¡Empieza a explorar las recomendaciones de ejercicios!
-                                ¡Disfruta de la experiencia de App Gym!
-                                ¡No te pierdas la oportunidad de mejorar tus habilidades!
-                                ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
+                                App Gym es una aplicación web que te ayuda a mejorar tus habilidades y llevar una vida más saludable.
+                                Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
                             </p>
                             <Button variant="primary" className="mt-3">
                                 <Link to="/about">Conoce más sobre nosotros y nuestro programa</Link>
@@ -93,12 +90,8 @@ export function Inicio() {
                         <Card.Body>
                             <Card.Title>Recomendaciones de Ejercicios</Card.Title>
                             <p>
-                                Conoce las recomendaciones de ejercicios para mejorar tus habilidades.
-                                Aprende a mejorar tus habilidades y mejorar tu vida diaria.
-                                ¡Empieza a explorar las recomendaciones de ejercicios!
-                                ¡Disfruta de la experiencia de App Gym!
-                                ¡No te pierdas la oportunidad de mejorar tus habilidades!
-                                ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
+                                Mejora tus habilidades físicas con nuestras recomendaciones personalizadas.
+                                ¡No te pierdas la oportunidad de alcanzar tus objetivos!
                             </p>
                             <Card.Footer className="text-center">
                                 <Link to="/machine-learning">Conoce más sobre tus recomendaciones</Link>
@@ -114,25 +107,26 @@ export function Inicio() {
                 <Col md={4}>
                     <Card className="info-card">
                         <Card.Body>
-                            <div className="card text-center">
+                            <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
                             <p>Nivel: {user.nivel}</p>
-                            <p>Peso: {user.peso}</p>
-                            <p>Altura: {user.estatura}</p>
-                            <p>Edad: {user.edad}</p>
+                            <p>Peso: {user.peso} kg</p>
+                            <p>Altura: {user.estatura} cm</p>
+                            <p>Edad: {user.edad} años</p>
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
-                            <p>Nivel de Actividad: {user.nivelActividad} | {multiplicador}</p>
-                            <hr className="text-black my-4 mt-4" />
+                            <p>Nivel de Actividad: {user.nivelActividad}</p>
+                            <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB
                             </Button>
                             <Card.Footer>
                                 {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-                                {tmb !== null && (
+                                {tmb && (
                                     <Alert variant="success" className="mt-3">
-                                        Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día, ya multiplicado por el nivel de actividad actual que tienes.
+                                        Tu Tasa de Metabolismo Basal es: {tmb.basal.toFixed(2)} Kcal/día<br />
+                                        Tus Kcal/día son: {tmb.total.toFixed(2)} Kcal
                                     </Alert>
                                 )}
                             </Card.Footer>
