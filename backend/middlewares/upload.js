@@ -5,13 +5,22 @@ import fs from 'fs';
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // Crea una carpeta específica para el usuario si no existe
-        const userId = req.user.id; // Suponiendo que tienes el ID de usuario en el request
-        const dir = `./uploads/perfil/${userId}`;
+        // Determina el destino según el tipo de imagen
+        const userId = req.user ? req.user.id : null; // Para imágenes de perfil
+        let dir;
+
+        if (file.fieldname === 'profileImage') {
+            // Imágenes de perfil
+            dir = `./uploads/perfil/${userId}`;
+        } else if (file.fieldname === 'imagen') {
+            // Imágenes de ejercicios
+            dir = './uploads/ejercicios';
+        }
+
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true }); // Crea la carpeta recursivamente
         }
-        cb(null, dir); // Carpeta donde se guardarán las imágenes de perfil
+        cb(null, dir);
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)); // Renombrar el archivo con la fecha actual
