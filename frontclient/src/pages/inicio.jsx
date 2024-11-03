@@ -9,17 +9,22 @@ import profileImage from '../imagenes/profileicono.png';
 
 export function Inicio() {
     const { user } = useAuth();
-    const [peso, setPeso] = useState(user.peso || "");
-    const [altura, setAltura] = useState(user.estatura || "");
-    const [edad, setEdad] = useState(user.edad || "");
-    const [genero, setGenero] = useState(user.genero || "");
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}` : profileImage;
+
+    const profileImageUrl = user.profileImage
+        ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}`
+        : profileImage;
 
     const calcularTMB = () => {
+        const peso = user.peso || 0;
+        const altura = user.estatura || 0;
+        const edad = user.edad || 0;
+        const genero = user.genero || '';
+
         let resultado;
 
+        // Calcular TMB
         if (genero === 'mujer') {
             resultado = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);
         } else if (genero === 'varon') {
@@ -29,7 +34,31 @@ export function Inicio() {
             return;
         }
 
-        setTmb(resultado);
+        // Multiplicador basado en el nivel de actividad
+        let multiplicador;
+        switch (user.nivelActividad) {
+            case "Sedentario":
+                multiplicador = 1.2;
+                break;
+            case "Ejercicio Leve":
+                multiplicador = 1.375;
+                break;
+            case "Ejercicio Moderado":
+                multiplicador = 1.55;
+                break;
+            case "Ejercicio Fuerte":
+                multiplicador = 1.725;
+                break;
+            case "Ejercicio Extra Fuerte":
+                multiplicador = 1.9;
+                break;
+            default:
+                multiplicador = 1.2; // Asignar un valor por defecto
+                break;
+        }
+
+        const tdee = resultado * multiplicador; // TDEE total
+        setTmb({ basal: resultado, total: tdee });
         setError("");
     };
 
@@ -98,6 +127,14 @@ export function Inicio() {
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB
                             </Button>
+                            <Card.Footer>
+                                {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+                                {tmb !== null && (
+                                    <Alert variant="success" className="mt-3">
+                                        Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día ya multiplicado por el nivel de actividad actual que tienes.
+                                    </Alert>
+                                )}
+                            </Card.Footer>
                         </Card.Body>
                     </Card>
                     <Card className="exercise-card mt-3">
