@@ -14,9 +14,7 @@ export function Inicio() {
     const [multiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
 
-    const profileImageUrl = user.profileImage
-        ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}`
-        : profileImage;
+    const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
     const calcularTMB = () => {
         const peso = user.peso || 0;
@@ -183,7 +181,7 @@ export function Inicio() {
                                 )}
                             </Card.Footer>
                         </Card.Body>
-                        <hr className="text-black my-4 mt-4" />
+                        <hr className="text-black my-2 mt-2" />
                         <Card.Body>
                             <Card.Title>Recomendaciones de Alimentaciones para *DEFINIR*</Card.Title>
                             {tmb ? (
