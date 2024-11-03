@@ -66,7 +66,7 @@ export function Inicio() {
                             <p>Peso: {user.peso}</p>
                             <p>Altura: {user.altura}</p>
                             <p>Edad: {user.edad}</p>
-                            <p>Sexo: {user.sexo}</p>
+                            <p>Sexo: {user.genero}</p>
                         </Card.Body>
                     </Card>
                     <Card className="exercise-card mt-3">

@@ -15,7 +15,7 @@ function ProfilePage() {
   const [estatura, setEstatura] = useState(user?.estatura || "");
   const [peso, setPeso] = useState(user?.peso || "");
   const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
-  const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
+  const [profileImg, setProfileImg] = useState(user.profileImage || "");
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [genero, setGenero] = useState(user?.genero || ""); // Nuevo estado para el género
 
@@ -180,8 +180,8 @@ function ProfilePage() {
                           src={profileImg}
                           alt="Profile"
                           className="rounded-circle mb-2"
-                          width="100"
-                          height="100"
+                          width="350"
+                          height="350"
                         />
                       </div>
                       <Form.Control type="file" onChange={handleImageUpload} />
