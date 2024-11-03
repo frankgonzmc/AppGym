@@ -182,7 +182,7 @@ export function Inicio() {
                             {tmb ? (
                                 <>
                                     <p>
-                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
+                                        Tus Kcal/día son: {tmb.total.toFixed(2) - 500} Kcal // Cambia aquí
                                     </p>
                                     {nutrientedefinir && (
                                         <>
@@ -207,7 +207,7 @@ export function Inicio() {
                             {tmb ? (
                                 <>
                                     <p>
-                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
+                                        Tus Kcal/día son: {tmb.total.toFixed(2) + 500} Kcal // Cambia aquí
                                     </p>
                                     {nutrientesVolumen && (
                                         <>
