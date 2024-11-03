@@ -112,7 +112,7 @@ function ProfilePage() {
           <Col md={8}>
             <Card className="mb-4">
               <Card.Header className="text-center bg-primary text-white">
-                <h4>Foto de Perfil</h4>
+                <h4>Perfil de Usuario</h4>
               </Card.Header>
               <Card.Body>
                 {error && <Alert variant="danger">{error}</Alert>}
@@ -130,7 +130,7 @@ function ProfilePage() {
                           height="350"
                         />
                       </div>
-                      <Form.Control />
+                      <Form.Control type="file" onChange={handleImageUpload} />
                     </Form.Group>
                   </Card.Body>
                   <Button type="submit" variant="primary" className="w-100">
