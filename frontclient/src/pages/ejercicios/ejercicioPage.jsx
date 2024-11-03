@@ -15,7 +15,7 @@ export default function EjercicioPage() {
 
   return (
     <section className="seccion">
-      <Container className="py-4 mt-4">
+      <Container className="py-4">
         {!ejercicios || ejercicios.length === 0 ? (
           <Row className="justify-content-center">
             <Col md={6} className="text-center">

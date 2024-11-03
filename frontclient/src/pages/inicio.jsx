@@ -151,7 +151,7 @@ export function Inicio() {
                                 Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
                             </p>
                             <Button variant="primary" className="mt-3">
-                                <Link to="/about">Conoce más sobre nosotros y nuestro programa</Link>
+                                <Link to="/about" className="text-white">Conoce más sobre nosotros y nuestro programa</Link>
                             </Button>
                         </Card.Body>
                     </Card>
