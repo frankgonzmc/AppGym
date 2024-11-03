@@ -183,8 +183,7 @@ export function Inicio() {
                                 )}
                             </Card.Footer>
                         </Card.Body>
-                    </Card>
-                    <Card className="info-card mt-2 mb-4">
+                        <hr className="text-black my-4 mt-4" />
                         <Card.Body>
                             <Card.Title>Recomendaciones de Alimentaciones para *DEFINIR*</Card.Title>
                             {tmb ? (
