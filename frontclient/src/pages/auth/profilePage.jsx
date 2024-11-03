@@ -107,7 +107,7 @@ function ProfilePage() {
     try {
       await updatePerfil(formData);
       // Actualiza la URL de la imagen en el estado
-      setProfileImg(`public/uploads/perfil/${user.id}.jpg`);
+      setProfileImg(`/uploads/perfil/${user.id}.jpg`);
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
