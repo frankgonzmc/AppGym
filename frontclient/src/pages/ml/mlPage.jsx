@@ -196,6 +196,9 @@ export default function mlPage() {
                         {/* Tabla de 2x6 */}
                         <Card.Body>
                             <Card.Title>TABLA DE NIVEL DE ACTIVIDAD</Card.Title>
+                            <p>
+                                La tabla de nivel de actividad es una tabla que te ayudará a determinar el multiplicador que debes multiplicar tu Gasto Energético Total(GET) para obtener tu Tasa de Metabolismo Basal(TMB).
+                            </p>
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
