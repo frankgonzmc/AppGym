@@ -46,3 +46,9 @@ a:hover {
     justify-content: center;
     padding: 15px;
 }
+
+.profile-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
