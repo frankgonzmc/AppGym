@@ -75,8 +75,7 @@ export function Inicio() {
             return;
         }
 
-        const alturaEnMetros = altura / 100;
-        const imc = peso / (alturaEnMetros * alturaEnMetros);
+        const imc = peso / (altura * altura);
 
         let nuevoEstado;
 
