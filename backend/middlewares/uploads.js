@@ -4,7 +4,7 @@ import fs from 'fs';
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => `./public/uploads/perfil/${userId}`, // Cambiar para solo usar userId
+    profileImage: (userId) => `./public/uploads/perfil/${userId}.jpg`,
     imagen: './public/uploads/ejercicios'
 };
 
@@ -21,15 +21,8 @@ const storage = multer.diskStorage({
         if (dir) {
             const directoryPath = path.dirname(dir);
             console.log(`Intentando crear el directorio: ${directoryPath}`);
-            // Crea el directorio si no existe
             if (!fs.existsSync(directoryPath)) {
-                try {
-                    fs.mkdirSync(directoryPath, { recursive: true });
-                    console.log(`Directorio creado: ${directoryPath}`); // Confirma que el directorio se ha creado
-                } catch (err) {
-                    console.error('Error al crear el directorio:', err.message);
-                    return cb(new Error('Error al crear el directorio de destino'));
-                }
+                fs.mkdirSync(directoryPath, { recursive: true });
             }
             cb(null, directoryPath);
         } else {
@@ -37,9 +30,8 @@ const storage = multer.diskStorage({
         }
     },
     filename: function (req, file, cb) {
-        const userId = req.user.id; // Asegúrate de que este valor es correcto
-        const uniqueFilename = `${userId}.jpg`; // Nombre del archivo usando solo el userId
-
+        const userId = req.user.id;
+        const uniqueFilename = `${userId}.jpg`;
         cb(null, uniqueFilename);
     }
 });
