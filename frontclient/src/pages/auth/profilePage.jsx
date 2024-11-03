@@ -117,35 +117,6 @@ function ProfilePage() {
               <Card.Body>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
-                <Form onSubmit={handleImageUpload}>
-                  <Card.Body>
-                    <Form.Group className="text-center">
-                      <Form.Label>Foto de Perfil</Form.Label>
-                      <div className="mb-3 mt-3 d-flex justify-content-center">
-                        <img
-                          src={profileImg}
-                          alt="Profile"
-                          className="rounded-circle mb-2"
-                          width="350"
-                          height="350"
-                        />
-                      </div>
-                      <Form.Control type="file" onChange={handleImageUpload} />
-                    </Form.Group>
-                  </Card.Body>
-                  <Button type="submit" variant="primary" className="w-100">
-                    Actualizar Foto Perfil
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-            <Card className="mb-4">
-              <Card.Header className="text-center bg-primary text-white">
-                <h4>Perfil de Usuario</h4>
-              </Card.Header>
-              <Card.Body>
-                {error && <Alert variant="danger">{error}</Alert>}
-                {success && <Alert variant="success">{success}</Alert>}
                 <Form onSubmit={handleUpdateProfile}>
                   <Form.Group className="mb-3">
                     <Form.Label>Nombre Completo</Form.Label>
@@ -201,6 +172,21 @@ function ProfilePage() {
                       />
                     </Col>
                   </Row>
+                  <Card.Body>
+                    <Form.Group className="text-center">
+                      <Form.Label>Foto de Perfil</Form.Label>
+                      <div className="mb-3 mt-3 d-flex justify-content-center">
+                        <img
+                          src={profileImg}
+                          alt="Profile"
+                          className="rounded-circle mb-2"
+                          width="350"
+                          height="350"
+                        />
+                      </div>
+                      <Form.Control type="file" onChange={handleImageUpload} />
+                    </Form.Group>
+                  </Card.Body>
                   <Button type="submit" variant="primary" className="w-100">
                     Actualizar Perfil
                   </Button>
