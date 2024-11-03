@@ -4,20 +4,24 @@ import fs from 'fs';
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
-    profileImage: (userId) => `./uploads/perfil/${userId}`, // Guarda la imagen con el ID del usuario
+    profileImage: (userId) => `./uploads/perfil/${userId}.jpg`, // Cambiar para solo usar userId
     imagen: './uploads/ejercicios'
 };
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const userId = req.user.id; // Asegúrate de que estás obteniendo el ID del usuario autenticado
+        const userId = req.user ? req.user.id : null; // Verifica si req.user está definido
+        if (!userId) {
+            return cb(new Error('No se encontró el ID del usuario'));
+        }
+
         const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname](userId) : null;
 
         if (dir) {
-            // Crea el directorio si no existe
             const directoryPath = path.dirname(dir);
-            console.log(`Intentando crear el directorio: ${directoryPath}`);
+
+            // Crea el directorio si no existe
             if (!fs.existsSync(directoryPath)) {
                 try {
                     fs.mkdirSync(directoryPath, { recursive: true });
@@ -33,13 +37,8 @@ const storage = multer.diskStorage({
         }
     },
     filename: function (req, file, cb) {
-        const timestamp = Date.now();
-        const userId = req.user.id;
-
-        // Genera un nombre único para el archivo
-        const uniqueFilename = file.fieldname === 'profileImage'
-            ? `${userId}_${timestamp}.jpg` // Guarda como userId_timestamp.jpg
-            : `${timestamp}${path.extname(file.originalname)}`;
+        const userId = req.user.id; // Asegúrate de que este valor es correcto
+        const uniqueFilename = `${userId}.jpg`; // Nombre del archivo usando solo el userId
 
         cb(null, uniqueFilename);
     }
