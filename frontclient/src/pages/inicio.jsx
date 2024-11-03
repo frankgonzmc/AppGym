@@ -8,7 +8,7 @@ import profileImage from '../imagenes/profileicono.png';
 
 export function Inicio() {
     const { user } = useAuth();
-    const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads-perfil/${user.id}/${user.profileImage}` : profileImage;
+    const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads-perfil/${user._id}/${user.profileImage}` : profileImage;
 
 
     return (

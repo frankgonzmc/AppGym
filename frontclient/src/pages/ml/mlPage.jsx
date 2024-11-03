@@ -18,7 +18,7 @@ export default function mlPage() {
                                 ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
                             </p>
 
-                            <p> esta es tu predicción en base a tus objetivos seleccionados  para tus rutinas de ejercicios y rutina de alimentación: </p>
+                            <p> esta es tu predicción en base a tus objetivos () seleccionados  para tus rutinas de ejercicios y rutina de alimentación: </p>
                         </Card.Body>
                     </Card>
                 </Col>
