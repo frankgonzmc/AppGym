@@ -209,8 +209,8 @@ function ProfilePage() {
                       onChange={(e) => setObjetivos(e.target.value)}
                     >
                       <option value="">Seleccionar Nivel de Actividad</option>
-                      {objetivosOptions.map((objetivo, index) => (
-                        <option key={index} value={objetivo}>{objetivo}</option>
+                      {nivelActividadOptions.map((nivelActividad, index) => (
+                        <option key={index} value={nivelActividad}>{nivelActividad}</option>
                       ))}
                     </Form.Select>
                   </Form.Group>
