@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
         default: "",
         unique: true,
     },
+    nivelActividad: {
+        type: String,
+        default: "",
+        unique: true,
+    },
     estatura: {
         type: Number,
         required: true,

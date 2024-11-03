@@ -6,6 +6,8 @@ export default function mlPage() {
 
     const { user } = useAuth();
 
+    const prediccion = "* Mejorar resistencia cardiovascular *";
+
     return (
         <Container>
             <Row>
@@ -17,12 +19,17 @@ export default function mlPage() {
                                 ¡No te pierdas la oportunidad de mejorar tus habilidades!
                                 ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
                             </p>
-
-                            <p> esta es tu predicción en base a tus objetivos () seleccionados  para tus rutinas de ejercicios y rutina de alimentación: </p>
+                            <p> esta es tu predicción en base a tus objetivos ({user.objetivos}) y segun tu nivel de actividad actual {user.nivelActividad} seleccionados  para tus rutinas de ejercicios y rutina de alimentación: ({prediccion})</p>
+                            <p>  </p>
+                            <Card.Title>¿¿Quieres empezar una Dieta??</Card.Title>
                             <p>
-                                {user.objetivos.map((objetivo, index) => (
-                                    <span key={index}>{objetivo} </span>
-                                ))}
+                                Empieza hacer Dieta mediante tus objetivos si tu quieres tener un cuerpo *DEFINIDO* y saludable. Sigue estas instruciones para empezar tu dieta.
+                            </p>
+                            <p>
+                                Empieza hacer Dieta mediante tus objetivos si tu quieres tener un cuerpo en *VOLUMEN* y saludable. Sigue estas instruciones para empezar tu dieta.
+                            </p>
+                            <p>
+                                2. Asegúrate de consumir una cantidad adecuada de proteínas, carbohidratos y grasas.
                             </p>
                         </Card.Body>
                     </Card>

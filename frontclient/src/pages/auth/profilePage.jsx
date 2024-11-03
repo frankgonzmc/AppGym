@@ -116,6 +116,14 @@ function ProfilePage() {
     "Aumentar flexibilidad"
   ];
 
+  const nivelActividadOptions = [
+    "Sedentario",
+    "Ejercicio Leve",
+    "Ejercicio Media",
+    "Ejercicio Fuerte",
+    "Ejercicio Extra Fuerte"
+  ];
+
   return (
     <section className="seccion">
       <Container className="py-4">
@@ -191,6 +199,16 @@ function ProfilePage() {
                       onChange={(e) => setObjetivos(e.target.value)}
                     >
                       <option value="">Seleccionar Objetivo</option>
+                      {objetivosOptions.map((objetivo, index) => (
+                        <option key={index} value={objetivo}>{objetivo}</option>
+                      ))}
+                    </Form.Select>
+                    <Form.Label className="text-black">Nivel de Actividad</Form.Label>
+                    <Form.Select
+                      value={objetivos}
+                      onChange={(e) => setObjetivos(e.target.value)}
+                    >
+                      <option value="">Seleccionar Nivel de Actividad</option>
                       {objetivosOptions.map((objetivo, index) => (
                         <option key={index} value={objetivo}>{objetivo}</option>
                       ))}
