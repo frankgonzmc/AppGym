@@ -16,13 +16,13 @@ const storage = multer.diskStorage({
 
         if (dir) {
             console.log(`Intentando crear el directorio: ${dir}`);
-
             // Crea el directorio si no existe
             fs.mkdir(dir, { recursive: true }, (err) => {
                 if (err) {
-                    console.error('Error al crear el directorio:', err);
+                    console.error('Error al crear el directorio:', err.message);
                     return cb(new Error('Error al crear el directorio de destino'));
                 }
+                console.log(`Directorio creado: ${dir}`); // Confirma que el directorio se ha creado
                 cb(null, dir);
             });
         } else {
