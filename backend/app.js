@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import path from 'path';
+import multer from 'multer';
 import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
@@ -26,6 +27,7 @@ app.use(cors({
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(multer());
 
 app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
@@ -34,6 +36,6 @@ app.use("/api", progresoRoutes);
 app.use("/api", detallerutinaRoutes);
 
 // Configurar ruta estática para acceder a las imágenes subidas
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'profileImage')));
 
 export default app;
