@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap'
 export default function MlPage() {
     const { user } = useAuth();
     const [peso, setPeso] = useState(user.peso || "");
-    const [altura, setAltura] = useState(user.altura || "");
+    const [altura, setAltura] = useState(user.estatura || "");
     const [edad, setEdad] = useState(user.edad || "");
     const [genero, setGenero] = useState(user.genero || "");
     const [tmb, setTmb] = useState(null);
