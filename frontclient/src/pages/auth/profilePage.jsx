@@ -5,21 +5,20 @@ import profileImage from "../../imagenes/profileicono.png";
 
 function ProfilePage() {
   const { user, updatePassword, checkEmailExists, updatePerfil } = useAuth();
-  const [userData, setUserData] = useState({
-    password: "",
-    newPassword: "",
-    confirmPassword: "",
-    username: user?.username || "",
-    edad: user?.edad || "",
-    estatura: user?.estatura || "",
-    peso: user?.peso || "",
-    nuevoEmail: user?.email || "",
-    genero: user?.genero || "",
-  });
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [profileImg, setProfileImg] = useState(user?.profileImage || profileImage);
+  const [nombreCompleto, setNombreCompleto] = useState(user?.username || "");
+  const [edad, setEdad] = useState(user?.edad || "");
+  const [estatura, setEstatura] = useState(user?.estatura || "");
+  const [peso, setPeso] = useState(user?.peso || "");
+  const [nuevoEmail, setNuevoEmail] = useState(user.email || "");
+  const [profileImg, setProfileImg] = useState(user.profileImage || profileImage);
   const [newProfileImage, setNewProfileImage] = useState(null);
+  const [genero, setGenero] = useState(user?.genero || ""); // Nuevo estado para el género
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,38 +28,37 @@ function ProfilePage() {
     return () => clearTimeout(timer);
   }, [error, success]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    if (userData.newPassword !== userData.confirmPassword) {
+    if (newPassword !== confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
     try {
-      await updatePassword(userData.password, userData.newPassword);
+      await updatePassword(password, newPassword);
       setSuccess("Contraseña actualizada con éxito");
-      setUserData({ ...userData, password: "", newPassword: "", confirmPassword: "" });
-    } catch {
+      setPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
       setError("Error al actualizar la contraseña");
     }
   };
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    const { nombreCompleto, edad, estatura, peso, nuevoEmail, genero } = userData;
     if (!nombreCompleto || !edad || !estatura || !peso || !nuevoEmail || !genero) {
       setError("Todos los campos deben estar completos.");
       return;
     }
 
     const isEmailChanged = nuevoEmail !== user.email;
-    const isProfileChanged = Object.keys(userData).some(
-      (key) => userData[key] !== user[key]
-    );
+    const isProfileChanged =
+      nombreCompleto !== user.username ||
+      edad !== user.edad ||
+      estatura !== user.estatura ||
+      peso !== user.peso ||
+      genero !== user.genero;
 
     if (!isEmailChanged && !isProfileChanged && !newProfileImage) {
       setError("No hay cambios para actualizar.");
@@ -76,9 +74,12 @@ function ProfilePage() {
     }
 
     const formData = new FormData();
-    for (let key in userData) {
-      formData.append(key, userData[key]);
-    }
+    formData.append('username', nombreCompleto);
+    formData.append('email', nuevoEmail);
+    formData.append('edad', edad);
+    formData.append('estatura', estatura);
+    formData.append('peso', peso);
+    formData.append('genero', genero);
     if (newProfileImage) {
       formData.append('profileImage', newProfileImage);
     }
@@ -86,8 +87,9 @@ function ProfilePage() {
     try {
       await updatePerfil(formData);
       setSuccess("Perfil actualizado con éxito");
-    } catch {
+    } catch (error) {
       setError("Error al actualizar el perfil");
+      //console.error(error); // Esto se puede eliminar en producción
     }
   };
 
