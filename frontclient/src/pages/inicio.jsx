@@ -62,8 +62,8 @@ export function Inicio() {
                 <Col md={4}>
                     <Card className="info-card">
                         <Card.Body>
-                            <div className="card">
-                                <p>{user.profileImage}</p>
+                            <div className="card text-center">
+                                {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
                             <p>Nivel: {user.nivel}</p>
                             <p>Peso: {user.peso}</p>
