@@ -72,7 +72,7 @@ export function EjercicioCard({ ejercicio }) {
       <p className="text-slate-300">Duración: {ejercicio.duracion} segundos</p>
       <p className="text-slate-300">Descanso: {ejercicio.descanso} segundos</p>
       {ejercicio.imagen && (
-        <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-full h-auto" />
+        <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-250px h-250px" />
       )}
 
       <footer>
