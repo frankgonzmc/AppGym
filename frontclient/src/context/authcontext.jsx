@@ -59,9 +59,9 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await updatePerfilRequest(datos);
             if (res.data) {
-                //setUser(res.data); // Actualiza el usuario en el contexto
-                console.log(datos, res.data);
-            } else {
+                setUser(res.data); // Actualiza el usuario en el contexto
+                console.log(datos, res.data, user);
+            } else {    
                 throw new Error('No se recibió una respuesta válida.');
             }
         } catch (error) {
