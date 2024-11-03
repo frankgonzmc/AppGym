@@ -70,8 +70,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-
-
     const checkEmailExists = async (email) => {
         try {
             await checkEmailRequest(email);
