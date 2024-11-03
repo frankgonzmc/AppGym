@@ -1,13 +1,17 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// Obtener el directorio actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Mapa de campos de archivos a sus respectivos directorios
 const uploadDirectories = {
     profileImage: (userId) => path.join(__dirname, 'uploads', 'perfil', userId),
     imagen: path.join(__dirname, 'uploads', 'ejercicios')
 };
-
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
