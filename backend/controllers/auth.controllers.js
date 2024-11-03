@@ -180,7 +180,7 @@ export const updatePerfil = async (req, res) => {
     try {
         const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero } = req.body;
         const profileImage = req.file ? req.file.path : undefined; // Obtiene la ruta de la imagen si se subió
-        console.log(req.file, profileImage);
+
         // Actualiza solo los campos que se han modificado
         if (username) user.username = username;
         if (email) user.email = email;
