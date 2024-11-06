@@ -12,19 +12,17 @@ export default function RutinaPage() {
   const { getProgreso } = useProgreso(); // Obtener la función getProgreso del contexto
 
   useEffect(() => {
-    const fetchRutinas = async () => {
-      await getRutinas();
-      // Usa una copia de rutinas o llama a getProgreso fuera de este ciclo.
+    const fetchRutinasConProgreso = async () => {
       const rutinasList = await getRutinas();
       rutinasList.forEach(rutina => getProgreso(rutina._id));
     };
-    fetchRutinas();
+    fetchRutinasConProgreso();
   }, [getRutinas, getProgreso]);
 
   return (
     <section className="seccion">
       <Container className="py-4">
-        {!rutinas || rutinas.length === 0 ? ( // Cambiar && por ?
+        {!rutinas || rutinas.length === 0 ? (
           <Row className="justify-content-center">
             <Col md={6} className="text-center">
               <Card className="p-4">
