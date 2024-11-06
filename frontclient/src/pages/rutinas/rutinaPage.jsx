@@ -14,13 +14,12 @@ export default function RutinaPage() {
   useEffect(() => {
     const fetchRutinas = async () => {
       await getRutinas();
-      rutinas.forEach(rutina => {
-        getProgreso(rutina._id); // Obtener progreso para cada rutina
-      });
+      // Usa una copia de rutinas o llama a getProgreso fuera de este ciclo.
+      const rutinasList = await getRutinas();
+      rutinasList.forEach(rutina => getProgreso(rutina._id));
     };
-
     fetchRutinas();
-  }, [getRutinas, rutinas, getProgreso]); // Agregar dependencias al efecto
+  }, [getRutinas, getProgreso]);
 
   return (
     <section className="seccion">
@@ -29,7 +28,7 @@ export default function RutinaPage() {
           <Row className="justify-content-center">
             <Col md={6} className="text-center">
               <Card className="p-4">
-                <ImFileEmpty className="text-center text-6xl text-gray-400 mb-3" />
+                <ImFileEmpty className="align-middle text-center text-6xl text-gray-400 mb-3" />
                 <h1 className="font-bold">No hay Rutinas por el momento</h1>
                 <p className="mb-4">Agrega una nueva rutina para empezar.</p>
                 <Link to="/add-rutinas" className="btn btn-primary">
@@ -41,7 +40,7 @@ export default function RutinaPage() {
         ) : (
           <Row className="g-4">
             {rutinas.map((rutina) => (
-              <Col md={6} lg={4} key={rutina._id}>
+              <Col md={6} key={rutina._id}>
                 <RutinaCard rutina={rutina} />
               </Col>
             ))}
