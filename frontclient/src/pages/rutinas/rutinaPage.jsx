@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRutinas } from "../../context/rutinascontext";
-import { useProgreso } from "../../context/progresocontext"; // Importar el contexto de progreso
+import { useProgreso } from "../../context/progresocontext";
 import { RutinaCard } from "../../components/rutina/rutinaCard";
 import "../../css/rutinaPage.css";
 import { ImFileEmpty } from "react-icons/im";
@@ -9,12 +9,16 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
-  const { getProgreso } = useProgreso(); // Obtener la función getProgreso del contexto
+  const { getProgreso } = useProgreso();
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      const rutinasList = await getRutinas();
-      rutinasList.forEach(rutina => getProgreso(rutina._id));
+      const rutinasList = await getRutinas() || []; // Si es undefined, asigna un array vacío
+      if (Array.isArray(rutinasList)) {
+        rutinasList.forEach(rutina => getProgreso(rutina._id));
+      } else {
+        console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
+      }
     };
     fetchRutinasConProgreso();
   }, [getRutinas, getProgreso]);
