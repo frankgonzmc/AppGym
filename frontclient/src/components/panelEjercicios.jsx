@@ -50,7 +50,7 @@ export function PanelEjercicios() {
 
 
     return (
-        <div className="panel-ejercicios w-full">
+        <div className="panel-ejercicios h-100 w-100">
             <section className="bg-gray-800 p-12 rounded-md shadow-lg mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Recomendaciones de Ejercicios</h2>
                 <p className="text-gray-400 mb-4">

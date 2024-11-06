@@ -267,7 +267,7 @@ export function Inicio() {
                     </Card>
                 </Col>
                 <Col md={3}>
-                    <Card className="exercise-card w-full h-full">
+                    <Card className="exercise-card h-100 w-100">
                         <Card.Body>
                             <PanelEjercicios />
                         </Card.Body>
