@@ -9,26 +9,27 @@ function ProgresoPage() {
   const [dailyProgress, setDailyProgress] = useState(Array(6).fill({ completed: false, exerciseCount: 0 }));
   const [weeklyProgress, setWeeklyProgress] = useState([]);
   const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!user?.id) return;
+      setLoading(true);
       try {
-        // Llama a tu API para obtener las rutinas y ejercicios del usuario autenticado
-        const response = await axios.get(`/rutinas/${user.id}`);
+        const response = await axios.get(`/api/rutinas/${user.id}`);
         const routines = response.data;
 
-        // Inicializa los arreglos de progreso diario, semanal y mensual
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
         const weeklyProgress = [];
         const monthlyProgress = new Array(12).fill(0);
 
         routines.forEach((routine) => {
-          const dayIndex = new Date(routine.fecha).getDay() - 1; // Lunes es 0, Domingo no cuenta
-          const month = new Date(routine.fecha).getMonth(); // Obtener el mes (0=enero, 11=diciembre)
+          const dayIndex = new Date(routine.fecha).getDay() - 1;
+          const month = new Date(routine.fecha).getMonth();
           const isComplete = routine.estado === "completada";
           const exerciseCount = routine.ejercicios.length;
 
-          // Lógica para el progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
@@ -36,7 +37,6 @@ function ProgresoPage() {
             };
           }
 
-          // Lógica para el progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
           if (!weeklyProgress[week]) weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           weeklyProgress[week][dayIndex] = {
@@ -44,7 +44,6 @@ function ProgresoPage() {
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount
           };
 
-          // Lógica para el progreso mensual
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
@@ -53,21 +52,20 @@ function ProgresoPage() {
         setDailyProgress(dailyProgress);
         setWeeklyProgress(weeklyProgress);
         setMonthlyProgress(monthlyProgress);
-
-        // Alerta si algún día no está completo
-        dailyProgress.forEach((day, index) => {
-          if (!day.completed) {
-            alert(`Falta completar la rutina del día ${["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"][index]}`);
-          }
-        });
-
+        setError(null);
       } catch (error) {
+        setError("Error al obtener las rutinas");
         console.error("Error al obtener las rutinas:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [user]);
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="progreso-page-container">
