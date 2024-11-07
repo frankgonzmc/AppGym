@@ -20,6 +20,7 @@ function ProgresoPage() {
       try {
         // Usar la instancia de axios configurada
         const response = await axios.get(`/rutina/${user.id}`);
+        console.log(response.data);
         const routines = response.data;
 
         // Inicializar los estados de progreso diario, semanal y mensual
