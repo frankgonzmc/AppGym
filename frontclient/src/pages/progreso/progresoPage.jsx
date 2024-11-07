@@ -14,10 +14,10 @@ function ProgresoPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user?.id) return;
+      if (!user?._id) return;
       setLoading(true);
       try {
-        const response = await axios.get(`/rutinas/${user.id}`);
+        const response = await axios.get(`/rutinas/${user._id}`);
         const routines = response.data;
 
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
