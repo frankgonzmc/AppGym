@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Cambia a localhost
+        target: 'http://backendgym:5000', // Cambia esto por el puerto en el que corre tu servidor Express
         changeOrigin: true,
         secure: false,
       },
