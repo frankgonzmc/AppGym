@@ -17,7 +17,7 @@ function ProgresoPage() {
       if (!user?.id) return;
       setLoading(true);
       try {
-        const response = await axios.get(`/api/rutinas/${user.id}`);
+        const response = await axios.get(`/rutinas/${user.id}`);
         const routines = response.data;
 
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
