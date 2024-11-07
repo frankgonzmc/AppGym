@@ -16,10 +16,13 @@ function ProgresoPage() {
     const fetchData = async () => {
       if (!user?.id) return;
       setLoading(true);
+
       try {
+        // Usar la instancia de axios configurada
         const response = await axios.get(`/rutina/${user.id}`);
         const routines = response.data;
 
+        // Inicializar los estados de progreso diario, semanal y mensual
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
         const weeklyProgress = [];
         const monthlyProgress = new Array(12).fill(0);
@@ -30,6 +33,7 @@ function ProgresoPage() {
           const isComplete = routine.estado === "completada";
           const exerciseCount = routine.ejercicios.length;
 
+          // Calcular el progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
@@ -37,6 +41,7 @@ function ProgresoPage() {
             };
           }
 
+          // Calcular el progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
           if (!weeklyProgress[week]) weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           weeklyProgress[week][dayIndex] = {
@@ -44,11 +49,13 @@ function ProgresoPage() {
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount
           };
 
+          // Calcular el progreso mensual
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
         });
 
+        // Actualizar el estado con los nuevos valores de progreso
         setDailyProgress(dailyProgress);
         setWeeklyProgress(weeklyProgress);
         setMonthlyProgress(monthlyProgress);

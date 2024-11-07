@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { getRutinaRequest } from "../api/rutina"; // Asegúrate de que la función esté definida correctamente
 import {
     getProgresoRequest,
     createProgresoRequest,
