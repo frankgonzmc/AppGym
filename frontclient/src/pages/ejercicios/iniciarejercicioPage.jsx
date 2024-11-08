@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina';
+import { updateProgresoEjercicioRequest, updateEstadoEjercicioRequest } from '../../api/detallerutina';
+import { updateRutinaProgressRequest, updateEstadoRutinaRequest } from '../../api/rutina';
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -32,7 +33,17 @@ export default function IniciaEjercicioPage() {
 
     if (nuevasSeries >= detalles.ejercicio.series) {
       setEjercicioCompletado(true);
-      await updateEstadoRutinaRequest(detalles._id, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
+      await updateEstadoEjercicioRequest(detalles._id, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
+      clearInterval(intervalRef.current);
+    }
+  };
+
+  const actualizarProgresoRutina = async (ejerciciosCompletados) => {
+    await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletados);
+
+    if (ejerciciosCompletados >= detalles.rutina.totalEjercicios) {
+      setEjercicioCompletado(true);
+      await updateEstadoRutinaRequest(detalles.rutina.totalEjercicios, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
       clearInterval(intervalRef.current);
     }
   };
@@ -56,6 +67,11 @@ export default function IniciaEjercicioPage() {
             const nuevasSeries = seriesCompletadas + 1;
             setSeriesCompletadas(nuevasSeries);
             actualizarProgresoSerie(nuevasSeries);
+
+
+            // aqui puedes poner una condicional para que se actualice el progreso de la rutina cuando se completa un ejercicio, si quieres
+            const totalEjerciciosCompletados = detalles.rutina.ejerciciosCompletados || 0;
+            actualizarProgresoRutina(totalEjerciciosCompletados);
           }
         }
       }, 1000);
@@ -63,6 +79,7 @@ export default function IniciaEjercicioPage() {
 
     return () => clearInterval(intervalRef.current);
   }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
+
 
   const handlePausarReanudar = () => {
     setIsPausado((prev) => !prev);
