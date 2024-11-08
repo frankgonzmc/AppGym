@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoEjercicioRequest } from '../../api/detallerutina';
+import { updateProgresoEjercicioRequest, updateEstadoEjercicioRequest, getDetalleRutinaRequest } from '../../api/detallerutina';
 import { updateRutinaProgressRequest, updateEstadoRutinaRequest } from '../../api/rutina';
 
 export default function IniciaEjercicioPage() {
@@ -42,18 +42,24 @@ export default function IniciaEjercicioPage() {
 
   const actualizarProgresoRutina = async () => {
     try {
-      const detalles = await getDetalleRutinaRequest(detalles.rutina); // Trae todos los detalles actualizados
-      const ejerciciosCompletos = detalles.data.filter(detalle => detalle.estado === 'Completado').length;
+      // Obtiene todos los detalles actualizados de la rutina
+      const response = await getDetalleRutinaRequest(detalles.rutina);
+      const detallesRutina = response.data;
 
+      // Filtra los ejercicios completados y calcula el progreso
+      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+
+      // Actualiza el progreso y estado de la rutina en la base de datos
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
-      if (ejerciciosCompletos >= detalles.data.length) {
+      if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
       }
     } catch (error) {
       console.error("Error al actualizar progreso de la rutina:", error);
     }
   };
+
 
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
