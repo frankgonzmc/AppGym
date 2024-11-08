@@ -134,3 +134,23 @@ export const deleteRutina = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar rutina", error });
     }
 };
+
+// Actualiza el progreso de la rutina basado en los ejercicios completados
+export const actualizarProgresoRutina = async (rutinaId) => {
+    try {
+        // Obtiene todos los detalles de la rutina
+        const detalles = await DetallesRutina.find({ rutina: rutinaId });
+
+        // Cuenta los ejercicios completados (ejemplo: si seriesProgreso llega a 4)
+        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
+
+        // Actualiza los campos `ejerciciosCompletados` y `estado` en la rutina
+        await Rutina.findByIdAndUpdate(rutinaId, {
+            ejerciciosCompletados: completados,
+            estado: completados === detalles.length ? "Completado" : "Pendiente"
+        });
+    } catch (error) {
+        console.error("Error al actualizar el progreso de la rutina:", error);
+    }
+};
+
