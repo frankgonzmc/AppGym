@@ -73,29 +73,30 @@ export function DetalleRutinaProvider({ children }) {
             const updatedData = {
                 ejercicio: ejercicioId,
                 seriesProgreso: datos.seriesCompletadas || 0,
-                ejerciciosCompletados: datos.ejerciciosCompletados,
                 estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
-    
-            console.log("Datos a enviar:", updatedData); // Verifica que estos datos son correctos
-    
-            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData);
+
+            console.log("Datos a enviar:", updatedData); // Verifica los datos que se envían
+
+            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
+
+            // Actualiza el progreso de la rutina en el backend
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
-    
+
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response?.data || error);
         }
-    };    
+    };
 
     const updateRutinaProgress = async (rutinaId) => {
         try {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
-
+    
             const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
-
-            // Aquí actualizas el estado en el contexto
+    
+            // Actualiza el estado de la rutina en el contexto
             setProgreso((prev) => ({
                 ...prev,
                 [rutinaId]: {
@@ -103,14 +104,13 @@ export function DetalleRutinaProvider({ children }) {
                     estado: ejerciciosCompletos === detallesResponse.data.length ? 'Completado' : 'Pendiente',
                 },
             }));
-
+    
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
             throw error;
         }
     };
-
 
     return (
         <DetalleRutinaContext.Provider

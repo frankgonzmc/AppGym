@@ -22,7 +22,8 @@ export default function RutinaPage() {
     };
 
     fetchRutinasConProgreso();
-  }, []); // Asegúrate de que solo se ejecute una vez
+  }, []); // Se ejecuta solo al cargar la página
+
 
   return (
     <section className="seccion">

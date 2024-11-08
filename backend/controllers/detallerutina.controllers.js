@@ -70,17 +70,14 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
             return res.status(404).json({ message: "Detalle no encontrado" });
         }
 
-        detalle.seriesProgreso += seriesCompletadas;
+        detalle.seriesProgreso = seriesCompletadas; // Actualiza series completadas
 
         // Actualiza el estado
-        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
-            detalle.estado = 'Completado';
-        } else {
-            detalle.estado = 'En Progreso';
-        }
+        detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? 'Completado' : 'En Progreso';
 
         await detalle.save();
-        // Actualizar rutina
+
+        // Llama a la función para actualizar el progreso de la rutina completa
         await actualizandoEstadosDetallesRutinas(rutinaId);
 
         res.status(200).json(detalle);
@@ -97,10 +94,10 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
         const totalEjercicios = detalles.length;
-        let estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
+        const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
 
         await Rutinas.findByIdAndUpdate(rutinaId, {
-            ejerciciosCompletos,
+            ejerciciosCompletados: ejerciciosCompletos,
             estado: estadoRutina
         }, { new: true });
     } catch (error) {
