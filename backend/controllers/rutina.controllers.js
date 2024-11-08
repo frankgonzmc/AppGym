@@ -9,7 +9,7 @@ export const getRutinas = async (req, res) => {
             user: req.user.id
         }).populate('user');
         if (!rutinas) {
-            return res.status(404).json({ message: "No se encontraron rutinas." });
+            return res.status(404).json({ message: "Rutina no encontrada para el ID especificado." });
         }
         res.json(rutinas);
     } catch (error) {

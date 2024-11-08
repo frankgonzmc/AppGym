@@ -19,7 +19,9 @@ function ProgresoPage() {
       setLoading(true);
 
       try {
-        const response = await axios.get(`/rutina/${user.id}`);
+        // Cambia la ruta según el endpoint correcto
+        const response = await axios.get(`/rutinas?userId=${user.id}`);
+        console.log(response.data);
         const routines = response.data;
 
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
