@@ -2,13 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina'; // Importar funciones API
+import { updateProgresoEjercicioRequest, updateEstadoRutinaRequest } from '../../api/detallerutina';
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
   const { detalles } = state || {};
 
-  // Si no hay detalles:
   if (!detalles || !detalles.ejercicio) {
     return <div>Error: No se han encontrado los detalles del ejercicio</div>;
   }
@@ -22,30 +21,22 @@ export default function IniciaEjercicioPage() {
 
   const intervalRef = useRef(null);
 
-  // Verificar el estado del ejercicio al cargar la página
   useEffect(() => {
     if (seriesCompletadas >= detalles.ejercicio.series) {
-      setEjercicioCompletado(true); // habilita el botón si las series están completas
+      setEjercicioCompletado(true);
     }
   }, [seriesCompletadas, detalles.ejercicio.series]);
 
-  // Función para actualizar el progreso de la serie en la base de datos
   const actualizarProgresoSerie = async (nuevasSeries) => {
-    try {
-      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
-      if (nuevasSeries >= detalles.ejercicio.series) {
-        console.log("Ejercicio completado:", detalles);
-        setEjercicioCompletado(true);
-        await updateEstadoRutinaRequest(detalles.rutina, nuevasSeries); // Pasa el ID de la rutina y el número de ejercicios completados
-        clearInterval(intervalRef.current);
-      }
-    } catch (error) {
-      console.error("Error al actualizar el progreso de la serie:", error);
+    if (nuevasSeries >= detalles.ejercicio.series) {
+      setEjercicioCompletado(true);
+      await updateEstadoRutinaRequest(detalles.rutina);  // Actualiza la rutina cuando un ejercicio se completa
+      clearInterval(intervalRef.current);
     }
   };
 
-  // Efecto para manejar el temporizador y el descanso
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
       intervalRef.current = setInterval(() => {
@@ -73,12 +64,10 @@ export default function IniciaEjercicioPage() {
     return () => clearInterval(intervalRef.current);
   }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
 
-  // Función para pausar o reanudar
   const handlePausarReanudar = () => {
     setIsPausado((prev) => !prev);
   };
 
-  // Función para reiniciar el ejercicio
   const handleReset = () => {
     setDuracionRestante(detalles.ejercicio.duracion);
     setDescansoRestante(detalles.ejercicio.descanso);
@@ -93,22 +82,10 @@ export default function IniciaEjercicioPage() {
       <Card.Header>
         <div className="flex h-[calc(80vh-80px)] items-center justify-center">
           {isDescanso ? (
-            // Imagen para el descanso
-            <img
-              src={reposo}
-              alt="Descanso"
-              className="w-450 h-450 mt-2 my-2"
-              style={{ maxWidth: '100%', height: 'auto' }}
-            />
+            <img src={reposo} alt="Descanso" className="w-450 h-450 mt-2 my-2" style={{ maxWidth: '100%', height: 'auto' }} />
           ) : (
-            // Imagen del ejercicio
             detalles.ejercicio.imagen && (
-              <img
-                src={detalles.ejercicio.imagen}
-                alt={detalles.ejercicio.nombre}
-                className="w-450 h-450 mt-2 my-2"
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
+              <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-450 h-450 mt-2 my-2" style={{ maxWidth: '100%', height: 'auto' }} />
             )
           )}
         </div>
@@ -116,36 +93,17 @@ export default function IniciaEjercicioPage() {
       <Card.Body>
         <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
-        <ProgressBar
-          now={(duracionRestante / detalles.ejercicio.duracion) * 100}
-          label={`Duración: ${duracionRestante}s`}
-          className='mt-2'
-          style={{ height: '40px', maxWidth: 'auto', }} // Ajusta la altura aquí
-        />
+        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`Duración: ${duracionRestante}s`} className='mt-2' style={{ height: '40px', maxWidth: 'auto', }} />
         {isDescanso && (
-          <ProgressBar
-            variant="info"
-            now={(descansoRestante / detalles.ejercicio.descanso) * 100}
-            className='mt-2'
-            label={`Descanso: ${descansoRestante}s`}
-            style={{ height: '40px', maxWidth: 'auto', }} // Ajusta la altura aquí también
-          />
+          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} className='mt-2' label={`Descanso: ${descansoRestante}s`} style={{ height: '40px', maxWidth: 'auto', }} />
         )}
-        <p>
-          Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}
-        </p>
+        <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
 
         <div className="d-flex justify-content-between">
           <Button onClick={handlePausarReanudar}>
             {isPausado ? 'Iniciar' : 'Pausar'}
           </Button>
-          <Button
-            variant="danger"
-            onClick={handleReset}
-            disabled={!ejercicioCompletado} // Habilitar solo si el ejercicio está completo
-          >
-            Reiniciar
-          </Button>
+          <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>Reiniciar</Button>
         </div>
       </Card.Body>
     </Card>
