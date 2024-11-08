@@ -62,7 +62,7 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
-    console.log("Solicitud de actualización recibida:", req.body); // Verifica los datos recibidos
+    console.log("Solicitud de actualización recibida:", req.body);
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
@@ -74,6 +74,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? 'Completado' : 'En Progreso';
         await detalle.save();
 
+        // Asegúrate de llamar a `actualizandoEstadosDetallesRutinas` aquí
         await actualizandoEstadosDetallesRutinas(rutinaId);
 
         res.status(200).json(detalle);
@@ -92,6 +93,7 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const totalEjercicios = detalles.length;
         const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
 
+        // Actualiza la colección `Rutinas`
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: ejerciciosCompletos,
             estado: estadoRutina
@@ -101,3 +103,4 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         throw error;
     }
 };
+
