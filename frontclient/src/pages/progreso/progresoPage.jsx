@@ -19,62 +19,6 @@ function ProgresoPage() {
       setLoading(true);
 
       try {
-        const response = await axios.get(`/rutina/${user.id}`);
-        const routines = response.data;
-
-        const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
-        const weeklyProgress = [];
-        const monthlyProgress = new Array(12).fill(0);
-
-        routines.forEach((routine) => {
-          const dayIndex = new Date(routine.fecha).getDay() - 1;
-          const month = new Date(routine.fecha).getMonth();
-          const isComplete = routine.estado === "completada";
-
-          // Asegurarse de que 'ejercicios' esté definido
-          const exerciseCount = routine.ejercicios ? routine.ejercicios.length : 0;
-
-          // Progreso diario
-          if (dayIndex >= 0 && dayIndex <= 5) {
-            dailyProgress[dayIndex] = {
-              completed: isComplete,
-              exerciseCount: dailyProgress[dayIndex].exerciseCount + exerciseCount,
-            };
-          }
-
-          // Progreso semanal
-          const week = Math.floor(new Date(routine.fecha).getDate() / 7);
-          if (!weeklyProgress[week]) {
-            weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
-          }
-          weeklyProgress[week][dayIndex] = {
-            completed: isComplete,
-            exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount,
-          };
-
-          // Progreso mensual
-          if (isComplete) {
-            monthlyProgress[month] += exerciseCount;
-          }
-        });
-
-        setDailyProgress(dailyProgress);
-        setWeeklyProgress(weeklyProgress);
-        setMonthlyProgress(monthlyProgress);
-        setError(null);
-      } catch (error) {
-        setError("Error al obtener las rutinas");
-        console.error("Error al obtener las rutinas:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    /*const fetchData = async () => {
-      if (!user?.id) return;
-      setLoading(true);
-
-      try {
         // Cambia la ruta según el endpoint correcto
         const response = await axios.get(`/rutinas?userId=${user.id}`);
         console.log(response.data);
@@ -128,7 +72,7 @@ function ProgresoPage() {
       } finally {
         setLoading(false);
       }
-    };*/
+    };
 
     fetchData();
   }, [user]);
