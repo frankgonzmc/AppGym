@@ -14,7 +14,7 @@ export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => 
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });
 };
 
-export const getDetallesRutina = async (rutinaId) => {
-    const response = await axios.get(`/detalles-rutinas/${rutinaId}`);
+export const getDetallesRutina = async (detalleId) => {
+    const response = await axios.get(`/detalles-rutinas/${detalleId}`);
     return response.data; // Debería devolver la lista de detalles de la rutina
 };

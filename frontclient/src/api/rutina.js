@@ -8,8 +8,8 @@ export const createRutinaRequest = (rutina) => axios.post('/rutinas', rutina)
 export const updateRutinaRequest = (id, rutina) => axios.put(`/rutinas/${id}`, rutina)
 export const deleteRutinaRequest = (id) => axios.delete(`/rutinas/${id}`)
 
-export const updateEstadoRutinaRequest = (rutina, estado) => axios.put(`/rutinas/${rutina}`, { estado });
+export const updateEstadoRutinaRequest = (rutinaId, estado) => axios.put(`/rutinas/${rutinaId}`, { estado });
 
-export const updateRutinaProgressRequest = (rutina, ejerciciosCompletados) => {
-    return axios.put(`/rutinas/${rutina}`, { ejerciciosCompletados: ejerciciosCompletados });
+export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletados) => {
+    return axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletados: ejerciciosCompletados });
 };
