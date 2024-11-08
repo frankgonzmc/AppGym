@@ -8,19 +8,10 @@ export const deleteDetalleRutinaRequest = (id) => axios.delete(`/detalles-rutina
 
 export const updateDetalleRutinaRequest = (id, detalles) => axios.put(`/detalles-rutinas/${id}`, detalles);
 
-// api/detallerutina.js
-export const updateEstadoRutinaRequest = async (rutinaId, ejerciciosCompletos) => {
-    try {
-        // Este endpoint debe existir en tu backend para actualizar la rutina
-        const response = await axios.put(`/rutinas/${rutinaId}/estado`, { ejerciciosCompletos });
-        return response.data;
-    } catch (error) {
-        console.error("Error al actualizar el estado de la rutina:", error);
-        throw error;
-    }
-};
+export const updateEstadoRutinaRequest = (detalleId, estado) => axios.put(`/detalles-rutinas/${detalleId}`, { estado });
 
-export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/detalle-rutinas/${rutinaId}`, { ejerciciosCompletos });
+export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
+
 
 export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });

@@ -75,33 +75,42 @@ export function DetalleRutinaProvider({ children }) {
                 seriesProgreso: datos.seriesCompletadas || 0,
                 estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
-    
-            console.log("Datos a enviar al backend:", updatedData); // Verifica los datos que se están enviando
-    
+
+            console.log("Datos a enviar:", updatedData); // Verifica los datos que se envían
+
             const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
-            // Después de actualizar el detalle, llama a `updateRutinaProgress`
+
+            // Actualiza el progreso de la rutina en el backend
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
-    
+
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response?.data || error);
         }
-    };    
+    };
 
     const updateRutinaProgress = async (rutinaId) => {
         try {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
     
-            // Llama a la API para actualizar el progreso de la rutina
             const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
+    
+            // Actualiza el estado de la rutina en el contexto
+            setProgreso((prev) => ({
+                ...prev,
+                [rutinaId]: {
+                    ...prev[rutinaId],
+                    estado: ejerciciosCompletos === detallesResponse.data.length ? 'Completado' : 'Pendiente',
+                },
+            }));
     
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
             throw error;
         }
-    };    
+    };
 
     return (
         <DetalleRutinaContext.Provider
