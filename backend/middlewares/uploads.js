@@ -7,19 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const uploadDirectories = {
-    profileImage: (userId) => path.join(__dirname, '../uploads/perfil', userId),
+    profileImage: () => path.join(__dirname, '../uploads/perfil'),
     imagen: path.join(__dirname, '../uploads/ejercicios')
 };
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const userId = req.user ? req.user.id : null;
-        if (!userId) {
-            return cb(new Error('No se encontró el ID del usuario'));
-        }
-
-        const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname](userId) : null;
+        const dir = uploadDirectories[file.fieldname] ? uploadDirectories[file.fieldname]() : null;
 
         if (dir) {
             console.log(`Intentando crear el directorio: ${dir}`);

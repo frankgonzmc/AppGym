@@ -192,7 +192,7 @@ export const updatePerfil = async (req, res) => {
         if (profileImage) user.profileImage = profileImage;
 
         await user.save();
-        return res.status(200).json(user); // Devuelve el usuario actualizado
+        return res.status(200).json(user);
     } catch (error) {
         console.error("Error en updatePerfil:", error);
         return res.status(500).json({ message: "Error al actualizar el perfil", error: error.message });
