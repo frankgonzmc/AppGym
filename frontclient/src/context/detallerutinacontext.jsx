@@ -80,6 +80,7 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+
     const updateRutinaProgress = async (rutinaId) => {
         try {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);

@@ -154,3 +154,24 @@ export const actualizarProgresoRutina = async (rutinaId) => {
     }
 };
 
+export const actualizarEstadoRutina = async (req, res) => {
+    const { rutinaId } = req.params;
+    const { ejerciciosCompletos } = req.body;
+
+    try {
+        // Encuentra la rutina y actualiza los ejercicios completados
+        const detalles = await DetallesRutina.find({ rutina: rutinaId });
+        const totalEjercicios = detalles.length;
+        const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
+
+        const rutinaActualizada = await Rutinas.findByIdAndUpdate(rutinaId, {
+            ejerciciosCompletados: ejerciciosCompletos,
+            estado: estadoRutina
+        }, { new: true });
+
+        res.json(rutinaActualizada);
+    } catch (error) {
+        console.error("Error al actualizar el estado de la rutina:", error);
+        res.status(500).json({ message: "Error al actualizar la rutina" });
+    }
+};
