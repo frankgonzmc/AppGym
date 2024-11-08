@@ -33,7 +33,7 @@ export default function IniciaEjercicioPage() {
 
     if (nuevasSeries >= detalles.ejercicio.series) {
       setEjercicioCompletado(true);
-      await updateEstadoEjercicioRequest(detalles._id, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
+      await updateEstadoEjercicioRequest(detalles._id, "Completado"); // Actualiza el estado del ejercicio cuando se completa
       clearInterval(intervalRef.current);
     }
   };
@@ -42,8 +42,7 @@ export default function IniciaEjercicioPage() {
     await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletados);
 
     if (ejerciciosCompletados >= detalles.rutina.totalEjercicios) {
-      setEjercicioCompletado(true);
-      await updateEstadoRutinaRequest(detalles.rutina.totalEjercicios, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
+      await updateEstadoRutinaRequest(detalles.rutina, "Completado"); // Actualiza la rutina cuando todos los ejercicios están completos
       clearInterval(intervalRef.current);
     }
   };
@@ -68,10 +67,10 @@ export default function IniciaEjercicioPage() {
             setSeriesCompletadas(nuevasSeries);
             actualizarProgresoSerie(nuevasSeries);
 
-
-            // aqui puedes poner una condicional para que se actualice el progreso de la rutina cuando se completa un ejercicio, si quieres
-            const totalEjerciciosCompletados = detalles.rutina.ejerciciosCompletados || 0;
-            actualizarProgresoRutina(totalEjerciciosCompletados);
+            if (nuevasSeries >= detalles.ejercicio.series) {
+              const totalEjerciciosCompletados = (detalles.rutina.ejerciciosCompletados || 0) + 1;
+              actualizarProgresoRutina(totalEjerciciosCompletados);
+            }
           }
         }
       }, 1000);
