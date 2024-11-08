@@ -145,10 +145,10 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
 
         // Actualiza los campos `ejerciciosCompletados` y `estado` en la rutina
-        await Rutinas.findByIdAndUpdate(rutinaId, {
-            ejerciciosCompletados: completados,
-            estado: completados === detalles.length ? "Completado" : "Pendiente"
-        });
+        /* await Rutinas.findByIdAndUpdate(rutinaId, {
+             ejerciciosCompletados: completados,
+             estado: completados === detalles.length ? "Completado" : "Pendiente"
+         });*/
     } catch (error) {
         console.error("Error al actualizar el progreso de la rutina:", error);
     }
