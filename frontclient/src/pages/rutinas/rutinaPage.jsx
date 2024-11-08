@@ -13,7 +13,7 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      const rutinasList = await getRutinas();
+      const rutinasList = await getRutinas() || [];
       if (Array.isArray(rutinasList)) {
         rutinasList.forEach(rutina => getProgreso(rutina._id));
       } else {
