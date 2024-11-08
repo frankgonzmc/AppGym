@@ -20,7 +20,7 @@ export const updateEstadoRutinaRequest = async (rutinaId, ejerciciosCompletos) =
     }
 };
 
-export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
+export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/detalle-rutinas/${rutinaId}`, { ejerciciosCompletos });
 
 export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });
