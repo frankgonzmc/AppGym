@@ -1,10 +1,14 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const uploadDirectories = {
-    profileImage: (userId) => path.join(__dirname, '../uploads/perfil', userId), // Ruta completa
-    imagen: path.join(__dirname, '../uploads/ejercicios')  // Ruta completa
+    profileImage: (userId) => path.join(__dirname, '../uploads/perfil', userId),
+    imagen: path.join(__dirname, '../uploads/ejercicios')
 };
 
 // Configuración de almacenamiento para multer
@@ -33,13 +37,12 @@ const storage = multer.diskStorage({
         }
     },
     filename: function (req, file, cb) {
-        const uniqueFilename = `${req.user.id}.jpg`; // Mantén el nombre único por ID
+        const uniqueFilename = `${req.user.id}.jpg`;
         console.log(`Guardando archivo como: ${uniqueFilename}`);
         cb(null, uniqueFilename);
     }
 });
 
-// Filtro de archivo
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
     if (allowedTypes.includes(file.mimetype)) {
