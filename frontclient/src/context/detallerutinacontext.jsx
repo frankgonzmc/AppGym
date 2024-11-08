@@ -68,40 +68,32 @@ export function DetalleRutinaProvider({ children }) {
         }
     };
 
+    // En DetalleRutinaContext
     const updateProgresoEjercicio = async (rutinaId, ejercicioId, datos) => {
+        console.log("Llamada a updateProgresoEjercicio con datos:", rutinaId, ejercicioId, datos); // Añade este log
         try {
-            const updatedData = {
-                ejercicio: ejercicioId,
-                seriesProgreso: datos.seriesCompletadas || 0,
-                estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
-            };
-    
-            console.log("Datos a enviar al backend:", updatedData); // Verifica los datos que se están enviando
-    
-            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
-            // Después de actualizar el detalle, llama a `updateRutinaProgress`
+            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, datos.seriesCompletadas || 0);
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
-    
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
-            console.error("Error al actualizar progreso del ejercicio:", error.response?.data || error);
+            console.error("Error al actualizar progreso del ejercicio:", error);
         }
-    };    
+    };
 
     const updateRutinaProgress = async (rutinaId) => {
         try {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
-    
+
             // Llama a la API para actualizar el progreso de la rutina
             const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
-    
+
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
             throw error;
         }
-    };    
+    };
 
     return (
         <DetalleRutinaContext.Provider

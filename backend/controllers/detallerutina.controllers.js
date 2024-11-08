@@ -60,9 +60,11 @@ export const deleteDetalleRutina = async (req, res) => {
 };
 
 // Actualizar progreso y estado de rutina
+// Controlador de DetallesRutina - detallerutina.controllers.js
+
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
-    console.log("Solicitud de actualización recibida:", req.body);
+    console.log("Solicitud de actualización recibida:", req.body); // Log para verificar los datos recibidos
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
@@ -74,8 +76,10 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? 'Completado' : 'En Progreso';
         await detalle.save();
 
-        // Asegúrate de llamar a `actualizandoEstadosDetallesRutinas` aquí
-        await actualizandoEstadosDetallesRutinas(rutinaId);
+        // Actualiza la rutina después de actualizar el detalle
+        const res = await actualizandoEstadosDetallesRutinas(rutinaId);
+
+        console.log(res);
 
         res.status(200).json(detalle);
     } catch (error) {
@@ -84,20 +88,24 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
     }
 };
 
-// Nueva función para actualizar la rutina
+
+// Función para actualizar el progreso de la rutina - detallerutina.controllers.js o rutina.controllers.js
 export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
-
         const totalEjercicios = detalles.length;
+
+        // Si todos los ejercicios están completos, la rutina también debe marcarse como completada
         const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
 
-        // Actualiza la colección `Rutinas`
+        // Actualiza la rutina con el número de ejercicios completados y el estado
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: ejerciciosCompletos,
             estado: estadoRutina
         }, { new: true });
+
+        console.log(`Actualización completada para la rutina ${rutinaId}: ${ejerciciosCompletos} ejercicios completados de ${estadoRutina}`);
     } catch (error) {
         console.error("Error actualizando la rutina:", error);
         throw error;
