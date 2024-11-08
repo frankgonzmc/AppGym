@@ -94,24 +94,32 @@ export const updateRutina = async (req, res) => {
         const rutinaId = req.params.id;
         if (!rutinaId) return res.status(400).json({ message: "ID de rutina es requerido." });
 
-        const { nombre, descripcion, ejercicios, totalEjercicios } = req.body; // obtener totalEjercicios también
+        // Extrae los datos del cuerpo de la solicitud
+        const { nombre, descripcion, ejercicios, totalEjercicios, ejerciciosCompletados, estado } = req.body;
+
+        // Crea el objeto de actualización dinámicamente según los datos proporcionados
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
-        if (totalEjercicios) updateData.totalEjercicios = totalEjercicios; // Actualizar totalEjercicios
+        if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
+        if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
+        if (estado) updateData.estado = estado;
 
-        // Actualiza la rutina
+        // Actualiza la rutina en la base de datos
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
 
-        // Aquí maneja los detalles de la rutina (ejercicios)
-        await DetallesRutina.deleteMany({ rutina: rutinaId }); // Elimina los detalles existentes
-        const detalles = ejercicios.map(ejercicioId => ({
-            rutina: rutinaId,
-            ejercicio: ejercicioId,
-            fecha: new Date(),
-        }));
-        await DetallesRutina.insertMany(detalles); // Inserta los nuevos detalles
+        // Maneja los detalles de la rutina (ejercicios)
+        if (ejercicios) {
+            // Elimina los detalles existentes y luego inserta los nuevos detalles
+            await DetallesRutina.deleteMany({ rutina: rutinaId });
+            const detalles = ejercicios.map(ejercicioId => ({
+                rutina: rutinaId,
+                ejercicio: ejercicioId,
+                fecha: new Date(),
+            }));
+            await DetallesRutina.insertMany(detalles);
+        }
 
         res.json(rutina);
     } catch (error) {
@@ -141,14 +149,19 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         // Obtiene todos los detalles de la rutina
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
 
-        // Cuenta los ejercicios completados (ejemplo: si seriesProgreso llega a 4)
-        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
+        // Cuenta los ejercicios completados
+        const completados = detalles.filter(detalle => detalle.estado === "Completado").length;
 
-        // Actualiza los campos `ejerciciosCompletados` y `estado` en la rutina
+        // Define el estado de la rutina en función de si todos los ejercicios están completos
+        const estadoRutina = completados === detalles.length ? "Completado" : "Pendiente";
+
+        // Actualiza la rutina en la base de datos
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: completados,
-            estado: completados === detalles.length ? "Completado" : "Pendiente"
-        });
+            estado: estadoRutina
+        }, { new: true });
+
+        console.log(`Actualización completada para la rutina ${rutinaId}: ${completados} ejercicios completados de ${detalles.length}`);
     } catch (error) {
         console.error("Error al actualizar el progreso de la rutina:", error);
     }
