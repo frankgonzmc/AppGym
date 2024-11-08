@@ -19,7 +19,6 @@ function ProgresoPage() {
       setLoading(true);
 
       try {
-        // Cambia la ruta según el endpoint correcto
         const response = await axios.get(`/rutinas?userId=${user.id}`);
         console.log(response.data);
         const routines = response.data;
@@ -46,9 +45,17 @@ function ProgresoPage() {
 
           // Progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
+
+          // Inicializa la semana si no está definida
           if (!weeklyProgress[week]) {
             weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           }
+
+          // Asegúrate de que el día de la semana esté definido en 'weeklyProgress'
+          if (!weeklyProgress[week][dayIndex]) {
+            weeklyProgress[week][dayIndex] = { completed: false, exerciseCount: 0 };
+          }
+
           weeklyProgress[week][dayIndex] = {
             completed: isComplete,
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount,
