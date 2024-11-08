@@ -93,21 +93,14 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
-        const totalEjercicios = detalles.length;
 
-        // Si todos los ejercicios están completos, la rutina también debe marcarse como completada
-        const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
-
-        // Actualiza el progreso en la colección `Rutinas`
+        const estadoRutina = ejerciciosCompletos === detalles.length ? 'Completado' : 'Pendiente';
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: ejerciciosCompletos,
             estado: estadoRutina
-        }, { new: true });
-
-        console.log(`Actualización completada para la rutina ${rutinaId}: ${ejerciciosCompletos} ejercicios completados de ${totalEjercicios}`);
+        });
     } catch (error) {
         console.error("Error actualizando la rutina:", error);
         throw error;
     }
 };
-

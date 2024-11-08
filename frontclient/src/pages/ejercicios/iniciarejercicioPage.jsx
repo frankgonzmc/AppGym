@@ -29,27 +29,35 @@ export default function IniciaEjercicioPage() {
   }, [seriesCompletadas, detalles.ejercicio.series]);
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
-    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+    if (nuevasSeries <= detalles.ejercicio.series) {
+      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
-    if (nuevasSeries >= detalles.ejercicio.series) {
-      setEjercicioCompletado(true);
-      await updateEstadoEjercicioRequest(detalles._id, "Completado"); // Actualiza el estado del ejercicio cuando se completa
-      clearInterval(intervalRef.current);
+      if (nuevasSeries === detalles.ejercicio.series) {
+        await updateEstadoEjercicioRequest(detalles._id, "Completado");
+        setEjercicioCompletado(true);
+        await actualizarProgresoRutina();
+      }
     }
   };
 
-  const actualizarProgresoRutina = async (ejerciciosCompletados) => {
-    await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletados);
+  const actualizarProgresoRutina = async () => {
+    try {
+      const detalles = await getDetalleRutinaRequest(detalles.rutina); // Trae todos los detalles actualizados
+      const ejerciciosCompletos = detalles.data.filter(detalle => detalle.estado === 'Completado').length;
 
-    if (ejerciciosCompletados >= detalles.rutina.totalEjercicios) {
-      await updateEstadoRutinaRequest(detalles.rutina, "Completado"); // Actualiza la rutina cuando todos los ejercicios están completos
-      clearInterval(intervalRef.current);
+      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+
+      if (ejerciciosCompletos >= detalles.data.length) {
+        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+      }
+    } catch (error) {
+      console.error("Error al actualizar progreso de la rutina:", error);
     }
   };
 
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
-      intervalRef.current = setInterval(() => {
+      intervalRef.current = setInterval(async () => {
         if (!isDescanso) {
           if (duracionRestante > 0) {
             setDuracionRestante((prev) => prev - 1);
@@ -65,20 +73,15 @@ export default function IniciaEjercicioPage() {
             setDuracionRestante(detalles.ejercicio.duracion);
             const nuevasSeries = seriesCompletadas + 1;
             setSeriesCompletadas(nuevasSeries);
-            actualizarProgresoSerie(nuevasSeries);
 
-            if (nuevasSeries >= detalles.ejercicio.series) {
-              const totalEjerciciosCompletados = (detalles.rutina.ejerciciosCompletados || 0) + 1;
-              actualizarProgresoRutina(totalEjerciciosCompletados);
-            }
+            // Actualiza la serie y verifica progreso
+            await actualizarProgresoSerie(nuevasSeries);
           }
         }
       }, 1000);
     }
-
     return () => clearInterval(intervalRef.current);
   }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
-
 
   const handlePausarReanudar = () => {
     setIsPausado((prev) => !prev);
