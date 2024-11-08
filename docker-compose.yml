@@ -8,7 +8,8 @@ services:
     links:
       - database
     volumes:
-      - .:/usr/src/app
+      - ./backend:/usr/src/app # Mapea solo el directorio backend en el contenedor backend
+      - ./backend/uploads:/usr/src/app/uploads # Mapea específicamente el directorio de uploads
 
   database:
     container_name: mongodb
@@ -25,4 +26,4 @@ services:
     links:
       - mybackend
     volumes:
-      - .:/usr/src/app
+      - ./frontclient:/usr/src/app # Mapea solo el directorio frontclient en el contenedor frontend
