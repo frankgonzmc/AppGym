@@ -10,8 +10,7 @@ export const updateDetalleRutinaRequest = (id, detalles) => axios.put(`/detalles
 
 export const updateEstadoRutinaRequest = (detalleId, estado) => axios.put(`/detalles-rutinas/${detalleId}`, { estado });
 
-export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/rutinas/${rutinaId}`, { ejerciciosCompletos });
-
+export const updateRutinaProgressRequest = (rutinaId, ejerciciosCompletos) => axios.put(`/detalles-rutinas/${rutinaId}`, { ejerciciosCompletos });
 
 export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => {
     return axios.put(`/detalles-rutinas/${detalleId}`, { seriesProgreso: seriesCompletadas });
