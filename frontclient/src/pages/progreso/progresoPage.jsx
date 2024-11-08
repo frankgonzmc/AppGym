@@ -32,22 +32,29 @@ function ProgresoPage() {
           const dayIndex = new Date(routine.fecha).getDay() - 1; // 0=Lunes
           const month = new Date(routine.fecha).getMonth();
           const isComplete = routine.estado === "completada";
-          const exerciseCount = routine.ejercicios.length;
 
+          // Asegúrate de que 'ejercicios' está definido antes de acceder a su 'length'
+          const exerciseCount = routine.ejercicios ? routine.ejercicios.length : 0;
+
+          // Progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
-              exerciseCount: dailyProgress[dayIndex].exerciseCount + exerciseCount
+              exerciseCount: dailyProgress[dayIndex].exerciseCount + exerciseCount,
             };
           }
 
+          // Progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
-          if (!weeklyProgress[week]) weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
+          if (!weeklyProgress[week]) {
+            weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
+          }
           weeklyProgress[week][dayIndex] = {
             completed: isComplete,
-            exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount
+            exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount,
           };
 
+          // Progreso mensual
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
