@@ -62,22 +62,18 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
+    console.log("Solicitud de actualización recibida:", req.body); // Verifica los datos recibidos
 
     try {
         const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
-
         if (!detalle) {
             return res.status(404).json({ message: "Detalle no encontrado" });
         }
 
-        detalle.seriesProgreso = seriesCompletadas; // Actualiza series completadas
-
-        // Actualiza el estado
+        detalle.seriesProgreso = seriesCompletadas;
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? 'Completado' : 'En Progreso';
-
         await detalle.save();
 
-        // Llama a la función para actualizar el progreso de la rutina completa
         await actualizandoEstadosDetallesRutinas(rutinaId);
 
         res.status(200).json(detalle);

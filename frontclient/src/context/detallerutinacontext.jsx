@@ -76,11 +76,9 @@ export function DetalleRutinaProvider({ children }) {
                 estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
 
-            console.log("Datos a enviar:", updatedData); // Verifica los datos que se envían
+            console.log("Datos a enviar al backend:", updatedData); // Verifica que los datos son correctos
 
             const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
-
-            // Actualiza el progreso de la rutina en el backend
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
 
             return { detalleActualizado, rutinaActualizada };
@@ -93,9 +91,9 @@ export function DetalleRutinaProvider({ children }) {
         try {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
-    
+
             const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
-    
+
             // Actualiza el estado de la rutina en el contexto
             setProgreso((prev) => ({
                 ...prev,
@@ -104,7 +102,7 @@ export function DetalleRutinaProvider({ children }) {
                     estado: ejerciciosCompletos === detallesResponse.data.length ? 'Completado' : 'Pendiente',
                 },
             }));
-    
+
             return res.data;
         } catch (error) {
             console.error("Error al actualizar rutina:", error);
