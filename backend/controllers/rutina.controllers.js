@@ -159,19 +159,25 @@ export const actualizarEstadoRutina = async (req, res) => {
     const { ejerciciosCompletos } = req.body;
 
     try {
-        // Encuentra la rutina y actualiza los ejercicios completados
+        // Obtén todos los detalles de la rutina y calcula los ejercicios completados y el estado
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
         const totalEjercicios = detalles.length;
         const estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
 
+        // Actualiza la rutina en la base de datos
         const rutinaActualizada = await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: ejerciciosCompletos,
             estado: estadoRutina
         }, { new: true });
 
+        if (!rutinaActualizada) {
+            console.log("Rutina no encontrada");
+            return res.status(404).json({ message: "Rutina no encontrada" });
+        }
+
         res.json(rutinaActualizada);
     } catch (error) {
         console.error("Error al actualizar el estado de la rutina:", error);
-        res.status(500).json({ message: "Error al actualizar la rutina" });
+        res.status(500).json({ message: "Error al actualizar la rutina", error });
     }
 };

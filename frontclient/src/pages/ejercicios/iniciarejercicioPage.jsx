@@ -36,7 +36,7 @@ export default function IniciaEjercicioPage() {
     if (nuevasSeries >= detalles.ejercicio.series) {
       console.log(detalles)
       setEjercicioCompletado(true);
-      await updateEstadoRutinaRequest(detalles._id, 'Completado');
+      await updateEstadoRutinaRequest(detalles.rutina, nuevasSeries); // Pasa el ID de la rutina y el número de ejercicios completados
       clearInterval(intervalRef.current);
     }
   };
