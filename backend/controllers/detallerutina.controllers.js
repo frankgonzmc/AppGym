@@ -88,8 +88,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
     }
 };
 
-
-// Función para actualizar el progreso de la rutina - detallerutina.controllers.js o rutina.controllers.js
+// Función para actualizar el progreso de la rutina - rutina.controllers.js
 export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
         // Obtén todos los detalles de ejercicios de la rutina específica
