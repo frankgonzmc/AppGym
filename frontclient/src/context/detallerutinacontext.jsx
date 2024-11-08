@@ -76,20 +76,17 @@ export function DetalleRutinaProvider({ children }) {
                 ejerciciosCompletados: datos.ejerciciosCompletados,
                 estado: (datos.seriesCompletadas >= datos.ejercicio.series) ? 'Completado' : 'En Progreso',
             };
-
-            console.log("Datos a enviar:", updatedData);
-
-            // Actualiza el progreso del ejercicio individual
+    
+            console.log("Datos a enviar:", updatedData); // Verifica que estos datos son correctos
+    
             const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData);
-
-            // Actualiza la rutina en el backend después de actualizar el ejercicio
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
-
+    
             return { detalleActualizado, rutinaActualizada };
         } catch (error) {
             console.error("Error al actualizar progreso del ejercicio:", error.response?.data || error);
         }
-    };
+    };    
 
     const updateRutinaProgress = async (rutinaId) => {
         try {
