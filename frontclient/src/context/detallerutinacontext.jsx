@@ -79,8 +79,10 @@ export function DetalleRutinaProvider({ children }) {
 
             console.log("Datos a enviar:", updatedData);
 
-            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData.seriesProgreso);
+            // Actualiza el progreso del ejercicio individual
+            const detalleActualizado = await updateProgresoEjercicioRequest(ejercicioId, updatedData);
 
+            // Actualiza la rutina en el backend después de actualizar el ejercicio
             const rutinaActualizada = await updateRutinaProgress(rutinaId);
 
             return { detalleActualizado, rutinaActualizada };

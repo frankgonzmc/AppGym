@@ -97,17 +97,12 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
         const totalEjercicios = detalles.length;
+        let estadoRutina = ejerciciosCompletos === totalEjercicios ? 'Completado' : 'Pendiente';
 
-        let estadoRutina = 'Pendiente';
-        if (ejerciciosCompletos === totalEjercicios) {
-            estadoRutina = 'Completado';
-        } else if (ejerciciosCompletos === 0) {
-            estadoRutina = 'En Progreso';
-        } else if (ejerciciosCompletos >= 1) {
-            estadoRutina = 'En Progreso';
-        }
-
-        await Rutinas.findByIdAndUpdate(rutinaId, { ejerciciosCompletos, estado: estadoRutina }, { new: true });
+        await Rutinas.findByIdAndUpdate(rutinaId, {
+            ejerciciosCompletos,
+            estado: estadoRutina
+        }, { new: true });
     } catch (error) {
         console.error("Error actualizando la rutina:", error);
         throw error;
