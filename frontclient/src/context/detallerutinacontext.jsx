@@ -5,7 +5,6 @@ import {
     getDetalleRutinaRequest,
     updateProgresoEjercicioRequest,
     updateDetalleRutinaRequest,
-    updateRutinaProgressRequest,
 } from "../api/detallerutina";
 
 const DetalleRutinaContext = createContext();
@@ -94,7 +93,7 @@ export function DetalleRutinaProvider({ children }) {
             const detallesResponse = await getDetalleRutinaRequest(rutinaId);
             const ejerciciosCompletos = detallesResponse.data.filter(detalle => detalle.estado === 'Completado').length;
     
-            const res = await updateRutinaProgressRequest(rutinaId, ejerciciosCompletos);
+            const res = await updateProgresoEjercicioRequest(rutinaId, ejerciciosCompletos);
     
             // Actualiza el estado de la rutina en el contexto
             setProgreso((prev) => ({
