@@ -44,22 +44,27 @@ export default function IniciaEjercicioPage() {
     try {
       // Obtiene todos los detalles actualizados de la rutina
       const response = await getDetalleRutinaRequest(detalles.rutina);
-      const detallesRutina = response.data;
+      const detallesRutina = response.data.detalles; // Asegúrate de que `detalles` sea un array
 
-      // Filtra los ejercicios completados y calcula el progreso
-      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+      console.log("Detalles de la rutina:", detallesRutina); // Verificar la estructura de los datos
 
-      // Actualiza el progreso y estado de la rutina en la base de datos
-      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+      // Asegúrate de que `detallesRutina` sea un array antes de usar `filter`
+      if (Array.isArray(detallesRutina)) {
+        const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
 
-      if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+        // Actualiza el progreso y estado de la rutina en la base de datos
+        await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+
+        if (ejerciciosCompletos >= detallesRutina.length) {
+          await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+        }
+      } else {
+        console.error("Error: `detallesRutina` no es un array.", detallesRutina);
       }
     } catch (error) {
       console.error("Error al actualizar progreso de la rutina:", error);
     }
   };
-
 
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
