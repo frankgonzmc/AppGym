@@ -11,6 +11,7 @@ function ProgresoPage() {
   const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,23 +19,19 @@ function ProgresoPage() {
       setLoading(true);
 
       try {
-        // Usar la instancia de axios configurada
         const response = await axios.get(`/rutina/${user.id}`);
-        console.log(response.data);
         const routines = response.data;
 
-        // Inicializar los estados de progreso diario, semanal y mensual
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
         const weeklyProgress = [];
         const monthlyProgress = new Array(12).fill(0);
 
         routines.forEach((routine) => {
-          const dayIndex = new Date(routine.fecha).getDay() - 1;
+          const dayIndex = new Date(routine.fecha).getDay() - 1; // 0=Lunes
           const month = new Date(routine.fecha).getMonth();
           const isComplete = routine.estado === "completada";
           const exerciseCount = routine.ejercicios.length;
 
-          // Calcular el progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
@@ -42,7 +39,6 @@ function ProgresoPage() {
             };
           }
 
-          // Calcular el progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
           if (!weeklyProgress[week]) weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           weeklyProgress[week][dayIndex] = {
@@ -50,17 +46,24 @@ function ProgresoPage() {
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount
           };
 
-          // Calcular el progreso mensual
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
         });
 
-        // Actualizar el estado con los nuevos valores de progreso
         setDailyProgress(dailyProgress);
         setWeeklyProgress(weeklyProgress);
         setMonthlyProgress(monthlyProgress);
         setError(null);
+
+        // Generar alerta si falta completar alguna rutina diaria
+        const incompleteDays = dailyProgress.filter(day => !day.completed).length;
+        if (incompleteDays > 0) {
+          setAlert(`¡Atención! Te faltan ${incompleteDays} días de completar en la semana.`);
+        } else {
+          setAlert(null);
+        }
+
       } catch (error) {
         setError("Error al obtener las rutinas");
         console.error("Error al obtener las rutinas:", error);
@@ -77,6 +80,8 @@ function ProgresoPage() {
 
   return (
     <div className="progreso-page-container">
+      {alert && <div className="alert alert-warning">{alert}</div>}
+
       <h2>Progreso de Rutinas Diarias</h2>
       <div className="daily-progress">
         {dailyProgress.map((day, index) => (

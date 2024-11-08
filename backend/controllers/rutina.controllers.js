@@ -8,6 +8,9 @@ export const getRutinas = async (req, res) => {
         const rutinas = await Rutinas.find({
             user: req.user.id
         }).populate('user');
+        if (!rutinas) {
+            return res.status(404).json({ message: "No se encontraron rutinas." });
+        }
         res.json(rutinas);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener rutinas", error });
