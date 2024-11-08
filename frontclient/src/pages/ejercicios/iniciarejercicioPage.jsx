@@ -32,7 +32,7 @@ export default function IniciaEjercicioPage() {
 
     if (nuevasSeries >= detalles.ejercicio.series) {
       setEjercicioCompletado(true);
-      await updateEstadoRutinaRequest(detalles.rutina);  // Actualiza la rutina cuando un ejercicio se completa
+      await updateEstadoRutinaRequest(detalles._id, "Completado");  // Actualiza la rutina cuando un ejercicio se completa
       clearInterval(intervalRef.current);
     }
   };
