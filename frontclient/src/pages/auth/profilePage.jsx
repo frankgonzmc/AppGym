@@ -112,7 +112,7 @@ function ProfilePage() {
         setUser(updatedUser); // Aquí asumo que tienes setUser definido
       }
       setSuccess("Perfil actualizado con éxito");
-      setProfileImg(user?.profileImage ? `${FRONTEND_URL}${user.profileImage}` : profileImage);
+      setProfileImg(user?.profileImage ? `http://localhost:5000${user.profileImage}` : profileImage);
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       setError("Error al actualizar el perfil");
