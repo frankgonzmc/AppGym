@@ -31,12 +31,12 @@ export default function IniciaEjercicioPage() {
 
   // Función para actualizar el progreso de la serie en la base de datos
   const actualizarProgresoSerie = async (nuevasSeries) => {
-    await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+    await updateProgresoEjercicioRequest(detalles._id, "Completado");
     // Verificar si se completan todas las series
     if (nuevasSeries >= detalles.ejercicio.series) {
       console.log(detalles)
       setEjercicioCompletado(true);
-      await updateEstadoRutinaRequest(detalles.rutina, nuevasSeries); // Pasa el ID de la rutina y el número de ejercicios completados
+      await updateEstadoRutinaRequest(detalles.rutina, "Completado"); // Pasa el ID de la rutina y el número de ejercicios completados
       clearInterval(intervalRef.current);
     }
   };
