@@ -3,13 +3,17 @@ import DetallesRutina from '../models/detallerutina.model.js'
 import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
 
 // Obtener todas las rutinas del usuario autenticado
+// Obtener rutinas del usuario autenticado y las predeterminadas
 export const getRutinas = async (req, res) => {
     try {
         const rutinas = await Rutinas.find({
-            user: req.user.id
+            $or: [
+                { user: req.user.id },
+                { predeterminado: true } // Rutinas disponibles para todos los usuarios
+            ]
         }).populate('user');
         if (!rutinas) {
-            return res.status(404).json({ message: "Rutina no encontrada para el ID especificado." });
+            return res.status(404).json({ message: "No se encontraron rutinas." });
         }
         res.json(rutinas);
     } catch (error) {

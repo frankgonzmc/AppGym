@@ -147,14 +147,14 @@ export function Inicio() {
 
     return (
         <Container fluid className="body-inicio">
-            <Row className="text-center mb-4">
+            <Row className="text-center mb-2">
                 <Col>
                     <h1>Bienvenido a App Gym</h1>
                 </Col>
             </Row>
             <Row>
                 <Col md={3}>
-                    <Card className="info-card profile-card mb-4 animate-card">
+                    <Card className="info-card profile-card mb-2 animate-card">
                         <Card.Body>
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
@@ -234,7 +234,7 @@ export function Inicio() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={6} className="mb-4">
+                <Col md={6} className="mb-2">
                     <Card className="info-card animate-card mb-4">
                         <Card.Body>
                             <Card.Title>¿Qué es App Gym?</Card.Title>

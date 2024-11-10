@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest } from "../api/rutina"
+import { createDetalleRutinaRequest } from "../api/detallerutina"
 
 const RutinaContext = createContext();
 
@@ -41,6 +42,14 @@ export function RutinaProvider({ children }) {
         }
     };
 
+    const createDetalleRutina = async (detalle) => {
+        try {
+            await createDetalleRutinaRequest(detalle);
+        } catch (error) {
+            console.error("Error al crear detalle de rutina:", error);
+        }
+    };
+
     const getRutina = async (id) => {
         try {
             const res = await getRutinaRequest(id);
@@ -70,6 +79,7 @@ export function RutinaProvider({ children }) {
                 createRutina,
                 getRutinas,
                 updateRutina,
+                createDetalleRutina,
             }}
         >
             {children}
