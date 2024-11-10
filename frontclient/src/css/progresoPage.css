@@ -16,8 +16,8 @@
     padding: 20px;
     transition: transform 0.3s ease, background-color 0.3s ease;
     width: 100%;
-    max-width: 150px;
-    margin-bottom: 20px;
+    max-width: 120px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -88,8 +88,8 @@
 /* Gráficos y contenedores adicionales */
 .chart-container {
     width: 100%;
-    max-width: 800px;
-    margin-top: 20px;
+    max-width: 1000px;
+    margin: 0px;
     padding: 20px;
     background-color: #f7f9fc;
     border-radius: 10px;
@@ -111,5 +111,9 @@
 
     .chart-container {
         width: 90%;
+    }
+
+    .day-card {
+        max-width: 100px;
     }
 }
