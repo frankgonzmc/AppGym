@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import { useAuth } from "../../context/authcontext";
-import { Button, ButtonLink, Card } from "../ui";
+import { Card } from "../ui";
 
 export function EjercicioCard({ ejercicio }) {
   const { user } = useAuth();
