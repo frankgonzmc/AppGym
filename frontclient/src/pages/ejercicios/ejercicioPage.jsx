@@ -36,7 +36,6 @@ export default function EjercicioPage() {
                 onChange={(e) => setCategoria(e.target.value)}
               >
                 <option value="Todos">Todos</option>
-                <option value="Fuerza">Fuerza</option>
                 <option value="Cardio">Cardio</option>
                 <option value="Pecho">Pecho</option>
                 <option value="Piernas">Piernas</option>
