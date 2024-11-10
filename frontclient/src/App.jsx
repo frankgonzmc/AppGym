@@ -20,6 +20,7 @@ import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ResetpasswordPage from './pages/auth/resetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
+import RutinaExistentePage from './pages/rutinas/rutinaExistentePage';
 import MlPage from './pages/ml/mlPage';
 import AboutPage from './aboutPage';
 
@@ -44,6 +45,7 @@ function App() {
                     <Route path='/about' element={<AboutPage />} />
 
                     <Route path='/rutinas' element={<RutinaPage />} />
+                    <Route path='/rutinas-existentes' element={<RutinaExistentePage />} />
                     <Route path='/add-rutinas' element={<RutinaForm />} />
                     <Route path='/rutinas/:id' element={<RutinaForm />} />
 

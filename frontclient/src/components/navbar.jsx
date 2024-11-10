@@ -37,6 +37,7 @@ function Navbar() {
           <Nav.Link as={Link} to="/">Home</Nav.Link>
           <NavDropdown title="Rutinas" id="nav-dropdown" show={dropdownOpenRutina} onToggle={toggleDropdownRutina}>
             <NavDropdown.Item as={Link} to="/rutinas">Mis Rutinas</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/rutinas-predeterminadas">Rutinas Existentes</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/add-rutinas">Crear Rutina</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/calendar">Calendario</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/progreso">Panel de Progresos</NavDropdown.Item>
