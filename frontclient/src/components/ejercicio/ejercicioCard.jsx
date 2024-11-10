@@ -47,7 +47,7 @@ export function EjercicioCard({ ejercicio }) {
     <Card className={`rounded-lg shadow-md ${isRecommended ? "bg-green-200" : "bg-red-200"} p-4`} style={{ width: "300px" }}>
       <header className="flex justify-between items-center mb-4">
         <h1
-          className="text-2xl font-bold text-center"
+          className="text-white text-2xl font-bold text-center"
           title={!isRecommended ? "Este ejercicio no es recomendado para tu nivel." : ""}
         >
           {ejercicio.nombre}
@@ -63,17 +63,17 @@ export function EjercicioCard({ ejercicio }) {
         )}
       </header>
       <hr />
-      <p className="text-gray-600">Descripción: {ejercicio.descripcion}</p>
-      <p className="text-gray-600">Nivel: {ejercicio.nivel}</p>
-      <p className="text-gray-600">Categoría: {ejercicio.categoria}</p>
+      <p className="text-gray-300">Descripción: {ejercicio.descripcion}</p>
+      <p className="text-gray-300">Nivel: {ejercicio.nivel}</p>
+      <p className="text-gray-300">Categoría: {ejercicio.categoria}</p>
       <hr />
-      <p className="text-gray-600">Series: {ejercicio.series}</p>
-      <p className="text-gray-600">Repeticiones: {ejercicio.repeticiones}</p>
-      <p className="text-gray-600">Duración: {ejercicio.duracion / 60} minutos</p>
-      <p className="text-gray-600">Descanso: {ejercicio.descanso} segundos</p>
+      <p className="text-gray-300">Series: {ejercicio.series}</p>
+      <p className="text-gray-300">Repeticiones: {ejercicio.repeticiones}</p>
+      <p className="text-gray-300">Duración: {ejercicio.duracion} segundos</p>
+      <p className="text-gray-300">Descanso: {ejercicio.descanso} segundos</p>
       {ejercicio.imagen && (
         <div className="w-full flex justify-center my-4">
-          <img src={ejercicio.imagen} alt={ejercicio.nombre} className="object-cover rounded-lg" style={{ width: "250px", height: "250px" }} />
+          <img src={ejercicio.imagen} alt={ejercicio.nombre} className="object-cover rounded-lg" style={{ width: "350px", height: "250px" }} />
         </div>
       )}
       <footer>
