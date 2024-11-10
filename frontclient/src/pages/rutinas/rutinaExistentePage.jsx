@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRutinas } from "../../context/rutinascontext";
 import { useAuth } from "../../context/authcontext";
-import { RutinaCard } from "../../components/rutina/rutinaCard";
+import { RutinaExistenteCard } from "../../components/rutina/rutinaExistenteCard";
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import "../../css/rutinaPage.css";
 
@@ -10,7 +10,7 @@ function RutinaExistentePage() {
   const { user } = useAuth();
   const [rutinasPredeterminadas, setRutinasPredeterminadas] = useState([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchRutinasPredeterminadas = async () => {
       await getRutinas();
       const predeterminadas = rutinas.filter(rutina => rutina.predeterminado);
@@ -18,33 +18,11 @@ function RutinaExistentePage() {
     };
 
     fetchRutinasPredeterminadas();
-  }, [rutinas]);
+  }, [rutinas]);*/
 
-  const handleAgregarRutina = async (rutina) => {
+  const handleAgregarRutina = async (rutinasExistentes) => {
     try {
-      // Crear una nueva rutina basada en la predeterminada seleccionada
-      const nuevaRutina = {
-        user: user._id,
-        nombre: rutina.nombre,
-        descripcion: rutina.descripcion,
-        totalEjercicios: rutina.totalEjercicios,
-        predeterminado: false, // La rutina copiada no será predeterminada
-      };
 
-      // Guardar la nueva rutina
-      const rutinaCreada = await createRutina(nuevaRutina);
-
-      // Clonar los detalles (ejercicios) de la rutina seleccionada
-      if (rutina.detalles && rutina.detalles.length > 0) {
-        const detallesRutina = rutina.detalles.map(detalle => ({
-          rutina: rutinaCreada._id,
-          ejercicio: detalle.ejercicio._id,
-          fecha: new Date(),
-        }));
-
-        // Llama a una función para crear los detalles de la rutina
-        await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
-      }
 
       alert("Rutina agregada exitosamente a tus rutinas");
     } catch (error) {

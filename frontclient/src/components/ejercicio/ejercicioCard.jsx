@@ -53,11 +53,11 @@ export function EjercicioCard({ ejercicio }) {
           {ejercicio.nombre}
         </h1>
         {isRecommended ? (
-          <span className="text-white bg-green-500 px-2 py-1 rounded-lg text-sm">
+          <span className="text-white bg-green-800 px-2 py-1 rounded-lg text-sm">
             Recomendado
           </span>
         ) : (
-          <span className="text-white bg-red-500 px-2 py-1 rounded-lg text-sm">
+          <span className="text-white bg-red-800 px-2 py-1 rounded-lg text-sm">
             No recomendado
           </span>
         )}

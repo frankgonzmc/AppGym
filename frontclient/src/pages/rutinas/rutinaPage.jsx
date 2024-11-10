@@ -44,6 +44,11 @@ export default function RutinaPage() {
           </Row>
         ) : (
           <Row className="g-4">
+            <header>
+              <Link to="/add-rutinas" className="btn btn-success">
+                CREAR RUTINA
+              </Link>
+            </header>
             {rutinas.map((rutina) => (
               <Col md={6} key={rutina._id}>
                 <RutinaCard rutina={rutina} />
