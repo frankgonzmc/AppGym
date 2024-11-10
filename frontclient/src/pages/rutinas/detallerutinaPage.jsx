@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getRutinaRequest } from '../../api/rutina';
 import DetalleRutinaCard from '../../components/detallerutina/detallerutinaCard';
 import { Card } from 'react-bootstrap';
+import '../../css/detallePage.css';
 
 const DetallerutinaPage = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const DetallerutinaPage = () => {
   if (loading) return <div className="text-center">Cargando...</div>;
 
   return (
-    <Card className="shadow-lg border-4 mt-4">
+    <Card className="shadow-lg seccion">
       <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
       <p className="text-center lead">{rutina.descripcion}</p>
       <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
