@@ -56,3 +56,11 @@ a:hover {
     color: #0056b3;
     text-decoration: underline;
 }
+
+.footer {
+    clear: both;
+    background-color: #1a202c;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
