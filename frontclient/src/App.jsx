@@ -45,7 +45,7 @@ function App() {
                     <Route path='/about' element={<AboutPage />} />
 
                     <Route path='/rutinas' element={<RutinaPage />} />
-                    <Route path='/rutinas-existentes' element={<RutinaExistentePage />} />
+                    <Route path='/rutinas-predeterminadas' element={<RutinaExistentePage />} />
                     <Route path='/add-rutinas' element={<RutinaForm />} />
                     <Route path='/rutinas/:id' element={<RutinaForm />} />
 
