@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from "react";
-import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest } from "../api/rutina"
-import { createDetalleRutinaRequest } from "../api/detallerutina"
+import { createContext, useContext, useState, useCallback } from "react";
+import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest } from "../api/rutina";
+import { createDetalleRutinaRequest } from "../api/detallerutina";
 
 const RutinaContext = createContext();
 
@@ -12,22 +12,26 @@ export const useRutinas = () => {
 
 export function RutinaProvider({ children }) {
     const [rutinas, setRutinas] = useState([]);
+    const [cargado, setCargado] = useState(false); // Nueva bandera para evitar llamadas repetidas
 
-    const getRutinas = async () => {
-        try {
-            const res = await getRutinasRequest();
-            setRutinas(res.data);
-        } catch (error) {
-            console.error(error);
+    const getRutinas = useCallback(async () => {
+        if (!cargado) { // Solo ejecuta la solicitud si `cargado` es `false`
+            try {
+                const res = await getRutinasRequest();
+                setRutinas(res.data);
+                setCargado(true); // Marca como cargado después de la primera llamada
+            } catch (error) {
+                console.error("Error al obtener rutinas:", error);
+            }
         }
-    };
+    }, [cargado]); // Dependencia `cargado` para que no cambie en cada render
 
     const deleteRutina = async (id) => {
         try {
             const res = await deleteRutinaRequest(id);
             if (res.status === 204) setRutinas(rutinas.filter((rutina) => rutina._id !== id));
         } catch (error) {
-            console.log(error);
+            console.log("Error al eliminar rutina:", error);
         }
     };
 
@@ -35,10 +39,9 @@ export function RutinaProvider({ children }) {
         try {
             const res = await createRutinaRequest(rutina);
             setRutinas((prev) => [...prev, res.data]); // Añadir la nueva rutina al estado
-            console.log(res.data);
             return res.data; // Devolver la rutina creada
         } catch (error) {
-            console.error(error.response.data);
+            console.error("Error al crear rutina:", error.response.data);
         }
     };
 
@@ -55,7 +58,7 @@ export function RutinaProvider({ children }) {
             const res = await getRutinaRequest(id);
             return res.data;
         } catch (error) {
-            console.error(error);
+            console.error("Error al obtener rutina:", error);
         }
     };
 
@@ -66,7 +69,7 @@ export function RutinaProvider({ children }) {
                 prev.map((rutina) => (rutina._id === id ? { ...rutina, ...res.data } : rutina))
             );
         } catch (error) {
-            console.error(error.response ? error.response.data : error.message);
+            console.error("Error al actualizar rutina:", error.response ? error.response.data : error.message);
         }
     };
 
