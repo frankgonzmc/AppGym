@@ -1,8 +1,13 @@
 import React from 'react'
+import { PanelCategorias } from '../../components/panelCategorias'
 
 function categoriaPage() {
     return (
-        <div>categoriaPage</div>
+        <div>
+            <Col md={3}>
+                <PanelCategorias />
+            </Col>
+        </div>
     )
 }
 
