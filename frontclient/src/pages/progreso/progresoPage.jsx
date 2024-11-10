@@ -20,19 +20,24 @@ function ProgresoPage() {
       setLoading(true);
 
       try {
+        // Llamada a la API para obtener las rutinas del usuario
         const response = await axios.get(`/rutinas?userId=${user.id}`);
         const routines = response.data;
 
+        // Variables locales para actualizar los progresos diarios, semanales y mensuales
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
         const weeklyProgress = [];
         const monthlyProgress = new Array(12).fill(0);
 
+        // Recorrer las rutinas y acumular datos en las variables locales
         routines.forEach((routine) => {
-          const dayIndex = new Date(routine.fecha).getDay() - 1;
-          const month = new Date(routine.fecha).getMonth();
+          const date = new Date(routine.fecha);
+          const dayIndex = date.getDay() - 1; // -1 para que el índice sea de 0 a 5 (lunes a sábado)
+          const month = date.getMonth(); // Obtener el mes de la rutina
           const isComplete = routine.estado === "completada";
           const exerciseCount = routine.ejercicios ? routine.ejercicios.length : 0;
 
+          // Progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
@@ -40,7 +45,8 @@ function ProgresoPage() {
             };
           }
 
-          const week = Math.floor(new Date(routine.fecha).getDate() / 7);
+          // Progreso semanal
+          const week = Math.floor(date.getDate() / 7);
           if (!weeklyProgress[week]) {
             weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           }
@@ -52,16 +58,19 @@ function ProgresoPage() {
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount,
           };
 
+          // Progreso mensual (solo acumular si la rutina está completa)
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
         });
 
+        // Actualizar los estados con los datos calculados
         setDailyProgress(dailyProgress);
         setWeeklyProgress(weeklyProgress);
         setMonthlyProgress(monthlyProgress);
         setError(null);
 
+        // Generar una alerta si falta completar algún día de la semana
         const incompleteDays = dailyProgress.filter(day => !day.completed).length;
         if (incompleteDays > 0) {
           setAlert(`¡Atención! Te faltan ${incompleteDays} días de completar en la semana.`);
@@ -81,7 +90,7 @@ function ProgresoPage() {
   }, [user]);
 
   useEffect(() => {
-    console.log("Monthly Progress Data:", monthlyProgress); // Verificación de datos
+    console.log("Monthly Progress Data:", monthlyProgress); // Verifica que monthlyProgress se esté actualizando
   }, [monthlyProgress]);
 
   if (loading) return <p>Cargando...</p>;
