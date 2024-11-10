@@ -80,6 +80,10 @@ function ProgresoPage() {
     fetchData();
   }, [user]);
 
+  useEffect(() => {
+    console.log("Monthly Progress Data:", monthlyProgress); // Verificación de datos
+  }, [monthlyProgress]);
+
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
@@ -121,7 +125,11 @@ function ProgresoPage() {
       </div>
 
       <h2 className="mt-4">Progreso Mensual</h2>
-      <LineChart data={monthlyProgress} />
+      {monthlyProgress.some(value => value > 0) ? (
+        <LineChart data={monthlyProgress} />
+      ) : (
+        <p>No hay datos disponibles para el progreso mensual.</p>
+      )}
     </Container>
   );
 }
