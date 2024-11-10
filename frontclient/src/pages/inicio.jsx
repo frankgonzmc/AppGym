@@ -154,7 +154,7 @@ export function Inicio() {
             </Row>
             <Row>
                 <Col md={3}>
-                    <Card className="info-card mb-4">
+                    <Card className="info-card profile-card mb-4 animate-card">
                         <Card.Body>
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
@@ -235,7 +235,7 @@ export function Inicio() {
                     </Card>
                 </Col>
                 <Col md={6} className="mb-4">
-                    <Card className="info-card">
+                    <Card className="info-card animate-card mb-4">
                         <Card.Body>
                             <Card.Title>¿Qué es App Gym?</Card.Title>
                             <p>
@@ -247,7 +247,7 @@ export function Inicio() {
                             </Button>
                         </Card.Body>
                     </Card>
-                    <Card className="info-card mt-3 mb-4">
+                    <Card className="info-card animate-card mt-3 mb-4">
                         <Card.Body>
                             <Card.Title>Recomendaciones de Rutinas y Alimentación</Card.Title>
                             <p>

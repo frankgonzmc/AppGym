@@ -5,28 +5,46 @@
 }
 
 .info-card,
-.exercise-card {
+.profile-card {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.info-card h1,
-.exercise-card h1 {
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.animate-card {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-card .profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    margin-bottom: 15px;
+}
+
+.nutrient-info p {
+    font-weight: bold;
     color: #343a40;
-}
-
-.info-card p,
-.exercise-card p {
-    color: #000000;
-}
-
-.panel-elements,
-.panel-ejercicios {
-    padding: 15px;
-    background-color: #eee;
-    border-radius: 5px;
 }
 
 a {
@@ -37,20 +55,4 @@ a {
 a:hover {
     color: #0056b3;
     text-decoration: underline;
-}
-
-.footer {
-    clear: both;
-    background-color: #1a202c;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-}
-
-.profile-image {
-    width: 80px;
-    height: 80px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 40%;
 }
