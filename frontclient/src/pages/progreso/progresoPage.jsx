@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart } from "../../components/GraCharts.jsx";
 import { useAuth } from "../../context/authcontext";
+import { ProgressBar, Alert, Card, Container, Row, Col } from 'react-bootstrap';
 import axios from '../../api/axios';
 import '../../css/progresoPage.css';
 
@@ -20,7 +21,6 @@ function ProgresoPage() {
 
       try {
         const response = await axios.get(`/rutinas?userId=${user.id}`);
-        console.log(response.data);
         const routines = response.data;
 
         const dailyProgress = Array(6).fill({ completed: false, exerciseCount: 0 });
@@ -28,14 +28,11 @@ function ProgresoPage() {
         const monthlyProgress = new Array(12).fill(0);
 
         routines.forEach((routine) => {
-          const dayIndex = new Date(routine.fecha).getDay() - 1; // 0=Lunes
+          const dayIndex = new Date(routine.fecha).getDay() - 1;
           const month = new Date(routine.fecha).getMonth();
           const isComplete = routine.estado === "completada";
-
-          // Asegúrate de que 'ejercicios' está definido antes de acceder a su 'length'
           const exerciseCount = routine.ejercicios ? routine.ejercicios.length : 0;
 
-          // Progreso diario
           if (dayIndex >= 0 && dayIndex <= 5) {
             dailyProgress[dayIndex] = {
               completed: isComplete,
@@ -43,25 +40,18 @@ function ProgresoPage() {
             };
           }
 
-          // Progreso semanal
           const week = Math.floor(new Date(routine.fecha).getDate() / 7);
-
-          // Inicializa la semana si no está definida
           if (!weeklyProgress[week]) {
             weeklyProgress[week] = Array(6).fill({ completed: false, exerciseCount: 0 });
           }
-
-          // Asegúrate de que el día de la semana esté definido en 'weeklyProgress'
           if (!weeklyProgress[week][dayIndex]) {
             weeklyProgress[week][dayIndex] = { completed: false, exerciseCount: 0 };
           }
-
           weeklyProgress[week][dayIndex] = {
             completed: isComplete,
             exerciseCount: weeklyProgress[week][dayIndex].exerciseCount + exerciseCount,
           };
 
-          // Progreso mensual
           if (isComplete) {
             monthlyProgress[month] += exerciseCount;
           }
@@ -72,12 +62,11 @@ function ProgresoPage() {
         setMonthlyProgress(monthlyProgress);
         setError(null);
 
-        // Generar alerta si falta completar alguna rutina diaria
         const incompleteDays = dailyProgress.filter(day => !day.completed).length;
         if (incompleteDays > 0) {
           setAlert(`¡Atención! Te faltan ${incompleteDays} días de completar en la semana.`);
         } else {
-          setAlert(null);
+          setAlert("¡Excelente! Has completado todas las rutinas de la semana.");
         }
 
       } catch (error) {
@@ -95,38 +84,45 @@ function ProgresoPage() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="progreso-page-container">
-      {alert && <div className="alert alert-warning">{alert}</div>}
+    <Container fluid className="progreso-page-container">
+      {alert && <Alert variant={alert.includes("¡Excelente!") ? "success" : "warning"}>{alert}</Alert>}
 
-      <h2>Progreso de Rutinas Diarias</h2>
-      <div className="daily-progress">
+      <h2>Progreso Diario</h2>
+      <Row className="daily-progress">
         {dailyProgress.map((day, index) => (
-          <div key={index} className={`day ${day.completed ? 'completed' : 'incomplete'}`}>
-            <h3>{["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"][index]}</h3>
-            <p>Ejercicios completados: {day.exerciseCount}</p>
-            <p>Estado: {day.completed ? "Completado" : "Incompleto"}</p>
-          </div>
+          <Col key={index} md={2}>
+            <Card className={`day-card ${day.completed ? 'completed' : 'incomplete'}`}>
+              <Card.Body>
+                <Card.Title>{["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"][index]}</Card.Title>
+                <ProgressBar now={day.completed ? 100 : (day.exerciseCount / 10) * 100} label={`${day.exerciseCount} ejercicios`} />
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
 
-      <h2>Progreso Semanal</h2>
+      <h2 className="mt-4">Progreso Semanal</h2>
       <div className="weekly-progress">
         {weeklyProgress.map((week, weekIndex) => (
-          <div key={weekIndex} className="week">
-            <h3>Semana {weekIndex + 1}</h3>
-            {week.map((day, dayIndex) => (
-              <p key={dayIndex}>
-                {["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"][dayIndex]}:
-                {day.completed ? " Completado" : " Incompleto"} - Ejercicios: {day.exerciseCount}
-              </p>
-            ))}
-          </div>
+          <Card key={weekIndex} className="week-card mb-3">
+            <Card.Body>
+              <Card.Title>Semana {weekIndex + 1}</Card.Title>
+              <Row>
+                {week.map((day, dayIndex) => (
+                  <Col key={dayIndex} md={2} className="text-center">
+                    <span>{["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"][dayIndex]}</span>
+                    <ProgressBar now={day.completed ? 100 : (day.exerciseCount / 10) * 100} variant={day.completed ? "success" : "danger"} />
+                  </Col>
+                ))}
+              </Row>
+            </Card.Body>
+          </Card>
         ))}
       </div>
 
-      <h2>Progreso Mensual</h2>
+      <h2 className="mt-4">Progreso Mensual</h2>
       <LineChart data={monthlyProgress} />
-    </div>
+    </Container>
   );
 }
 
