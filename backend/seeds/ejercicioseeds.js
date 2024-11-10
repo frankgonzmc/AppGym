@@ -534,7 +534,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pushup.gif" // Agregar URL de la imagen
     },
@@ -547,7 +547,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/sentadillas.gif" // Agregar URL de la imagen
     },
@@ -560,7 +560,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/planchas.gif" // Agregar URL de la imagen
     },
@@ -573,7 +573,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/burpees.gif" // Agregar URL de la imagen
     },
@@ -586,7 +586,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/Zancadas.webp" // Agregar URL de la imagen
     },
@@ -599,7 +599,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/dominadas.gif" // Agregar URL de la imagen
     },
@@ -612,7 +612,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/abdominales.gif" // Agregar URL de la imagen
     },
@@ -625,7 +625,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/saltosencaja.gif" // Agregar URL de la imagen
     },
@@ -638,7 +638,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/flexionesdiamantes.gif" // Agregar URL de la imagen
     },
@@ -651,7 +651,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/mountainclimbers.gif" // Agregar URL de la imagen
     },
@@ -664,7 +664,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pesomuerto.gif" // Agregar URL de la imagen
     },
@@ -677,7 +677,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressdebanca.gif" // Agregar URL de la imagen
     },
@@ -690,7 +690,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/remo-en-punta-gif.gif" // Agregar URL de la imagen
     },
@@ -703,7 +703,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressmilitar.gif" // Agregar URL de la imagen
     },
@@ -716,7 +716,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/elevacioneslaterales.gif" // Agregar URL de la imagen
     },
@@ -727,7 +727,7 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Cardio",
         "series": 1,
-        "duracion": 300,
+        "duracion": 540,
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
@@ -740,7 +740,7 @@ const ejerciciosPredeterminados = [
         "nivel": "Avanzado",
         "categoria": "Cardio",
         "series": 1,
-        "duracion": 600,
+        "duracion": 900,
         "descanso": 60,
         "repeticiones": 1,
         "estado": "En proceso",
@@ -755,7 +755,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressfrances.gif" // Agregar URL de la imagen
     },
@@ -768,7 +768,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/curl-biceps-alterno-con-mancuernas.gif" // Agregar URL de la imagen
     },
@@ -781,7 +781,7 @@ const ejerciciosPredeterminados = [
         "series": 4,
         "duracion": 30,
         "descanso": 10,
-        "repeticiones": 10,
+        "repeticiones": 15,
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/Jumpingjacks.gif" // Agregar URL de la imagen
     }
