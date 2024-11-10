@@ -44,10 +44,10 @@ export function EjercicioCard({ ejercicio }) {
   const isRecommended = ejercicio.nivel === user.nivel;
 
   return (
-    <Card className={isRecommended ? "bg-green-200" : "bg-red-200"}>
-      <header className="flex justify-between items-center">
+    <Card className={`rounded-lg shadow-md ${isRecommended ? "bg-green-200" : "bg-red-200"} p-4`} style={{ width: "300px" }}>
+      <header className="flex justify-between items-center mb-4">
         <h1
-          className="text-2xl text-slate-300 font-bold text-center"
+          className="text-2xl font-bold text-center"
           title={!isRecommended ? "Este ejercicio no es recomendado para tu nivel." : ""}
         >
           {ejercicio.nombre}
@@ -62,22 +62,24 @@ export function EjercicioCard({ ejercicio }) {
           </span>
         )}
       </header>
-      <hr className="text-slate-300" />
-      <p className="text-slate-300">Descripción: {ejercicio.descripcion}</p>
-      <p className="text-slate-300">Nivel: {ejercicio.nivel}</p>
-      <p className="text-slate-300">Categoría: {ejercicio.categoria}</p>
-      <hr className="text-slate-300" />
-      <p className="text-slate-300">Series: {ejercicio.series}</p>
-      <p className="text-slate-300">Repeticiones: {ejercicio.repeticiones}</p>
-      <p className="text-slate-300">Duración: {ejercicio.duracion} segundos</p>
-      <p className="text-slate-300">Descanso: {ejercicio.descanso} segundos</p>
+      <hr />
+      <p className="text-gray-600">Descripción: {ejercicio.descripcion}</p>
+      <p className="text-gray-600">Nivel: {ejercicio.nivel}</p>
+      <p className="text-gray-600">Categoría: {ejercicio.categoria}</p>
+      <hr />
+      <p className="text-gray-600">Series: {ejercicio.series}</p>
+      <p className="text-gray-600">Repeticiones: {ejercicio.repeticiones}</p>
+      <p className="text-gray-600">Duración: {ejercicio.duracion / 60} minutos</p>
+      <p className="text-gray-600">Descanso: {ejercicio.descanso} segundos</p>
       {ejercicio.imagen && (
-        <img src={ejercicio.imagen} alt={ejercicio.nombre} className="w-250px h-250px" />
+        <div className="w-full flex justify-center my-4">
+          <img src={ejercicio.imagen} alt={ejercicio.nombre} className="object-cover rounded-lg" style={{ width: "250px", height: "250px" }} />
+        </div>
       )}
-
       <footer>
         <div className="flex gap-x-2 items-center">
-          {/*<button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Delete</button>*/}
+          {/* Uncomment the buttons below if needed */}
+          {/*<button className="btn btn-primary" onClick={() => deleteEjercicio(ejercicio._id)}>Eliminar</button>*/}
           {/*<button className="btn btn-primary" onClick={() => navigate(`/ejercicio/${ejercicio._id}`)}>Editar Ejercicio</button>*/}
         </div>
       </footer>
