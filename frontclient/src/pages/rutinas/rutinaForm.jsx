@@ -121,7 +121,7 @@ const RutinaForm = () => {
                 <h3 className="text-center mb-4">Crea tu Rutina</h3>
                 <Form onSubmit={onSubmit}>
                   <Form.Group className="mb-3" controlId="nombre">
-                    <Form.Label>Nombre de la rutina</Form.Label>
+                    <Form.Label className='text-black'>Nombre de la rutina</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Nombre de la rutina"
@@ -131,7 +131,7 @@ const RutinaForm = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="descripcion">
-                    <Form.Label>Descripción</Form.Label>
+                    <Form.Label className='text-black'>Descripción</Form.Label>
                     <Form.Control
                       as="textarea"
                       placeholder="Descripción"
@@ -140,7 +140,7 @@ const RutinaForm = () => {
                     />
                   </Form.Group>
 
-                  <Form.Label className="mb-2">Selecciona Ejercicios (Nivel: {user.nivel})</Form.Label>
+                  <Form.Label className="mb-2 text-black">Selecciona Ejercicios (Nivel: {user.nivel})</Form.Label>
                   <div className="mb-3">
                     {filteredEjercicios.map((ejercicio) => (
                       <Form.Check

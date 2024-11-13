@@ -57,28 +57,32 @@ function ProgresoPage() {
   };
 
   return (
-    <Container fluid className="progreso-page-container">
-      {alert && <Alert variant="warning">{alert}</Alert>}
-      <h2>Progreso Mensual</h2>
+    <section>
+      <Card>
+        <Container fluid className="progreso-page-container">
+          {alert && <Alert variant="warning">{alert}</Alert>}
+          <h2>Progreso Mensual</h2>
 
-      <Dropdown onSelect={(e) => setPeriod(e)}>
-        <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item eventKey="weekly">Semanal</Dropdown.Item>
-          <Dropdown.Item eventKey="monthly">Mensual</Dropdown.Item>
-          <Dropdown.Item eventKey="yearly">Anual</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+          <Dropdown onSelect={(e) => setPeriod(e)}>
+            <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item eventKey="weekly">Semanal</Dropdown.Item>
+              <Dropdown.Item eventKey="monthly">Mensual</Dropdown.Item>
+              <Dropdown.Item eventKey="yearly">Anual</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
 
-      {monthlyProgress.some(value => value > 0) ? (
-        <LineChart data={monthlyProgress} />
-      ) : (
-        <p>No hay datos disponibles para el progreso mensual.</p>
-      )}
+          {monthlyProgress.some(value => value > 0) ? (
+            <LineChart data={monthlyProgress} />
+          ) : (
+            <p>No hay datos disponibles para el progreso mensual.</p>
+          )}
 
-      <h3 className="mt-4">Comparación de Progreso con Objetivos</h3>
-      <Alert variant="info">{progressComparison}</Alert>
-    </Container>
+          <h3 className="mt-4">Comparación de Progreso con Objetivos</h3>
+          <Alert variant="info">{progressComparison}</Alert>
+        </Container>
+      </Card>
+    </section>
   );
 }
 
