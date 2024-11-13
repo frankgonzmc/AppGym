@@ -14,7 +14,7 @@ function ProgresoPage() {
 
   useEffect(() => {
     if (user?.id) {
-      console.log("User ID:", user.id); // Verificar que user.id existe
+      //console.log("User ID:", user.id); // Verificar que user.id existe
       fetchUserStats();
       fetchProgressComparison();
     } else {
