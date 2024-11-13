@@ -6,6 +6,7 @@ import axios from '../../api/axios';
 
 function ProgresoPage() {
   const { user } = useAuth();
+  const userId = user?._id; // Verifica que user y user._id estén definidos
   const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0));
   const [period, setPeriod] = useState('monthly');
   const [loading, setLoading] = useState(true);
@@ -13,14 +14,16 @@ function ProgresoPage() {
   const [progressComparison, setProgressComparison] = useState('');
 
   useEffect(() => {
-    fetchUserStats();
-    fetchProgressComparison();
-  }, [user, period]);
+    if (userId) {
+      fetchUserStats();
+      fetchProgressComparison();
+    }
+  }, [userId, period]); // Cambiar a userId en lugar de user para evitar errores
 
   const fetchUserStats = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/stats/${user.id}/${period}`);
+      const response = await axios.get(`/stats/${userId}/${period}`);
       const stats = response.data;
 
       const processedData = new Array(12).fill(0);
@@ -38,7 +41,7 @@ function ProgresoPage() {
 
   const fetchProgressComparison = async () => {
     try {
-      const response = await axios.get(`/compare-progress/${user.id}`);
+      const response = await axios.get(`/compare-progress/${userId}`);
       setProgressComparison(response.data.message);
     } catch (error) {
       setAlert("Error al comparar el progreso con los objetivos.");

@@ -84,7 +84,7 @@ export default function mlPage() {
     return (
         <Container>
             <Row>
-                <Col md={8} className="text-center">
+                <Col md={6} className="text-center mb-2">
                     <Card className="info-card mt-3 my-3">
                         <Card.Body>
                             <Card.Title>¿recomendaciones de rutinas para ejercicios?</Card.Title>
@@ -256,8 +256,6 @@ export default function mlPage() {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row>
-            <Row>
                 <Col md={6} className="mb-2">
                     <Card className="info-card animate-card mt-3 mb-4">
                         <Card.Body>
