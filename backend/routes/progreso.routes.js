@@ -1,18 +1,20 @@
-import { Router } from 'express'
-import { authRequired } from '../middlewares/validateToken.js'
-import { createProgreso, deleteProgreso, getProgreso, updateProgreso } from '../controllers/progreso.controllers.js'
+import { Router } from 'express';
+import { authRequired } from '../middlewares/validateToken.js';
+import { createProgreso, deleteProgreso, getProgreso, updateProgreso, getUserStats, getUserStatsByPeriod, compareProgressWithGoals } from '../controllers/progreso.controllers.js';
 
 const router = Router();
 
-router.get('/progreso/:id', authRequired, getProgreso)
-
-
+// Rutas para progreso de usuario
+router.get('/progreso/:id', authRequired, getProgreso);
 router.post('/progreso', authRequired, createProgreso);
+router.delete('/progreso/:id', authRequired, deleteProgreso);
+router.put('/progreso/:id', authRequired, updateProgreso);
 
-// Eliminar un detalle de rutina existente
-router.delete('/progreso:id', authRequired, deleteProgreso);
+// Rutas para estadísticas
+router.get('/stats/:userId', authRequired, getUserStats);
+router.get('/stats/:userId/:period', authRequired, getUserStatsByPeriod);
 
-router.put('/progreso/:id', authRequired, updateProgreso)
+// Ruta para comparación de progreso con objetivos
+router.get('/compare-progress/:userId', authRequired, compareProgressWithGoals);
 
-
-export default router
+export default router;

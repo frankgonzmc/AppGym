@@ -1,4 +1,5 @@
 import Progreso from '../models/progreso.model.js';
+import User from '../models/user.model.js'
 
 export const getProgreso = async (req, res) => {
     try {
@@ -57,4 +58,43 @@ export const updateProgreso = async (req, res) => {
     } catch (error) {
         return res.status(404).json({ message: "progreso no encontrado..." });
     }
+};
+
+export const getUserStats = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const stats = await Progreso.aggregate([
+            { $match: { user: userId } },
+            { $group: { _id: { month: { $month: "$fecha" } }, total: { $sum: 1 } } }
+        ]);
+        res.status(200).json(stats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getUserStatsByPeriod = async (req, res) => {
+    const { userId, period } = req.params;
+    const matchStage = { user: userId };
+    const groupStage = { _id: { year: { $year: "$fecha" } }, total: { $sum: 1 } };
+
+    if (period === 'monthly') groupStage._id.month = { $month: "$fecha" };
+    if (period === 'weekly') groupStage._id.week = { $week: "$fecha" };
+
+    try {
+        const stats = await Progreso.aggregate([{ $match: matchStage }, { $group: groupStage }]);
+        res.status(200).json(stats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const compareProgressWithGoals = async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    const progreso = await Progreso.find({ user: userId, estado: 'Completo' }).countDocuments();
+
+    const message = progreso >= user.objetivos ?
+        "Estás en buen camino" : "Considera aumentar tu intensidad";
+    res.json({ progreso, message });
 };

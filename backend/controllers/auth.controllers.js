@@ -172,6 +172,7 @@ export const checkEmail = async (req, res) => {
     }
 };
 
+// Actualizar Perfil (con imagen)
 export const updatePerfil = async (req, res) => {
     const userId = req.user.id;
     const user = await User.findById(userId);
@@ -223,8 +224,7 @@ export const updatePassword = async (req, res) => {
     }
 };
 
-// auth.controllers.js
-
+// Configuración de recuperación de contraseña
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -262,6 +262,7 @@ export const forgotPassword = async (req, res) => {
     }
 };
 
+//resetear contraseña
 export const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
@@ -284,4 +285,11 @@ export const resetPassword = async (req, res) => {
         console.error("Error en resetPassword:", error);
         res.status(500).json({ message: error.message });
     }
+};
+
+export const updatePreferences = async (req, res) => {
+    const { userId } = req.params;
+    const { tipo, intensidad, frecuencia } = req.body;
+    await User.findByIdAndUpdate(userId, { preferencias: { tipo, intensidad, frecuencia } });
+    res.json({ message: 'Preferencias actualizadas' });
 };
