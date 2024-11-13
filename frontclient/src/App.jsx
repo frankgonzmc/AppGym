@@ -18,8 +18,8 @@ import EjercicioForm from './pages/ejercicios/ejercicioForm';
 import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
 import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
-import ResetPassword from './pages/auth/resetpasswordPage';
-import ForgotPassword from './pages/auth/forgotpasswordPage'; // Asegúrate de importar ForgotPassword
+import ForgotpasswordPage from './pages/auth/ForgotpasswordPage';
+import ResetpasswordPage from './pages/auth/ResetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
 import CategoriaPage from './pages/categorias/categoriaPage';
 import RutinaExistentePage from './pages/rutinas/rutinaExistentePage';
@@ -38,8 +38,9 @@ function App() {
                 <Routes>
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegistroUsuario />} />
-                  <Route path='/forgot-password' element={<ForgotPassword />} /> {/* Añade esta línea */}
-                  <Route path='/reset-password/:token' element={<ResetPassword />} />
+                  <Route path='/forgot-password' element={<ForgotpasswordPage />} />
+                  <Route path='/reset-password/:token' element={<ResetpasswordPage />} />
+
 
                   <Route element={<ProtectedRoute />}>
                     <Route path='/' element={<Inicio />} />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from '../../api/axios'
 
-const ForgotPassword = () => {
+const ForgotpasswordPage = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -45,4 +45,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default ForgotpasswordPage;

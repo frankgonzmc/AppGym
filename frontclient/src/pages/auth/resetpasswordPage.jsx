@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 
-function ResetPasswordPage() {
+function ResetpasswordPage() {
     const { token } = useParams();
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
@@ -45,4 +45,4 @@ function ResetPasswordPage() {
     );
 }
 
-export default ResetPasswordPage;
+export default ResetpasswordPage;
