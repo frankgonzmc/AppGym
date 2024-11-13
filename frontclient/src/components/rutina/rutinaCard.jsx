@@ -14,22 +14,15 @@ export function RutinaCard({ rutina }) {
   const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
 
   useEffect(() => {
-    // Llama a getProgreso si aún no hay datos en progreso[rutina._id]
-    if (!progreso[rutina._id]) {
-      console.log(`Llamando a getProgreso para la rutina: ${rutina._id}`);
-      getProgreso(rutina._id);
-    }
-  }, [progreso, rutina._id, getProgreso]);
-
-  useEffect(() => {
-    // Extrae progreso de la rutina específica y actualiza ejercicios completados
     const progresoRutina = progreso[rutina._id];
     console.log(`Progreso para la rutina ${rutina.nombre}:`, progresoRutina);
 
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
+    } else {
+      getProgreso(rutina._id); // Llama a getProgreso si el progreso es indefinido
     }
-  }, [progreso, rutina._id]);
+  }, [progreso, rutina._id, getProgreso]);
 
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
