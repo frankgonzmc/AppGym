@@ -256,7 +256,8 @@ export default function mlPage() {
                         </Card.Body>
                     </Card>
                 </Col>
-
+            </Row>
+            <Row>
                 <Col md={6} className="mb-2">
                     <Card className="info-card animate-card mt-3 mb-4">
                         <Card.Body>
