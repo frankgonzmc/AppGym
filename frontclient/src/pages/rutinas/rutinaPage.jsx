@@ -12,10 +12,6 @@ export default function RutinaPage() {
   const { getProgreso } = useProgreso();
 
   useEffect(() => {
-    console.log("Progreso en RutinaPage:", progreso);
-  }, [progreso]);
-
-  useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       if (!rutinas || rutinas.length === 0) {  // Solo llamar si `rutinas` está vacío
         const rutinasList = await getRutinas() || [];

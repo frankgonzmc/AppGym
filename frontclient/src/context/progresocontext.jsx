@@ -10,40 +10,39 @@ const ProgresoContext = createContext();
 
 export const useProgreso = () => {
     const context = useContext(ProgresoContext);
-
     if (!context) throw new Error("useProgreso debe estar dentro de un ProgresoProvider");
     return context;
-
-}
+};
 
 export function ProgresoProvider({ children }) {
-    const [progreso, setProgreso] = useState([]);
+    const [progreso, setProgreso] = useState({});
 
     const getProgreso = async (id) => {
         try {
-            const progreso = await getProgresoRequest(id);
-            const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
+            const response = await getProgresoRequest(id);
+            const progresoData = response.data || {}; // Asegúrate de que hay datos en la respuesta
+            const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
 
-            // Actualiza el estado global con el progreso
+            // Actualiza el estado global `progreso` con el progreso de la rutina especificada
             setProgreso((prev) => ({
                 ...prev,
-                [id]: { ...progreso, ejerciciosCompletados },
+                [id]: { ...progresoData, ejerciciosCompletados },
             }));
 
-            return { progreso, ejerciciosCompletados };
+            return { progreso: progresoData, ejerciciosCompletados };
         } catch (error) {
-            console.error("Error al obtener progreso o rutina:", error);
+            console.error("Error al obtener progreso de la rutina:", error);
             return { progreso: null, ejercicios: [] };
         }
     };
 
-    const createProgreso = async (progreso) => {
+    const createProgreso = async (progresoData) => {
         try {
-            const res = await createProgresoRequest(progreso);
+            const res = await createProgresoRequest(progresoData);
             console.log(res.data);
-            return res.data; // Devolver la rutina creada
+            return res.data; // Devolver el progreso creado
         } catch (error) {
-            console.error(error.response.data);
+            console.error("Error al crear progreso:", error);
         }
     };
 
@@ -51,39 +50,38 @@ export function ProgresoProvider({ children }) {
         try {
             const res = await deleteProgresoRequest(id);
             if (res.status === 204) {
-                setDetalles(prevDetalles => prevDetalles.filter(detalle => detalle._id !== id));
+                setProgreso((prevProgreso) => {
+                    const updatedProgreso = { ...prevProgreso };
+                    delete updatedProgreso[id]; // Elimina el progreso específico
+                    return updatedProgreso;
+                });
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error al eliminar progreso:", error);
         }
     };
 
-    const updateProgreso = async (id, progreso) => {
+    const updateProgreso = async (id, progresoData) => {
         try {
-            await updateProgresoRequest(id, progreso);
+            const res = await updateProgresoRequest(id, progresoData);
+            const updatedProgreso = res.data;
+            setProgreso((prevProgreso) => ({
+                ...prevProgreso,
+                [id]: updatedProgreso,
+            }));
         } catch (error) {
-            console.error(error);
+            console.error("Error al actualizar progreso:", error);
         }
     };
 
-    const updateProgresoEjercicio = (rutinaId, ejercicioId, seriesCompletadas) => {
+    const updateProgresoEjercicio = (rutinaId, ejerciciosCompletados) => {
         setProgreso((prevProgreso) => ({
             ...prevProgreso,
             [rutinaId]: {
                 ...prevProgreso[rutinaId],
-                ejerciciosCompletados: seriesCompletadas,
+                ejerciciosCompletados,
             },
         }));
-    };
-
-    const updateProgresoRutina = (id, progresoRutina) => {
-        setRutinas((prevRutinas) =>
-            prevRutinas.map((rutina) =>
-                rutina._id === id
-                    ? { ...rutina, progreso: progresoRutina }
-                    : rutina
-            )
-        );
     };
 
     return (
@@ -96,7 +94,6 @@ export function ProgresoProvider({ children }) {
                 deleteProgreso,
                 updateProgreso,
                 updateProgresoEjercicio,
-                updateProgresoRutina,
             }}
         >
             {children}
