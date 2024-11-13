@@ -13,22 +13,18 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      // Llama a getRutinas para obtener la lista de rutinas
-      const rutinasList = rutinas && rutinas.length > 0 ? rutinas : await getRutinas();
-
-      // Verifica si la respuesta es un array
-      if (Array.isArray(rutinasList) && rutinasList.length > 0) {
-        // Itera sobre cada rutina y llama a getProgreso para obtener el progreso
-        for (const rutina of rutinasList) {
-          await getProgreso(rutina._id);
+      if (!rutinas || rutinas.length === 0) {  // Solo llamar si `rutinas` está vacío
+        const rutinasList = await getRutinas() || [];
+        if (Array.isArray(rutinasList)) {
+          rutinasList.forEach(rutina => getProgreso(rutina._id));
+        } else {
+          console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
         }
-      } else {
-        console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
     };
 
     fetchRutinasConProgreso();
-  }, [rutinas, getRutinas, getProgreso]); // Dependencias adecuadas
+  }, [rutinas, getRutinas, getProgreso]); // Agrega las dependencias para asegurar que se ejecute correctamente
 
   return (
     <section className="seccion">

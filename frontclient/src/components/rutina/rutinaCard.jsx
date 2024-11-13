@@ -15,13 +15,10 @@ export function RutinaCard({ rutina }) {
 
   useEffect(() => {
     const progresoRutina = progreso[rutina._id];
-    console.log(`Progreso actualizado para la rutina ${rutina.nombre} (ID: ${rutina._id}):`, progresoRutina);
-
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
     }
   }, [progreso, rutina._id]);
-
 
   // Efecto para actualizar el total de ejercicios cuando la rutina cambie
   useEffect(() => {
