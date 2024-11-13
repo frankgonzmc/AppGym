@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
+import axios from '../api/axios';
 
 export function Inicio() {
     const { user } = useAuth();
@@ -298,7 +299,6 @@ export function Inicio() {
                             )}
                         </Card.Body>
                     </Card>
-                    {/* Más información */}
                 </Col>
             </Row>
         </Container>

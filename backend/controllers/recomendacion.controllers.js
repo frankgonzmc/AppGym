@@ -1,6 +1,5 @@
-import Recomendacion from '../models/recomendacion.model.js';
 import Ejercicio from '../models/ejercicio.model.js';
-import Progreso from '../models/progreso.model.js';
+import User from '../models/user.model.js';
 
 export const getRecomendaciones = async (req, res) => {
     const { userId } = req.params;
