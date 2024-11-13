@@ -18,7 +18,7 @@ import EjercicioForm from './pages/ejercicios/ejercicioForm';
 import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
 import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
-import ResetpasswordPage from './pages/auth/resetpasswordPage';
+import ResetPassword from './pages/auth/resetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
 import CategoriaPage from './pages/categorias/categoriaPage';
 import RutinaExistentePage from './pages/rutinas/rutinaExistentePage';
@@ -37,7 +37,7 @@ function App() {
                 <Routes>
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegistroUsuario />} />
-                  <Route path='/forgot-password' element={<ResetpasswordPage />} />
+                  <Route path='/reset-password/:token' element={<ResetPassword />} />
 
                   <Route element={<ProtectedRoute />}>
                     <Route path='/' element={<Inicio />} />

@@ -1,48 +1,48 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import axios from '../../api/axios'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 
-const ForgotPassword = () => {
-    const [email, setEmail] = useState('');
+function ResetPassword() {
+    const { token } = useParams();
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = handleSubmit(async (data) => {
+    const onSubmit = async (data) => {
         setLoading(true);
-        console.log(data);
         try {
-            const response = await axios.post('/forgot-password', { email: data.email });
+            const response = await axios.post(`/reset-password/${token}`, { password: data.password });
             setMessage(response.data.message);
-            setEmail(''); // Limpiar el campo de email
+            navigate('/login');
         } catch (error) {
-            setMessage(error.response ? error.response.data.message : "Error en la solicitud");
+            setMessage(error.response?.data?.message || "Error al restablecer contraseña");
         } finally {
-            setLoading(false); // Ocultar carga
+            setLoading(false);
         }
-    });
-
+    };
 
     return (
         <div className="flex h-screen items-center justify-center">
-            <form onSubmit={onSubmit} className="bg-zinc-800 p-10 rounded-md">
-                <h2 className="text-white mb-4">Recuperar Contraseña</h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-zinc-800 p-10 rounded-md">
+                <h2 className="text-white mb-4">Restablecer Contraseña</h2>
                 <input
-                    type="email"
-                    {...register('email', { required: true })}
-                    placeholder="Ingresa tu correo"
+                    type="password"
+                    {...register('password', { required: true })}
+                    placeholder="Nueva Contraseña"
                     required
                     className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md mb-2"
                 />
-                {errors.email && (<p className="text-red-500"> Email es Necesario! </p>)}
+                {errors.password && (<p className="text-red-500">Se requiere la nueva contraseña</p>)}
 
                 <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md">
-                    {loading ? "Enviando..." : "Enviar enlace de recuperación"}
+                    {loading ? "Procesando..." : "Restablecer Contraseña"}
                 </button>
                 {message && <p className="text-red-500 mt-2">{message}</p>}
             </form>
         </div>
     );
-};
+}
 
-export default ForgotPassword;
+export default ResetPassword;

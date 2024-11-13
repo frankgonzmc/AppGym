@@ -223,6 +223,8 @@ export const updatePassword = async (req, res) => {
     }
 };
 
+// auth.controllers.js
+
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -231,29 +233,29 @@ export const forgotPassword = async (req, res) => {
 
         const token = crypto.randomBytes(20).toString('hex');
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 3600000;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hora para expiración
         await user.save();
 
         const transporter = nodemailer.createTransport({
-            service: 'Gmail',
+            service: 'Gmail', // Usa el servicio de Gmail
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
             },
         });
 
+        const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
+
         const mailOptions = {
             to: user.email,
             subject: 'Recuperación de Contraseña',
-            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: 
-                   http://localhost:5000/api/reset-password/${token}`,
+            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetUrl}`
         };
 
-        await transporter.sendMail(mailOptions)
-
-        res.status(200).json({ message: "Se ha enviado un correo para restablecer la contraseña." });
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: "Correo de recuperación enviado. Revisa tu bandeja de entrada." });
     } catch (error) {
-        console.error("Error en forgotPassword:", error); // Para ver errores en el backend
+        console.error("Error en forgotPassword:", error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -268,7 +270,7 @@ export const resetPassword = async (req, res) => {
             resetPasswordExpires: { $gt: Date.now() },
         });
 
-        if (!user) return res.status(400).json({ message: "Token no válido o ha expirado." });
+        if (!user) return res.status(400).json({ message: "Token no válido o expirado." });
 
         user.password = await bcrypt.hash(password, 10);
         user.resetPasswordToken = undefined;
@@ -277,7 +279,7 @@ export const resetPassword = async (req, res) => {
 
         res.status(200).json({ message: "Contraseña restablecida correctamente." });
     } catch (error) {
-        console.error("Error en resetPassword:", error); // Para ver errores en el backend
+        console.error("Error en resetPassword:", error);
         res.status(500).json({ message: error.message });
     }
 };
