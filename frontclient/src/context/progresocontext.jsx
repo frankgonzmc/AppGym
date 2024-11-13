@@ -22,15 +22,14 @@ export function ProgresoProvider({ children }) {
     const getProgreso = async (id) => {
         try {
             const response = await getProgresoRequest(id);
-            console.log("Respuesta de progreso para la rutina con id:", id, response.data);
+            const progresoData = response.data && response.data[0] ? response.data[0] : {}; // Verifica que sea un objeto y accede al primer elemento si es un array
 
-            // Verifica si la respuesta es un array y toma el primer elemento en caso de que sea así
-            const progresoData = Array.isArray(response.data) ? response.data[0] : response.data;
+            console.log("Datos de progreso recibidos para la rutina:", id, progresoData);
 
             if (progresoData) {
                 const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
 
-                // Actualiza el estado global con el progreso
+                // Actualiza el estado global `progreso` con el progreso de la rutina especificada
                 setProgreso((prev) => ({
                     ...prev,
                     [id]: { ...progresoData, ejerciciosCompletados },
