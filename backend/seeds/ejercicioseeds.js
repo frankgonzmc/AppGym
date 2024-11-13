@@ -4,6 +4,19 @@ import { connectDB } from "../db.js"; // Importa tu función de conexión
 const ejerciciosPredeterminados = [
     //Principiante
     {
+        "codigo": "00PRUBEA",
+        "nombre": "Flexiones",
+        "descripcion": "Ejercicio para fortalecer el pecho y tríceps.",
+        "nivel": "Principiante",
+        "categoria": "Pecho",
+        "series": 1,
+        "duracion": 3,
+        "descanso": 5,
+        "repeticiones": 1,
+        "estado": "En proceso",
+        "imagen": "http://localhost:5000/uploads/ejercicios/pushup.gif" // Agregar URL de la imagen
+    },
+    {
         "codigo": "EJ001",
         "nombre": "Flexiones",
         "descripcion": "Ejercicio para fortalecer el pecho y tríceps.",
