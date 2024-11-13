@@ -11,6 +11,7 @@ export function Inicio() {
     const { user } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
+    const [recomendaciones, setRecomendaciones] = useState([]);
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
 
