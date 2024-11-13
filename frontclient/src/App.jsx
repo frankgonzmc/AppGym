@@ -37,6 +37,7 @@ function App() {
                 <Routes>
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegistroUsuario />} />
+                  <Route path='/forgot-password' element={<ForgotPassword />} /> {/* Añade esta línea */}
                   <Route path='/reset-password/:token' element={<ResetPassword />} />
 
                   <Route element={<ProtectedRoute />}>
