@@ -19,7 +19,7 @@ import DetallerutinaPage from './pages/rutinas/detallerutinaPage';
 import CalendarPage from './pages/calendario/calendarPage';
 import EjercicioPage from './pages/ejercicios/ejercicioPage';
 import ForgotPasswordPage from './pages/auth/forgotPasswordPage';
-import ResetPasswordPage from './pages/auth/ResetPasswordPage';
+import ResetPasswordPage from './pages/auth/resetpasswordPage';
 import IniciarejercicioPage from './pages/ejercicios/iniciarejercicioPage';
 import CategoriaPage from './pages/categorias/categoriaPage';
 import RutinaExistentePage from './pages/rutinas/rutinaExistentePage';
