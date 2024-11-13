@@ -1,6 +1,7 @@
 import Progreso from '../models/progreso.model.js';
 import User from '../models/user.model.js'
 
+// Obtener un progreso del usuario existente
 export const getProgreso = async (req, res) => {
     try {
         const progreso = await Progreso.find({
@@ -18,6 +19,7 @@ export const getProgreso = async (req, res) => {
     }
 };
 
+// Crear un nuevo progreso del usuario existente
 export const createProgreso = async (req, res) => {
     try {
         const { rutina, fecha, estado } = req.body;
@@ -48,6 +50,7 @@ export const deleteProgreso = async (req, res) => {
     }
 };
 
+// Actualizar un progreso del usuario existente
 export const updateProgreso = async (req, res) => {
     try {
         const progreso = await Progreso.findByIdAndUpdate(req.params.id, req.body, {
@@ -60,6 +63,7 @@ export const updateProgreso = async (req, res) => {
     }
 };
 
+// Obtener estadísticas del progreso del usuario existente
 export const getUserStats = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -73,6 +77,7 @@ export const getUserStats = async (req, res) => {
     }
 };
 
+// Obtener estadísticas del progreso por período (mensual, semanal, etc.) del usuario existente
 export const getUserStatsByPeriod = async (req, res) => {
     const { userId, period } = req.params;
     const matchStage = { user: userId };
@@ -89,6 +94,8 @@ export const getUserStatsByPeriod = async (req, res) => {
     }
 };
 
+
+// Comparar el progreso con objetivos del usuario existente
 export const compareProgressWithGoals = async (req, res) => {
     const { userId } = req.params;
     const user = await User.findById(userId);
