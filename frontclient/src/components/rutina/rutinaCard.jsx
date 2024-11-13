@@ -7,43 +7,45 @@ import { getDetallesRutina } from "../../api/detallerutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
-  const { progreso, getProgreso } = useProgreso();
+  const { progreso } = useProgreso();
   const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
-  const porcentajeProgreso = totalEjercicios > 0 ? Math.round((ejerciciosCompletados / totalEjercicios) * 100) : 0;
+  const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
   const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
 
   useEffect(() => {
     const progresoRutina = progreso[rutina._id];
-    console.log(`Progreso para la rutina ${rutina.nombre}:`, progresoRutina);
-
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
-    } else {
-      getProgreso(rutina._id); // Llama a getProgreso si el progreso es indefinido
     }
-  }, [progreso, rutina._id, getProgreso]);
+  }, [progreso, rutina._id]);
 
+  // Efecto para actualizar el total de ejercicios cuando la rutina cambie
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
   }, [rutina.totalEjercicios]);
 
+  // Nueva función para verificar el progreso de los ejercicios
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const { detalles } = await getDetallesRutina(rutina._id);
+        const { detalles } = await getDetallesRutina(rutina._id); // Accede a 'detalles' en la respuesta
+
+        // Verifica si 'detalles' es un array
         if (!Array.isArray(detalles)) {
           console.error("La respuesta de detalles no es un array:", detalles);
-          return;
+          return; // Salir si no es un array
         }
-        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
-        setEjerciciosCompletados(completados);
+
+        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length; // Cuenta los ejercicios completados
+        setEjerciciosCompletados(completados); // Actualiza el estado con la cantidad de ejercicios completados
       } catch (error) {
         console.error("Error al obtener detalles de la rutina:", error);
       }
     };
+
     fetchDetalles();
-  }, [rutina._id]);
+  }, [rutina._id]); // Dependencia en el id de la rutina
 
   return (
     <Card>
@@ -58,7 +60,7 @@ export function RutinaCard({ rutina }) {
 
       <div className="my-3">
         <p className="text-slate-300">Progreso de la rutina:</p>
-        <ProgressBar now={porcentajeProgreso} label={`${porcentajeProgreso}%`} />
+        <ProgressBar now={porcentajeProgreso} label={`${Math.round(porcentajeProgreso)}%`} />
         {porcentajeProgreso === 100 && <p className="text-green-500 mt-2">¡Rutina Completada!</p>}
       </div>
 

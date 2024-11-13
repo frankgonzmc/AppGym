@@ -21,21 +21,18 @@ export function ProgresoProvider({ children }) {
 
     const getProgreso = async (id) => {
         try {
-            const response = await getProgresoRequest(id);
-            console.log("Respuesta de API para progreso:", response); // Log completo
-            const progresoData = response.data || {}; // Asegúrate de que hay datos en la respuesta
-            const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
+            const progreso = await getProgresoRequest(id);
+            const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
 
-            console.log("Datos de progreso recibidos para la rutina:", id, progresoData); // Verificar el contenido específico
-
+            // Actualiza el estado global con el progreso
             setProgreso((prev) => ({
                 ...prev,
-                [id]: { ...progresoData, ejerciciosCompletados },
+                [id]: { ...progreso, ejerciciosCompletados },
             }));
 
-            return { progreso: progresoData, ejerciciosCompletados };
+            return { progreso, ejerciciosCompletados };
         } catch (error) {
-            console.error("Error al obtener progreso de la rutina:", error);
+            console.error("Error al obtener progreso o rutina:", error);
             return { progreso: null, ejercicios: [] };
         }
     };
