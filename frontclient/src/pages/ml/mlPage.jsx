@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from "../../context/authcontext";
 import { Container, Form, Row, Col, Card, Button, Alert, Table } from 'react-bootstrap';
+import axios from '../api/axios';
 
 export default function mlPage() {
 
@@ -11,6 +12,21 @@ export default function mlPage() {
     const [genero, setGenero] = useState(user.genero || "");
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
+    const [recomendaciones, setRecomendaciones] = useState([]);
+
+    useEffect(() => {
+        fetchRecomendaciones();
+    }, [user]);
+
+    const fetchRecomendaciones = async () => {
+        try {
+            const response = await axios.get(`/recomendaciones/${user.id}`);
+            setRecomendaciones(response.data);
+        } catch (error) {
+            console.error("Error al obtener recomendaciones:", error);
+            setError("No se pudieron cargar las recomendaciones.");
+        }
+    };
 
     const calcularTMB = () => {
         let resultado;
@@ -68,7 +84,7 @@ export default function mlPage() {
     return (
         <Container>
             <Row>
-                <Col className="text-center">
+                <Col md={8} className="text-center">
                     <Card className="info-card mt-3 my-3">
                         <Card.Body>
                             <Card.Title>¿recomendaciones de rutinas para ejercicios?</Card.Title>
@@ -236,6 +252,21 @@ export default function mlPage() {
                                 </>
                             ) : (
                                 <p>Por favor, calcula primero tu TMB.</p>
+                            )}
+                        </Card.Body>
+                    </Card>
+                </Col>
+
+                <Col md={6} className="mb-2">
+                    <Card className="info-card animate-card mt-3 mb-4">
+                        <Card.Body>
+                            <Card.Title>Recomendaciones de Ejercicios</Card.Title>
+                            {recomendaciones.length > 0 ? (
+                                recomendaciones.map((rec, index) => (
+                                    <p key={index}>{rec.ejercicio.nombre} - {rec.motivo}</p>
+                                ))
+                            ) : (
+                                <p>No hay recomendaciones disponibles en este momento.</p>
                             )}
                         </Card.Body>
                     </Card>

@@ -6,31 +6,15 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
-import axios from '../api/axios';
 
 export function Inicio() {
     const { user } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const [recomendaciones, setRecomendaciones] = useState([]);
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
 
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
-
-    useEffect(() => {
-        fetchRecomendaciones();
-    }, [user]);
-
-    const fetchRecomendaciones = async () => {
-        try {
-            const response = await axios.get(`/recomendaciones/${user.id}`);
-            setRecomendaciones(response.data);
-        } catch (error) {
-            console.error("Error al obtener recomendaciones:", error);
-            setError("No se pudieron cargar las recomendaciones.");
-        }
-    };
 
     const calcularTMB = () => {
         const peso = user.peso || 0;
@@ -285,20 +269,6 @@ export function Inicio() {
                 <Col md={3}>
                     <PanelEjercicios />
 
-                </Col>
-                <Col md={6} className="mb-2">
-                    <Card className="info-card animate-card mt-3 mb-4">
-                        <Card.Body>
-                            <Card.Title>Recomendaciones de Ejercicios</Card.Title>
-                            {recomendaciones.length > 0 ? (
-                                recomendaciones.map((rec, index) => (
-                                    <p key={index}>{rec.ejercicio.nombre} - {rec.motivo}</p>
-                                ))
-                            ) : (
-                                <p>No hay recomendaciones disponibles en este momento.</p>
-                            )}
-                        </Card.Body>
-                    </Card>
                 </Col>
             </Row>
         </Container>
