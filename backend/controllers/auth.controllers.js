@@ -237,7 +237,7 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         const transporter = nodemailer.createTransport({
-            service: 'Gmail', // Usa el servicio de Gmail
+            service: 'gmail', // Usa el servicio de Gmail
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
