@@ -8,6 +8,7 @@ import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
+import recomendacionRoutes from './routes/recomendacion.routes.js';
 import { FRONTEND_URL } from "./config.js";
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -31,6 +32,7 @@ app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
 app.use("/api", detallerutinaRoutes);
+app.use('/api', recomendacionRoutes);
 
 // Configura una ruta general para servir archivos de /uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
