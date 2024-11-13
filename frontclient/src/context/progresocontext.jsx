@@ -23,6 +23,9 @@ export function ProgresoProvider({ children }) {
             const progresoData = response.data || {}; // Asegúrate de que hay datos en la respuesta
             const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
 
+            // Log para verificar que se está recibiendo la respuesta correcta
+            console.log("Datos de progreso recibidos para la rutina:", id, progresoData);
+
             // Actualiza el estado global `progreso` con el progreso de la rutina especificada
             setProgreso((prev) => ({
                 ...prev,
