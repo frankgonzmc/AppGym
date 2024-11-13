@@ -12,26 +12,25 @@ export default function RutinaPage() {
   const { getProgreso } = useProgreso();
 
   useEffect(() => {
-    const fetchData = async () => {
-      let rutinasList = rutinas;
+    const fetchRutinasConProgreso = async () => {
+      // Obtener rutinas si no están cargadas
+      const rutinasList = rutinas && rutinas.length > 0 ? rutinas : await getRutinas();
 
-      // Si no hay rutinas cargadas, llamamos a `getRutinas` para obtenerlas
-      if (!rutinas || rutinas.length === 0) {
-        rutinasList = await getRutinas() || [];
-      }
-
-      // Para cada rutina, llamamos a `getProgreso` para obtener el progreso correspondiente
-      if (Array.isArray(rutinasList) && rutinasList.length > 0) {
+      // Verificar si es una lista válida antes de continuar
+      if (Array.isArray(rutinasList)) {
+        // Obtener el progreso solo una vez por cada rutina
         for (const rutina of rutinasList) {
-          await getProgreso(rutina._id);
+          if (!rutina.ejerciciosCompletados) { // Evitar múltiples llamadas
+            await getProgreso(rutina._id);
+          }
         }
       } else {
         console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
     };
 
-    fetchData();
-  }, [rutinas, getRutinas, getProgreso]); // Dependencias para ejecutar correctamente el efecto
+    fetchRutinasConProgreso();
+  }, [rutinas, getRutinas]); // Excluir getProgreso de las dependencias
 
   return (
     <section className="seccion">
