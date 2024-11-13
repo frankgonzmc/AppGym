@@ -21,19 +21,29 @@ export function ProgresoProvider({ children }) {
 
     const getProgreso = async (id) => {
         try {
-            const progreso = await getProgresoRequest(id);
-            const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
+            const response = await getProgresoRequest(id);
+            console.log("Respuesta de progreso para la rutina con id:", id, response.data);
 
-            // Actualiza el estado global con el progreso
-            setProgreso((prev) => ({
-                ...prev,
-                [id]: { ...progreso, ejerciciosCompletados },
-            }));
+            // Verifica si la respuesta es un array y toma el primer elemento en caso de que sea así
+            const progresoData = Array.isArray(response.data) ? response.data[0] : response.data;
 
-            return { progreso, ejerciciosCompletados };
+            if (progresoData) {
+                const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
+
+                // Actualiza el estado global con el progreso
+                setProgreso((prev) => ({
+                    ...prev,
+                    [id]: { ...progresoData, ejerciciosCompletados },
+                }));
+
+                return { progreso: progresoData, ejerciciosCompletados };
+            } else {
+                console.warn(`No se encontró progreso para la rutina con id ${id}`);
+                return { progreso: null, ejerciciosCompletados: 0 };
+            }
         } catch (error) {
-            console.error("Error al obtener progreso o rutina:", error);
-            return { progreso: null, ejercicios: [] };
+            console.error("Error al obtener progreso de la rutina:", error);
+            return { progreso: null, ejerciciosCompletados: 0 };
         }
     };
 

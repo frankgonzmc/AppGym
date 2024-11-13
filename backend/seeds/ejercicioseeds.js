@@ -5,8 +5,8 @@ const ejerciciosPredeterminados = [
     //Principiante
     {
         "codigo": "00PRUBEA",
-        "nombre": "Flexiones",
-        "descripcion": "Ejercicio para fortalecer el pecho y tríceps.",
+        "nombre": "PRUEBA",
+        "descripcion": "PRUEBAAAAAAAAAAAAAAA",
         "nivel": "Principiante",
         "categoria": "Pecho",
         "series": 1,
