@@ -6,7 +6,6 @@ import axios from '../../api/axios';
 
 function ProgresoPage() {
   const { user } = useAuth();
-  const userId = user?._id; // Verifica que user y user._id estén definidos
   const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0));
   const [period, setPeriod] = useState('monthly');
   const [loading, setLoading] = useState(true);
@@ -14,16 +13,21 @@ function ProgresoPage() {
   const [progressComparison, setProgressComparison] = useState('');
 
   useEffect(() => {
-    if (userId) {
+    if (user?.id) {
+      console.log("User ID:", user.id); // Verificar que user.id existe
       fetchUserStats();
       fetchProgressComparison();
+    } else {
+      console.log("User ID is undefined");
     }
-  }, [userId, period]); // Cambiar a userId en lugar de user para evitar errores
+  }, [user, period]);
 
   const fetchUserStats = async () => {
+    if (!user.id) return; // Evitar hacer la solicitud si user.id es undefined
     setLoading(true);
     try {
-      const response = await axios.get(`/stats/${userId}/${period}`);
+      const response = await axios.get(`/stats/${user.id}/${period}`);
+      console.log("User Stats Response:", response.data); // Verificar la respuesta
       const stats = response.data;
 
       const processedData = new Array(12).fill(0);
@@ -33,6 +37,7 @@ function ProgresoPage() {
       setMonthlyProgress(processedData);
       setAlert(null);
     } catch (error) {
+      console.error("Error fetching user stats:", error);
       setAlert("Error al cargar estadísticas");
     } finally {
       setLoading(false);
@@ -40,10 +45,13 @@ function ProgresoPage() {
   };
 
   const fetchProgressComparison = async () => {
+    if (!user.id) return; // Evitar hacer la solicitud si user.id es undefined
     try {
-      const response = await axios.get(`/compare-progress/${userId}`);
+      const response = await axios.get(`/compare-progress/${user.id}`);
+      console.log("Progress Comparison Response:", response.data); // Verificar la respuesta
       setProgressComparison(response.data.message);
     } catch (error) {
+      console.error("Error fetching progress comparison:", error);
       setAlert("Error al comparar el progreso con los objetivos.");
     }
   };
