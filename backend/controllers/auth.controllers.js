@@ -241,8 +241,8 @@ export const forgotPassword = async (req, res) => {
             port: 465,
             secure: true, // true para 465, false para otros puertos
             auth: {
-                user: 'jpal199809@gmail.com',        // Tu correo de Gmail
-                pass: 'ppp@33@77'  // Contraseña de aplicación generada en Google
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
 
