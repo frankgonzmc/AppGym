@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   mybackend:
     container_name: backendgym
@@ -5,24 +6,11 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
-    depends_on:
+    links:
       - database
     volumes:
-      - ./backend:/usr/src/app
-      - ./backend/uploads:/usr/src/app/uploads
-    networks:
-      - tailscale-network
-
-  myfrontend:
-    container_name: frontgym
-    restart: always
-    build: ./frontclient
-    ports:
-      - "5173:5173"
-    depends_on:
-      - mybackend
-    volumes:
-      - ./frontclient:/usr/src/app
+      - ./backend:/usr/src/app # Mapea solo el directorio backend en el contenedor backend
+      - ./backend/uploads:/usr/src/app/uploads # Mapea específicamente el directorio de uploads
     networks:
       - tailscale-network
 
@@ -33,3 +21,20 @@ services:
       - "27017:27017"
     networks:
       - tailscale-network
+
+  myfrontend:
+    container_name: frontgym
+    restart: always
+    build: ./frontclient
+    ports:
+      - "5173:5173"
+    links:
+      - mybackend
+    volumes:
+      - ./frontclient:/usr/src/app # Mapea solo el directorio frontclient en el contenedor frontend
+    networks:
+      - tailscale-network
+
+networks:
+  tailscale-network:
+    driver: bridge
