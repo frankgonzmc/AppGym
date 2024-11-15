@@ -30,6 +30,7 @@ export function ProgresoProvider({ children }) {
                 [id]: { ...progreso, ejerciciosCompletados },
             }));
 
+            console.log("Estado de progreso actualizado:", progreso);
             return { progreso, ejerciciosCompletados };
         } catch (error) {
             console.error("Error al obtener progreso o rutina:", error);

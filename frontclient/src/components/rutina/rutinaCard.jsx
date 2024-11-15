@@ -15,10 +15,11 @@ export function RutinaCard({ rutina }) {
 
   useEffect(() => {
     const progresoRutina = progreso[rutina._id];
+    console.log("Progreso de la rutina en RutinaCard:", progresoRutina);
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
     }
-  }, [progreso, rutina._id]); // Escuchar `progreso` para actualizaciones
+  }, [progreso, rutina._id]); // Asegúrate de tener `progreso` como dependencia
 
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
