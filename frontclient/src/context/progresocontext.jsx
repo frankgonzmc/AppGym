@@ -25,10 +25,14 @@ export function ProgresoProvider({ children }) {
             const ejerciciosCompletados = progreso.ejerciciosCompletados || 0;
 
             // Actualiza el estado global con el progreso
-            setProgreso((prev) => ({
-                ...prev,
-                [id]: { ...progreso, ejerciciosCompletados },
-            }));
+            setProgreso((prev) => {
+                const updatedProgreso = {
+                    ...prev,
+                    [id]: { ...progreso, ejerciciosCompletados },
+                };
+                console.log("Actualización de progreso global:", updatedProgreso);
+                return updatedProgreso;
+            });
 
             console.log("Estado de progreso actualizado:", progreso);
             return { progreso, ejerciciosCompletados };

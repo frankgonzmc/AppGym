@@ -7,19 +7,20 @@ import { getDetallesRutina } from "../../api/detallerutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
-  const { progreso } = useProgreso(); // Obtén el progreso global del contexto
+  const { progreso } = useProgreso();
   const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
-  const estadoRutina = porcentajeProgreso === 100 ? 'Completado' : 'Pendiente';
+  const estadoRutina = porcentajeProgreso === 100 ? "Completado" : "Pendiente";
 
   useEffect(() => {
     const progresoRutina = progreso[rutina._id];
     console.log("Progreso de la rutina en RutinaCard:", progresoRutina);
-    if (progresoRutina) {
-      setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
+
+    if (progresoRutina && progresoRutina.ejerciciosCompletados !== undefined) {
+      setEjerciciosCompletados(progresoRutina.ejerciciosCompletados);
     }
-  }, [progreso, rutina._id]); // Asegúrate de tener `progreso` como dependencia
+  }, [progreso, rutina._id]);
 
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
