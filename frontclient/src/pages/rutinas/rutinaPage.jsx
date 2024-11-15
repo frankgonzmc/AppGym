@@ -14,7 +14,7 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      setIsLoading(true);
+      setIsLoading(true); // Activa el estado de carga
       const rutinasList = await getRutinas();
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
@@ -23,11 +23,11 @@ export default function RutinaPage() {
       } else {
         console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
-      setIsLoading(false);
+      setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
 
     fetchRutinasConProgreso();
-  }, [getRutinas, getProgreso]);
+  }, []); // Dependencias vacías para ejecutar solo una vez
 
   if (isLoading) {
     return <p>Cargando rutinas...</p>;
