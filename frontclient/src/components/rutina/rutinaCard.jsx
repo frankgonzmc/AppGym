@@ -7,7 +7,7 @@ import { getDetallesRutina } from "../../api/detallerutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
-  const { progreso } = useProgreso();
+  const { progreso } = useProgreso(); // Obtén el progreso global del contexto
   const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
@@ -18,34 +18,27 @@ export function RutinaCard({ rutina }) {
     if (progresoRutina) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados || 0);
     }
-  }, [progreso, rutina._id]); // Asegúrate de tener `progreso` como dependencia  
+  }, [progreso, rutina._id]); // Escuchar `progreso` para actualizaciones
 
-  // Efecto para actualizar el total de ejercicios cuando la rutina cambie
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
   }, [rutina.totalEjercicios]);
 
-  // Nueva función para verificar el progreso de los ejercicios
   useEffect(() => {
     const fetchDetalles = async () => {
       try {
-        const { detalles } = await getDetallesRutina(rutina._id); // Accede a 'detalles' en la respuesta
-
-        // Verifica si 'detalles' es un array
-        if (!Array.isArray(detalles)) {
-          console.error("La respuesta de detalles no es un array:", detalles);
-          return; // Salir si no es un array
+        const { detalles } = await getDetallesRutina(rutina._id);
+        if (Array.isArray(detalles)) {
+          const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
+          setEjerciciosCompletados(completados);
         }
-
-        const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length; // Cuenta los ejercicios completados
-        setEjerciciosCompletados(completados); // Actualiza el estado con la cantidad de ejercicios completados
       } catch (error) {
         console.error("Error al obtener detalles de la rutina:", error);
       }
     };
 
     fetchDetalles();
-  }, [rutina._id]); // Dependencia en el id de la rutina
+  }, [rutina._id]);
 
   return (
     <Card>
