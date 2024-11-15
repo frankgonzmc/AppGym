@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRutinas } from "../../context/rutinascontext";
 import { useProgreso } from "../../context/progresocontext";
 import { RutinaCard } from "../../components/rutina/rutinaCard";
