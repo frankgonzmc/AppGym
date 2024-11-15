@@ -23,11 +23,11 @@ export function ProgresoProvider({ children }) {
         try {
             const res = await getProgresoRequest(id);
             const progresoData = res.data[0] || {};
-            const ejerciciosCompletados = progresoData.ejerciciosCompletados || 0;
 
+            // Guardamos solo los datos de progreso en el estado global
             setProgreso(prev => ({
                 ...prev,
-                [id]: { ...progresoData, ejerciciosCompletados },
+                [id]: progresoData,
             }));
         } catch (error) {
             console.error("Error al obtener progreso:", error);

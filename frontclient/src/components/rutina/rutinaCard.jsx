@@ -8,39 +8,14 @@ import { getDetallesRutina } from "../../api/detallerutina";
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
   const { progreso } = useProgreso();
-  const [ejerciciosCompletados, setEjerciciosCompletados] = useState(0);
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
+  const ejerciciosCompletados = rutina.ejerciciosCompletados || 0; // Obtener directamente de rutina
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
   const estadoRutina = porcentajeProgreso === 100 ? "Completado" : "Pendiente";
 
   useEffect(() => {
-    const progresoRutina = progreso[rutina._id];
-    console.log("Progreso de la rutina en RutinaCard:", progresoRutina);
-
-    if (progresoRutina && progresoRutina.ejerciciosCompletados !== undefined) {
-      setEjerciciosCompletados(progresoRutina.ejerciciosCompletados);
-    }
-  }, [progreso, rutina._id]); // Asegúrate de tener `progreso` como dependencia
-
-  useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
   }, [rutina.totalEjercicios]);
-
-  useEffect(() => {
-    const fetchDetalles = async () => {
-      try {
-        const { detalles } = await getDetallesRutina(rutina._id);
-        if (Array.isArray(detalles)) {
-          const completados = detalles.filter(detalle => detalle.seriesProgreso === 4).length;
-          setEjerciciosCompletados(completados);
-        }
-      } catch (error) {
-        console.error("Error al obtener detalles de la rutina:", error);
-      }
-    };
-
-    fetchDetalles();
-  }, [rutina._id]);
 
   return (
     <Card>
