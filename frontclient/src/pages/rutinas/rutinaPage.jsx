@@ -13,8 +13,8 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      const rutinasList = await getRutinas() || [];
-      if (Array.isArray(rutinasList) && rutinasList.length > 0) { // Verifica que sea un array válido
+      const rutinasList = await getRutinas();
+      if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
           await getProgreso(rutina._id);
         }
@@ -23,7 +23,8 @@ export default function RutinaPage() {
       }
     };
     fetchRutinasConProgreso();
-  }, [rutinas, getRutinas, getProgreso]); // Agrega las dependencias para asegurar que se ejecute correctamente
+  }, [getRutinas, getProgreso]);
+
 
   return (
     <section className="seccion">
