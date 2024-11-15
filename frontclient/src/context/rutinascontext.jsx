@@ -18,23 +18,23 @@ export function RutinaProvider({ children }) {
         if (!cargado) {
             try {
                 const res = await getRutinasRequest();
-                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar que es un array
+                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
                 if (Array.isArray(res.data)) {
                     setRutinas(res.data);
                     setCargado(true);
-                    return res.data;
+                    return res.data; // Aseguramos que devuelva la lista de rutinas
                 } else {
                     console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
-                    setRutinas([]); // Establecer un array vacío si no es un array
-                    return [];
+                    setRutinas([]); // Establece un array vacío si no es un array
+                    return []; // Devuelve un array vacío en caso de error
                 }
             } catch (error) {
                 console.error("Error al obtener rutinas:", error);
-                setRutinas([]); // Establecer un array vacío en caso de error
-                return [];
+                setRutinas([]); // Establece un array vacío en caso de error
+                return []; // Devuelve un array vacío en caso de error
             }
         }
-    }, [cargado]);
+    }, [cargado]);    
 
     const deleteRutina = async (id) => {
         try {

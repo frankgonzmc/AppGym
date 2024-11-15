@@ -26,6 +26,7 @@ export default function RutinaPage() {
     fetchRutinasConProgreso();
   }, [getRutinas, getProgreso]);
 
+
   return (
     <section className="seccion">
       <Container className="py-4">
