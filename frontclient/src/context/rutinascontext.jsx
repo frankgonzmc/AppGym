@@ -18,11 +18,18 @@ export function RutinaProvider({ children }) {
         if (!cargado) {
             try {
                 const res = await getRutinasRequest();
-                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
-                setRutinas(res.data);
-                setCargado(true);
+                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar que es un array
+                if (Array.isArray(res.data)) {
+                    setRutinas(res.data);
+                    setCargado(true);
+                    return res.data;
+                } else {
+                    console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
+                    return []; // Retorna un array vacío si no es un array
+                }
             } catch (error) {
                 console.error("Error al obtener rutinas:", error);
+                return []; // Retorna un array vacío en caso de error
             }
         }
     }, [cargado]);

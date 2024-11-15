@@ -22,9 +22,9 @@ export default function RutinaPage() {
         console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
     };
+
     fetchRutinasConProgreso();
   }, [getRutinas, getProgreso]);
-
 
   return (
     <section className="seccion">
