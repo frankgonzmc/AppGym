@@ -13,8 +13,8 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      const rutinasList = await getRutinas();
-      if (Array.isArray(rutinasList)) {
+      const rutinasList = await getRutinas() || [];
+      if (Array.isArray(rutinasList) && rutinasList.length > 0) { // Verifica que sea un array válido
         for (const rutina of rutinasList) {
           await getProgreso(rutina._id);
         }
@@ -22,9 +22,8 @@ export default function RutinaPage() {
         console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
     };
-  
     fetchRutinasConProgreso();
-  }, [getRutinas, getProgreso]);  
+  }, [rutinas, getRutinas, getProgreso]); // Agrega las dependencias para asegurar que se ejecute correctamente
 
   return (
     <section className="seccion">
