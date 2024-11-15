@@ -15,16 +15,17 @@ export function RutinaProvider({ children }) {
     const [cargado, setCargado] = useState(false); // Nueva bandera para evitar llamadas repetidas
 
     const getRutinas = useCallback(async () => {
-        if (!cargado) { // Solo ejecuta la solicitud si `cargado` es `false`
+        if (!cargado) {
             try {
                 const res = await getRutinasRequest();
+                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
                 setRutinas(res.data);
-                setCargado(true); // Marca como cargado después de la primera llamada
+                setCargado(true);
             } catch (error) {
                 console.error("Error al obtener rutinas:", error);
             }
         }
-    }, [cargado]); // Dependencia `cargado` para que no cambie en cada render
+    }, [cargado]);
 
     const deleteRutina = async (id) => {
         try {
