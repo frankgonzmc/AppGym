@@ -20,7 +20,7 @@ export function RutinaCard({ rutina }) {
     if (progresoRutina && progresoRutina.ejerciciosCompletados !== undefined) {
       setEjerciciosCompletados(progresoRutina.ejerciciosCompletados);
     }
-  }, [progreso, rutina._id]);
+  }, [progreso, rutina._id]); // Asegúrate de tener `progreso` como dependencia
 
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
