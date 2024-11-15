@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
 import { useProgreso } from "../../context/progresocontext";
 import { useEffect, useState } from "react";
-import { getDetallesRutina } from "../../api/detallerutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
