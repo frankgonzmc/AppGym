@@ -25,11 +25,13 @@ export function RutinaProvider({ children }) {
                     return res.data;
                 } else {
                     console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
-                    return []; // Retorna un array vacío si no es un array
+                    setRutinas([]); // Establecer un array vacío si no es un array
+                    return [];
                 }
             } catch (error) {
                 console.error("Error al obtener rutinas:", error);
-                return []; // Retorna un array vacío en caso de error
+                setRutinas([]); // Establecer un array vacío en caso de error
+                return [];
             }
         }
     }, [cargado]);
