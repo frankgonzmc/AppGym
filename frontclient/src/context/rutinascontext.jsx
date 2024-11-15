@@ -11,12 +11,12 @@ export const useRutinas = () => {
 };
 
 export function RutinaProvider({ children }) {
-    const [rutinas, setRutinas] = useState([]);
+    const [rutinas, setRutinas] = useState([]); // Inicializa en un array vacío
     const [cargado, setCargado] = useState(false); // Nueva bandera para evitar llamadas repetidas
 
     const getRutinas = useCallback(async () => {
-        if (!cargado) {
-            try {
+        try {
+            if (!cargado) {
                 const res = await getRutinasRequest();
                 console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
                 if (Array.isArray(res.data)) {
@@ -28,13 +28,15 @@ export function RutinaProvider({ children }) {
                     setRutinas([]); // Establece un array vacío si no es un array
                     return []; // Devuelve un array vacío en caso de error
                 }
-            } catch (error) {
-                console.error("Error al obtener rutinas:", error);
-                setRutinas([]); // Establece un array vacío en caso de error
-                return []; // Devuelve un array vacío en caso de error
+            } else {
+                return rutinas; // Retorna el estado actual si ya se ha cargado
             }
+        } catch (error) {
+            console.error("Error al obtener rutinas:", error);
+            setRutinas([]); // Establece un array vacío en caso de error
+            return []; // Devuelve un array vacío en caso de error
         }
-    }, [cargado]);    
+    }, [cargado, rutinas]); // Asegúrate de agregar `rutinas` como dependencia
 
     const deleteRutina = async (id) => {
         try {

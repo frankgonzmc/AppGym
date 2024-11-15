@@ -10,13 +10,12 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
   const { getProgreso } = useProgreso();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
+      setIsLoading(true);
       const rutinasList = await getRutinas();
-      console.log("Rutinas obtenidas:", rutinasList);
-
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
           await getProgreso(rutina._id);
@@ -24,14 +23,14 @@ export default function RutinaPage() {
       } else {
         console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
-      setIsLoaded(true); // Cambia el estado para forzar el renderizado
+      setIsLoading(false);
     };
 
     fetchRutinasConProgreso();
   }, [getRutinas, getProgreso]);
 
-  if (!isLoaded) {
-    return <p>Cargando rutinas...</p>; // Mostrar un mensaje de carga si los datos no están listos
+  if (isLoading) {
+    return <p>Cargando rutinas...</p>;
   }
 
   return (
