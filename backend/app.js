@@ -36,6 +36,12 @@ app.use(cors({
     optionsSuccessStatus: 200, // Soluciona problemas con navegadores antiguos
 }));
 
+app.use((req, res, next) => {
+    console.log('Encabezados enviados al cliente:');
+    console.log(res.getHeaders());
+    next();
+});
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
