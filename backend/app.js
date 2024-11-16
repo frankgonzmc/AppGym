@@ -21,13 +21,12 @@ dotenv.config();
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Si la solicitud no tiene origen (por ejemplo, Postman) o el origen está permitido
-        console.log(`Request origin: ${origin}`); // Log para verificar el origen de la solicitud
-        if (!origin || FRONTEND_URL.includes(origin)) {
-            callback(null, true); // Permite la solicitud
+        console.log(`Request origin: ${origin}`); // Debug para verificar el origen de la solicitud
+        if (!origin || FRONTEND_URL.some(url => url.includes(origin))) {
+            callback(null, true); // Permite la solicitud si el origen coincide
         } else {
-            console.error(`Blocked by CORS: ${origin}`); // Log para depuración
-            callback(new Error('Not allowed by CORS')); // Bloquea la solicitud
+            console.error(`Blocked by CORS: ${origin}`);
+            callback(new Error('Not allowed by CORS'));
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
