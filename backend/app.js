@@ -30,6 +30,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
+/*
 app.get("/api", (req, res) => {
     res.json({
         message: "Bienvenido a la API del GymApp",
@@ -42,7 +43,7 @@ app.get("/api", (req, res) => {
             recomendacion: "/api/recomendaciones",
         },
     });
-});
+});*/
 
 // Rutas de tu aplicación
 app.use("/api", authRoutes);
