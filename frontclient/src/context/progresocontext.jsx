@@ -97,7 +97,6 @@ export function ProgresoProvider({ children }) {
         }));
     };
 
-    /*
     const updateProgresoRutina = (id, progresoRutina) => {
         setRutinas((prevRutinas) =>
             prevRutinas.map((rutina) =>
@@ -107,7 +106,6 @@ export function ProgresoProvider({ children }) {
             )
         );
     };
-    */
 
     return (
         <ProgresoContext.Provider
