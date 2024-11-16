@@ -21,6 +21,7 @@ dotenv.config();
 
 app.use(cors({
     origin: FRONTEND_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Permite todos los métodos necesarios
     credentials: true
 }));
 
