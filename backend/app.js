@@ -20,8 +20,14 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-    origin: FRONTEND_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Permite todos los métodos necesarios
+    origin: (origin, callback) => {
+        if (!origin || FRONTEND_URL.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
