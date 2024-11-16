@@ -21,7 +21,7 @@ export default function RutinaPage() {
           await getProgreso(rutina._id);
         }
       } else {
-        console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
+        console.error("");
       }
       setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
