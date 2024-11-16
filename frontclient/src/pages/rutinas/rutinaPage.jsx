@@ -15,7 +15,7 @@ export default function RutinaPage() {
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true); // Activa el estado de carga
-      const rutinasList = await getRutinas() || []; // Obtener las rutinas
+      const rutinasList = await getRutinas(); // Obtener las rutinas
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
           await getProgreso(rutina._id); // Llama a `getProgreso` solo si hay rutinas
