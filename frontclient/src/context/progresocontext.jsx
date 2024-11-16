@@ -19,6 +19,7 @@ export const useProgreso = () => {
 export function ProgresoProvider({ children }) {
     const [progreso, setProgreso] = useState([]);
 
+    /*
     const getProgreso = async (id) => {
         try {
             const res = await getProgresoRequest(id);
@@ -29,6 +30,29 @@ export function ProgresoProvider({ children }) {
                 ...prev,
                 [id]: progresoData,
             }));
+        } catch (error) {
+            console.error("Error al obtener progreso:", error);
+        }
+    };*/
+    const getProgreso = async (id) => {
+        try {
+            // Evita llamadas redundantes si ya tienes el progreso cargado
+            if (progreso[id]) {
+                console.log(`Progreso para rutina ${id} ya cargado.`);
+                return progreso[id];
+            }
+
+            console.log(`Obteniendo progreso para rutina con ID: ${id}`);
+            const res = await getProgresoRequest(id);
+            const progresoData = res.data[0] || {};
+
+            // Actualiza el estado global solo si obtuviste datos nuevos
+            setProgreso((prev) => ({
+                ...prev,
+                [id]: progresoData,
+            }));
+
+            return progresoData;
         } catch (error) {
             console.error("Error al obtener progreso:", error);
         }
@@ -73,6 +97,7 @@ export function ProgresoProvider({ children }) {
         }));
     };
 
+    /*
     const updateProgresoRutina = (id, progresoRutina) => {
         setRutinas((prevRutinas) =>
             prevRutinas.map((rutina) =>
@@ -82,6 +107,7 @@ export function ProgresoProvider({ children }) {
             )
         );
     };
+    */
 
     return (
         <ProgresoContext.Provider

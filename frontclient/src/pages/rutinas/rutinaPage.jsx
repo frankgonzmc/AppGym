@@ -15,19 +15,27 @@ export default function RutinaPage() {
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true); // Activa el estado de carga
-      const rutinasList = await getRutinas(); // Obtiene las rutinas del contexto
+
+      // Obtiene las rutinas del contexto
+      const rutinasList = await getRutinas();
+
+      // Valida si hay rutinas para obtener progreso
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
-          await getProgreso(rutina._id); // Obtiene el progreso solo si hay rutinas
+          // Valida si ya existe el progreso antes de obtenerlo
+          if (!progreso[rutina._id]) {
+            await getProgreso(rutina._id); // Llama a getProgreso solo si no está cargado
+          }
         }
       } else {
         console.warn("No hay rutinas o la respuesta no es válida.");
       }
-      setIsLoading(false); // Desactiva el estado de carga una vez que termina
+      setIsLoading(false); // Desactiva el estado de carga
     };
 
-    fetchRutinasConProgreso(); // Llama solo una vez al montar el componente
-  }, [getRutinas, getProgreso]); // Dependencias controladas
+    fetchRutinasConProgreso(); // Llama solo una vez
+  }, [getRutinas, getProgreso, progreso]); // Incluye `progreso` como dependencia para evitar repeticiones innecesarias
+
 
   if (isLoading) {
     return (
