@@ -9,42 +9,28 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
-  const { getProgreso, progreso } = useProgreso();
+  const { getProgreso } = useProgreso();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true); // Activa el estado de carga
-
-      // Obtiene las rutinas del contexto
       const rutinasList = await getRutinas();
-
-      // Valida si hay rutinas para obtener progreso
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
-          // Valida si ya existe el progreso antes de obtenerlo
-          if (!progreso[rutina._id]) {
-            await getProgreso(rutina._id); // Llama a getProgreso solo si no está cargado
-          }
+          await getProgreso(rutina._id);
         }
       } else {
-        console.warn("No hay rutinas o la respuesta no es válida.");
+        console.error("Error: 'getRutinas' no devolvió una lista válida de rutinas.");
       }
-      setIsLoading(false); // Desactiva el estado de carga
+      setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
 
-    fetchRutinasConProgreso(); // Llama solo una vez
-  }, [getRutinas, getProgreso, progreso]); // Incluye `progreso` como dependencia para evitar repeticiones innecesarias
-
+    fetchRutinasConProgreso();
+  }, []); // Dependencias vacías para ejecutar solo una vez
 
   if (isLoading) {
-    return (
-      <section className="seccion">
-        <Container className="py-4">
-          <p>Cargando rutinas...</p>
-        </Container>
-      </section>
-    );
+    return <p>Cargando rutinas...</p>;
   }
 
   return (
