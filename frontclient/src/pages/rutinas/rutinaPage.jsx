@@ -20,8 +20,6 @@ export default function RutinaPage() {
         for (const rutina of rutinasList) {
           await getProgreso(rutina._id);
         }
-      } else {
-        console.error("");
       }
       setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
