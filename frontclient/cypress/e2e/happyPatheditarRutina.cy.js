@@ -2,7 +2,7 @@ describe('Editar rutina por usuario logueado', () => {
     beforeEach(() => {
         // Usar cy.session para mantener la sesión activa entre pruebas
         cy.session('usuarioSesion', () => {
-          cy.visit('http://100.125.85.115:5173/login');
+          cy.visit('http://localhost:5173/login');
           cy.get('input[name="email"]').type('pepe@prueba.com');
           cy.get('input[name="password"]').type('pepe1234567');
           cy.get('button[type="submit"]').click();
@@ -18,7 +18,7 @@ describe('Editar rutina por usuario logueado', () => {
         });
       });
     it('Las rutinas editadas deberian guardarse y mostrarse en rutinas', () => {
-      cy.visit('http://100.125.85.115:5173/rutinas')  
+      cy.visit('http://localhost:5173/rutinas')  
       cy.contains('button', 'Editar').click();
       // Verifica si fue redirigido al dashboard o se muestra un mensaje de éxito
       cy.url().should('include', '/rutinas/');

@@ -2,7 +2,7 @@ describe('Editar datos de usuario', () => {
     beforeEach(() => {
         // Usar cy.session para mantener la sesión activa entre pruebas
         cy.session('usuarioSesion', () => {
-          cy.visit('http://100.125.85.115:5173/login');
+          cy.visit('http://localhost:5173/login');
           cy.get('input[name="email"]').type('pepe@prueba.com');
           cy.get('input[name="password"]').type('pepe1234567');
           cy.get('button[type="submit"]').click();
@@ -18,7 +18,7 @@ describe('Editar datos de usuario', () => {
         });
       });
     it('Las rutinas editadas deberian guardarse y mostrarse en rutinas', () => {
-      cy.visit('http://100.125.85.115:5173/profile')  
+      cy.visit('http://localhost:5173/profile')  
       // Escribir en "Contraseña actual"
       cy.contains('label', 'Contraseña actual:').siblings('input').type('pepe1234567');
       // Escribir en "Nueva contraseña"

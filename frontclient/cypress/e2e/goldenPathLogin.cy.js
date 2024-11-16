@@ -7,7 +7,7 @@ describe('Golden Path - Login de usuario', () => {
 
     it('Debería loguear un usuario registrado exitosamente con verificaciones adicionales', () => {
         // Visitar la página de login
-        cy.visit('http://100.125.85.115:5173/login');
+        cy.visit('http://localhost:5173/login');
 
         // Verificar que los elementos de la página de login están visibles
         cy.get('input[name="email"]').should('be.visible');

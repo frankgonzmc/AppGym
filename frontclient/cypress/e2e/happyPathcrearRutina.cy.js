@@ -2,7 +2,7 @@ describe('Crear rutina por usuario logueado', () => {
     beforeEach(() => {
         // Usar cy.session para mantener la sesión activa entre pruebas
         cy.session('usuarioSesion', () => {
-          cy.visit('http://100.125.85.115:5173/login');
+          cy.visit('http://localhost:5173/login');
           cy.get('input[name="email"]').type('pepe@prueba.com');
           cy.get('input[name="password"]').type('pepe123456');
           cy.get('button[type="submit"]').click();
@@ -20,7 +20,7 @@ describe('Crear rutina por usuario logueado', () => {
     
     it('Las rutinas creadas deberian guardarse y mostrarse en rutinas', () => {
       //cy.visit('http://localhost:5173/inicio')
-      cy.visit('http://100.125.85.115:5173/add-rutinas');  // Cambia la URL según tu ruta de registro
+      cy.visit('http://localhost:5173/add-rutinas');  // Cambia la URL según tu ruta de registro
       cy.get('input[name="nombre"]').type('Rutina Piernas');
       cy.get('textarea[name="descripcion"]').type('Rutinas para muslos y gluteos.');
       cy.get('input[value="670552af7119492283741722"]').check();

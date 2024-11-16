@@ -7,7 +7,7 @@ describe('Golden Path - Registro de usuario', () => {
 
     it('Debería registrar un nuevo usuario exitosamente con verificaciones adicionales', () => {
         // Visitar la página de registro
-        cy.visit('http://100.125.85.115:5173/register');
+        cy.visit('http://localhost:5173/register');
 
         // Verificar que los elementos del formulario de registro están visibles
         cy.get('input[name="username"]').should('be.visible');
