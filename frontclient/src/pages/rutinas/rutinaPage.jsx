@@ -25,7 +25,7 @@ export default function RutinaPage() {
     };
 
     fetchRutinasConProgreso();
-  }, [rutinas]); // Dependencias vacías para ejecutar solo una vez
+  }, [getRutinas, rutinas]); // Dependencias vacías para ejecutar solo una vez
 
   if (isLoading) {
     return <p>Cargando rutinas...</p>;
