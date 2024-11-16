@@ -34,7 +34,7 @@ export function RutinaProvider({ children }) {
         try {
             if (!cargado) {
                 const res = await getRutinasRequest();
-                console.log("Respuesta de getRutinasRequest:", res.data); // Verifica la respuesta de la API
+                //console.log("Respuesta de getRutinasRequest:", res.data); // Verifica la respuesta de la API
                 if (Array.isArray(res.data)) {
                     setRutinas(res.data);
                     setCargado(true); // Marca como cargado después de obtener los datos
@@ -45,7 +45,7 @@ export function RutinaProvider({ children }) {
                     return [];
                 }
             } else {
-                console.log("Rutinas ya cargadas. Retornando el estado actual.");
+                //console.log("Rutinas ya cargadas. Retornando el estado actual.");
                 return rutinas; // Devuelve el estado actual si ya fue cargado
             }
         } catch (error) {

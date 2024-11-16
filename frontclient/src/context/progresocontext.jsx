@@ -38,11 +38,11 @@ export function ProgresoProvider({ children }) {
         try {
             // Evita llamadas redundantes si ya tienes el progreso cargado
             if (progreso[id]) {
-                console.log(`Progreso para rutina ${id} ya cargado.`);
+                //console.log(`Progreso para rutina ${id} ya cargado.`);
                 return progreso[id];
             }
 
-            console.log(`Obteniendo progreso para rutina con ID: ${id}`);
+            //console.log(`Obteniendo progreso para rutina con ID: ${id}`);
             const res = await getProgresoRequest(id);
             const progresoData = res.data[0] || {};
 
