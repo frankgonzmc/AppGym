@@ -15,10 +15,10 @@ export default function RutinaPage() {
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true); // Activa el estado de carga
-      const rutinasList = await getRutinas(); // Solo se llama una vez
+      const rutinasList = await getRutinas(); // Obtiene las rutinas del contexto
       if (Array.isArray(rutinasList) && rutinasList.length > 0) {
         for (const rutina of rutinasList) {
-          await getProgreso(rutina._id); // Llama a getProgreso solo si hay rutinas
+          await getProgreso(rutina._id); // Obtiene el progreso solo si hay rutinas
         }
       } else {
         console.warn("No hay rutinas o la respuesta no es válida.");
@@ -26,13 +26,17 @@ export default function RutinaPage() {
       setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
 
-    if (rutinas.length === 0) { // Evita reejecutar si ya hay rutinas cargadas
-      fetchRutinasConProgreso();
-    }
-  }, [getRutinas, getProgreso, rutinas]); // Incluye `rutinas` como dependencia para evitar múltiples llamadas
+    fetchRutinasConProgreso(); // Llama solo una vez al montar el componente
+  }, [getRutinas, getProgreso]); // Dependencias controladas
 
   if (isLoading) {
-    return <p>Cargando rutinas...</p>;
+    return (
+      <section className="seccion">
+        <Container className="py-4">
+          <p>Cargando rutinas...</p>
+        </Container>
+      </section>
+    );
   }
 
   return (

@@ -14,8 +14,20 @@ export function RutinaProvider({ children }) {
     const [rutinas, setRutinas] = useState([]); // Inicializa en un array vacío
     const [cargado, setCargado] = useState(false); // Nueva bandera para evitar llamadas repetidas
 
-    const reloadRutinas = () => {
-        setCargado(false); // Permite recargar los datos
+    const reloadRutinas = async () => {
+        try {
+            const res = await getRutinasRequest(); // Llama a la API para recargar rutinas
+            if (Array.isArray(res.data)) {
+                setRutinas(res.data);
+                setCargado(true); // Marca como cargado
+            } else {
+                console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
+                setRutinas([]);
+            }
+        } catch (error) {
+            console.error("Error al recargar rutinas:", error);
+            setRutinas([]);
+        }
     };
 
     const getRutinas = useCallback(async () => {
@@ -56,8 +68,7 @@ export function RutinaProvider({ children }) {
         try {
             const res = await createRutinaRequest(rutina);
             if (res.data) {
-                reloadRutinas(); // Marca como no cargado para recargar datos
-                setRutinas((prev) => [...prev, res.data]);
+                await reloadRutinas(); // Recarga las rutinas después de crear una
                 return res.data;
             }
         } catch (error) {
