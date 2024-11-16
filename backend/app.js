@@ -19,18 +19,20 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 
+app.options('*', cors()); // Permite las opciones de preflight en el servidor
+
 app.use(cors({
-    origin: function (origin, callback) {
-        console.log(`Request origin: ${origin}`); // Debug para verificar el origen de la solicitud
-        if (!origin || FRONTEND_URL.some(url => url.includes(origin))) {
-            callback(null, true); // Permite la solicitud si el origen coincide
+    origin: (origin, callback) => {
+        console.log(`Request origin: ${origin}`); // Verificar qué origen se detecta
+        if (!origin || FRONTEND_URL.some(url => url === origin)) {
+            callback(null, true); // Permite la solicitud
         } else {
-            console.error(`Blocked by CORS: ${origin}`);
-            callback(new Error('Not allowed by CORS'));
+            console.error(`Blocked by CORS: ${origin}`); // Log para depuración
+            callback(new Error('Not allowed by CORS')); // Bloquea la solicitud
         }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Permite cookies o headers de autenticación
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true, // Necesario para cookies o headers de autenticación
     optionsSuccessStatus: 200, // Soluciona problemas con navegadores antiguos
 }));
 
