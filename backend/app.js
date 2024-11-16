@@ -21,16 +21,18 @@ dotenv.config();
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Permitir cualquier origen en la lista FRONTEND_URL o solicitudes sin origen (como Postman)
+        // Si la solicitud no tiene origen (por ejemplo, Postman) o el origen está permitido
+        console.log(`Request origin: ${origin}`); // Log para verificar el origen de la solicitud
         if (!origin || FRONTEND_URL.includes(origin)) {
-            callback(null, true);
+            callback(null, true); // Permite la solicitud
         } else {
-            console.error(`Blocked by CORS: ${origin}`);
-            callback(new Error('Not allowed by CORS'));
+            console.error(`Blocked by CORS: ${origin}`); // Log para depuración
+            callback(new Error('Not allowed by CORS')); // Bloquea la solicitud
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Necesario si usas cookies o autenticación basada en sesiones
+    credentials: true, // Permite cookies o headers de autenticación
+    optionsSuccessStatus: 200, // Soluciona problemas con navegadores antiguos
 }));
 
 app.use(morgan("dev"));
