@@ -14,29 +14,34 @@ export function RutinaProvider({ children }) {
     const [rutinas, setRutinas] = useState([]); // Inicializa en un array vacío
     const [cargado, setCargado] = useState(false); // Nueva bandera para evitar llamadas repetidas
 
+    const reloadRutinas = () => {
+        setCargado(false); // Permite recargar los datos
+    };
+
     const getRutinas = useCallback(async () => {
         try {
-            if (!cargado) {
+            if (!cargado) { // Solo intenta cargar si no ha sido cargado antes
                 const res = await getRutinasRequest();
-                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
+                console.log("Respuesta de getRutinasRequest:", res.data); // Verifica la respuesta de la API
                 if (Array.isArray(res.data)) {
                     setRutinas(res.data);
-                    setCargado(true);
-                    return res.data; // Aseguramos que devuelva la lista de rutinas
+                    setCargado(true); // Marca como cargado después de obtener los datos
+                    return res.data;
                 } else {
                     console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
-                    setRutinas([]); // Establece un array vacío si no es un array
-                    return []; // Devuelve un array vacío en caso de error
+                    setRutinas([]); // Vacía el estado si la respuesta no es válida
+                    return [];
                 }
             } else {
-                return rutinas; // Retorna el estado actual si ya se ha cargado
+                console.log("Rutinas ya cargadas. Retornando el estado actual.");
+                return rutinas; // Devuelve el estado actual si ya fue cargado
             }
         } catch (error) {
             console.error("Error al obtener rutinas:", error);
-            setRutinas([]); // Establece un array vacío en caso de error
-            return []; // Devuelve un array vacío en caso de error
+            setRutinas([]); // Vacía el estado en caso de error
+            return [];
         }
-    }, [cargado, rutinas]); // Asegúrate de agregar `rutinas` como dependencia
+    }, [cargado, rutinas]); // `rutinas` es una dependencia para devolver siempre el estado actual    
 
     const deleteRutina = async (id) => {
         try {
@@ -50,10 +55,13 @@ export function RutinaProvider({ children }) {
     const createRutina = async (rutina) => {
         try {
             const res = await createRutinaRequest(rutina);
-            setRutinas((prev) => [...prev, res.data]); // Añadir la nueva rutina al estado
-            return res.data; // Devolver la rutina creada
+            if (res.data) {
+                reloadRutinas(); // Marca como no cargado para recargar datos
+                setRutinas((prev) => [...prev, res.data]);
+                return res.data;
+            }
         } catch (error) {
-            console.error("Error al crear rutina:", error.response.data);
+            console.error("Error al crear rutina:", error.response?.data || error.message);
         }
     };
 
