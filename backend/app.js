@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(cors({
-    origin: "http://100.125.85.115:5173",
+    origin: FRONTEND_URL, // Usamos el array procesado
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
