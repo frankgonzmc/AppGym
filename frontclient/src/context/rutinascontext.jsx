@@ -20,7 +20,7 @@ export function RutinaProvider({ children }) {
 
     const getRutinas = useCallback(async () => {
         try {
-            if (!cargado) { // Solo intenta cargar si no ha sido cargado antes
+            if (!cargado) {
                 const res = await getRutinasRequest();
                 console.log("Respuesta de getRutinasRequest:", res.data); // Verifica la respuesta de la API
                 if (Array.isArray(res.data)) {
@@ -41,7 +41,7 @@ export function RutinaProvider({ children }) {
             setRutinas([]); // Vacía el estado en caso de error
             return [];
         }
-    }, [cargado, rutinas]); // `rutinas` es una dependencia para devolver siempre el estado actual    
+    }, [cargado, rutinas]); // `rutinas` es una dependencia para devolver siempre el estado actual
 
     const deleteRutina = async (id) => {
         try {
