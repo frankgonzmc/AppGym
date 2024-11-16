@@ -21,17 +21,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(cors({
-    origin: ["http://179.6.42.7:5173"], // Agrega tu IP pública
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-}));
-
-/*
-app.use(cors({
     origin: FRONTEND_URL, // Usamos el array procesado
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
-}));*/
+}));
 
 app.use(morgan("dev"));
 app.use(express.json());
