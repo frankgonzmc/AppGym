@@ -2,7 +2,7 @@ describe('Pruebas Unhappy Path - Login', () => {
   
   beforeEach(() => {
     
-    cy.visit('http://localhost:5173/login'); 
+    cy.visit('http://100.125.85.115:5173/login'); 
   });
 
   it('Debe mostrar un error cuando se envia un email invalido', () => {

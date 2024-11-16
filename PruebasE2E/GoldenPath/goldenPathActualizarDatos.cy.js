@@ -1,7 +1,7 @@
 describe('Golden Path: Cambio de contraseña', () => {
     before(() => {
       // Aquí puedes usar cy.session si ya configuraste sesiones
-      cy.visit('http://localhost:5173/login');
+      cy.visit('http://100.125.85.115:5173/login');
       cy.get('input[type="email"]').type('pepe@prueba.com');
       cy.get('input[type="password"]').type('pepe12345678910');
       cy.get('button[type="submit"]').click();
@@ -14,7 +14,7 @@ describe('Golden Path: Cambio de contraseña', () => {
   
     it('Debería cambiar la contraseña correctamente en el flujo Golden Path', () => {
       // Ir a la página de cambio de contraseña
-      cy.visit('http://localhost:5173/profile');
+      cy.visit('http://100.125.85.115:5173/profile');
   
       // Escribir en "Contraseña actual"
       cy.contains('label', 'Contraseña actual:').siblings('input').type('pepe12345678910');

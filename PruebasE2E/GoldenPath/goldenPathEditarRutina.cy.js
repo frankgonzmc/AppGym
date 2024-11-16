@@ -2,7 +2,7 @@ describe('Golden Path - Editar rutina por usuario logueado', () => {
     beforeEach(() => {
         // Usar cy.session para mantener la sesión activa entre pruebas
         cy.session('usuarioSesion', () => {
-            cy.visit('http://localhost:5173/login');
+            cy.visit('http://100.125.85.115:5173/login');
             cy.get('input[name="email"]').type('alex2@prueba.com');
             cy.get('input[name="password"]').type('alex12345');
             cy.get('button[type="submit"]').click();
@@ -20,7 +20,7 @@ describe('Golden Path - Editar rutina por usuario logueado', () => {
 
     it('Las rutinas editadas deberían guardarse y mostrarse en rutinas', () => {
         // Visitar la página de rutinas
-        cy.visit('http://localhost:5173/rutinas');  
+        cy.visit('http://100.125.85.115:5173/rutinas');  
         
         // Encontrar y hacer clic en el botón de editar
         cy.contains('button', 'Editar').click();

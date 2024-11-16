@@ -1,6 +1,6 @@
 Cypress.Commands.add('login', (email, password) => {
     // Visitar la página de inicio de sesión
-    cy.visit('http://localhost:5173/login'); // Cambia esto a la URL de tu página de inicio de sesión
+    cy.visit('http://100.125.85.115:5173/login'); // Cambia esto a la URL de tu página de inicio de sesión
   
     // Completar el formulario de inicio de sesión
     cy.get('input[name="email"]').type(email); // Cambia el selector según tu estructura

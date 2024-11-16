@@ -2,7 +2,7 @@ describe('Golden Path - Crear rutina por usuario logueado', () => {
     beforeEach(() => {
         // Usar cy.session para mantener la sesión activa entre pruebas
         cy.session('usuarioSesion', () => {
-            cy.visit('http://localhost:5173/login');
+            cy.visit('http://100.125.85.115:5173/login');
             cy.get('input[name="email"]').type('alex2@prueba.com');
             cy.get('input[name="password"]').type('alex12345');
             cy.get('button[type="submit"]').click();
@@ -19,7 +19,7 @@ describe('Golden Path - Crear rutina por usuario logueado', () => {
     });
     
     it('Las rutinas creadas deberían guardarse y mostrarse en rutinas', () => {
-        cy.visit('http://localhost:5173/add-rutinas');  // Visitar la página de agregar rutina
+        cy.visit('http://100.125.85.115:5173/add-rutinas');  // Visitar la página de agregar rutina
         
         // Verificar que los elementos del formulario están visibles
         cy.get('input[name="nombre"]').should('be.visible');

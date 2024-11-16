@@ -1,6 +1,6 @@
 describe('Happy Path - Registro de usuario', () => {
     it('Debería registrar un nuevo usuario exitosamente', () => {
-      cy.visit('http://localhost:5173/register')  // Cambia la URL según tu ruta de registro
+      cy.visit('http://100.125.85.115:5173/register')  // Cambia la URL según tu ruta de registro
       cy.get('input[name="username"]').type('Gonzalo')
       cy.get('input[name="email"]').type('frankpuertas@prueba.com')
       cy.get('input[name="password"]').type('frank12345')
