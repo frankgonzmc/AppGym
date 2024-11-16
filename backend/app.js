@@ -20,15 +20,17 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+        // Permitir cualquier origen en la lista FRONTEND_URL o solicitudes sin origen (como Postman)
         if (!origin || FRONTEND_URL.includes(origin)) {
             callback(null, true);
         } else {
+            console.error(`Blocked by CORS: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    credentials: true, // Necesario si usas cookies o autenticación basada en sesiones
 }));
 
 app.use(morgan("dev"));
