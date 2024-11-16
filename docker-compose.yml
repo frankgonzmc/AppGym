@@ -10,12 +10,16 @@ services:
     volumes:
       - ./backend:/usr/src/app # Mapea solo el directorio backend en el contenedor backend
       - ./backend/uploads:/usr/src/app/uploads # Mapea específicamente el directorio de uploads
+    networks:
+      - tailscale-network
 
   database:
     container_name: mongodb
     image: mongo:latest
     ports:
       - "27017:27017"
+    networks:
+      - tailscale-network
 
   myfrontend:
     container_name: frontgym
@@ -27,3 +31,9 @@ services:
       - mybackend
     volumes:
       - ./frontclient:/usr/src/app # Mapea solo el directorio frontclient en el contenedor frontend
+    networks:
+      - tailscale-network
+
+networks:
+  tailscale-network:
+    driver: bridge
