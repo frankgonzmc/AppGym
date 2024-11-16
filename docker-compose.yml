@@ -10,6 +10,8 @@ services:
     volumes:
       - ./backend:/usr/src/app
       - ./backend/uploads:/usr/src/app/uploads
+    env_file:
+      - ./backend/.env # Archivo .env específico del backend
 
   database:
     container_name: mongodb
@@ -27,6 +29,8 @@ services:
       - "5173:5173"
     networks:
       - gym-network
+    env_file:
+      - ./frontclient/.env # Archivo .env específico del frontend
 
 networks:
   gym-network:
