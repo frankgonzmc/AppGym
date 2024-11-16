@@ -22,19 +22,11 @@ dotenv.config();
 app.options('*', cors()); // Permite las opciones de preflight en el servidor
 
 app.use(cors({
-    origin: (origin, callback) => {
-        console.log(`Request origin: ${origin}`); // Verificar qué origen se detecta
-        if (!origin || FRONTEND_URL.some(url => url === origin)) {
-            callback(null, true); // Permite la solicitud
-        } else {
-            console.error(`Blocked by CORS: ${origin}`); // Log para depuración
-            callback(new Error('Not allowed by CORS')); // Bloquea la solicitud
-        }
-    },
+    origin: FRONTEND_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true, // Necesario para cookies o headers de autenticación
-    optionsSuccessStatus: 200, // Soluciona problemas con navegadores antiguos
+    credentials: true,
 }));
+
 
 app.use((req, res, next) => {
     console.log('Encabezados enviados al cliente:');

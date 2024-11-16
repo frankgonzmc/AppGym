@@ -5,17 +5,19 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
-    links:
-      - database
+    networks:
+      - gym-network
     volumes:
-      - ./backend:/usr/src/app # Mapea solo el directorio backend en el contenedor backend
-      - ./backend/uploads:/usr/src/app/uploads # Mapea específicamente el directorio de uploads
+      - ./backend:/usr/src/app
+      - ./backend/uploads:/usr/src/app/uploads
 
   database:
     container_name: mongodb
     image: mongo:latest
     ports:
       - "27017:27017"
+    networks:
+      - gym-network
 
   myfrontend:
     container_name: frontgym
@@ -23,8 +25,9 @@ services:
     build: ./frontclient
     ports:
       - "5173:5173"
-    links:
-      - mybackend
-    volumes:
-      - ./frontclient:/usr/src/app # Mapea solo el directorio frontclient en el contenedor frontend
+    networks:
+      - gym-network
 
+networks:
+  gym-network:
+    driver: bridge
