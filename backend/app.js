@@ -22,11 +22,10 @@ dotenv.config();
 app.options('*', cors()); // Permite las opciones de preflight en el servidor
 
 app.use(cors({
-    origin: FRONTEND_URL,
+    origin: FRONTEND_URL.split(','), // Divide la lista separada por comas en un array
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 }));
-
 
 app.use((req, res, next) => {
     console.log('Encabezados enviados al cliente:');
