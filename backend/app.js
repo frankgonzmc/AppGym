@@ -20,20 +20,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Configuración de CORS
-app.options('*', cors()); // Permite las opciones de preflight en el servidor
 app.use(cors({
     origin: FRONTEND_URL, // Usamos el array procesado
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
-
-// Middleware de depuración
-app.use((req, res, next) => {
-    console.log('Encabezados enviados al cliente:');
-    console.log(res.getHeaders());
-    next();
-});
 
 app.use(morgan("dev"));
 app.use(express.json());
