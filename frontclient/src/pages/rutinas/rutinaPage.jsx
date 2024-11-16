@@ -9,7 +9,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
-  const { getProgreso } = useProgreso();
+  const { getProgreso, progreso } = useProgreso();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
