@@ -6,53 +6,67 @@ import axios from '../../api/axios';
 
 function ProgresoPage() {
   const { user } = useAuth();
-  const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0));
-  const [period, setPeriod] = useState('monthly');
-  const [loading, setLoading] = useState(true);
-  const [alert, setAlert] = useState(null);
-  const [progressComparison, setProgressComparison] = useState('');
+  const [monthlyProgress, setMonthlyProgress] = useState(new Array(12).fill(0)); // Datos para la gráfica
+  const [period, setPeriod] = useState('monthly'); // Período seleccionado
+  const [loading, setLoading] = useState(false); // Indicador de carga
+  const [alert, setAlert] = useState(null); // Mensajes de error o advertencias
+  const [progressComparison, setProgressComparison] = useState(''); // Comparación de progreso con objetivos
 
+  // Función principal para cargar datos de progreso
   useEffect(() => {
     if (user?.id) {
-      //console.log("User ID:", user.id); // Verificar que user.id existe
-      fetchUserStats();
-      fetchProgressComparison();
+      fetchData(); // Cargar estadísticas y comparación al cambiar `user` o `period`
     } else {
-      console.log("User ID is undefined");
+      console.error("El ID del usuario no está definido.");
     }
   }, [user, period]);
 
-  const fetchUserStats = async () => {
-    if (!user.id) return; // Evitar hacer la solicitud si user.id es undefined
+  // Función para cargar estadísticas y comparación
+  const fetchData = async () => {
     setLoading(true);
+    setAlert(null);
+
     try {
-      const response = await axios.get(`/stats/${user.id}/${period}`);
-      console.log("User Stats Response:", response.data); // Verificar la respuesta
-      const stats = response.data;
-
-      const processedData = new Array(12).fill(0);
-      stats.forEach((item) => {
-        if (item._id?.month) processedData[item._id.month - 1] = item.total;
-      });
-
-      setMonthlyProgress(processedData);
-      setAlert(null);
+      await Promise.all([fetchUserStats(), fetchProgressComparison()]);
     } catch (error) {
-      console.error("Error fetching user stats:", error);
-      setAlert("Error al cargar estadísticas");
+      console.error("Error al cargar datos:", error);
+      setAlert("Error al cargar datos del progreso.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Función para obtener estadísticas de progreso
+  const fetchUserStats = async () => {
+    try {
+      const response = await axios.get(`/stats/${user.id}/${period}`);
+      console.log("Estadísticas de usuario:", response.data);
+
+      // Procesar datos para la gráfica
+      const stats = response.data;
+      const processedData = new Array(12).fill(0); // Inicializar con ceros
+      stats.forEach((item) => {
+        if (item._id?.month) {
+          processedData[item._id.month - 1] = item.total; // Ajustar índices (0-11)
+        }
+      });
+
+      setMonthlyProgress(processedData);
+    } catch (error) {
+      console.error("Error al obtener estadísticas:", error);
+      setAlert("Error al cargar estadísticas.");
+    }
+  };
+
+  // Función para comparar progreso con los objetivos
   const fetchProgressComparison = async () => {
-    if (!user.id) return; // Evitar hacer la solicitud si user.id es undefined
     try {
       const response = await axios.get(`/compare-progress/${user.id}`);
-      console.log("Progress Comparison Response:", response.data); // Verificar la respuesta
-      setProgressComparison(response.data.message);
+      console.log("Comparación de progreso:", response.data);
+
+      setProgressComparison(response.data.message || "No se encontraron objetivos.");
     } catch (error) {
-      console.error("Error fetching progress comparison:", error);
+      console.error("Error al comparar el progreso:", error);
       setAlert("Error al comparar el progreso con los objetivos.");
     }
   };
@@ -64,6 +78,7 @@ function ProgresoPage() {
           {alert && <Alert variant="warning">{alert}</Alert>}
           <h2>Progreso Mensual</h2>
 
+          {/* Selector de período */}
           <Dropdown onSelect={(e) => setPeriod(e)}>
             <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
             <Dropdown.Menu>
@@ -73,7 +88,10 @@ function ProgresoPage() {
             </Dropdown.Menu>
           </Dropdown>
 
-          {monthlyProgress.some(value => value > 0) ? (
+          {/* Gráfica de progreso */}
+          {loading ? (
+            <p>Cargando datos...</p>
+          ) : monthlyProgress.some(value => value > 0) ? (
             <LineChart data={monthlyProgress} />
           ) : (
             <p>No hay datos disponibles para el progreso mensual.</p>
