@@ -20,14 +20,14 @@ export function RutinaProvider({ children }) {
             setLoading(true);
             try {
                 const res = await getRutinasRequest();
-                if (Array.isArray(res.data)) {
+                if (res.status === 200 && Array.isArray(res.data)) {
                     setRutinas(res.data);
                     setCargado(true);
                 } else {
-                    setRutinas([]);
+                    setRutinas([]); // Vacía el estado si no hay rutinas.
                 }
             } catch (error) {
-                console.error("Error al obtener rutinas:", error);
+                console.error("Error al obtener rutinas:", error.response?.data || error.message);
             } finally {
                 setLoading(false);
             }
