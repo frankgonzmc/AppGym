@@ -142,6 +142,7 @@ export const deleteRutina = async (req, res) => {
 
         // Eliminar los detalles de rutina asociados
         await DetallesRutina.deleteMany({ rutina: req.params.id }); // Ajustado a `rutina`
+        await Progreso.deleteMany({ rutina: req.params.id });
 
         res.json({ message: "Rutina y detalles asociados eliminados con éxito", rutina });
     } catch (error) {
