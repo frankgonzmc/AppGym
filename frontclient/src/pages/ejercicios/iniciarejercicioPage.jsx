@@ -102,6 +102,10 @@ export default function IniciaEjercicioPage() {
     return () => clearInterval(intervalRef.current);
   }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
 
+  const handlePausarReanudar = () => {
+    setIsPausado((prev) => !prev);
+  };
+
   const handleReset = async () => {
     try {
       // Reiniciar progreso en el backend
