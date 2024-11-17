@@ -1,20 +1,27 @@
 import axios from './axios';
 
-export const getDetalleRutinaRequest = (id) => axios.get(`/detalles-rutinas/${id}`);
+// Obtener los detalles de una rutina específica
+export const getDetalleRutinaRequest = (rutinaId) => axios.get(`/detalles-rutinas/${rutinaId}`);
 
+// Crear un nuevo detalle de rutina
 export const createDetalleRutinaRequest = (detalles) => axios.post('/detalles-rutinas', detalles);
 
-export const deleteDetalleRutinaRequest = (id) => axios.delete(`/detalles-rutinas/${id}`);
+// Eliminar un detalle de rutina por su ID
+export const deleteDetalleRutinaRequest = (detalleId) => axios.delete(`/detalles-rutinas/${detalleId}`);
 
-export const updateDetalleRutinaRequest = (id, detalles) => axios.put(`/detalles-rutinas/${id}`, detalles);
+// Actualizar un detalle de rutina (general)
+export const updateDetalleRutinaRequest = (detalleId, detalles) => axios.put(`/detalles-rutinas/${detalleId}`, detalles);
 
-export const updateEstadoEjercicioRequest = (detalleId, estado) => axios.put(`/detalles-rutinas/${detalleId}`, { estado });
+// Actualizar el estado de un ejercicio específico en los detalles de la rutina
+export const updateEstadoEjercicioRequest = (detalleId, estado) =>
+    axios.put(`/detalles-rutinas/${detalleId}`, { estado });
 
-export const updateProgresoEjercicioRequest = (detalleId, seriesCompletadas) => {
-    return axios.put(`/detalles-rutinas/${detalleId}/progreso`, { seriesProgreso: seriesCompletadas });
-};
+// Actualizar el progreso de un ejercicio específico (series completadas)
+export const updateProgresoEjercicioRequest = (detalleId, seriesProgreso) =>
+    axios.put(`/detalles-rutinas/${detalleId}/progreso`, { seriesProgreso });
 
-export const getDetallesRutina = async (detalleId) => {
-    const response = await axios.get(`/detalles-rutinas/${detalleId}`);
-    return response.data; // Debería devolver la lista de detalles de la rutina
+// Obtener todos los detalles relacionados con una rutina
+export const getDetallesRutina = async (rutinaId) => {
+    const response = await axios.get(`/detalles-rutinas/${rutinaId}`);
+    return response.data; // Devuelve los detalles de la rutina
 };

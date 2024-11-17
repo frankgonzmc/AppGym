@@ -86,48 +86,55 @@ export const deleteDetalleRutina = async (req, res) => {
 };
 
 // Actualizar progreso y estado de rutina
-// Controlador de DetallesRutina - detallerutina.controllers.js
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { rutinaId, ejercicioId, seriesCompletadas } = req.body;
-    console.log("Solicitud de actualización recibida:", req.body); // Log para verificar los datos recibidos
-
     try {
-        const detalle = await DetallesRutina.findOne({ rutina: rutinaId, ejercicio: ejercicioId }).populate('ejercicio');
-        if (!detalle) {
-            return res.status(404).json({ message: "Detalle no encontrado" });
+        const { seriesCompletadas } = req.body;
+        const { id } = req.params;
+
+        // Buscar el detalle
+        const detalle = await DetallesRutina.findById(id).populate("ejercicio");
+        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado" });
+
+        // Actualizar el progreso de las series
+        detalle.seriesProgreso = detalle.seriesProgreso + seriesCompletadas;
+
+        // Verificar si se completó
+        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
+            detalle.estado = "Completado";
+        } else {
+            detalle.estado = "En Progreso";
         }
 
-        detalle.seriesProgreso = seriesCompletadas;
-        detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? 'Completado' : 'En Progreso';
         await detalle.save();
 
-        // Actualiza la rutina después de actualizar el detalle
-        await actualizandoEstadosDetallesRutinas(rutinaId);
+        // Actualizar la rutina asociada
+        await actualizarEstadoRutina(detalle.rutina);
 
-        res.status(200).json(detalle);
+        res.json({ message: "Progreso actualizado", detalle });
     } catch (error) {
-        console.error('Error actualizando el progreso:', error);
-        res.status(500).json({ message: "Error actualizando el progreso", error });
+        console.error("Error al actualizar el progreso:", error);
+        res.status(500).json({ message: "Error al actualizar el progreso" });
     }
 };
 
-
-// Función para actualizar el progreso de la rutina - detallerutina.controllers.js o rutina.controllers.js
-export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
+// Actualizar el Estado de la Rutina
+export const actualizarEstadoRutina = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
-        const ejerciciosCompletos = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
-        const estadoRutina = ejerciciosCompletos === detalles.length ? 'Completado' : 'Pendiente';
+        const ejerciciosCompletados = detalles.filter(
+            (detalle) => detalle.estado === "Completado"
+        ).length;
 
-        await Rutinas.findByIdAndUpdate(rutinaId, {
-            ejerciciosCompletados: ejerciciosCompletos,
-            estado: estadoRutina,
-        }, { new: true });
+        const estadoRutina =
+            ejerciciosCompletados === detalles.length ? "Completada" : "Pendiente";
 
-        console.log(`Estado de rutina actualizado: ${ejerciciosCompletos}/${detalles.length}`);
+        await Rutinas.findByIdAndUpdate(
+            rutinaId,
+            { ejerciciosCompletados, estado: estadoRutina },
+            { new: true }
+        );
     } catch (error) {
-        console.error("Error actualizando estado de rutina:", error);
-        throw error;
+        console.error("Error al actualizar el estado de la rutina:", error);
     }
 };

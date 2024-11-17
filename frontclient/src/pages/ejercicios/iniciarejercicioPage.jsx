@@ -2,7 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
-import { updateProgresoEjercicioRequest, updateEstadoEjercicioRequest, getDetalleRutinaRequest } from '../../api/detallerutina';
+import {
+  updateProgresoEjercicioRequest,
+  updateEstadoEjercicioRequest,
+  getDetalleRutinaRequest
+} from '../../api/detallerutina';
 import { updateRutinaProgressRequest, updateEstadoRutinaRequest } from '../../api/rutina';
 import { updateEstadoProgresoRequest } from '../../api/progreso';
 
@@ -30,14 +34,18 @@ export default function IniciaEjercicioPage() {
   }, [seriesCompletadas, detalles.ejercicio.series]);
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
-    if (nuevasSeries <= detalles.ejercicio.series) {
-      await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+    try {
+      if (nuevasSeries <= detalles.ejercicio.series) {
+        await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
-      if (nuevasSeries === detalles.ejercicio.series) {
-        await updateEstadoEjercicioRequest(detalles._id, "Completado");
-        setEjercicioCompletado(true);
-        await actualizarProgresoRutina();
+        if (nuevasSeries === detalles.ejercicio.series) {
+          await updateEstadoEjercicioRequest(detalles._id, "Completado");
+          setEjercicioCompletado(true);
+          await actualizarProgresoRutina();
+        }
       }
+    } catch (error) {
+      console.error("Error al actualizar la serie:", error);
     }
   };
 
