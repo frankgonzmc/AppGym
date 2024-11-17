@@ -3,16 +3,13 @@ import { authRequired } from '../middlewares/validateToken.js';
 import { getEjercicio, getEjercicios, createEjercicios, updateEjercicios, deleteEjercicios, getNivelEjercicio } from '../controllers/ejercicio.controllers.js';
 import { upload } from '../middlewares/uploads.js';  // Importamos multer
 
-
 const router = Router();
 
-
-router.get('/ejercicios/:nivel', authRequired, getNivelEjercicio)
-
-router.get('/ejercicios', authRequired, getEjercicios)
-router.get('/ejercicio/:id', authRequired, getEjercicio)
-router.post('/ejercicios', authRequired, upload.single('imagen'), createEjercicios); // Aquí aceptamos la imagen
-router.delete('/ejercicios/:id', authRequired, deleteEjercicios)
-router.put('/ejercicios/:id', authRequired, upload.single('imagen'), updateEjercicios); // Para actualización de imagen
+router.get('/ejercicios', authRequired, getEjercicios); // Obtiene todos los ejercicios
+router.get('/ejercicio/:id', authRequired, getEjercicio); // Detalles de un ejercicio
+router.get('/ejercicios/:nivel', authRequired, getNivelEjercicio); // Filtrar por nivel
+router.post('/ejercicios', authRequired, upload.single('imagen'), createEjercicios);
+router.put('/ejercicios/:id', authRequired, upload.single('imagen'), updateEjercicios);
+router.delete('/ejercicios/:id', authRequired, deleteEjercicios);
 
 export default router;

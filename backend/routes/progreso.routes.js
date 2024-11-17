@@ -4,17 +4,15 @@ import { createProgreso, deleteProgreso, getProgreso, updateProgreso, getUserSta
 
 const router = Router();
 
-// Rutas para progreso de usuario
+// Rutas principales
 router.get('/progreso/:id', authRequired, getProgreso);
 router.post('/progreso', authRequired, createProgreso);
-router.delete('/progreso/:id', authRequired, deleteProgreso);
 router.put('/progreso/:id', authRequired, updateProgreso);
+router.delete('/progreso/:id', authRequired, deleteProgreso);
 
 // Rutas para estadísticas
-router.get('/stats/:userId', authRequired, getUserStats);
-router.get('/stats/:userId/:period', authRequired, getUserStatsByPeriod);
-
-// Ruta para comparación de progreso con objetivos
-router.get('/compare-progress/:userId', authRequired, compareProgressWithGoals);
+router.get('/progreso/stats/:userId', authRequired, getUserStats);
+router.post('/progreso/stats/:userId/period', authRequired, getUserStatsByPeriod);
+router.get('/progreso/compare/:userId', authRequired, compareProgressWithGoals);
 
 export default router;
