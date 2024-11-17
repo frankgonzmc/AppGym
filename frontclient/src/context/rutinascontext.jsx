@@ -23,7 +23,6 @@ export function RutinaProvider({ children }) {
                 if (Array.isArray(res.data)) {
                     setRutinas(res.data);
                     setCargado(true);
-                    return res.data;
                 } else {
                     setRutinas([]);
                 }
