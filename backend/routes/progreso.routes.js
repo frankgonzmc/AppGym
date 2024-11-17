@@ -12,7 +12,8 @@ router.put('/progreso/:id', authRequired, validateObjectId, updateProgreso);
 router.delete('/progreso/:id', authRequired, validateObjectId, deleteProgreso);
 
 // Rutas para estadísticas
-router.get('/stats/:userId/:period', authRequired, getUserStatsByPeriod);
+router.get('/stats/:userId', authRequired, getUserStats);
+router.get('/stats/:userId/:period', authRequired, getUserStatsByPeriod); // Cambiado POST a GET
 router.get('/compare-progress/:userId', authRequired, compareProgressWithGoals);
 
 export default router;
