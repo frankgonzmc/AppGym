@@ -32,9 +32,8 @@ export const register = async (req, res) => {
         const token = createAccessToken({ id: savedUser._id });
         res.cookie('token', token, {
             httpOnly: true,
-            //secure: process.env.NODE_ENV === 'production', // Solo en producción
             sameSite: 'strict',
-            maxAge: 1 * 24 * 60 * 60 * 1000 // 7 días
+            maxAge: 1 * 24 * 60 * 60 * 1000 // 1 días
         });
 
         return res.status(201).json({
@@ -63,9 +62,18 @@ export const login = async (req, res) => {
 
         if (!isMatch) return res.status(400).json({ message: "Credenciales Incorrectas" });
 
-        const token = await createAccessToken({ id: userEncontrado._id });
+        const token = jwt.sign(
+            { id: userEncontrado._id, email: userEncontrado.email }, // Asegúrate de incluir el ID del usuario
+            TOKEN_SECRET,
+            { expiresIn: "1d" }
+        );
+    
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 1 * 24 * 60 * 60 * 1000, // 1 día
+        });        
 
-        res.cookie('token', token);
         res.json({
             id: userEncontrado.id,
             username: userEncontrado.username,
