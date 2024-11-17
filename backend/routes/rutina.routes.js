@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { authRequired } from '../middlewares/validateToken.js'
 import { getRutina, getRutinas, createRutinas, updateRutina, deleteRutina } from '../controllers/rutina.controllers.js'
-import { Rutinas } from '../models/rutina.model.js'
+import Rutinas from '../models/rutina.model.js'
 import { validateSchema } from '../middlewares/validator.middleware.js'
 import { validateObjectId } from '../middlewares/validateId.js'
 import { createRutinaSchema } from '../validator/rutina.schema.js'
