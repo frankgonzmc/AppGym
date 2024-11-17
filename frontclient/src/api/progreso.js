@@ -1,12 +1,22 @@
 import axios from './axios';
 
+// Obtener el progreso específico de un usuario para una rutina
+export const getProgresoRequest = (id) => axios.get(`/progreso/${id}`);
 
-export const getProgresoRequest = (id) => axios.get(`/progreso/${id}`)
+// Crear un nuevo progreso
+export const createProgresoRequest = (progreso) => axios.post('/progreso', progreso);
 
-export const createProgresoRequest = (progreso) => axios.post('/progreso', progreso)
+// Eliminar un progreso específico
+export const deleteProgresoRequest = (id) => axios.delete(`/progreso/${id}`);
 
-export const deleteProgresoRequest = (id) => axios.delete(`/progreso/${id}`)
+// Actualizar un progreso específico
+export const updateProgresoRequest = (id, progreso) => axios.put(`/progreso/${id}`, progreso);
 
-export const updateProgresoRequest = (id, progreso) => axios.put(`/progreso/${id}`, progreso)
-
+// Actualizar el estado de un progreso específico
 export const updateEstadoProgresoRequest = (id, estado) => axios.put(`/progreso/${id}`, { estado });
+
+// Obtener estadísticas del progreso por período (mensual, semanal, anual)
+export const getUserStatsRequest = (userId, period) => axios.get(`/progreso/stats/${userId}/${period}`);
+
+// Comparar progreso con los objetivos del usuario
+export const compareProgressRequest = (userId) => axios.get(`/progreso/compare/${userId}`);
