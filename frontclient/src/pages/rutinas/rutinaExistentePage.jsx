@@ -10,7 +10,24 @@ function RutinaExistentePage() {
     <Container className="py-4">
       <h2 className="text-center mb-4">Rutinas Disponibles</h2>
       <Row className="g-4">
-
+        <Col md={6} className="text-center">
+          <Card className="p-4">
+            <h1 className="font-bold">Rutina 1</h1>
+            <p className="mb-4">Descripción de la rutina 1</p>
+            <Button variant="primary" className="mt-4">
+              Iniciar Rutina
+            </Button>
+          </Card>
+        </Col>
+        <Col md={6} className="text-center">
+          <Card className="p-4">
+            <h1 className="font-bold">Rutina 2</h1>
+            <p className="mb-4">Descripción de la rutina 2</p>
+            <Button variant="primary" className="mt-4">
+              Iniciar Rutina
+            </Button>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );
