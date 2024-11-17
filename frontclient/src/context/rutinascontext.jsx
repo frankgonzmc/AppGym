@@ -18,7 +18,7 @@ export function RutinaProvider({ children }) {
         try {
             if (!cargado) {
                 const res = await getRutinasRequest();
-                console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
+                //console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
                 if (Array.isArray(res.data)) {
                     setRutinas(res.data);
                     setCargado(true);
@@ -76,6 +76,18 @@ export function RutinaProvider({ children }) {
 
     const updateRutina = async (id, rutina) => {
         try {
+          const res = await updateRutinaRequest(id, rutina);
+          setRutinas((prev) =>
+            prev.map((r) => (r._id === id ? { ...r, ...res.data } : r))
+          );
+        } catch (error) {
+          console.error('Error al actualizar rutina:', error.response?.data || error.message);
+        }
+      };
+      
+    /*
+    const updateRutina = async (id, rutina) => {
+        try {
             const res = await updateRutinaRequest(id, rutina);
             setRutinas((prev) =>
                 prev.map((rutina) => (rutina._id === id ? { ...rutina, ...res.data } : rutina))
@@ -83,7 +95,7 @@ export function RutinaProvider({ children }) {
         } catch (error) {
             console.error("Error al actualizar rutina:", error.response ? error.response.data : error.message);
         }
-    };
+    };*/
 
     return (
         <RutinaContext.Provider

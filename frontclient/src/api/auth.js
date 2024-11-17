@@ -14,10 +14,11 @@ export const updatePasswordRequest = (currentPassword, newPassword) => {
     return axios.post('/update-password', { currentPassword, newPassword });
 };
 
-export const updatePerfilRequest = (datos) => axios.post('/update-perfil', datos, {
+export const updatePerfilRequest = (datos) => axios.put('/update-perfil', datos, {
     headers: {
-        'Content-Type': 'multipart/form-data'
-    }
+        'Content-Type': 'multipart/form-data',
+    },
 });
+
 
 export const checkEmailRequest = (email) => axios.get(`/check-email?email=${email}`);

@@ -32,8 +32,9 @@ function ProgresoPage() {
 
       const processedData = new Array(12).fill(0);
       stats.forEach((item) => {
-        if (item._id.month !== undefined) processedData[item._id.month - 1] = item.total;
+        if (item._id?.month) processedData[item._id.month - 1] = item.total;
       });
+
       setMonthlyProgress(processedData);
       setAlert(null);
     } catch (error) {
