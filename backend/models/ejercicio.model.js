@@ -44,8 +44,6 @@ const ejercicioSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        enum: ['Activo', 'Inactivo'],
-        required: true,
     },
     imagen: {
         type: String,
