@@ -39,6 +39,7 @@ export function RutinaCard({ rutina }) {
         <div className="flex gap-x-3 items-center">
           <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Editar</button>
           <button className="btn btn-primary" onClick={() => navigate(`/detalles-rutinas/${rutina._id}`)}>Ver Ejercicios</button>
+          <button className="btn btn-danger" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Eliminar</button>
         </div>
       </footer>
     </Card>
