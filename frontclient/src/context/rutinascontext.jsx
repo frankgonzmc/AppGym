@@ -16,21 +16,18 @@ export function RutinaProvider({ children }) {
     const [loading, setLoading] = useState(false);
 
     const getRutinas = useCallback(async () => {
-        setLoading(true);
         try {
             const res = await getRutinasRequest();
             if (res.status === 200 && Array.isArray(res.data)) {
                 setRutinas(res.data);
             } else {
-                setRutinas([]); // Vacía las rutinas si no se encuentran
+                setRutinas([]);
                 console.error("No se encontraron rutinas.");
             }
         } catch (error) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
-        } finally {
-            setLoading(false);
         }
-    }, []);     
+    }, []);      
 
     const deleteRutina = async (id) => {
         try {
