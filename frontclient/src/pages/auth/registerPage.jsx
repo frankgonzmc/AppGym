@@ -36,17 +36,29 @@ function RegistroUsuario() {
             ))}
             <Form onSubmit={onSubmit} className="form-register">
               <Form.Group>
-                <Form.Control type="text" placeholder="Nombre Completo" {...register('username', { required: "Nombre Completo es necesario" })} />
+                <Form.Control
+                  type="text"
+                  placeholder="Nombre Completo"
+                  {...register('username', { required: "Nombre Completo es necesario" })}
+                />
                 {errors.username && <span className="error-text">{errors.username.message}</span>}
               </Form.Group>
 
               <Form.Group>
-                <Form.Control type="email" placeholder="Email" {...register('email', { required: "Email es necesario" })} />
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  {...register('email', { required: "Email es necesario" })}
+                />
                 {errors.email && <span className="error-text">{errors.email.message}</span>}
               </Form.Group>
 
               <Form.Group>
-                <Form.Control type="password" placeholder="Password" {...register('password', { required: "Password es necesario" })} />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  {...register('password', { required: "Password es necesario" })}
+                />
                 {errors.password && <span className="error-text">{errors.password.message}</span>}
               </Form.Group>
 
@@ -61,25 +73,40 @@ function RegistroUsuario() {
               </Form.Group>
 
               <Form.Group>
-                <Form.Control type="number" placeholder="Edad" {...register('edad', { required: "Edad es necesario" })} />
+                <Form.Control
+                  type="number"
+                  placeholder="Edad"
+                  {...register('edad', { required: "Edad es necesario" })}
+                />
                 {errors.edad && <span className="error-text">{errors.edad.message}</span>}
               </Form.Group>
 
               <Form.Group>
-                <Form.Control type="number" placeholder="Estatura" step="0.01" {...register('estatura', { required: "Estatura es necesaria", min: 0.5, max: 3 })} />
+                <Form.Control
+                  type="number"
+                  placeholder="Estatura"
+                  step="0.01"
+                  {...register('estatura', { required: "Estatura es necesaria", min: 0.5, max: 3 })}
+                />
                 {errors.estatura && <span className="error-text">{errors.estatura.message}</span>}
               </Form.Group>
 
               <Form.Group>
-                <Form.Control type="number" placeholder="Peso" step="0.01" {...register('peso', { required: "Peso es necesario", min: 1, max: 120 })} />
+                <Form.Control
+                  type="number"
+                  placeholder="Peso"
+                  step="0.01"
+                  {...register('peso', { required: "Peso es necesario", min: 1, max: 200 })}
+                />
                 {errors.peso && <span className="error-text">{errors.peso.message}</span>}
               </Form.Group>
 
-              <Form.Control type="hidden" {...register('nivel')} value={nivel} />
+              <Form.Control type="hidden" value="Principiante" {...register('nivel')} />
 
-              <Button variant="success" type="submit" className="w-100 mt-3">Continuar Registro</Button>
+              <Button variant="success" type="submit" className="w-100 mt-3">
+                Continuar Registro
+              </Button>
             </Form>
-
             <p className="footer-text mt-3">
               ¿Ya tienes una cuenta? <Link to="/login" className="link-login">Inicia sesión</Link>
             </p>
