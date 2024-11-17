@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -19,27 +17,25 @@ const userSchema = new mongoose.Schema({
     edad: {
         type: Number,
         required: true,
-        min: 0,  // mínimo
+        min: 0,
     },
     objetivos: {
         type: String,
         default: "",
-        unique: true,
     },
     nivelActividad: {
         type: String,
         default: "",
-        unique: true,
     },
     estatura: {
         type: Number,
         required: true,
-        min: 0,  // mínimo
+        min: 0,
     },
     peso: {
         type: Number,
         required: true,
-        min: 0,  // mínimo
+        min: 0,
     },
     profileImage: {
         type: String,
@@ -47,19 +43,36 @@ const userSchema = new mongoose.Schema({
     genero: {
         type: String,
         enum: ['varon', 'mujer', 'otro'],
-        required: true
+        required: true,
     },
     nivel: {
         type: String,
         required: true,
         enum: ['Principiante', 'Intermedio', 'Avanzado'],
+        default: 'Principiante',
+    },
+    ejerciciosCompletados: {
+        type: Number,
+        default: 0, // Total de ejercicios realizados
+    },
+    metasEjercicios: {
+        type: Number,
+        default: 10, // Meta para cambiar de nivel
+    },
+    caloriasQuemadas: {
+        type: Number,
+        default: 0, // Calorías totales quemadas
+    },
+    tiempoEntrenado: {
+        type: Number,
+        default: 0, // Tiempo total entrenado (en minutos)
     },
     estado: {
         type: String,
         default: "",
-    }
+    },
 }, {
-    timestamps: true
-})
+    timestamps: true,
+});
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema);

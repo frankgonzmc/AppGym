@@ -1,6 +1,3 @@
-import mongoose from "mongoose";
-
-
 const rutinaSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -9,7 +6,7 @@ const rutinaSchema = new mongoose.Schema({
     },
     nombre: {
         type: String,
-        required: true
+        required: true,
     },
     descripcion: {
         type: String,
@@ -19,10 +16,18 @@ const rutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    ejerciciosCompletados: {  // Nuevo atributo
+    ejerciciosCompletados: {
         type: Number,
         default: 0,
     },
+    nivelRequerido: {
+        type: String,
+        enum: ['Principiante', 'Intermedio', 'Avanzado'],
+        default: 'Principiante',
+    },
+    categorias: [{
+        type: String, // Por ejemplo, 'Cardio', 'Fuerza', 'Resistencia'
+    }],
     estado: {
         type: String,
         default: 'Pendiente',
@@ -32,7 +37,7 @@ const rutinaSchema = new mongoose.Schema({
         default: Date.now,
     },
 }, {
-    timestamps: true
-})
+    timestamps: true,
+});
 
 export default mongoose.model("Rutina", rutinaSchema);

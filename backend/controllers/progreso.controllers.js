@@ -27,19 +27,16 @@ export const createProgreso = async (req, res) => {
 
         const nuevoProgreso = new Progreso({
             user: req.user.id,
-            rutina, //req.params.id,
+            rutina,
             fecha,
             estado,
         });
 
         const progresoGuardado = await nuevoProgreso.save();
 
-        // Opcional: actualizar la rutina con el ID del progreso
-        await Rutinas.findByIdAndUpdate(rutina, { progreso: progresoGuardado._id });
-
         res.status(201).json(progresoGuardado);
     } catch (error) {
-        res.status(500).json({ message: "Error al crear el detalle de la rutina", error });
+        res.status(500).json({ message: "Error al crear progreso", error });
     }
 };
 
@@ -58,13 +55,26 @@ export const deleteProgreso = async (req, res) => {
 // Actualizar un progreso del usuario existente
 export const updateProgreso = async (req, res) => {
     try {
-        const progreso = await Progreso.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
-        })
-        if (!progreso) return res.status(404).json({ message: "progreso no encontrado..." })
-        res.json(progreso)
+        const { ejerciciosCompletados, caloriasQuemadas } = req.body;
+
+        const progreso = await Progreso.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!progreso) return res.status(404).json({ message: "Progreso no encontrado" });
+
+        // Actualiza estadísticas del usuario
+        const user = await User.findById(progreso.user);
+        if (user) {
+            user.ejerciciosCompletados += ejerciciosCompletados || 0;
+            user.caloriasQuemadas += caloriasQuemadas || 0;
+            await user.save();
+
+            // Verifica si el usuario debe subir de nivel
+            await actualizarNivelUsuario(user._id);
+        }
+
+        res.json(progreso);
     } catch (error) {
-        return res.status(404).json({ message: "progreso no encontrado..." });
+        console.error("Error actualizando progreso:", error);
+        res.status(500).json({ message: "Error al actualizar progreso", error });
     }
 };
 

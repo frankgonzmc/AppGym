@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const detallesrutinaSchema = new mongoose.Schema({
     rutina: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,13 +9,19 @@ const detallesrutinaSchema = new mongoose.Schema({
         ref: 'Ejercicio',
         required: true,
     },
-    seriesProgreso: { // Nuevo campo
+    seriesProgreso: {
         type: Number,
-        default: 0, // Comienza en 0
+        default: 0,
     },
     estado: {
         type: String,
-        default: 'Pendiente', // Por defecto, todos los detalles de rutina están pendientes de completar
+        default: 'Pendiente',
+    },
+    caloriasQuemadas: {
+        type: Number,
+    },
+    tiempoEstimado: {
+        type: Number, // Duración estimada del ejercicio (en minutos)
     },
     fecha: {
         type: Date,

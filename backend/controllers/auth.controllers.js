@@ -7,12 +7,12 @@ import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
-    const { username, email, password, edad, objetivos, estatura, peso, nivel, genero } = req.body;
+    const { username, email, password, edad, objetivos, estatura, peso, nivel = 'Principiante', genero } = req.body;
 
     try {
         const userFound = await User.findOne({ email });
         if (userFound)
-            return res.status(400).json({ message: ["El email no es valido, o ya existe!"] });
+            return res.status(400).json({ message: ["El email no es válido, o ya existe!"] });
 
         const passwordHash = await bcrypt.hash(password, 10);
 
@@ -37,13 +37,11 @@ export const register = async (req, res) => {
             email: userSaved.email,
             edad: userSaved.edad,
             estatura: userSaved.estatura,
-            objetivos: userSaved.objetivos,
-            nivelActividad: userSaved.nivelActividad,
             peso: userSaved.peso,
             genero: userSaved.genero,
             nivel: userSaved.nivel,
-            createdAt: userSaved.createdAt,
-            updatedAt: userSaved.updatedAt,
+            ejerciciosCompletados: userSaved.ejerciciosCompletados,
+            metasEjercicios: userSaved.metasEjercicios,
         });
 
     } catch (error) {
@@ -292,4 +290,26 @@ export const updatePreferences = async (req, res) => {
     const { tipo, intensidad, frecuencia } = req.body;
     await User.findByIdAndUpdate(userId, { preferencias: { tipo, intensidad, frecuencia } });
     res.json({ message: 'Preferencias actualizadas' });
+};
+
+export const actualizarNivelUsuario = async (userId) => {
+    try {
+        const user = await User.findById(userId);
+        if (!user) throw new Error("Usuario no encontrado");
+
+        const { ejerciciosCompletados, metasEjercicios, nivel } = user;
+
+        if (nivel === 'Principiante' && ejerciciosCompletados >= metasEjercicios) {
+            user.nivel = 'Intermedio';
+            user.metasEjercicios += 20; // Nueva meta para Avanzado
+        } else if (nivel === 'Intermedio' && ejerciciosCompletados >= metasEjercicios) {
+            user.nivel = 'Avanzado';
+        }
+
+        await user.save();
+        console.log(`Nivel actualizado para el usuario ${userId}: ${user.nivel}`);
+    } catch (error) {
+        console.error("Error actualizando nivel del usuario:", error);
+        throw error;
+    }
 };

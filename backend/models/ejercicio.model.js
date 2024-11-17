@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const ejercicioSchema = new mongoose.Schema({
     codigo: {
         type: String,
@@ -16,6 +14,7 @@ const ejercicioSchema = new mongoose.Schema({
     },
     nivel: {
         type: String,
+        enum: ['Principiante', 'Intermedio', 'Avanzado'],
         required: true,
     },
     categoria: {
@@ -23,6 +22,10 @@ const ejercicioSchema = new mongoose.Schema({
         required: true,
     },
     series: {
+        type: Number,
+        required: true,
+    },
+    repeticiones: {
         type: Number,
         required: true,
     },
@@ -34,17 +37,16 @@ const ejercicioSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    repeticiones: {
-        type: Number,
-        required: true,
+    caloriasPorRepeticion: {
+        type: Number, // Estimación de calorías quemadas por repetición
     },
     estado: {
         type: String,
+        enum: ['Activo', 'Inactivo'],
         required: true,
     },
     imagen: {
         type: String,
-        required: false,
     },
     date: {
         type: Date,
@@ -52,6 +54,6 @@ const ejercicioSchema = new mongoose.Schema({
     },
 }, {
     timestamps: true,
-})
+});
 
 export default mongoose.model("Ejercicio", ejercicioSchema);

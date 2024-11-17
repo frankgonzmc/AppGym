@@ -136,22 +136,20 @@ export const updateRutina = async (req, res) => {
 export const deleteRutina = async (req, res) => {
     try {
         const rutina = await Rutinas.findByIdAndDelete(req.params.id);
-        if (!rutina) {
-            return res.status(404).json({ message: "Rutina no encontrada..." });
-        }
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
 
-        // Eliminar los detalles de rutina asociados
-        await DetallesRutina.deleteMany({ rutina: req.params.id }); // Ajustado a `rutina`
+        // Eliminar detalles y progreso asociados
+        await DetallesRutina.deleteMany({ rutina: req.params.id });
         await Progreso.deleteMany({ rutina: req.params.id });
 
-        res.json({ message: "Rutina y detalles asociados eliminados con éxito", rutina });
+        res.json({ message: "Rutina, detalles y progreso asociados eliminados con éxito", rutina });
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar rutina", error });
     }
 };
 
 // Actualiza el progreso de la rutina basado en los ejercicios completados
-export const actualizarProgresoRutina = async (rutinaId) => {
+export const actualizarProgresoRutina = async (rutinaId, userId) => {
     try {
         // Obtiene todos los detalles de la rutina
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
@@ -159,17 +157,28 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         // Cuenta los ejercicios completados
         const completados = detalles.filter(detalle => detalle.estado === "Completado").length;
 
-        // Define el estado de la rutina en función de si todos los ejercicios están completos
+        // Define el estado de la rutina
         const estadoRutina = completados === detalles.length ? "Completado" : "Pendiente";
 
-        // Actualiza la rutina en la base de datos
+        // Actualiza la rutina
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: completados,
-            estado: estadoRutina
+            estado: estadoRutina,
         }, { new: true });
 
-        console.log(`Actualización completada para la rutina ${rutinaId}: ${completados} ejercicios completados de ${detalles.length}`);
+        // Actualizar estadísticas del usuario
+        const user = await User.findById(userId);
+        if (user) {
+            user.ejerciciosCompletados += completados;
+            await user.save();
+
+            // Verifica si el usuario debe subir de nivel
+            await actualizarNivelUsuario(user._id);
+        }
+
+        console.log(`Progreso actualizado para la rutina ${rutinaId}: ${completados} completados.`);
     } catch (error) {
         console.error("Error al actualizar el progreso de la rutina:", error);
     }
 };
+

@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const progresoSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,13 +9,30 @@ const progresoSchema = new mongoose.Schema({
         ref: 'Rutina',
         required: true,
     },
-    fecha : {
+    fechaInicio: {
         type: Date,
-        required: true,
+        default: Date.now,
+    },
+    fechaFin: {
+        type: Date,
+    },
+    ejerciciosCompletados: {
+        type: Number,
+        default: 0,
     },
     estado: {
         type: String,
+        enum: ['Pendiente', 'En Progreso', 'Completado', 'Cancelado'],
         default: 'Pendiente',
+    },
+    tiempoTotal: {
+        type: Number, // Tiempo total invertido (en minutos)
+    },
+    caloriasQuemadas: {
+        type: Number, // Calorías estimadas quemadas
+    },
+    notas: {
+        type: String,
     },
 }, {
     timestamps: true,
