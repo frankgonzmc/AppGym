@@ -14,6 +14,7 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
+      setIsLoading(true);
       try {
         const rutinasList = await getRutinas();
         if (Array.isArray(rutinasList) && rutinasList.length > 0) {
@@ -25,11 +26,12 @@ export default function RutinaPage() {
         }
       } catch (error) {
         console.error("Error al obtener rutinas:", error.response?.data || error.message);
+      } finally {
+        setIsLoading(false); // Esto es importante para detener el mensaje de carga
       }
     };
-  
     fetchRutinasConProgreso();
-  }, [getRutinas]);  
+  }, [getRutinas]);
 
   if (isLoading) {
     return <p>Cargando rutinas...</p>;

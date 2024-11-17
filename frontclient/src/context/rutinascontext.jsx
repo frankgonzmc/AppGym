@@ -19,18 +19,18 @@ export function RutinaProvider({ children }) {
         setLoading(true);
         try {
             const res = await getRutinasRequest();
-            console.log("Respuesta de rutinas:", res.data); // Para verificar los datos
-            if (Array.isArray(res.data)) {
+            if (res.status === 200 && Array.isArray(res.data)) {
                 setRutinas(res.data);
             } else {
-                setRutinas([]);
+                setRutinas([]); // Vacía las rutinas si no se encuentran
+                console.error("No se encontraron rutinas.");
             }
         } catch (error) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
         } finally {
             setLoading(false);
         }
-    }, [cargado]);    
+    }, []);     
 
     const deleteRutina = async (id) => {
         try {
