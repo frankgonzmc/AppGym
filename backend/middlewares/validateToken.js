@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 export const authRequired = (req, res, next) => {
     try {
         const { token } = req.cookies;
-        console.log("Token recibido:", token);
+        //console.log("Token recibido:", token);
 
         if (!token) {
             return res
@@ -18,7 +18,7 @@ export const authRequired = (req, res, next) => {
                 return res.status(401).json({ message: "Token is not valid" });
             }
             req.user = user;
-            console.log("Usuario autenticado:", user);
+            //console.log("Usuario autenticado:", user);
             next();
         });
     } catch (error) {

@@ -14,23 +14,22 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      setIsLoading(true);
       try {
         const rutinasList = await getRutinas();
         if (Array.isArray(rutinasList) && rutinasList.length > 0) {
           for (const rutina of rutinasList) {
             await getProgreso(rutina._id);
           }
+        } else {
+          console.log("No se encontraron rutinas.");
         }
       } catch (error) {
-        console.error("Error al obtener rutinas o progreso:", error.response?.data || error.message);
-      } finally {
-        setIsLoading(false);
+        console.error("Error al obtener rutinas:", error.response?.data || error.message);
       }
     };
-
+  
     fetchRutinasConProgreso();
-  }, [getRutinas]); // Dependencias vacías para ejecutar solo una vez
+  }, [getRutinas]);  
 
   if (isLoading) {
     return <p>Cargando rutinas...</p>;
