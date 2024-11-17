@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
-import { Card } from "react-bootstrap"; // Asegúrate de tener react-bootstrap instalado
+import { Card } from "react-bootstrap";
 import '../../css/detallePage.css';
 
 export default function DetalleRutinaCard({ detalles }) {

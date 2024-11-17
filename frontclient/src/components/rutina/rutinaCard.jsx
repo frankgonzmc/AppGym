@@ -1,13 +1,13 @@
 import { Card } from "../ui";
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
-import { useProgreso } from "../../context/progresocontext";
+//import { useProgreso } from "../../context/progresocontext";
 import { useRutinas } from "../../context/rutinascontext";
 import { useEffect, useState } from "react";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
-  const { progreso } = useProgreso();
+  //const { progreso } = useProgreso();
   const { deleteRutina } = useRutinas();
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
   const ejerciciosCompletados = rutina.ejerciciosCompletados || 0; // Obtener directamente de rutina

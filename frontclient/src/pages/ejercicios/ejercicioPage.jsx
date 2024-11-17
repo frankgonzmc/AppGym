@@ -29,7 +29,7 @@ export default function EjercicioPage() {
         <Row className="mb-4">
           <Col md={6}>
             <Form.Group controlId="categoriaSelect">
-              <Form.Label>Filtrar por Categoría</Form.Label>
+              <Form.Label className="mb-0 text-white font-bold background-black">Filtrar por Categoría</Form.Label>
               <Form.Control
                 as="select"
                 value={categoria}
@@ -52,7 +52,7 @@ export default function EjercicioPage() {
           </Col>
           <Col md={6}>
             <Form.Group controlId="nivelSelect">
-              <Form.Label>Filtrar por Nivel</Form.Label>
+              <Form.Label className="mb-0 text-white font-bold background-black">Filtrar por Nivel</Form.Label>
               <Form.Control
                 as="select"
                 value={nivel}

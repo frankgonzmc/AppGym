@@ -1,4 +1,4 @@
-import { useEjercicios } from "../../context/ejercicioscontext";
+//import { useEjercicios } from "../../context/ejercicioscontext";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
@@ -7,7 +7,7 @@ import { Card } from "../ui";
 
 export function EjercicioCard({ ejercicio }) {
   const { user } = useAuth();
-  const { deleteEjercicio } = useEjercicios();
+  //const { deleteEjercicio } = useEjercicios();
   const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
