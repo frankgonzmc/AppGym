@@ -9,6 +9,6 @@ router.get('/detalles-rutinas/:id', authRequired, getDetallesRutina);
 router.post('/detalles-rutinas', authRequired, createDetalleRutina);
 router.put('/detalles-rutinas/:id', authRequired, updateDetalleRutina);
 router.delete('/detalles-rutinas/:id', authRequired, deleteDetalleRutina);
-router.put('/detalles-rutinas/:id/actualizar-progreso', authRequired, actualizarProgresoDetalleRutina);
+router.put('/detalles-rutinas/:id/progreso', authRequired, actualizarProgresoDetalleRutina);
 
 export default router;
