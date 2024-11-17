@@ -26,7 +26,7 @@ export function RutinaProvider({ children }) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
             setRutinas([]);
         }
-    }, []);
+    }, [rutinas, cargado]);
 
     const deleteRutina = async (id) => {
         try {
