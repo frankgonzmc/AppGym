@@ -39,13 +39,12 @@ export default function IniciaEjercicioPage() {
         await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
         if (nuevasSeries === detalles.ejercicio.series) {
+          console.log("Ejercicio completado. Actualizando estado...");
           await updateEstadoEjercicioRequest(detalles._id, "Completado");
-          setEjercicioCompletado(true);
-          await actualizarProgresoRutina();
         }
       }
     } catch (error) {
-      console.error("Error al actualizar la serie:", error);
+      console.error("Error al actualizar progreso de la serie:", error);
     }
   };
 
