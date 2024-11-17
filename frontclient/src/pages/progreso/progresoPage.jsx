@@ -39,11 +39,9 @@ function ProgresoPage() {
   // Función para obtener estadísticas de progreso
   const fetchUserStats = async () => {
     try {
-      const response = await axios.get(`/stats/${user.id}/${period}`);
-      console.log("Estadísticas de usuario:", response.data);
-
-      // Procesar datos para la gráfica
+      const response = await getUserStatsRequest(user.id, period); // Llamada ajustada
       const stats = response.data;
+
       const processedData = new Array(12).fill(0); // Inicializar con ceros
       stats.forEach((item) => {
         if (item._id?.month) {
@@ -58,12 +56,9 @@ function ProgresoPage() {
     }
   };
 
-  // Función para comparar progreso con los objetivos
   const fetchProgressComparison = async () => {
     try {
-      const response = await axios.get(`/compare-progress/${user.id}`);
-      console.log("Comparación de progreso:", response.data);
-
+      const response = await compareProgressRequest(user.id); // Llamada ajustada
       setProgressComparison(response.data.message || "No se encontraron objetivos.");
     } catch (error) {
       console.error("Error al comparar el progreso:", error);

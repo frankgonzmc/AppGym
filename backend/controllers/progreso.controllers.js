@@ -121,13 +121,20 @@ export const getUserStatsByPeriod = async (req, res) => {
     const { userId, period } = req.params;
 
     const matchStage = { user: userId };
-    const groupStage = { _id: { year: { $year: "$fechaInicio" } }, total: { $sum: 1 } };
+    const groupStage = { _id: {}, total: { $sum: "$ejerciciosCompletados" } };
 
+    // Validar el período
     if (period === 'monthly') groupStage._id.month = { $month: "$fechaInicio" };
-    if (period === 'weekly') groupStage._id.week = { $week: "$fechaInicio" };
+    else if (period === 'weekly') groupStage._id.week = { $week: "$fechaInicio" };
+    else if (period === 'yearly') groupStage._id.year = { $year: "$fechaInicio" };
+    else return res.status(400).json({ message: "Período no válido." });
 
     try {
-        const stats = await Progreso.aggregate([{ $match: matchStage }, { $group: groupStage }]);
+        const stats = await Progreso.aggregate([
+            { $match: matchStage },
+            { $group: groupStage }
+        ]);
+
         res.status(200).json(stats);
     } catch (error) {
         console.error("Error al obtener estadísticas por período:", error);
