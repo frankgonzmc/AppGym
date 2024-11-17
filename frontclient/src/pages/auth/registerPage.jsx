@@ -10,14 +10,22 @@ function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
-  const nivel = "Principiante";
 
   useEffect(() => {
     if (isAuthenticated) navigate("/inicio");
   }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {
-    signup(values);
+    // Convertimos los valores numéricos a su tipo correcto antes de enviarlos
+    const formData = {
+      ...values,
+      edad: parseInt(values.edad, 10),
+      estatura: parseFloat(values.estatura),
+      peso: parseFloat(values.peso),
+    };
+
+    console.log("Datos enviados al backend:", formData); // Verificar los datos en la consola
+    signup(formData);
   });
 
   return (
@@ -76,7 +84,7 @@ function RegistroUsuario() {
                 <Form.Control
                   type="number"
                   placeholder="Edad"
-                  {...register('edad', { required: "Edad es necesario" })}
+                  {...register('edad', { required: "Edad es necesaria" })}
                 />
                 {errors.edad && <span className="error-text">{errors.edad.message}</span>}
               </Form.Group>
@@ -115,7 +123,6 @@ function RegistroUsuario() {
       </Container>
     </section>
   );
-
 }
 
 export default RegistroUsuario;
