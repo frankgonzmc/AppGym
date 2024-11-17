@@ -21,11 +21,10 @@ export function RutinaProvider({ children }) {
                 setRutinas(res.data);
             } else {
                 setRutinas([]);
-                console.error("No se encontraron rutinas.");
             }
         } catch (error) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
-            setRutinas([]); // Asegurarse de limpiar el estado en caso de error
+            setRutinas([]);
         }
     }, []);
 

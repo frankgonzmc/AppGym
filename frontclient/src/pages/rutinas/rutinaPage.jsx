@@ -23,19 +23,20 @@ export default function RutinaPage() {
       setIsLoading(true);
       try {
         const rutinasList = await getRutinas();
-        if (Array.isArray(rutinasList) && rutinasList.length > 0) {
+        if (rutinasList && rutinasList.length > 0) {
           for (const rutina of rutinasList) {
-            await getProgreso(rutina._id);
+            await getProgreso(rutina._id); // Solo si hay progreso asociado
           }
         } else {
-          console.log("No se encontraron rutinas.");
+          console.log("No se encontraron rutinas."); // Mensaje claro en caso de que no haya datos
         }
       } catch (error) {
         console.error("Error al obtener rutinas:", error.response?.data || error.message);
       } finally {
-        setIsLoading(false); // Esto es importante para detener el mensaje de carga
+        setIsLoading(false);
       }
     };
+
     fetchRutinasConProgreso();
   }, [getRutinas]);
 
