@@ -85,7 +85,7 @@ const RutinaForm = () => {
         }));
 
         await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
-        /*
+
         const progresoData = {
           user: user._id,
           rutina: rutinaCreada._id,
@@ -93,9 +93,8 @@ const RutinaForm = () => {
           estado: 'En Progreso'
         };
 
-        await createProgreso(progresoData);*/
-
-
+        await createProgreso(progresoData);
+        
         navigate('/rutinas');
       }
     } catch (error) {
