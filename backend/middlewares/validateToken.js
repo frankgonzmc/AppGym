@@ -16,7 +16,7 @@ export const authRequired = (req, res, next) => {
                 return res.status(401).json({ message: "Token is not valid" });
             }
 
-            console.log("Usuario autenticado:", user); // <-- Agregar este log
+            console.log("Usuario autenticado:", user);
             req.user = user;
             next();
         });

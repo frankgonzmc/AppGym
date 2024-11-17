@@ -6,13 +6,14 @@ import User from '../models/user.model.js'; // Importar modelo de usuario
 // Obtener todas las rutinas del usuario autenticado o predeterminadas
 export const getRutinas = async (req, res) => {
     try {
-        const rutinas = await Rutinas.find({ user: req.user.id }); // Asegúrate de que `req.user` esté definido correctamente
+        console.log("Usuario en req.user:", req.user); // Verifica qué contiene req.user
+        const rutinas = await Rutinas.find(); // Elimina la dependencia de req.user
         if (!rutinas || rutinas.length === 0) {
             return res.status(404).json({ message: "No se encontraron rutinas." });
         }
         res.json(rutinas);
     } catch (error) {
-        console.error("Error al obtener rutinas:", error);
+        console.error("Error al obtener rutinas:", error.message);
         res.status(500).json({ message: "Error al obtener rutinas." });
     }
 };
