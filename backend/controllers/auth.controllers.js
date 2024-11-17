@@ -6,47 +6,43 @@ import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config.js'
 
-export const register = async (req, res) => {
-    const { username, email, password, edad, objetivos, estatura, peso, nivel = 'Principiante', genero } = req.body;
-
+const register = async (req, res) => {
     try {
-        const userFound = await User.findOne({ email });
-        if (userFound)
-            return res.status(400).json({ message: ["El email no es válido, o ya existe!"] });
+        const { username, email, password, edad, estatura, peso, genero, nivel = 'Principiante' } = req.body;
 
-        const passwordHash = await bcrypt.hash(password, 10);
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "El email ya está registrado" });
+        }
 
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,
             email,
-            password: passwordHash,
+            password: hashedPassword,
             edad,
             estatura,
-            genero,
             peso,
+            genero,
             nivel,
         });
 
-        const userSaved = await newUser.save();
-        const token = await createAccessToken({ id: userSaved._id });
+        const savedUser = await newUser.save();
 
-        res.cookie('token', token);
-        res.json({
-            id: userSaved.id,
-            username: userSaved.username,
-            email: userSaved.email,
-            edad: userSaved.edad,
-            estatura: userSaved.estatura,
-            peso: userSaved.peso,
-            genero: userSaved.genero,
-            nivel: userSaved.nivel,
-            ejerciciosCompletados: userSaved.ejerciciosCompletados,
-            metasEjercicios: userSaved.metasEjercicios,
+        const token = createAccessToken({ id: savedUser._id });
+        res.cookie('token', token, { httpOnly: true });
+
+        return res.status(201).json({
+            id: savedUser._id,
+            username: savedUser.username,
+            email: savedUser.email,
+            genero: savedUser.genero,
+            nivel: savedUser.nivel,
+            edad: savedUser.edad,
         });
-
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: error.message });
+        console.error("Error en el registro:", error);
+        return res.status(500).json({ message: "Error en el servidor" });
     }
 };
 

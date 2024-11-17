@@ -22,14 +22,19 @@ export const AuthProvider = ({ children }) => {
     const signup = async (user) => {
         try {
             const res = await registerRequest(user);
-            console.log(res.data);
+            console.log("Usuario registrado:", res.data);
             setUser(res.data);
             setIsAuthenticated(true);
+            setErrors([]);
         } catch (error) {
-            console.log(error.response)
-            setErrors(error.response.data)
+            console.error("Error en signup:", error);
+            if (error.response) {
+                setErrors([error.response.data.message || "Error en el registro"]);
+            } else {
+                setErrors(["Error al conectar con el servidor"]);
+            }
         }
-    }
+    };    
 
     const signin = async (user) => {
         try {
