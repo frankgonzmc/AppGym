@@ -16,7 +16,7 @@ export const updateProgresoRequest = (id, progreso) => axios.put(`/progreso/${id
 export const updateEstadoProgresoRequest = (id, estado) => axios.put(`/progreso/${id}`, { estado });
 
 // Obtener estadísticas del progreso por período (mensual, semanal, anual)
-export const getUserStatsRequest = (userId, period) => axios.get(`/progreso/stats/${userId}/${period}`);
+export const getUserStatsRequest = (userId, period) => axios.get(`/stats/${userId}/${period}`);
 
 // Comparar progreso con los objetivos del usuario
-export const compareProgressRequest = (userId) => axios.get(`/progreso/compare/${userId}`);
+export const compareProgressRequest = (userId) => axios.get(`/compare-progress/${userId}`);
