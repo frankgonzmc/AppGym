@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
 import { updateProgresoEjercicioRequest, updateEstadoEjercicioRequest, getDetalleRutinaRequest } from '../../api/detallerutina';
 import { updateRutinaProgressRequest, updateEstadoRutinaRequest } from '../../api/rutina';
+import { updateEstadoProgresoRequest } from '../../api/progreso';
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -57,6 +58,7 @@ export default function IniciaEjercicioPage() {
 
         if (ejerciciosCompletos >= detallesRutina.length) {
           await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+          await updateEstadoProgresoRequest(detalles.rutina, "Completado");
         }
       } else {
         console.error("Error: `detallesRutina` no es un array.", detallesRutina);
