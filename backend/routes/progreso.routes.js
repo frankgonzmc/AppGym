@@ -12,8 +12,8 @@ router.put('/progreso/:id', authRequired, validateObjectId, updateProgreso);
 router.delete('/progreso/:id', authRequired, validateObjectId, deleteProgreso);
 
 // Rutas para estadísticas
-router.get('/progreso/stats/:userId', authRequired, getUserStats);
-router.post('/progreso/stats/:userId/period', authRequired, getUserStatsByPeriod);
-router.get('/progreso/compare/:userId', authRequired, compareProgressWithGoals);
+router.get('/stats/:userId', authRequired, getUserStats);
+router.post('/stats/:userId/period', authRequired, getUserStatsByPeriod);
+router.get('/stats/compare/:userId', authRequired, compareProgressWithGoals);
 
 export default router;
