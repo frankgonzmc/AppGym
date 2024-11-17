@@ -16,27 +16,19 @@ export function RutinaProvider({ children }) {
 
     const getRutinas = useCallback(async () => {
         try {
-            if (!cargado) {
-                const res = await getRutinasRequest();
-                //console.log("Respuesta de getRutinasRequest:", res.data); // Verificar la estructura de la respuesta
-                if (Array.isArray(res.data)) {
-                    setRutinas(res.data);
-                    setCargado(true);
-                    return res.data; // Aseguramos que devuelva la lista de rutinas
-                } else {
-                    console.error("Error: La respuesta de 'getRutinasRequest' no es un array.");
-                    setRutinas([]); // Establece un array vacío si no es un array
-                    return []; // Devuelve un array vacío en caso de error
-                }
+            const res = await getRutinasRequest();
+            if (res.status === 200 && Array.isArray(res.data)) {
+                setRutinas(res.data);
+                setCargado(true);
             } else {
-                return rutinas; // Retorna el estado actual si ya se ha cargado
+                setRutinas([]);
+                setCargado(false);
+                console.error("No se encontraron rutinas.");
             }
         } catch (error) {
-            console.error("Error al obtener rutinas:", error);
-            setRutinas([]); // Establece un array vacío en caso de error
-            return []; // Devuelve un array vacío en caso de error
+            console.error("Error al obtener rutinas:", error.response?.data || error.message);
         }
-    }, [cargado, rutinas]); // Asegúrate de agregar `rutinas` como dependencia
+    }, [cargado]);      
 
     const deleteRutina = async (id) => {
         try {
@@ -76,15 +68,15 @@ export function RutinaProvider({ children }) {
 
     const updateRutina = async (id, rutina) => {
         try {
-          const res = await updateRutinaRequest(id, rutina);
-          setRutinas((prev) =>
-            prev.map((r) => (r._id === id ? { ...r, ...res.data } : r))
-          );
+            const res = await updateRutinaRequest(id, rutina);
+            setRutinas((prev) =>
+                prev.map((r) => (r._id === id ? { ...r, ...res.data } : r))
+            );
         } catch (error) {
-          console.error('Error al actualizar rutina:', error.response?.data || error.message);
+            console.error('Error al actualizar rutina:', error.response?.data || error.message);
         }
-      };
-      
+    };
+
     /*
     const updateRutina = async (id, rutina) => {
         try {
