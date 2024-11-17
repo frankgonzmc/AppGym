@@ -13,6 +13,12 @@ export default function RutinaPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!rutinas || rutinas.length === 0) {
+      console.log("No se encontraron rutinas.");
+    }
+  }, [rutinas]);
+
+  useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true);
       try {
