@@ -3,7 +3,7 @@ import axios from './axios';
 
 export const getRutinasRequest = () => axios.get('/rutinas')
 
-export const getRutinaRequest = (id) => axios.get(`/rutina/${id}`)
+export const getRutinaRequest = (id) => axios.get(`/rutinas/${id}`)
 
 export const createRutinaRequest = (rutina) => axios.post('/rutinas', rutina)
 

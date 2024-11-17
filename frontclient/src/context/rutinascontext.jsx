@@ -16,23 +16,21 @@ export function RutinaProvider({ children }) {
     const [loading, setLoading] = useState(false);
 
     const getRutinas = useCallback(async () => {
-        if (!loading && !cargado) {
-            setLoading(true);
-            try {
-                const res = await getRutinasRequest();
-                if (res.status === 200 && Array.isArray(res.data)) {
-                    setRutinas(res.data);
-                    setCargado(true);
-                } else {
-                    setRutinas([]); // Vacía el estado si no hay rutinas.
-                }
-            } catch (error) {
-                console.error("Error al obtener rutinas:", error.response?.data || error.message);
-            } finally {
-                setLoading(false);
+        setLoading(true);
+        try {
+            const res = await getRutinasRequest();
+            console.log("Respuesta de rutinas:", res.data); // Para verificar los datos
+            if (Array.isArray(res.data)) {
+                setRutinas(res.data);
+            } else {
+                setRutinas([]);
             }
+        } catch (error) {
+            console.error("Error al obtener rutinas:", error.response?.data || error.message);
+        } finally {
+            setLoading(false);
         }
-    }, [cargado, loading]);
+    }, [cargado]);    
 
     const deleteRutina = async (id) => {
         try {

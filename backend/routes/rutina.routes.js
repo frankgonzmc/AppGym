@@ -10,7 +10,7 @@ const router = Router()
 
 
 router.get('/rutinas', authRequired, getRutinas);
-router.get('/rutina/:id', authRequired, validateObjectId, getRutina);
+router.get('/rutinas/:id', authRequired, validateObjectId, getRutina);
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas);
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
