@@ -12,8 +12,10 @@ function RegistroUsuario() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/inicio");
-  }, [isAuthenticated]);
+    if (isAuthenticated) {
+      navigate("/inicio");
+    }
+  }, [isAuthenticated, navigate]);
 
   const onSubmit = handleSubmit(async (values) => {
     // Convertimos los valores numéricos a su tipo correcto antes de enviarlos

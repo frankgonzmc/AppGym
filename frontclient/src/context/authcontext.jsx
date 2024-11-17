@@ -5,9 +5,9 @@ import {
     verifityTokenRequest,
     updatePasswordRequest,
     updatePerfilRequest,
-    checkEmailRequest
+    checkEmailRequest,
 } from "../api/auth";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -20,7 +20,6 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -28,14 +27,14 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (user) => {
         try {
-            const res = await registerRequest(user); // Registro del usuario
+            // Registro del usuario
+            const res = await registerRequest(user);
             console.log("Usuario registrado:", res.data);
-            setUser(res.data);
-            setIsAuthenticated(true);
-            setErrors([]);
 
-            // Verificar el token después de registrarse
-            await checkLogin();
+            // Inicia sesión automáticamente con los mismos datos
+            await signin({ email: user.email, password: user.password });
+
+            setErrors([]);
         } catch (error) {
             console.error("Error en signup:", error);
             if (error.response) {
@@ -50,6 +49,8 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await loginRequest(user);
             console.log("Usuario autenticado:", res.data);
+
+            // Guarda el estado de autenticación
             setIsAuthenticated(true);
             setUser(res.data);
         } catch (error) {
@@ -75,7 +76,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await updatePerfilRequest(datos);
             if (res.data) {
-                setUser(res.data); // Actualiza el usuario en el contexto
+                setUser(res.data);
                 console.log("Perfil actualizado:", res.data);
                 return res.data;
             } else {
@@ -102,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
-        Cookies.remove("token"); // Elimina el token
+        Cookies.remove("token");
     };
 
     const checkLogin = async () => {
@@ -115,16 +116,16 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-            const res = await verifityTokenRequest(cookies.token); // Verifica el token con el backend
+            const res = await verifityTokenRequest(cookies.token);
             if (!res.data) {
                 setIsAuthenticated(false);
                 setLoading(false);
                 return;
             }
 
-            setIsAuthenticated(true); // Usuario autenticado
-            setUser(res.data); // Guarda los datos del usuario en el contexto
-            setLoading(false); // Finaliza el estado de carga
+            setIsAuthenticated(true);
+            setUser(res.data);
+            setLoading(false);
         } catch (error) {
             console.error("Error verificando el token:", error);
             setIsAuthenticated(false);
@@ -134,7 +135,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        checkLogin(); // Llama a checkLogin al cargar la aplicación
+        checkLogin();
     }, []);
 
     useEffect(() => {
