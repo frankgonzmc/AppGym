@@ -17,7 +17,7 @@ const progresoSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        required: true,
+        default: 'Pendiente',
     },
 }, {
     timestamps: true,
