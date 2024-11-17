@@ -14,14 +14,19 @@ export default function RutinaPage() {
 
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
-      setIsLoading(true); // Activa el estado de carga
-      const rutinasList = await getRutinas();
-      if (Array.isArray(rutinasList) && rutinasList.length > 0) {
-        for (const rutina of rutinasList) {
-          await getProgreso(rutina._id);
+      setIsLoading(true);
+      try {
+        const rutinasList = await getRutinas();
+        if (Array.isArray(rutinasList) && rutinasList.length > 0) {
+          for (const rutina of rutinasList) {
+            await getProgreso(rutina._id);
+          }
         }
+      } catch (error) {
+        console.error("Error al obtener rutinas o progreso:", error.response?.data || error.message);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false); // Desactiva el estado de carga una vez que termina
     };
 
     fetchRutinasConProgreso();
