@@ -4,6 +4,6 @@ import { authRequired } from '../middlewares/validateToken.js';
 
 const router = Router();
 
-router.get('/recomendaciones', authRequired, getRecomendaciones); // Usamos el ID del usuario autenticado
+router.get('/recomendaciones/:userId', authRequired, getRecomendaciones);
 
 export default router;

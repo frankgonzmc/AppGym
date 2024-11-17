@@ -52,6 +52,38 @@ export const deleteProgreso = async (req, res) => {
     }
 };
 
+export const updateProgreso = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ejerciciosCompletados, estado } = req.body;
+
+        const progreso = await Progreso.findByIdAndUpdate(
+            id,
+            { ejerciciosCompletados, estado, fechaFin: estado === 'Completado' ? new Date() : null },
+            { new: true }
+        );
+
+        if (!progreso) return res.status(404).json({ message: "Progreso no encontrado" });
+
+
+        const user = await User.findById(progreso.user);
+        if (user) {
+            user.ejerciciosCompletados += ejerciciosCompletados || 0;
+            user.caloriasQuemadas += caloriasQuemadas || 0;
+            await user.save();
+
+            // Verifica si el usuario debe subir de nivel
+            await actualizarNivelUsuario(user._id);
+        }
+
+        res.json(progreso);
+    } catch (error) {
+        console.error("Error actualizando progreso:", error);
+        res.status(500).json({ message: "Error al actualizar progreso", error });
+    }
+};
+
+/*
 // Actualizar un progreso del usuario existente
 export const updateProgreso = async (req, res) => {
     try {
@@ -76,7 +108,7 @@ export const updateProgreso = async (req, res) => {
         console.error("Error actualizando progreso:", error);
         res.status(500).json({ message: "Error al actualizar progreso", error });
     }
-};
+};*/
 
 // Obtener estadísticas del progreso del usuario existente
 export const getUserStats = async (req, res) => {

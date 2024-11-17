@@ -102,17 +102,21 @@ export default function IniciaEjercicioPage() {
     return () => clearInterval(intervalRef.current);
   }, [isPausado, duracionRestante, descansoRestante, isDescanso, seriesCompletadas, ejercicioCompletado]);
 
-  const handlePausarReanudar = () => {
-    setIsPausado((prev) => !prev);
-  };
+  const handleReset = async () => {
+    try {
+      // Reiniciar progreso en el backend
+      await updateProgresoEjercicioRequest(detalles._id, 0);
+      await updateEstadoEjercicioRequest(detalles._id, "Pendiente");
 
-  const handleReset = () => {
-    setDuracionRestante(detalles.ejercicio.duracion);
-    setDescansoRestante(detalles.ejercicio.descanso);
-    setSeriesCompletadas(0);
-    setIsPausado(true);
-    setIsDescanso(false);
-    setEjercicioCompletado(false);
+      setDuracionRestante(detalles.ejercicio.duracion);
+      setDescansoRestante(detalles.ejercicio.descanso);
+      setSeriesCompletadas(0);
+      setIsPausado(true);
+      setIsDescanso(false);
+      setEjercicioCompletado(false);
+    } catch (error) {
+      console.error("Error al reiniciar el ejercicio:", error);
+    }
   };
 
   return (
@@ -138,7 +142,7 @@ export default function IniciaEjercicioPage() {
         <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
 
         <div className="d-flex justify-content-between">
-          <Button onClick={handlePausarReanudar}>
+          <Button onClick={handlePausarReanudar} disabled={ejercicioCompletado}>
             {isPausado ? 'Iniciar' : 'Pausar'}
           </Button>
           <Button variant="danger" onClick={handleReset} disabled={!ejercicioCompletado}>Reiniciar</Button>
