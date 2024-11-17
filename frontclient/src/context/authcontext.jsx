@@ -26,12 +26,15 @@ export const AuthProvider = ({ children }) => {
             setUser(res.data);
             setIsAuthenticated(true);
             setErrors([]);
+
+            // Verifica el token después de registrar al usuario
+            await checkLogin(); // Esta función valida el token y carga el usuario
         } catch (error) {
             console.error("Error en signup:", error);
-            if (error.response && error.response.data.message) {
-                setErrors([error.response.data.message]); // Mostrar mensaje del backend
+            if (error.response) {
+                setErrors([error.response.data.message || "Error en el registro"]);
             } else {
-                setErrors(["Error al conectar con el servidor"]); // Error genérico
+                setErrors(["Error al conectar con el servidor"]);
             }
         }
     };
@@ -106,32 +109,33 @@ export const AuthProvider = ({ children }) => {
     }, [errors])
 
     useEffect(() => {
-        async function checkLogin() {
-            const cookies = Cookies.get()
+        // Función para verificar el login (reutilizable en registro)
+        const checkLogin = async () => {
+            const cookies = Cookies.get();
 
             if (!cookies.token) {
-                setIsAuthenticated(false)
-                setLoading(false)
-                return setUser(null)
+                setIsAuthenticated(false);
+                setLoading(false);
+                return setUser(null);
             }
 
             try {
-                const res = await verifityTokenRequest(cookies.token)
+                const res = await verifityTokenRequest(cookies.token);
                 if (!res.data) {
-                    setIsAuthenticated(false)
-                    setLoading(false)
+                    setIsAuthenticated(false);
+                    setLoading(false);
                     return;
                 }
 
-                setIsAuthenticated(true)
-                setUser(res.data)
-                setLoading(false)
+                setIsAuthenticated(true);
+                setUser(res.data);
+                setLoading(false);
             } catch (error) {
-                setIsAuthenticated(false)
-                setUser(null)
-                setLoading(false)
+                setIsAuthenticated(false);
+                setUser(null);
+                setLoading(false);
             }
-        }
+        };
 
         checkLogin();
     }, [])
