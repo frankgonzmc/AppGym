@@ -1,6 +1,4 @@
 import Ejercicios from '../models/ejercicio.model.js';
-import multer from 'multer';
-import path from 'path';
 
 export const getEjercicios = async (req, res) => {
     try {
@@ -88,34 +86,3 @@ export const deleteEjercicios = async (req, res) => {
         return res.status(404).json({ message: "Ejercicio no encontrado..." });
     }
 };
-
-
-// Configuración de almacenamiento para multer
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname)); // Nombre único para evitar colisiones
-    }
-});
-
-// Configuración de multer
-export const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5 // Limitar el tamaño de archivos a 5 MB
-    },
-    fileFilter: function (req, file, cb) {
-        const filetypes = /jpeg|jpg|webp|png|gif/; // Solo permite imágenes
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-        if (mimetype && extname) {
-            return cb(null, true);
-        } else {
-            cb(new Error('Solo se permiten archivos de imagen (jpeg, jpg, png, gif)'));
-        }
-    }
-});

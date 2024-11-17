@@ -166,10 +166,10 @@ export function Inicio() {
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
                             <p>Nivel de Actividad: {user.nivelActividad}</p>
-                            <p>Estado (IMC): {estado}</p>
+                            <p>Estado (Indice de Masa Corporal): {estado}</p>
                             <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
-                                Calcular TMB
+                                Calcular TMB (Tasa de Metabolismo Basal)
                             </Button>
                             <Card.Footer>
                                 {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
@@ -204,7 +204,7 @@ export function Inicio() {
                                     )}
                                 </>
                             ) : (
-                                <p>Por favor, calcula primero tu TMB.</p>
+                                <p>Por favor, calcula primero tu TMB (Tasa de Metabolismo Basal).</p>
                             )}
                         </Card.Body>
                         <Card.Body>
@@ -229,7 +229,7 @@ export function Inicio() {
                                     )}
                                 </>
                             ) : (
-                                <p>Por favor, calcula primero tu TMB.</p>
+                                <p>Por favor, calcula primero tu TMB (Tasa de Metabolismo Basal).</p>
                             )}
                         </Card.Body>
                     </Card>

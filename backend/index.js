@@ -9,9 +9,9 @@ async function main() {
         await seedEjercicios();
         app.listen(PORT, '0.0.0.0', () => {
             console.log(`Servidor corriendo en el puerto ${PORT}`);
-        });        
-        console.log(`Conectado en el puerto: ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV}`)
+        });
+        //console.log(`Conectado en el puerto: ${PORT}`);
+        //console.log(`Environment: ${process.env.NODE_ENV}`)
     } catch (error) {
         console.error(error);
     }
