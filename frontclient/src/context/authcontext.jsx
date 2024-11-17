@@ -28,13 +28,13 @@ export const AuthProvider = ({ children }) => {
             setErrors([]);
         } catch (error) {
             console.error("Error en signup:", error);
-            if (error.response) {
-                setErrors([error.response.data.message || "Error en el registro"]);
+            if (error.response && error.response.data.message) {
+                setErrors([error.response.data.message]); // Mostrar mensaje del backend
             } else {
-                setErrors(["Error al conectar con el servidor"]);
+                setErrors(["Error al conectar con el servidor"]); // Error genérico
             }
         }
-    };    
+    };
 
     const signin = async (user) => {
         try {
