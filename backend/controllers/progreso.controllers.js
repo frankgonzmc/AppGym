@@ -1,5 +1,6 @@
 import Progreso from '../models/progreso.model.js';
-import User from '../models/user.model.js'
+import User from '../models/user.model.js';
+import Rutinas from '../models/rutina.model.js';
 
 // Obtener un progreso del usuario existente
 export const getProgreso = async (req, res) => {
@@ -32,6 +33,10 @@ export const createProgreso = async (req, res) => {
         });
 
         const progresoGuardado = await nuevoProgreso.save();
+
+        // Opcional: actualizar la rutina con el ID del progreso
+        await Rutinas.findByIdAndUpdate(rutina, { progreso: progresoGuardado._id });
+
         res.status(201).json(progresoGuardado);
     } catch (error) {
         res.status(500).json({ message: "Error al crear el detalle de la rutina", error });

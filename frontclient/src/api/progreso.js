@@ -9,4 +9,4 @@ export const deleteProgresoRequest = (id) => axios.delete(`/progreso/${id}`)
 
 export const updateProgresoRequest = (id, progreso) => axios.put(`/progreso/${id}`, progreso)
 
-export const updateEstadoProgresoRequest = (progreso, estado) => axios.put(`/progreso/${progreso}`, { estado });
+export const updateEstadoProgresoRequest = (id, estado) => axios.put(`/progreso/${id}`, { estado });
