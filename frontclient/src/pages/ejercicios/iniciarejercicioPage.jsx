@@ -93,6 +93,8 @@ export default function IniciaEjercicioPage() {
 
             // Actualiza la serie y verifica progreso
             await actualizarProgresoSerie(nuevasSeries);
+
+            await actualizarProgresoRutina();
           }
         }
       }, 1000);
