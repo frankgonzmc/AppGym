@@ -2,11 +2,13 @@ import { Card } from "../ui";
 import { useNavigate } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap';
 import { useProgreso } from "../../context/progresocontext";
+import { useRutinas } from "../../context/rutinascontext";
 import { useEffect, useState } from "react";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
   const { progreso } = useProgreso();
+  const { deleteRutina } = useRutinas();
   const [totalEjercicios, setTotalEjercicios] = useState(rutina.totalEjercicios || 0);
   const ejerciciosCompletados = rutina.ejerciciosCompletados || 0; // Obtener directamente de rutina
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
@@ -39,7 +41,7 @@ export function RutinaCard({ rutina }) {
         <div className="flex gap-x-3 items-center">
           <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Editar</button>
           <button className="btn btn-primary" onClick={() => navigate(`/detalles-rutinas/${rutina._id}`)}>Ver Ejercicios</button>
-          <button className="btn btn-danger" onClick={() => navigate(`/rutinas/${rutina._id}`)}>Eliminar</button>
+          <button className="btn btn-danger text-left" onClick={() => deleteRutina(rutina._id)}>Eliminar</button>
         </div>
       </footer>
     </Card>
