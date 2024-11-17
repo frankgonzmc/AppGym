@@ -5,6 +5,7 @@ import User from '../models/user.model.js'; // Importar modelo de usuario
 
 // Obtener todas las rutinas del usuario autenticado o predeterminadas
 export const getRutinas = async (req, res) => {
+    console.log("Solicitud recibida en /rutinas");
     try {
         const rutinas = await Rutinas.find({ user: req.user.id }).populate('user');
         if (!rutinas || rutinas.length === 0) {
