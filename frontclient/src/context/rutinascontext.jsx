@@ -24,7 +24,7 @@ export function RutinaProvider({ children }) {
             }
         } catch (error) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
-            setRutinas([]);
+            setRutinas([]); // Maneja error sin mostrar como fallo fatal
         }
     }, []);
 
@@ -43,7 +43,7 @@ export function RutinaProvider({ children }) {
             setRutinas((prev) => [...prev, res.data]); // Añadir la nueva rutina al estado
             return res.data; // Devolver la rutina creada
         } catch (error) {
-            console.error("Error al crear rutina:", error.response.data);
+            console.error("Error al crear rutina:", error.response?.data || error.message);
         }
     };
 
@@ -74,18 +74,6 @@ export function RutinaProvider({ children }) {
             console.error('Error al actualizar rutina:', error.response?.data || error.message);
         }
     };
-
-    /*
-    const updateRutina = async (id, rutina) => {
-        try {
-            const res = await updateRutinaRequest(id, rutina);
-            setRutinas((prev) =>
-                prev.map((rutina) => (rutina._id === id ? { ...rutina, ...res.data } : rutina))
-            );
-        } catch (error) {
-            console.error("Error al actualizar rutina:", error.response ? error.response.data : error.message);
-        }
-    };*/
 
     return (
         <RutinaContext.Provider

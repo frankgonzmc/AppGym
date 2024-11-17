@@ -12,23 +12,19 @@ export default function RutinaPage() {
   const { getProgreso } = useProgreso();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!rutinas || rutinas.length === 0) {
-      console.log("No se encontraron rutinas.");
-    }
-  }, [rutinas]);
-
+  // Efecto para cargar las rutinas y su progreso
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
       setIsLoading(true);
       try {
         const rutinasList = await getRutinas();
         if (rutinasList && rutinasList.length > 0) {
+          // Si hay rutinas, obtenemos el progreso de cada una
           for (const rutina of rutinasList) {
             await getProgreso(rutina._id); // Solo si hay progreso asociado
           }
         } else {
-          console.log("No se encontraron rutinas."); // Mensaje claro en caso de que no haya datos
+          console.log("No se encontraron rutinas."); // Mensaje claro si no hay rutinas
         }
       } catch (error) {
         console.error("Error al obtener rutinas:", error.response?.data || error.message);
@@ -38,16 +34,18 @@ export default function RutinaPage() {
     };
 
     fetchRutinasConProgreso();
-  }, [getRutinas]);
+  }, [getRutinas, getProgreso]);
 
+  // Si está cargando, mostramos un mensaje de "Cargando"
   if (isLoading) {
     return <p>Cargando rutinas...</p>;
   }
 
-  return (
-    <section className="seccion">
-      <Container className="py-4">
-        {!rutinas || rutinas.length === 0 ? (
+  // Renderizamos si no hay rutinas
+  if (!rutinas || rutinas.length === 0) {
+    return (
+      <section className="seccion">
+        <Container className="py-4">
           <Row className="justify-content-center">
             <Col md={6} className="text-center">
               <Card className="p-4">
@@ -60,20 +58,27 @@ export default function RutinaPage() {
               </Card>
             </Col>
           </Row>
-        ) : (
-          <Row className="g-4">
-            <header>
-              <Link to="/add-rutinas" className="btn btn-success">
-                CREAR RUTINA
-              </Link>
-            </header>
-            {rutinas.map((rutina) => (
-              <Col md={6} key={rutina._id}>
-                <RutinaCard rutina={rutina} />
-              </Col>
-            ))}
-          </Row>
-        )}
+        </Container>
+      </section>
+    );
+  }
+
+  // Si hay rutinas, las mostramos
+  return (
+    <section className="seccion">
+      <Container className="py-4">
+        <Row className="g-4">
+          <header>
+            <Link to="/add-rutinas" className="btn btn-success">
+              CREAR RUTINA
+            </Link>
+          </header>
+          {rutinas.map((rutina) => (
+            <Col md={6} key={rutina._id}>
+              <RutinaCard rutina={rutina} />
+            </Col>
+          ))}
+        </Row>
       </Container>
     </section>
   );
