@@ -136,10 +136,12 @@ export const updateRutina = async (req, res) => {
 export const deleteRutina = async (req, res) => {
     try {
         const rutina = await Rutinas.findByIdAndDelete(req.params.id);
-        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+        if (!rutina) {
+            return res.status(404).json({ message: "Rutina no encontrada..." });
+        }
 
         // Eliminar los detalles de rutina asociados
-        await DetallesRutina.deleteMany({ id_rutina: req.params.id });
+        await DetallesRutina.deleteMany({ rutina: req.params.id }); // Ajustado a `rutina`
 
         res.json({ message: "Rutina y detalles asociados eliminados con éxito", rutina });
     } catch (error) {
