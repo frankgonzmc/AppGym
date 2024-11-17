@@ -1,94 +1,87 @@
-import Rutinas from '../models/rutina.model.js'
-import DetallesRutina from '../models/detallerutina.model.js'
-import Progreso from '../models/progreso.model.js'; // Importa tu modelo Progreso
+import Rutinas from '../models/rutina.model.js';
+import DetallesRutina from '../models/detallerutina.model.js';
+import Progreso from '../models/progreso.model.js';
+import User from '../models/user.model.js'; // Importar modelo de usuario
 
-// Obtener todas las rutinas del usuario autenticado
-// Obtener rutinas del usuario autenticado y las predeterminadas
+// Obtener todas las rutinas del usuario autenticado o predeterminadas
 export const getRutinas = async (req, res) => {
     try {
         const rutinas = await Rutinas.find({
             $or: [
                 { user: req.user.id },
-                { predeterminado: true } // Rutinas disponibles para todos los usuarios
+                { predeterminado: true } // Rutinas predeterminadas para todos los usuarios
             ]
         }).populate('user');
-        if (!rutinas) {
+        if (!rutinas || rutinas.length === 0) {
             return res.status(404).json({ message: "No se encontraron rutinas." });
         }
         res.json(rutinas);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener rutinas", error });
+        console.error("Error al obtener rutinas:", error);
+        res.status(500).json({ message: "Error al obtener rutinas.", error });
     }
 };
 
+// Crear una nueva rutina
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, detalles = [], progreso, totalEjercicios } = req.body;
+        const { nombre, descripcion, detalles = [], progreso } = req.body;
 
-        // Validar campos requeridos
         if (!nombre || !descripcion) {
-            return res.status(400).json({ message: "Los campos nombre y descripción son requeridos." });
+            return res.status(400).json({ message: "Los campos nombre y descripción son obligatorios." });
         }
 
-        // Validar si detalles es un array
-        if (!Array.isArray(detalles)) {
-            return res.status(400).json({ message: "El campo detalles debe ser un array." });
-        }
-
-        // Crear la nueva rutina
         const newRutina = new Rutinas({
             user: req.user.id,
             nombre,
             descripcion,
-            totalEjercicios, // Aquí asignamos el total de ejercicios
+            totalEjercicios: detalles.length || 0,
             date: new Date(),
         });
-        const saveRutina = await newRutina.save();
-        console.log("Rutina guardada:", saveRutina);
 
-        // Crear los detalles de la rutina
-        if (detalles && detalles.length > 0) {
-            for (const detalle of detalles) {
-                const newDetalleRutina = new DetallesRutina(detalle);
-                await newDetalleRutina.save();
-                console.log("Detalle guardado:", newDetalleRutina);
-            }
+        const savedRutina = await newRutina.save();
+        console.log("Rutina guardada:", savedRutina);
 
-            // Crear el progreso asociado
-            if (progreso) {
-                try {
-                    console.log("Datos de progreso:", progreso); // Verifica lo que recibes
-                    const newProgreso = new Progreso({
-                        user: req.user.id,
-                        rutina: saveRutina._id,
-                        ...progreso
-                    });
-                    const progresoGuardado = await newProgreso.save();
-                    console.log(progresoGuardado);
-                } catch (error) {
-                    console.log(error)
-                }
-            }
+        // Crear detalles de la rutina
+        if (detalles.length > 0) {
+            const detallesToSave = detalles.map(detalle => ({
+                ...detalle,
+                rutina: savedRutina._id
+            }));
+
+            await DetallesRutina.insertMany(detallesToSave);
+            console.log("Detalles guardados.");
         }
-        res.json(saveRutina);
+
+        // Crear progreso asociado
+        if (progreso) {
+            const newProgreso = new Progreso({
+                user: req.user.id,
+                rutina: savedRutina._id,
+                ...progreso
+            });
+            await newProgreso.save();
+            console.log("Progreso asociado creado.");
+        }
+
+        res.status(201).json(savedRutina);
     } catch (error) {
         console.error("Error al crear rutina:", error);
-        res.status(500).json({ message: "Error al crear rutina", error });
+        res.status(500).json({ message: "Error al crear rutina.", error });
     }
 };
-
 
 // Obtener una rutina por su ID
 export const getRutina = async (req, res) => {
     try {
         const rutina = await Rutinas.findById(req.params.id).populate('user');
-        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
 
         const detalles = await DetallesRutina.find({ rutina: req.params.id }).populate('ejercicio');
         res.json({ rutina, detalles });
     } catch (error) {
         console.error("Error al obtener rutina:", error);
-        res.status(500).json({ message: "Error al obtener rutina", error });
+        res.status(500).json({ message: "Error al obtener rutina.", error });
     }
 };
 
@@ -96,12 +89,8 @@ export const getRutina = async (req, res) => {
 export const updateRutina = async (req, res) => {
     try {
         const rutinaId = req.params.id;
-        if (!rutinaId) return res.status(400).json({ message: "ID de rutina es requerido." });
-
-        // Extrae los datos del cuerpo de la solicitud
         const { nombre, descripcion, ejercicios, totalEjercicios, ejerciciosCompletados, estado } = req.body;
 
-        // Crea el objeto de actualización dinámicamente según los datos proporcionados
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
@@ -109,76 +98,69 @@ export const updateRutina = async (req, res) => {
         if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
         if (estado) updateData.estado = estado;
 
-        // Actualiza la rutina en la base de datos
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
-        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
 
-        // Maneja los detalles de la rutina (ejercicios)
+        // Manejar detalles de rutina
         if (ejercicios) {
-            // Elimina los detalles existentes y luego inserta los nuevos detalles
             await DetallesRutina.deleteMany({ rutina: rutinaId });
-            const detalles = ejercicios.map(ejercicioId => ({
+
+            const nuevosDetalles = ejercicios.map(ejercicioId => ({
                 rutina: rutinaId,
                 ejercicio: ejercicioId,
-                fecha: new Date(),
+                fecha: new Date()
             }));
-            await DetallesRutina.insertMany(detalles);
+            await DetallesRutina.insertMany(nuevosDetalles);
         }
 
         res.json(rutina);
     } catch (error) {
         console.error("Error al actualizar rutina:", error);
-        res.status(500).json({ message: "Error al actualizar rutina", error: error.message });
+        res.status(500).json({ message: "Error al actualizar rutina.", error });
     }
 };
 
-// Eliminar una rutina existente
+// Eliminar una rutina
 export const deleteRutina = async (req, res) => {
     try {
         const rutina = await Rutinas.findByIdAndDelete(req.params.id);
-        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
 
         // Eliminar detalles y progreso asociados
         await DetallesRutina.deleteMany({ rutina: req.params.id });
         await Progreso.deleteMany({ rutina: req.params.id });
 
-        res.json({ message: "Rutina, detalles y progreso asociados eliminados con éxito", rutina });
+        res.json({ message: "Rutina, detalles y progreso asociados eliminados.", rutina });
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar rutina", error });
+        console.error("Error al eliminar rutina:", error);
+        res.status(500).json({ message: "Error al eliminar rutina.", error });
     }
 };
 
-// Actualiza el progreso de la rutina basado en los ejercicios completados
+// Actualizar progreso de la rutina basado en los ejercicios completados
 export const actualizarProgresoRutina = async (rutinaId, userId) => {
     try {
-        // Obtiene todos los detalles de la rutina
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
-
-        // Cuenta los ejercicios completados
         const completados = detalles.filter(detalle => detalle.estado === "Completado").length;
 
-        // Define el estado de la rutina
         const estadoRutina = completados === detalles.length ? "Completado" : "Pendiente";
 
-        // Actualiza la rutina
-        await Rutinas.findByIdAndUpdate(rutinaId, {
+        const rutina = await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados: completados,
             estado: estadoRutina,
         }, { new: true });
 
-        // Actualizar estadísticas del usuario
+        if (!rutina) return console.error("Rutina no encontrada para actualizar progreso.");
+
         const user = await User.findById(userId);
         if (user) {
             user.ejerciciosCompletados += completados;
             await user.save();
-
-            // Verifica si el usuario debe subir de nivel
-            await actualizarNivelUsuario(user._id);
+            console.log("Estadísticas del usuario actualizadas.");
         }
 
-        console.log(`Progreso actualizado para la rutina ${rutinaId}: ${completados} completados.`);
+        console.log(`Progreso actualizado para rutina ${rutinaId}: ${completados}/${detalles.length}`);
     } catch (error) {
-        console.error("Error al actualizar el progreso de la rutina:", error);
+        console.error("Error al actualizar progreso de rutina:", error);
     }
 };
-

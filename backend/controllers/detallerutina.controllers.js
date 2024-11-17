@@ -1,25 +1,27 @@
 import DetallesRutina from '../models/detallerutina.model.js';
 import Rutinas from '../models/rutina.model.js';
 
-// Obtener una rutina por su ID
+// Obtener detalles de rutina por ID de rutina
 export const getDetallesRutina = async (req, res) => {
     try {
         const rutina = await Rutinas.findById(req.params.id).populate('user');
-        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada..." });
+        if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
 
         const detalles = await DetallesRutina.find({ rutina: req.params.id }).populate('ejercicio');
         res.json({ rutina, detalles });
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener rutina", error });
+        console.error("Error al obtener detalles de rutina:", error);
+        res.status(500).json({ message: "Error al obtener detalles de rutina.", error });
     }
 };
 
+// Crear un nuevo detalle de rutina
 export const createDetalleRutina = async (req, res) => {
     try {
         const { rutina, ejercicio, fecha } = req.body;
 
         const rutinaExistente = await Rutinas.findById(rutina);
-        if (!rutinaExistente) return res.status(404).json({ message: "Rutina no encontrada" });
+        if (!rutinaExistente) return res.status(404).json({ message: "Rutina no encontrada." });
 
         const nuevoDetalleRutina = new DetallesRutina({
             rutina,
@@ -29,14 +31,14 @@ export const createDetalleRutina = async (req, res) => {
 
         const detalleGuardado = await nuevoDetalleRutina.save();
 
-        // Actualizar el total de ejercicios en la rutina
+        // Incrementar el total de ejercicios en la rutina
         rutinaExistente.totalEjercicios += 1;
         await rutinaExistente.save();
 
         res.status(201).json(detalleGuardado);
     } catch (error) {
-        console.error("Error al crear el detalle de la rutina:", error);
-        res.status(500).json({ message: "Error al crear el detalle de la rutina", error });
+        console.error("Error al crear el detalle de rutina:", error);
+        res.status(500).json({ message: "Error al crear el detalle de rutina.", error });
     }
 };
 
@@ -47,29 +49,30 @@ export const updateDetalleRutina = async (req, res) => {
         const { seriesProgreso, estado } = req.body;
 
         const detalle = await DetallesRutina.findById(id);
-        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado..." });
+        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado." });
 
         if (seriesProgreso !== undefined) detalle.seriesProgreso = seriesProgreso;
         if (estado) detalle.estado = estado;
 
         await detalle.save();
 
-        // Actualiza el progreso general de la rutina
+        // Actualizar progreso general de la rutina
         await actualizandoEstadosDetallesRutinas(detalle.rutina);
 
         res.json(detalle);
     } catch (error) {
         console.error("Error al actualizar detalle de rutina:", error);
-        res.status(500).json({ message: "Error al actualizar detalle de rutina", error });
+        res.status(500).json({ message: "Error al actualizar detalle de rutina.", error });
     }
 };
 
-// Eliminar un detalle de rutina existente
+// Eliminar un detalle de rutina
 export const deleteDetalleRutina = async (req, res) => {
-    const { id } = req.params;
     try {
+        const { id } = req.params;
         const detalle = await DetallesRutina.findByIdAndDelete(id);
-        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado" });
+
+        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado." });
 
         // Actualizar el total de ejercicios en la rutina
         const rutina = await Rutinas.findById(detalle.rutina);
@@ -78,34 +81,32 @@ export const deleteDetalleRutina = async (req, res) => {
             await rutina.save();
         }
 
-        return res.status(204).send(); // Eliminación exitosa
+        res.status(204).send(); // Eliminación exitosa
     } catch (error) {
-        console.error("Error al eliminar el detalle:", error);
-        return res.status(500).json({ message: "Error al eliminar detalle de rutina", error });
+        console.error("Error al eliminar detalle de rutina:", error);
+        res.status(500).json({ message: "Error al eliminar detalle de rutina.", error });
     }
 };
 
 // Actualizar progreso y estado de un detalle de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
-    const { detalleId } = req.params;
-    const { seriesProgreso } = req.body;
-
     try {
-        // Buscar el detalle de rutina por su ID
-        const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
-        if (!detalle) {
-            return res.status(404).json({ message: "Detalle de rutina no encontrado" });
-        }
+        const { detalleId } = req.params;
+        const { seriesProgreso } = req.body;
 
-        // Actualizar series completadas
+        const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
+        if (!detalle) return res.status(404).json({ message: "Detalle de rutina no encontrado." });
+
         detalle.seriesProgreso = seriesProgreso;
 
-        // Determinar el estado del detalle
-        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
-            detalle.estado = 'Completado';
-        } else {
-            detalle.estado = 'En Progreso';
-        }
+        // Calcular tiempo total y calorías quemadas
+        const tiempoTotal = detalle.ejercicio.duracion * detalle.seriesProgreso;
+        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.ejercicio, tiempoTotal);
+
+        // Determinar estado del detalle
+        detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
+        detalle.tiempoEstimado = tiempoTotal;
+        detalle.caloriasQuemadas = caloriasQuemadas;
 
         await detalle.save();
 
@@ -114,32 +115,39 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         res.status(200).json(detalle);
     } catch (error) {
-        console.error("Error al actualizar el progreso del detalle:", error);
-        res.status(500).json({ message: "Error al actualizar el progreso del detalle", error });
+        console.error("Error al actualizar progreso de detalle de rutina:", error);
+        res.status(500).json({ message: "Error al actualizar progreso de detalle de rutina.", error });
     }
 };
 
-// Función para actualizar el progreso general de una rutina
+// Función para calcular calorías quemadas
+const calcularCaloriasQuemadas = (ejercicio, tiempoTotal) => {
+    const MET = 8; // MET estimado para ejercicios moderados
+    const pesoUsuario = 70; // Peso promedio del usuario en kg (puedes personalizar esto)
+    const duracionEnHoras = tiempoTotal / 60; // Convertir minutos a horas
+    return MET * pesoUsuario * duracionEnHoras;
+};
+
+// Actualizar el progreso general de la rutina
 export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
-        // Obtener todos los detalles asociados a la rutina
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
 
-        // Contar cuántos ejercicios están completados
+        // Contar ejercicios completados
         const ejerciciosCompletados = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
-        // Determinar el estado de la rutina
+        // Determinar el estado general de la rutina
         const estadoRutina = ejerciciosCompletados === detalles.length ? 'Completado' : 'Pendiente';
 
-        // Actualizar la rutina con el progreso y estado
+        // Actualizar rutina
         await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados,
             estado: estadoRutina,
         });
 
-        console.log(`Estado actualizado para rutina ${rutinaId}: ${ejerciciosCompletados}/${detalles.length}`);
+        console.log(`Estado actualizado para la rutina ${rutinaId}: ${ejerciciosCompletados}/${detalles.length}`);
     } catch (error) {
-        console.error("Error al actualizar el estado de la rutina:", error);
+        console.error("Error al actualizar el progreso de la rutina:", error);
         throw error;
     }
 };

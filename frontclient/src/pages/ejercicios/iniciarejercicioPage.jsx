@@ -27,11 +27,40 @@ export default function IniciaEjercicioPage() {
 
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    if (seriesCompletadas >= detalles.ejercicio.series) {
-      setEjercicioCompletado(true);
+  const calcularCaloriasQuemadas = () => {
+    const MET = 8; // MET para ejercicio moderado
+    const pesoEnKg = detalles.peso || 70; // Peso del usuario (kg)
+    const duracionEnHoras = (detalles.ejercicio.duracion * detalles.ejercicio.series) / 3600;
+    return MET * pesoEnKg * duracionEnHoras;
+  };
+
+  const actualizarDatosCompletos = async () => {
+    try {
+      await updateEstadoEjercicioRequest(detalles._id, "Completado");
+
+      const response = await getDetalleRutinaRequest(detalles.rutina);
+      const detallesRutina = response.data.detalles;
+
+      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+
+      if (ejerciciosCompletos >= detallesRutina.length) {
+        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+
+        if (detalles.progresoId) {
+          await updateEstadoProgresoRequest(detalles.progresoId, {
+            ejerciciosCompletados: ejerciciosCompletos,
+            estado: "Completado",
+            fechaFin: new Date(),
+            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas()
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error al actualizar los datos completos:", error);
     }
-  }, [seriesCompletadas, detalles.ejercicio.series]);
+  };
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
@@ -39,36 +68,12 @@ export default function IniciaEjercicioPage() {
         await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
         if (nuevasSeries === detalles.ejercicio.series) {
-          console.log("Ejercicio completado. Actualizando estado...");
-          await updateEstadoEjercicioRequest(detalles._id, "Completado");
+          setEjercicioCompletado(true);
+          await actualizarDatosCompletos();
         }
       }
     } catch (error) {
       console.error("Error al actualizar progreso de la serie:", error);
-    }
-  };
-
-  const actualizarProgresoRutina = async () => {
-    try {
-      const response = await getDetalleRutinaRequest(detalles.rutina);
-      const detallesRutina = response.data.detalles;
-
-      if (Array.isArray(detallesRutina)) {
-        const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
-
-        await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
-
-        if (ejerciciosCompletos >= detallesRutina.length) {
-          await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-
-          // Usa el ID correcto del progreso asociado
-          if (detalles.progresoId) {
-            await updateEstadoProgresoRequest(detalles.progresoId, "Completado");
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Error al actualizar progreso de la rutina:", error);
     }
   };
 
@@ -91,10 +96,7 @@ export default function IniciaEjercicioPage() {
             const nuevasSeries = seriesCompletadas + 1;
             setSeriesCompletadas(nuevasSeries);
 
-            // Actualiza la serie y verifica progreso
             await actualizarProgresoSerie(nuevasSeries);
-
-            await actualizarProgresoRutina();
           }
         }
       }, 1000);
@@ -108,7 +110,6 @@ export default function IniciaEjercicioPage() {
 
   const handleReset = async () => {
     try {
-      // Reiniciar progreso en el backend
       await updateProgresoEjercicioRequest(detalles._id, 0);
       await updateEstadoEjercicioRequest(detalles._id, "Pendiente");
 

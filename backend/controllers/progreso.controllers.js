@@ -2,153 +2,160 @@ import Progreso from '../models/progreso.model.js';
 import User from '../models/user.model.js';
 import Rutinas from '../models/rutina.model.js';
 
-// Obtener un progreso del usuario existente
+// Obtener progreso de un usuario para una rutina específica
 export const getProgreso = async (req, res) => {
     try {
         const progreso = await Progreso.find({
             user: req.user.id,
-            rutina: req.params.id, // O req.rutina._id si ya tienes la rutina en req.rutina
+            rutina: req.params.id,
         }).populate('user').populate('rutina');
 
         if (!progreso || progreso.length === 0) {
-            return res.status(404).json({ message: "Progreso no encontrado..." });
+            return res.status(404).json({ message: "Progreso no encontrado." });
         }
 
         res.json(progreso);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener progreso", error });
+        console.error("Error al obtener progreso:", error);
+        res.status(500).json({ message: "Error al obtener progreso.", error });
     }
 };
 
-// Crear un nuevo progreso del usuario existente
+// Crear un nuevo progreso para una rutina específica
 export const createProgreso = async (req, res) => {
     try {
-        const { rutina, fecha, estado } = req.body;
+        const { rutina, estado } = req.body;
 
         const nuevoProgreso = new Progreso({
             user: req.user.id,
             rutina,
-            fecha,
             estado,
         });
 
         const progresoGuardado = await nuevoProgreso.save();
-
         res.status(201).json(progresoGuardado);
     } catch (error) {
-        res.status(500).json({ message: "Error al crear progreso", error });
+        console.error("Error al crear progreso:", error);
+        res.status(500).json({ message: "Error al crear progreso.", error });
     }
 };
 
-// Eliminar un progreso del usuario existente
+// Eliminar un progreso existente
 export const deleteProgreso = async (req, res) => {
     try {
         const progreso = await Progreso.findByIdAndDelete(req.params.id);
-        if (!progreso) return res.status(404).json({ message: "Detalle no encontrado..." });
+        if (!progreso) {
+            return res.status(404).json({ message: "Progreso no encontrado." });
+        }
 
-        res.json({ message: "Progreso eliminado con éxito", progreso });
+        res.json({ message: "Progreso eliminado con éxito.", progreso });
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar detalle", error });
+        console.error("Error al eliminar progreso:", error);
+        res.status(500).json({ message: "Error al eliminar progreso.", error });
     }
 };
 
+// Actualizar progreso existente
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, estado } = req.body;
+        const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
 
         const progreso = await Progreso.findByIdAndUpdate(
             id,
-            { ejerciciosCompletados, estado, fechaFin: estado === 'Completado' ? new Date() : null },
+            {
+                ejerciciosCompletados,
+                estado,
+                tiempoTotal,
+                caloriasQuemadas,
+                fechaFin: estado === 'Completado' ? new Date() : null,
+            },
             { new: true }
         );
 
-        if (!progreso) return res.status(404).json({ message: "Progreso no encontrado" });
+        if (!progreso) {
+            return res.status(404).json({ message: "Progreso no encontrado." });
+        }
 
-
+        // Actualizar estadísticas del usuario
         const user = await User.findById(progreso.user);
         if (user) {
             user.ejerciciosCompletados += ejerciciosCompletados || 0;
             user.caloriasQuemadas += caloriasQuemadas || 0;
+            user.tiempoEntrenado += tiempoTotal || 0;
             await user.save();
-
-            // Verifica si el usuario debe subir de nivel
-            await actualizarNivelUsuario(user._id);
+            console.log("Estadísticas del usuario actualizadas.");
         }
 
         res.json(progreso);
     } catch (error) {
-        console.error("Error actualizando progreso:", error);
-        res.status(500).json({ message: "Error al actualizar progreso", error });
+        console.error("Error al actualizar progreso:", error);
+        res.status(500).json({ message: "Error al actualizar progreso.", error });
     }
 };
 
-/*
-// Actualizar un progreso del usuario existente
-export const updateProgreso = async (req, res) => {
-    try {
-        const { ejerciciosCompletados, caloriasQuemadas } = req.body;
-
-        const progreso = await Progreso.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!progreso) return res.status(404).json({ message: "Progreso no encontrado" });
-
-        // Actualiza estadísticas del usuario
-        const user = await User.findById(progreso.user);
-        if (user) {
-            user.ejerciciosCompletados += ejerciciosCompletados || 0;
-            user.caloriasQuemadas += caloriasQuemadas || 0;
-            await user.save();
-
-            // Verifica si el usuario debe subir de nivel
-            await actualizarNivelUsuario(user._id);
-        }
-
-        res.json(progreso);
-    } catch (error) {
-        console.error("Error actualizando progreso:", error);
-        res.status(500).json({ message: "Error al actualizar progreso", error });
-    }
-};*/
-
-// Obtener estadísticas del progreso del usuario existente
+// Obtener estadísticas del progreso de un usuario (por mes)
 export const getUserStats = async (req, res) => {
     try {
         const { userId } = req.params;
         const stats = await Progreso.aggregate([
             { $match: { user: userId } },
-            { $group: { _id: { month: { $month: "$fecha" } }, total: { $sum: 1 } } }
+            {
+                $group: {
+                    _id: { month: { $month: "$fechaInicio" } },
+                    totalEjercicios: { $sum: "$ejerciciosCompletados" },
+                    totalCalorias: { $sum: "$caloriasQuemadas" },
+                    totalTiempo: { $sum: "$tiempoTotal" },
+                },
+            },
         ]);
         res.status(200).json(stats);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error al obtener estadísticas del usuario:", error);
+        res.status(500).json({ message: "Error al obtener estadísticas.", error });
     }
 };
 
-// Obtener estadísticas del progreso por período (mensual, semanal, etc.) del usuario existente
+// Obtener estadísticas del progreso por período (mensual, semanal, etc.)
 export const getUserStatsByPeriod = async (req, res) => {
     const { userId, period } = req.params;
-    const matchStage = { user: userId };
-    const groupStage = { _id: { year: { $year: "$fecha" } }, total: { $sum: 1 } };
 
-    if (period === 'monthly') groupStage._id.month = { $month: "$fecha" };
-    if (period === 'weekly') groupStage._id.week = { $week: "$fecha" };
+    const matchStage = { user: userId };
+    const groupStage = { _id: { year: { $year: "$fechaInicio" } }, total: { $sum: 1 } };
+
+    if (period === 'monthly') groupStage._id.month = { $month: "$fechaInicio" };
+    if (period === 'weekly') groupStage._id.week = { $week: "$fechaInicio" };
 
     try {
         const stats = await Progreso.aggregate([{ $match: matchStage }, { $group: groupStage }]);
         res.status(200).json(stats);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error al obtener estadísticas por período:", error);
+        res.status(500).json({ message: "Error al obtener estadísticas.", error });
     }
 };
 
-
-// Comparar el progreso con objetivos del usuario existente
+// Comparar progreso con los objetivos del usuario
 export const compareProgressWithGoals = async (req, res) => {
-    const { userId } = req.params;
-    const user = await User.findById(userId);
-    const progreso = await Progreso.find({ user: userId, estado: 'Completo' }).countDocuments();
+    try {
+        const { userId } = req.params;
 
-    const message = progreso >= user.objetivos ?
-        "Estás en buen camino" : "Considera aumentar tu intensidad";
-    res.json({ progreso, message });
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado." });
+
+        const progreso = await Progreso.countDocuments({
+            user: userId,
+            estado: 'Completado',
+        });
+
+        const cumplido = progreso >= user.metasEjercicios;
+        const message = cumplido
+            ? "¡Has alcanzado tus objetivos! 🎉"
+            : "Aún no has cumplido tus metas, sigue esforzándote. 💪";
+
+        res.json({ progreso, message });
+    } catch (error) {
+        console.error("Error al comparar progreso con objetivos:", error);
+        res.status(500).json({ message: "Error al comparar progreso con objetivos.", error });
+    }
 };
