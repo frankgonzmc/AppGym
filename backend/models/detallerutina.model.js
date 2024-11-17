@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const detallesrutinaSchema = new mongoose.Schema({
     rutina: {
         type: mongoose.Schema.Types.ObjectId,

@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const progresoSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

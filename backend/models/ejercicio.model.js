@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const ejercicioSchema = new mongoose.Schema({
     codigo: {
         type: String,

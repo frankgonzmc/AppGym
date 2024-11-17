@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const rutinaSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
