@@ -5,7 +5,6 @@ import { Container, Form, Row, Col, Card, Button, Alert, Table } from 'react-boo
 import axios from '../../api/axios';
 
 export default function mlPage() {
-
     const { user } = useAuth();
     const [peso, setPeso] = useState(user.peso || "");
     const [altura, setAltura] = useState(user.estatura || "");
@@ -14,6 +13,7 @@ export default function mlPage() {
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
     const [recomendaciones, setRecomendaciones] = useState([]);
+    const [recomendaciones2, setRecomendaciones2] = useState([]);
 
     useEffect(() => {
         fetchRecomendaciones();
@@ -131,9 +131,9 @@ export default function mlPage() {
                         <hr className="my-4" />
                         <div className="text-left">
                             <h5>Para tu objetivo de ( {user.objetivos} ), te recomendaría la siguiente dieta:</h5>
-                            {recomendaciones.length > 0 ? (
+                            {recomendaciones2.length > 0 ? (
                                 <ul>
-                                    {recomendaciones.map((rec, index) => (
+                                    {recomendaciones2.map((rec, index) => (
                                         <p key={index}>
                                             {rec.ejercicio?.nombre || "Nombre no disponible"} - {rec.motivo || "Motivo no disponible"}
                                         </p>
