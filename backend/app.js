@@ -40,12 +40,19 @@ app.get('/api/dieta', async (req, res) => {
     try {
         const response = await axios.get('https://2ed6-34-48-20-104.ngrok-free.app', {
             params: { content },
-        });
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });        
 
-        res.json(response.data); // Responde con los datos del API externo
+        if (!response.data || !response.data.respuesta) {
+            throw new Error('Formato de respuesta inesperado del API externo');
+        }
+
+        res.json(response.data);
     } catch (error) {
         console.error('Error al conectar con el API externo:', error.message);
-        res.status(500).json({ error: 'Error al conectar con el API externo.' });
+        res.status(500).json({ error: error.message });
     }
 });
 
