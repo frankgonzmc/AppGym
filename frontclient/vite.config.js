@@ -6,9 +6,14 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://backendgym:5000', // Cambia esto por el puerto en el que corre tu servidor Express
+        target: 'http://backendgym:5000', // Cambia esto si tu servidor Express está en otro lugar
         changeOrigin: true,
         secure: false,
+      },
+      '/dieta': {
+        target: 'https://993a-34-48-20-104.ngrok-free.app', // URL del endpoint externo
+        changeOrigin: true,
+        secure: false, // Esto omite el uso de HTTPS estricto
       },
     },
   },

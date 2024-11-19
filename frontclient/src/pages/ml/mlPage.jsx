@@ -89,7 +89,7 @@ export default function mlPage() {
         const content = textareaContent || "Genera una dieta recomendada para mi.";
 
         try {
-            const response = await axios.get(`https://993a-34-48-20-104.ngrok-free.app/dieta`, {
+            const response = await axios.get(`/dieta`, {
                 params: { content: queryParams + ", " + content },
             });
 
