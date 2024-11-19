@@ -104,21 +104,38 @@ export default function mlPage() {
         <Container>
             <Row>
                 <Col md={12} className="text-center mb-2 animate-card">
-                    <Card.Title>¿recomendaciones de rutinas para ejercicios?</Card.Title>
-                    <h1>Generador de Dietas</h1>
-                    <p>
-                        <strong>Usuario: {user.username}</strong>
-                        <br />
-                        Estatura: {user.estatura} metros
-                        <br />
-                        Peso: {user.peso} kilogramos
-                        <br />
-                        Género: {user.genero}
-                    </p>
-
-                    <Button onClick={enviarDatosUsuario} variant="primary" className="mt-3 my-2">
-                        Enviar Datos del Usuario
-                    </Button>
+                    <Card className="p-4 shadow">
+                        <Card.Title className="mb-4">Recomendación de alimentación con IA</Card.Title>
+                        <p>Pide una dieta de alimentación para hoy o toda la semana</p>
+                        <Form>
+                            <Form.Group controlId="dietRequest">
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Ejemplo: quiero la dieta del día de hoy"
+                                    className="mb-3"
+                                />
+                            </Form.Group>
+                            <Button onClick={enviarDatosUsuario} variant="primary" className="w-100">
+                                Enviar
+                            </Button>
+                        </Form>
+                        <hr className="my-4" />
+                        <div className="text-left">
+                            <h5>Para tu objetivo de {user.objetivos}, te recomendaría la siguiente dieta:</h5>
+                            <p><strong>Desayuno:</strong></p>
+                            <ul>
+                                <li>1 taza de té verde o café negro</li>
+                                <li>1 taza de avena cocida con trozos de frutas frescas (manzana, fresas, plátano)</li>
+                                <li>1 vaso de agua</li>
+                            </ul>
+                            <p><strong>Media Mañana:</strong></p>
+                            <ul>
+                                <li>1 yogurt natural descremado</li>
+                                <li>1 puñado de almendras o nueces</li>
+                            </ul>
+                        </div>
+                    </Card>
                 </Col>
                 <hr className="text-black my-2 mt-2" />
                 <Col md={6} className="text-center mb-2">
