@@ -79,19 +79,27 @@ export default function mlPage() {
 
     const enviarDatosUsuario = async () => {
         const userData = {
-            altura: user.estatura || 0,
-            peso: user.peso || 0,
-            genero: user.genero || '',
-            objetivo: user.objetivos || ''
+            altura: altura,
+            peso: peso,
+            genero: genero,
+            objetivo: user.objetivos || "",
         };
 
+        const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${userData.objetivo}`;
+
         try {
-            const response = await sendUserDataRequest(userData);
-            //setResponseMessage(response.data.message || 'Datos enviados correctamente.');
-            console.log(response);
+            const response = await axios.get(`https://993a-34-48-20-104.ngrok-free.app/dieta`, {
+                params: { content: queryParams },
+            });
+
+            // Maneja la respuesta como necesites
+            console.log("Respuesta del servidor:", response.data);
+
+            // Puedes guardar la respuesta en el estado para mostrarla en el componente
+            setRecomendaciones(response.data);
         } catch (error) {
-            error.response && console.error(error.response.data);
-            console.error('Error al enviar datos del usuario:', error.message);
+            console.error("Error al enviar datos al servidor:", error);
+            setError("No se pudo obtener la recomendación.");
         }
     };
 
@@ -123,17 +131,15 @@ export default function mlPage() {
                         <hr className="my-4" />
                         <div className="text-left">
                             <h5>Para tu objetivo de ( {user.objetivos} ), te recomendaría la siguiente dieta:</h5>
-                            <p><strong>Desayuno:</strong></p>
-                            <ul>
-                                <li>1 taza de té verde o café negro</li>
-                                <li>1 taza de avena cocida con trozos de frutas frescas (manzana, fresas, plátano)</li>
-                                <li>1 vaso de agua</li>
-                            </ul>
-                            <p><strong>Media Mañana:</strong></p>
-                            <ul>
-                                <li>1 yogurt natural descremado</li>
-                                <li>1 puñado de almendras o nueces</li>
-                            </ul>
+                            {recomendaciones.length > 0 ? (
+                                <ul>
+                                    {recomendaciones.map((rec, index) => (
+                                        <li key={index}>{rec}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No hay recomendaciones disponibles en este momento.</p>
+                            )}
                         </div>
                     </Card>
                 </Col>
