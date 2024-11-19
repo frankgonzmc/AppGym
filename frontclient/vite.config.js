@@ -11,7 +11,7 @@ export default defineConfig({
         secure: false,
       },
       '/dieta': {
-        target: 'https://993a-34-48-20-104.ngrok-free.app', // URL del endpoint externo
+        target: 'https://2ed6-34-48-20-104.ngrok-free.app', // URL del endpoint externo
         changeOrigin: true,
         secure: false, // Esto omite el uso de HTTPS estricto
       },
