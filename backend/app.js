@@ -31,6 +31,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+app.get('/api/dieta', async (req, res) => {
+    const { content } = req.query;
+
+    try {
+        const response = await axios.get('https://2ed6-34-48-20-104.ngrok-free.app', {
+            params: { content },
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error al conectar con el API externo:', error.message);
+        res.status(500).send('Error al conectar con el API externo.');
+    }
+});
+
 // Rutas de tu aplicación
 app.use("/api", authRoutes);
 app.use("/api", rutinaRoutes);
