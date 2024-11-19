@@ -90,7 +90,8 @@ export default function mlPage() {
             //setResponseMessage(response.data.message || 'Datos enviados correctamente.');
             console.log(response);
         } catch (error) {
-            setResponseMessage('Error al enviar los datos. Por favor, inténtalo de nuevo.');
+            error.response && console.error(error.response.data);
+            console.error('Error al enviar datos del usuario:', error.message);
         }
     };
 
