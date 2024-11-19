@@ -103,7 +103,7 @@ export default function mlPage() {
     return (
         <Container>
             <Row>
-                <Col md={12} className="text-center mb-2 animate-card">
+                <Col md={12} className="text-center mt-4 mb-2 animate-card">
                     <Card className="p-4 shadow">
                         <Card.Title className="mb-4">Recomendación de alimentación con IA</Card.Title>
                         <p>Pide una dieta de alimentación para hoy o toda la semana</p>
@@ -116,7 +116,7 @@ export default function mlPage() {
                                     className="mb-3"
                                 />
                             </Form.Group>
-                            <Button onClick={enviarDatosUsuario} variant="primary" className="w-100">
+                            <Button onClick={enviarDatosUsuario} variant="primary" className="mt-3 w-50 align-self-center">
                                 Enviar
                             </Button>
                         </Form>
