@@ -134,7 +134,9 @@ export default function mlPage() {
                             {recomendaciones.length > 0 ? (
                                 <ul>
                                     {recomendaciones.map((rec, index) => (
-                                        <li key={index}>{rec}</li>
+                                        <p key={index}>
+                                            {rec.ejercicio?.nombre || "Nombre no disponible"} - {rec.motivo || "Motivo no disponible"}
+                                        </p>
                                     ))}
                                 </ul>
                             ) : (
