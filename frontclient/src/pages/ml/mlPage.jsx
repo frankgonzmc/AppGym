@@ -120,6 +120,7 @@ export default function mlPage() {
                         Enviar Datos del Usuario
                     </Button>
                 </Col>
+                <hr className="text-black my-2 mt-2" />
                 <Col md={6} className="text-center mb-2">
                     <Card className="info-card mt-3 my-3">
                         <Card.Body>
