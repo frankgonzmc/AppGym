@@ -41,7 +41,7 @@ app.get('/api/dieta', async (req, res) => {
 
         res.json(response.data);
     } catch (error) {
-        console.error('Error al conectar con el API externo:', error.message);
+        console.error('Error al conectar con el API externo AQUIE STAMOS:', error.message);
         res.status(500).send('Error al conectar con el API externo.');
     }
 });
