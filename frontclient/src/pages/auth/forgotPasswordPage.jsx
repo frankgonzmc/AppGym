@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import '../../css/authPage.css';
 import axios from '../../api/axios'
 
 const ForgotPasswordPage = () => {
@@ -24,7 +25,7 @@ const ForgotPasswordPage = () => {
 
 
     return (
-        <div className="flex h-screen items-center justify-center">
+        <div className="seccion flex h-screen items-center justify-center">
             <form onSubmit={onSubmit} className="bg-zinc-800 p-10 rounded-md">
                 <h2 className="text-white mb-4">Recuperar Contraseña</h2>
                 <input
