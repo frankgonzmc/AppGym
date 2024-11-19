@@ -84,7 +84,7 @@ export default function mlPage() {
         const content = textareaContent || "Genera una dieta recomendada para mi.";
 
         try {
-            const response = await axios.get('/api/dieta', {
+            const response = await axios.get('/dieta', {
                 params: { content: queryParams + ", " + content },
             });
 
