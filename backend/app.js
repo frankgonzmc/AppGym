@@ -12,7 +12,6 @@ import recomendacionRoutes from './routes/recomendacion.routes.js';
 import { FRONTEND_URL } from "./config.js"; // Importa el array procesado
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import axios from 'axios';
 
 dotenv.config(); // Asegúrate de cargar las variables de entorno antes de usar cualquier configuración
 
