@@ -11,9 +11,11 @@ export default function mlPage() {
     const [edad, setEdad] = useState(user.edad || "");
     const [genero, setGenero] = useState(user.genero || "");
     const [tmb, setTmb] = useState(null);
-    const [error, setError] = useState("");
     const [recomendaciones, setRecomendaciones] = useState([]);
-    const [recomendaciones2, setRecomendaciones2] = useState([]);
+    const [objetivo, setObjetivo] = useState(user.objetivos || "");
+    const [textareaContent, setTextareaContent] = useState(""); // Estado para el textarea
+    const [recomendacionIA, setRecomendacionIA] = useState(""); // Estado para la respuesta del API
+    const [error, setError] = useState("");
 
     useEffect(() => {
         fetchRecomendaciones();
@@ -78,28 +80,24 @@ export default function mlPage() {
     };
 
     const enviarDatosUsuario = async () => {
-        const userData = {
-            altura: altura,
-            peso: peso,
-            genero: genero,
-            objetivo: user.objetivos || "",
-        };
+        if (!altura || !peso || !genero || !objetivo) {
+            setError("Por favor completa todos los campos antes de enviar.");
+            return;
+        }
 
-        const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${userData.objetivo}`;
+        const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
+        const content = textareaContent || "Genera una dieta recomendada para mi.";
 
         try {
             const response = await axios.get(`https://993a-34-48-20-104.ngrok-free.app/dieta`, {
-                params: { content: queryParams },
+                params: { content: queryParams + ", " + content },
             });
 
-            // Maneja la respuesta como necesites
-            console.log("Respuesta del servidor:", response.data);
-
-            // Puedes guardar la respuesta en el estado para mostrarla en el componente
-            setRecomendaciones(response.data);
+            setRecomendacionIA(response.data.respuesta); // Guardar la respuesta en el estado
+            setError(""); // Limpiar errores si todo salió bien
         } catch (error) {
             console.error("Error al enviar datos al servidor:", error);
-            setError("No se pudo obtener la recomendación.");
+            setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
         }
     };
 
@@ -121,6 +119,8 @@ export default function mlPage() {
                                     as="textarea"
                                     rows={3}
                                     placeholder="Ejemplo: quiero la dieta del día de hoy"
+                                    value={textareaContent}
+                                    onChange={(e) => setTextareaContent(e.target.value)}
                                     className="mb-3"
                                 />
                             </Form.Group>
@@ -130,18 +130,15 @@ export default function mlPage() {
                         </Form>
                         <hr className="my-4" />
                         <div className="text-left">
-                            <h5>Para tu objetivo de ( {user.objetivos} ), te recomendaría la siguiente dieta:</h5>
-                            {recomendaciones2.length > 0 ? (
-                                <ul>
-                                    {recomendaciones2.map((rec, index) => (
-                                        <p key={index}>
-                                            {rec.ejercicio?.nombre || "Nombre no disponible"} - {rec.motivo || "Motivo no disponible"}
-                                        </p>
-                                    ))}
-                                </ul>
+                            <h5>Para tu objetivo de ( {objetivo} ), te recomendaría la siguiente dieta:</h5>
+                            {recomendacionIA ? (
+                                <div>
+                                    <p>{recomendacionIA}</p>
+                                </div>
                             ) : (
-                                <p>No hay recomendaciones disponibles en este momento.</p>
+                                <p>No hay recomendaciones disponibles en este momento. Completa el formulario para generar una.</p>
                             )}
+                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                         </div>
                     </Card>
                 </Col>
