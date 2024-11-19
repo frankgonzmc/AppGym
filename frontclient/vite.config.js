@@ -11,7 +11,7 @@ export default defineConfig({
         secure: false,
       },
       '/dieta': {
-        target: 'https://2ed6-34-48-20-104.ngrok-free.app',
+        target: 'https://b6ac-34-106-54-54.ngrok-free.app',
         changeOrigin: true,
         secure: false,
       },
