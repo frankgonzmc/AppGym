@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/authcontext";
+import { sendUserDataRequest } from "../../api/auth";
 import { Container, Form, Row, Col, Card, Button, Alert, Table } from 'react-bootstrap';
 import axios from '../../api/axios';
 
@@ -76,6 +77,23 @@ export default function mlPage() {
         return null;
     };
 
+    const enviarDatosUsuario = async () => {
+        const userData = {
+            altura: user.estatura || 0,
+            peso: user.peso || 0,
+            genero: user.genero || '',
+            objetivo: user.objetivos || ''
+        };
+
+        try {
+            const response = await sendUserDataRequest(userData);
+            //setResponseMessage(response.data.message || 'Datos enviados correctamente.');
+            console.log(response);
+        } catch (error) {
+            setResponseMessage('Error al enviar los datos. Por favor, inténtalo de nuevo.');
+        }
+    };
+
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
 
@@ -84,6 +102,23 @@ export default function mlPage() {
     return (
         <Container>
             <Row>
+                <Col md={12} className="text-center mb-2 animate-card">
+                    <Card.Title>¿recomendaciones de rutinas para ejercicios?</Card.Title>
+                    <h1>Generador de Dietas</h1>
+                    <p>
+                        <strong>Usuario: {user.username}</strong>
+                        <br />
+                        Estatura: {user.estatura} metros
+                        <br />
+                        Peso: {user.peso} kilogramos
+                        <br />
+                        Género: {user.genero}
+                    </p>
+
+                    <Button onClick={enviarDatosUsuario} variant="primary" className="mt-3 my-2">
+                        Enviar Datos del Usuario
+                    </Button>
+                </Col>
                 <Col md={6} className="text-center mb-2">
                     <Card className="info-card mt-3 my-3">
                         <Card.Body>
