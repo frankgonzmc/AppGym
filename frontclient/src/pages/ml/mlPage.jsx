@@ -122,7 +122,7 @@ export default function mlPage() {
                         </Form>
                         <hr className="my-4" />
                         <div className="text-left">
-                            <h5>Para tu objetivo de {user.objetivos}, te recomendaría la siguiente dieta:</h5>
+                            <h5>Para tu objetivo de ( {user.objetivos} ), te recomendaría la siguiente dieta:</h5>
                             <p><strong>Desayuno:</strong></p>
                             <ul>
                                 <li>1 taza de té verde o café negro</li>
