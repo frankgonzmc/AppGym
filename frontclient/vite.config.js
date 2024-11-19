@@ -10,6 +10,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/dieta': {
+        target: 'https://2ed6-34-48-20-104.ngrok-free.app',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });

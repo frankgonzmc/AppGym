@@ -82,25 +82,19 @@ export default function mlPage() {
     const enviarDatosUsuario = async () => {
         const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
         const content = textareaContent || "Genera una dieta recomendada para mi.";
-
+    
         try {
-            const response = await axios.get(
-                `https://2ed6-34-48-20-104.ngrok-free.app/dieta`,
-                {
-                    params: { content: queryParams + ", " + content },
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
+            const response = await axios.get('/dieta', {
+                params: { content: queryParams + ", " + content },
+            });
+    
             setRecomendacionIA(response.data.respuesta);
             setError("");
         } catch (error) {
             console.error("Error al enviar datos al servidor:", error.response?.data || error.message);
             setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
         }
-    };
+    };    
 
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
