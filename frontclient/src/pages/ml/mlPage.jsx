@@ -90,7 +90,7 @@ export default function mlPage() {
 
         try {
             const response = await axios.get(`https://993a-34-48-20-104.ngrok-free.app/dieta`, {
-                params: { content: "1.65 metros, 70kg, femenino, bajar de peso" },
+                params: { content: queryParams + ", " + content },
             });
 
             setRecomendacionIA(response.data.respuesta); // Guardar la respuesta en el estado
