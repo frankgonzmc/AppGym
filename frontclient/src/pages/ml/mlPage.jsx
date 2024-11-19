@@ -80,21 +80,16 @@ export default function mlPage() {
     };
 
     const enviarDatosUsuario = async () => {
-        if (!altura || !peso || !genero || !objetivo) {
-            setError("Por favor completa todos los campos antes de enviar.");
-            return;
-        }
-
         const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
         const content = textareaContent || "Genera una dieta recomendada para mi.";
 
         try {
-            const response = await axios.get(`/dieta`, {
+            const response = await axios.get(`/api/dieta`, {
                 params: { content: queryParams + ", " + content },
             });
 
-            setRecomendacionIA(response.data.respuesta); // Guardar la respuesta en el estado
-            setError(""); // Limpiar errores si todo salió bien
+            setRecomendacionIA(response.data.respuesta);
+            setError("");
         } catch (error) {
             console.error("Error al enviar datos al servidor:", error);
             setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
