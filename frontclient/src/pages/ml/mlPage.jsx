@@ -82,19 +82,19 @@ export default function mlPage() {
     const enviarDatosUsuario = async () => {
         const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
         const content = textareaContent || "Genera una dieta recomendada para mi.";
-    
+
         try {
             const response = await axios.get('/dieta', {
                 params: { content: queryParams + ", " + content },
             });
-    
+
             setRecomendacionIA(response.data.respuesta);
             setError("");
         } catch (error) {
             console.error("Error al enviar datos al servidor:", error.response?.data || error.message);
             setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
         }
-    };    
+    };
 
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
@@ -127,8 +127,12 @@ export default function mlPage() {
                         <div className="text-left">
                             <h5>Para tu objetivo de ( {objetivo} ), te recomendaría la siguiente dieta:</h5>
                             {recomendacionIA ? (
-                                <div>
-                                    <p>{recomendacionIA}</p>
+                                <div className="p-3 bg-light border rounded">
+                                    <ul className="list-unstyled mb-0">
+                                        {recomendacionIA.split('\n').map((line, index) => (
+                                            <li key={index} className="mb-2">{line}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             ) : (
                                 <p>No hay recomendaciones disponibles en este momento. Completa el formulario para generar una.</p>
