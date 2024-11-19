@@ -89,10 +89,9 @@ export default function mlPage() {
         const content = textareaContent || "Genera una dieta recomendada para mi.";
 
         try {
-            const response = await axios.get(
-                `https://cors-anywhere.herokuapp.com/https://993a-34-48-20-104.ngrok-free.app/dieta`,
-                { params: { content: queryParams + ", " + content } }
-            );
+            const response = await axios.get(`https://993a-34-48-20-104.ngrok-free.app/dieta`, {
+                params: { content: queryParams + ", " + content },
+            });
 
             setRecomendacionIA(response.data.respuesta); // Guardar la respuesta en el estado
             setError(""); // Limpiar errores si todo salió bien
