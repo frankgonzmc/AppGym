@@ -232,7 +232,7 @@ export const forgotPassword = async (req, res) => {
 
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
-            port: 465,
+            port: 587,
             secure: true, // true para 465, false para otros puertos
             auth: {
                 user: process.env.EMAIL_USER,
