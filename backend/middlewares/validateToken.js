@@ -1,13 +1,27 @@
-import jwt from "jsonwebtoken";
-import { TOKEN_SECRET } from "../config.js";
+import { TOKEN_SECRET } from '../config.js';
+import jwt from 'jsonwebtoken';
 
 export const authRequired = (req, res, next) => {
-    const token = req.cookies.token; // Asegúrate de que está leyendo la cookie
-    if (!token) return res.status(401).json({ message: 'No autorizado' });
+    try {
+        const { token } = req.cookies;
 
-    jwt.verify(token, TOKEN_SECRET, (err, user) => {
-        if (err) return res.status(403).json({ message: 'Token inválido o expirado' });
-        req.user = user;
-        next();
-    });
+        if (!token) {
+            console.error("Token no encontrado en las cookies.");
+            return res.status(401).json({ message: "No token, authorization denied" });
+        }
+
+        jwt.verify(token, TOKEN_SECRET, (error, user) => {
+            if (error) {
+                console.error("Error verificando token:", error);
+                return res.status(401).json({ message: "Token is not valid" });
+            }
+
+            console.log("Usuario autenticado:", user);
+            req.user = user;
+            next();
+        });
+    } catch (error) {
+        console.error("Error en el middleware de autenticación:", error);
+        return res.status(500).json({ message: error.message });
+    }
 };
