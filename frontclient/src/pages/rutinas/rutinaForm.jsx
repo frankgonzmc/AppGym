@@ -59,63 +59,35 @@ const RutinaForm = () => {
     }
 
     try {
+      const detalles = selectedEjercicios.map((ejercicioId) => ({
+        ejercicio: ejercicioId,
+        fecha: new Date(),
+      }));
+
       if (params.id) {
-        // Actualizar rutina existente
+        // Actualizar rutina
         const rutinaActualizada = {
-          user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length, // Número total de ejercicios seleccionados
+          totalEjercicios: detalles.length,
+          ejercicios: selectedEjercicios,
         };
-
         await updateRutina(params.id, rutinaActualizada);
-
-        // Actualiza los detalles asociados
-        //await DetallesRutinas.deleteMany({ rutina: params.id }); // Borra detalles anteriores
-        const nuevosDetalles = selectedEjercicios.map((ejercicioId) => ({
-          rutina: params.id,
-          ejercicio: ejercicioId,
-          fecha: new Date(),
-        }));
-        await Promise.all(nuevosDetalles.map((detalle) => createDetalleRutina(detalle)));
-
-        showSuccessAlert('Rutina Actualizada', 'Tu rutina se ha actualizado exitosamente.');
-        navigate('/rutinas');
       } else {
         // Crear nueva rutina
         const nuevaRutina = {
-          user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length, // Asegúrate de enviar el número total
+          detalles,
         };
-
-        const rutinaCreada = await createRutina(nuevaRutina);
-
-        // Crear detalles asociados
-        const detallesRutina = selectedEjercicios.map((ejercicioId) => ({
-          rutina: rutinaCreada._id,
-          ejercicio: ejercicioId,
-          fecha: new Date(),
-        }));
-
-        await Promise.all(detallesRutina.map((detalle) => createDetalleRutina(detalle)));
-
-        // Crear progreso asociado
-        const progresoData = {
-          user: user._id,
-          rutina: rutinaCreada._id,
-          fecha: new Date(),
-        };
-
-        await createProgreso(progresoData);
-
-        showSuccessAlert('Rutina Creada', 'Tu rutina se ha creado exitosamente.');
-        navigate('/rutinas');
+        await createRutina(nuevaRutina);
       }
+
+      showSuccessAlert('Rutina Guardada', 'La rutina se guardó exitosamente.');
+      navigate('/rutinas');
     } catch (error) {
-      console.error('Error al actualizar o crear la rutina:', error);
-      showErrorAlert('Error', 'Ocurrió un problema al guardar la rutina. Inténtalo de nuevo.');
+      console.error("Error al guardar rutina:", error);
+      showErrorAlert('Error', 'Ocurrió un problema al guardar la rutina.');
     }
   });
 
