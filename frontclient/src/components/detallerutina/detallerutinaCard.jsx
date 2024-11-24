@@ -48,6 +48,11 @@ export default function DetalleRutinaCard({ detalles }) {
           <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
           <Card.Subtitle className="mb-2 text-black text-center">
             Descripción: {detalles.ejercicio.descripcion}
+            <br />
+            Calorias Quemadas: {detalles.caloriasQuemadas} <br />
+            Tiempo Estimado: {detalles.tiempoEstimado} segundos <br />
+            Fecha Inicio: {detalles.fecha.toLocaleDateString()} <br />
+
           </Card.Subtitle>
           <p className="text-center">Categoría: {detalles.ejercicio.categoria}</p>
           <p className="text-center">Duración: {detalles.ejercicio.duracion} segundos</p>
