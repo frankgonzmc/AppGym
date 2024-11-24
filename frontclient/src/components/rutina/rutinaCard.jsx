@@ -39,6 +39,7 @@ export function RutinaCard({ rutina }) {
         try {
           await deleteRutina(rutina._id);
           alert("Rutina eliminada exitosamente.");
+          navigate('/rutinas');
         } catch (error) {
           console.error("Error al eliminar rutina:", error);
           alert("Hubo un error al intentar eliminar la rutina.");
@@ -50,6 +51,7 @@ export function RutinaCard({ rutina }) {
       }
 
       showAlert('¡Hecho!', 'Acción confirmada.', 'success');
+      navigate('/rutinas');
     } else {
       showAlert('Cancelado', 'No se realizó ninguna acción.', 'info');
     }
