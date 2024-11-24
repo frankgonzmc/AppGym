@@ -11,7 +11,7 @@ import {
   updateEstadoRutinaRequest,
   registrarRutinaCompletadoRequest,
 } from '../../api/rutina';
-import { updateEstadoProgresoRequest } from '../../api/progreso';
+import { updateProgresoRequest, updateEstadoProgresoRequest } from '../../api/progreso';
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
@@ -62,18 +62,21 @@ export default function IniciaEjercicioPage() {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
 
         const progreso = await getProgresoUsuarioRequest(detalles.user);
-        if (progreso && progreso.id) {
+        if (detalles.progresoId) {
           await updateEstadoProgresoRequest(progreso.id, {
             estado: "Completado",
-            ejerciciosCompletados: ejerciciosCompletos,
-            fechaFin: new Date(),
-            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas(),
           });
+
+          if (progreso && progreso.id) {
+            await updateProgresoRequest(progreso.id, {
+              ejerciciosCompletados: ejerciciosCompletos,
+              fechaFin: new Date(),
+              tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+              caloriasQuemadas: calcularCaloriasQuemadas(),
+            });
+          }
         }
       }
-    } catch (error) {
-      console.error("Error al actualizar los datos completos:", error);
     } finally {
       setLoading(false);
     }
