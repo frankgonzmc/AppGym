@@ -77,8 +77,12 @@ export default function IniciaEjercicioPage() {
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
-          await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
-          await registrarRutinaCompletadoRequest(detalles.rutina);
+          try {
+            await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
+            await registrarRutinaCompletadoRequest(detalles.rutina._id);
+          } catch (error) {
+            console.error("Error al registrar como completado:", error);
+          }
         }
       }
     } catch (error) {

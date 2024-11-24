@@ -8,4 +8,4 @@ export const createEjerciciosRequest = (ejercicio) => axios.post('/ejercicios', 
 export const updateEjerciciosRequest = (id, ejercicio) => axios.put(`/ejercicios/${id}`, ejercicio)
 export const deleteEjerciciosRequest = (id) => axios.delete(`/ejercicios/${id}`)
 
-export const registrarEjercicioCompletadoRequest = (ejercicioId) => axios.post(`/ejercicios/${ejercicioId}/registrar-completado`);
+export const registrarEjercicioCompletadoRequest = (id) => axios.post(`/ejercicios/${id}/registrar-completado`);
