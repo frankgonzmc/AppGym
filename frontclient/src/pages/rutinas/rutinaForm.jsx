@@ -8,6 +8,7 @@ import { useAuth } from '../../context/authcontext';
 import '../../css/rutinaPage.css'; // Tu propio archivo CSS para personalizar el calendario
 import { useDetallesRutina } from '../../context/detallerutinacontext';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { showSuccessAlert, showErrorAlert } from '../../utils/alerts'; // Importa las alertas
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
@@ -28,7 +29,8 @@ const RutinaForm = () => {
         const res = await getEjerciciosRequest();
         setEjercicios(res.data);
       } catch (error) {
-        console.error('Error al obtener ejercicios:', error);
+        //console.error('Error al obtener ejercicios:', error);
+        showErrorAlert('Error', 'No se pudieron cargar los ejercicios.');
       }
     };
     fetchEjercicios();
@@ -53,6 +55,7 @@ const RutinaForm = () => {
 
     if (!nombre || !descripcion || selectedEjercicios.length === 0) {
       console.error("Faltan datos requeridos");
+      showErrorAlert('Datos incompletos', 'Por favor completa todos los campos y selecciona ejercicios.');
       return;
     }
 
@@ -66,8 +69,12 @@ const RutinaForm = () => {
           ejercicios: selectedEjercicios,
         };
 
+
         await updateRutina(params.id, rutinaActualizada);
+        showSuccessAlert('Rutina Actualizada', 'Tu rutina se ha actualizado exitosamente.');
         navigate('/rutinas');
+
+
       } else {
         const nuevaRutina = {
           user: user._id,
@@ -91,13 +98,13 @@ const RutinaForm = () => {
           rutina: rutinaCreada._id,
           fecha: new Date()
         };
-
         await createProgreso(progresoData);
-        
+        showSuccessAlert('Rutina Creada', 'Tu rutina se ha creado exitosamente.');
         navigate('/rutinas');
       }
     } catch (error) {
       console.error("Error al actualizar o crear la rutina:", error);
+      showErrorAlert('Error', 'Ocurrió un problema al guardar la rutina. Inténtalo de nuevo.');
     }
   });
 
