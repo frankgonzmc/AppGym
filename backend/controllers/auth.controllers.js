@@ -297,20 +297,19 @@ export const resetPassword = async (req, res) => {
     const { password } = req.body;
 
     try {
-        console.log("Token recibido:", token);
         const user = await User.findOne({
             resetPasswordToken: token,
             resetPasswordExpires: { $gt: Date.now() },
         });
 
         if (!user) {
-            console.error("Token no encontrado o expirado:", token);
             return res.status(400).json({ message: "Token no válido o expirado." });
         }
 
         user.password = await bcrypt.hash(password, 10);
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
+        user.defaultToken = crypto.randomBytes(20).toString('hex'); // Nuevo token
         await user.save();
 
         res.status(200).json({ message: "Contraseña restablecida correctamente." });

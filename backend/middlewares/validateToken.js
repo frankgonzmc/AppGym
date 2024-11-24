@@ -6,23 +6,27 @@ export const authRequired = (req, res, next) => {
         const { token } = req.cookies;
 
         if (!token) {
-            console.error("Token no encontrado en las cookies.");
             return res.status(401).json({ message: "No token, authorization denied" });
         }
 
-        jwt.verify(token, TOKEN_SECRET, (error, user) => {
-            if (error) { // Usa la variable "error" correctamente
+        jwt.verify(token, TOKEN_SECRET, async (error, user) => {
+            if (error) {
                 if (error.name === 'TokenExpiredError') {
-                    console.error("Token expirado:", error);
-                    return res.status(401).json({ message: "Token expirado" });
+                    // Renovar el token
+                    const newToken = await createAccessToken({ id: user.id });
+                    res.cookie('token', newToken, {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === 'production',
+                        sameSite: 'strict',
+                        maxAge: 24 * 60 * 60 * 1000, // 1 día
+                    });
+                    return res.status(200).json({ message: "Token renovado", token: newToken });
                 }
-                console.error("Token inválido:", error);
                 return res.status(403).json({ message: "Token inválido" });
             }
 
-            console.log("Usuario autenticado:", user);
-            req.user = user; // Adjunta la información del usuario al objeto de la solicitud
-            next(); // Llama a la siguiente función en la pila de middlewares
+            req.user = user;
+            next();
         });
     } catch (error) {
         console.error("Error en el middleware de autenticación:", error);
