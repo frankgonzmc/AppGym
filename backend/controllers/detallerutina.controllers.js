@@ -1,5 +1,6 @@
 import DetallesRutina from '../models/detallerutina.model.js';
 import Rutinas from '../models/rutina.model.js';
+import Ejercicios from '../models/ejercicio.model.js';
 
 // Obtener detalles de rutina por ID de rutina
 export const getDetallesRutina = async (req, res) => {
@@ -105,6 +106,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         // Determinar estado del detalle
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
+        detalle.ejercicio.estadoEjercicioRealizado = 1;
         detalle.tiempoEstimado = tiempoTotal;
         detalle.caloriasQuemadas = caloriasQuemadas;
 
