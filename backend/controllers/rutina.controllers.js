@@ -45,12 +45,16 @@ export const createRutinas = async (req, res) => {
             await DetallesRutina.insertMany(detallesToSave);
         }
 
-        const saveProgreso = {
+        // Crear progreso asociado
+        const progreso = new Progreso({
             user: req.user.id,
             rutina: savedRutina._id,
-        };
-
-        await saveProgreso.save();
+            estado: 'Pendiente',
+            ejerciciosCompletados: 0,
+            tiempoTotal: 0,
+            caloriasQuemadas: 0,
+        });
+        await progreso.save();
 
         res.status(201).json(savedRutina);
     } catch (error) {

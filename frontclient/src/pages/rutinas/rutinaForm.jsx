@@ -79,15 +79,6 @@ const RutinaForm = () => {
           detalles,
         };
         await createRutina(nuevaRutina);
-
-        const nuevoProgreso = {
-          ejerciciosCompletados: 0,
-          estado: 'Pendiente',
-          tiempoTotal: 0,
-          caloriasQuemadas: 0,
-        };
-
-        await createProgreso(nuevoProgreso);
       }
 
       showSuccessAlert('Rutina Guardada', 'La rutina se guardó exitosamente.');
