@@ -39,32 +39,33 @@ export default function IniciaEjercicioPage() {
   };
 
   const actualizarDatosCompletos = async () => {
-    try {
-      await updateEstadoEjercicioRequest(detalles._id, "Completado");
+    await updateEstadoEjercicioRequest(detalles._id, "Completado");
 
-      const response = await getDetalleRutinaRequest(detalles.rutina);
-      const detallesRutina = response.data.detalles;
+    const response = await getDetalleRutinaRequest(detalles.rutina);
+    const detallesRutina = response.data.detalles;
 
-      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
-      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+    const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+    await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
-      if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+    if (ejerciciosCompletos >= detallesRutina.length) {
+      await updateEstadoRutinaRequest(detalles.rutina, "Completado");
 
-        if (detalles.progresoId) {
-          await updateEstadoProgresoRequest(detalles.progresoId, {
-            ejerciciosCompletados: ejerciciosCompletos,
-            estado: "Completado",
-            fechaFin: new Date(),
-            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas(),
-          });
-        }
+      if (detalles.progresoId) {
+        await updateEstadoProgresoRequest(detalles.progresoId, {
+          ejerciciosCompletados: ejerciciosCompletos,
+          estado: "Completado",
+          fechaFin: new Date(),
+          tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+          caloriasQuemadas: calcularCaloriasQuemadas(),
+        });
+      } else {
+        console.error("No se encontró el progreso asociado a la rutina.");  // Agrega esta línea para ver el error
       }
-    } catch (error) {
+    } else {
       console.error("Error al actualizar los datos completos:", error);
     }
   };
+
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
