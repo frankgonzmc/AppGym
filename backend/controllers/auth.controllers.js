@@ -30,7 +30,13 @@ export const register = async (req, res) => {
         const savedUser = await newUser.save();
 
         const token = createAccessToken({ id: savedUser._id });
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true, // Evita que el cliente acceda a la cookie desde JavaScript
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict', // Previene ataques CSRF
+            maxAge: 24 * 60 * 60 * 1000, // 1 día
+        });
+
 
         return res.status(201).json({
             id: savedUser._id,
@@ -61,7 +67,13 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userEncontrado._id });
 
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true, // Evita que el cliente acceda a la cookie desde JavaScript
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict', // Previene ataques CSRF
+            maxAge: 24 * 60 * 60 * 1000, // 1 día
+        });
+
         res.json({
             id: userEncontrado.id,
             username: userEncontrado.username,
@@ -86,7 +98,10 @@ export const login = async (req, res) => {
 // Eliminar token y cerrar sesión
 export const logout = (req, res) => {
     res.cookie('token', "", {
-        expires: new Date(0)
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        expires: new Date(0),
     });
     return res.sendStatus(200);
 }
@@ -122,7 +137,12 @@ export const verifityToken = async (req, res) => {
     if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
 
     jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-        if (err) return res.status(401).json({ message: "NO AUTORIZADO" });
+        if (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: "Token expirado" });
+            }
+            return res.status(401).json({ message: "NO AUTORIZADO" });
+        }
 
         try {
             const userFound = await User.findById(user.id);

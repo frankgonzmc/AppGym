@@ -11,9 +11,11 @@ export const authRequired = (req, res, next) => {
         }
 
         jwt.verify(token, TOKEN_SECRET, (error, user) => {
-            if (error) {
-                console.error("Error verificando token:", error);
-                return res.status(401).json({ message: "Token is not valid" });
+            if (err) {
+                if (err.name === 'TokenExpiredError') {
+                    return res.status(401).json({ message: "Token expirado" });
+                }
+                return res.status(403).json({ message: "Token inválido" });
             }
 
             console.log("Usuario autenticado:", user);

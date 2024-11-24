@@ -22,11 +22,20 @@ export function FormularioSesion() {
   const { signin, isAuthenticated, errors: signinErrors } = useAuth();
   const navigate = useNavigate();
 
-  const onSubmit = handleSubmit((data) => {
-    signin(data);
-    showSuccessAlert('Bienvenido!', 'estas listo para iniciar tu rutina???');
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await signin(data);
+      showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+    } catch (error) {
+      if (error.response && error.response.data.message === "Token expirado") {
+        showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
+        navigate("/login");
+      } else {
+        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+      }
+    }
   });
-
+  
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio');
   }, [isAuthenticated]);
