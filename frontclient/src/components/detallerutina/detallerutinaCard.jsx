@@ -11,10 +11,8 @@ export default function DetalleRutinaCard({ detalles }) {
   const handleDelete = async () => {
     try {
       await deleteDetalleRutina(detalles._id);
-
-      showConfirmation("Exito!", "Se eliminó el ejercicio.", "success");
       navigate("/rutinas");
-
+      showConfirmation("Exito!", "Se eliminó el ejercicio.", "success");
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
     }
