@@ -227,7 +227,7 @@ export const forgotPassword = async (req, res) => {
 
         const token = crypto.randomBytes(20).toString('hex');
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 3600000; // 1 hora para expiración
+        user.resetPasswordExpires = Date.now() + 7200000; // 2 horas
         await user.save();
 
 
@@ -266,13 +266,16 @@ export const resetPassword = async (req, res) => {
     try {
         const user = await User.findOne({
             resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() },
+            resetPasswordExpires: { $gt: Date.now() }, // Verifica que no haya expirado
         });
 
-        if (!user) return res.status(400).json({ message: "Token no válido o expirado." });
+        if (!user) {
+            console.error(`Token no encontrado o expirado: ${token}`);
+            return res.status(400).json({ message: "Token no válido o expirado." });
+        }
 
         user.password = await bcrypt.hash(password, 10);
-        user.resetPasswordToken = undefined;
+        user.resetPasswordToken = undefined; // Elimina el token después de usarlo
         user.resetPasswordExpires = undefined;
         await user.save();
 
