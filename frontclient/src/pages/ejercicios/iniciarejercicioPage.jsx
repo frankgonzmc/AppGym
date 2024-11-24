@@ -49,6 +49,11 @@ export default function IniciaEjercicioPage() {
   const actualizarDatosCompletos = async () => {
     try {
       setLoading(true);
+
+      if (!user || !user._id) {
+        throw new Error("Usuario no autenticado o user._id es inválido.");
+      }
+
       await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
 
       const response = await getDetalleRutinaRequest(detalles.rutina);
@@ -64,17 +69,17 @@ export default function IniciaEjercicioPage() {
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-      }
+        
+        if (progreso) {
+          await updateEstadoProgresoRequest(progreso._id, { estado: "Completado" });
 
-      if (progreso) {
-        await updateEstadoProgresoRequest(progreso._id, { estado: "Completado" });
-
-        await updateProgresoRequest(progreso._id, {
-          ejerciciosCompletados: ejerciciosCompletos,
-          fechaFin: new Date(),
-          tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-          caloriasQuemadas: calcularCaloriasQuemadas(),
-        });
+          await updateProgresoRequest(progreso._id, {
+            ejerciciosCompletados: ejerciciosCompletos,
+            fechaFin: new Date(),
+            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas(),
+          });
+        }
       }
     } finally {
       setLoading(false);
