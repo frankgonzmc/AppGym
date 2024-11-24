@@ -3,7 +3,6 @@ import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
 import {
-  updateProgresoEjercicioRequest,
   getDetalleRutinaRequest,
   updateDetalleRutinaRequest,
 } from '../../api/detallerutina';
