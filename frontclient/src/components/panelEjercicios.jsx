@@ -1,6 +1,6 @@
 import { useAuth } from "../context/authcontext";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import '../css/panelElements.css';
 
 export function PanelEjercicios() {
@@ -11,7 +11,7 @@ export function PanelEjercicios() {
 
     const fetchExercises = async () => {
         try {
-            const response = await axios.get(`/api/ejercicios/${user.nivel}`);
+            const response = await axios.get(`/ejercicios/${user.nivel}`);
             setExercises(response.data);
         } catch (error) {
             console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
