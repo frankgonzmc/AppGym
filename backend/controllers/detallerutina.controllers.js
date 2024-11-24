@@ -113,7 +113,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         // Determinar estado del detalle
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
-        detalle.ejercicio.estadoEjercicioRealizado = 1;
+        detalle.estadoEjercicioRealizado = 1;
         detalle.tiempoEstimado = tiempoTotal;
         detalle.caloriasQuemadas = caloriasQuemadas;
 
