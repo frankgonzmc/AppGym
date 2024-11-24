@@ -61,6 +61,11 @@ export const updateProgreso = async (req, res) => {
         const { id } = req.params;
         const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
 
+        // Validar que `estado` sea un string
+        if (estado && typeof estado !== "string") {
+            return res.status(400).json({ message: "El estado debe ser un string válido." });
+        }
+
         const progreso = await Progreso.findByIdAndUpdate(
             id,
             {
@@ -68,9 +73,9 @@ export const updateProgreso = async (req, res) => {
                 estado,
                 tiempoTotal,
                 caloriasQuemadas,
-                fechaFin: estado === 'Completado' ? new Date() : null,
+                fechaFin: estado === "Completado" ? new Date() : "En Progreso",
             },
-            { new: true }
+            { new: true } // Retorna el documento actualizado
         );
 
         if (!progreso) {
@@ -84,13 +89,13 @@ export const updateProgreso = async (req, res) => {
             user.caloriasQuemadas += caloriasQuemadas || 0;
             user.tiempoEntrenado += tiempoTotal || 0;
 
-            // Revisión de nivel
+            // Ajustar nivel del usuario
             if (user.ejerciciosCompletados >= user.metasEjercicios) {
-                if (user.nivel === 'Principiante') {
-                    user.nivel = 'Intermedio';
+                if (user.nivel === "Principiante") {
+                    user.nivel = "Intermedio";
                     user.metasEjercicios += 20;
-                } else if (user.nivel === 'Intermedio') {
-                    user.nivel = 'Avanzado';
+                } else if (user.nivel === "Intermedio") {
+                    user.nivel = "Avanzado";
                 }
             }
 

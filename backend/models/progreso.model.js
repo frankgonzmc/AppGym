@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 
-const progresoSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    rutina: { type: mongoose.Schema.Types.ObjectId, ref: 'Rutina', required: true },
+const ProgresoSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    rutina: { type: mongoose.Schema.Types.ObjectId, ref: "Rutinas", required: true },
     ejerciciosCompletados: { type: Number, default: 0 },
+    estado: { type: String, default: "Pendiente" }, // Enum para valores válidos
+    tiempoTotal: { type: Number, default: 0 }, // Tiempo total en segundos
+    caloriasQuemadas: { type: Number, default: 0 },
     fechaInicio: { type: Date, default: Date.now },
     fechaFin: { type: Date },
-    estado: { type: String, enum: ['Pendiente', 'En Progreso', 'Completado', 'Cancelado'], default: 'Pendiente' },
-    tiempoTotal: { type: Number, default: 0 }, // En segundos
-    caloriasQuemadas: { type: Number, default: 0 },
-    notas: { type: String },
-}, { timestamps: true });
+});
 
-export default mongoose.model("Progreso", progresoSchema);
+export default mongoose.model("Progreso", ProgresoSchema);
