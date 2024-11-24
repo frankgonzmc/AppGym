@@ -103,9 +103,26 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
-        Cookies.remove("token");
+        Cookies.remove("Token");
     };
 
+
+    const checkLogin = async () => {
+        try {
+            const res = await verifityTokenRequest(); // Asegúrate de que 'axios' ya incluye cookies
+            if (res.data) {
+                setIsAuthenticated(true);
+                setUser(res.data);
+            }
+        } catch (error) {
+            console.error("Error verificando el token:", error);
+            setIsAuthenticated(false);
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+    /*
     const checkLogin = async () => {
         const cookies = Cookies.get();
 
@@ -132,7 +149,7 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
             setLoading(false);
         }
-    };
+    };*/
 
     useEffect(() => {
         checkLogin();

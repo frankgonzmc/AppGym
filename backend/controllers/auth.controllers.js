@@ -31,12 +31,11 @@ export const register = async (req, res) => {
 
         const token = createAccessToken({ id: savedUser._id });
         res.cookie('token', token, {
-            httpOnly: true, // No permite que JavaScript del cliente acceda a la cookie
-            secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
-            sameSite: 'strict', // Previene ataques CSRF
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Usa HTTPS en producción
+            sameSite: 'strict', // Protege contra ataques CSRF
             maxAge: 24 * 60 * 60 * 1000, // 1 día
         });
-        
 
         return res.status(201).json({
             id: savedUser._id,
