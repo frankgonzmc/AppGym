@@ -58,9 +58,10 @@ export const updateDetalleRutina = async (req, res) => {
 
         // Actualizar estadoEjercicioRealizado si el ejercicio se completa
         if (detalle.seriesProgreso >= detalle.ejercicio.series) {
-            detalle.estadoEjercicioRealizado = 1;
             detalle.estado = "Completado";
         }
+
+        detalle.ejercicio.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;
 
         await detalle.save();
 
@@ -113,7 +114,8 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         // Determinar estado del detalle
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
-        detalle.estadoEjercicioRealizado = 1;
+        detalle.ejercicio.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;
+        detalle.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;;
         detalle.tiempoEstimado = tiempoTotal;
         detalle.caloriasQuemadas = caloriasQuemadas;
 
@@ -146,7 +148,7 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const ejerciciosCompletados = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
         // Determinar el estado general de la rutina
-        const estadoRutina = ejerciciosCompletados === detalles.length ? 'Completado' : 'Pendiente';
+        const estadoRutina = ejerciciosCompletados === detalles.length ? 'Pendiente' : 'Completado';
 
         // Actualizar rutina
         await Rutinas.findByIdAndUpdate(rutinaId, {
