@@ -45,6 +45,12 @@ export default function IniciaEjercicioPage() {
       const ejerciciosCompletos = detallesRutina.filter(
         (detalle) => detalle.estado === "Completado"
       ).length;
+
+      const ejerciciosCompletos2 = detallesRutina.filter(
+        (detalle) => detalle.ejercicioCompletado === 1
+      ).length;
+
+      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos2);
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
