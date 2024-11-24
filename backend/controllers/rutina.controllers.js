@@ -132,6 +132,37 @@ export const deleteRutina = async (req, res) => {
     }
 };
 
+
+export const updateProgresoRutina = async (req, res) => {
+    const { rutinaId } = req.params;
+
+    try {
+        // Obtén los detalles de la rutina
+        const detalles = await DetalleRutina.find({ rutina: rutinaId });
+
+        // Calcula ejercicios completados
+        const ejerciciosCompletados = detalles.filter(
+            (detalle) => detalle.seriesProgreso >= detalle.series
+        ).length;
+
+        // Actualiza la rutina
+        const rutina = await Rutina.findByIdAndUpdate(
+            rutinaId,
+            { ejerciciosCompletados },
+            { new: true }
+        );
+
+        if (!rutina) {
+            return res.status(404).json({ message: "Rutina no encontrada" });
+        }
+
+        res.json(rutina);
+    } catch (error) {
+        console.error("Error al actualizar progreso de rutina:", error);
+        res.status(500).json({ message: "Error del servidor" });
+    }
+};
+
 // Actualizar progreso de la rutina basado en los ejercicios completados (actualiza todos los detalles)
 export const actualizarProgresoRutina = async (rutinaId) => {
     try {

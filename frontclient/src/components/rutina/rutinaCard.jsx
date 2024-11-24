@@ -16,7 +16,7 @@ export function RutinaCard({ rutina }) {
 
   useEffect(() => {
     setTotalEjercicios(rutina.totalEjercicios || 0);
-  }, [rutina._id]);
+  }, [rutina]);
 
   return (
     <Card>

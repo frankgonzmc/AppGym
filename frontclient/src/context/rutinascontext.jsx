@@ -26,7 +26,7 @@ export function RutinaProvider({ children }) {
         } catch (error) {
             console.error("Error al obtener rutinas:", error.response?.data || error.message);
             setRutinas([]); // Maneja error sin mostrar como fallo fatal
-        }   
+        }
     }, []);
 
     const deleteRutina = async (id) => {
@@ -68,11 +68,13 @@ export function RutinaProvider({ children }) {
     const updateRutina = async (id, rutina) => {
         try {
             const res = await updateRutinaRequest(id, rutina);
+            // Actualiza la rutina específica en el estado
             setRutinas((prev) =>
                 prev.map((r) => (r._id === id ? { ...r, ...res.data } : r))
             );
+            return res.data; // Retorna la rutina actualizada
         } catch (error) {
-            console.error('Error al actualizar rutina:', error.response?.data || error.message);
+            console.error("Error al actualizar rutina:", error.response?.data || error.message);
         }
     };
 
