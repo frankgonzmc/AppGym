@@ -2,19 +2,15 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRutinas } from '../../context/rutinascontext';
-import { useProgreso } from '../../context/progresocontext';
 import { getEjerciciosRequest } from '../../api/ejercicio';
 import { useAuth } from '../../context/authcontext';
-import '../../css/rutinaPage.css'; // Tu propio archivo CSS para personalizar el calendario
-import { useDetallesRutina } from '../../context/detallerutinacontext';
+import '../../css/rutinaPage.css';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
   const { createRutina, getRutina, updateRutina } = useRutinas();
-  const { createProgreso } = useProgreso();
-  const { createDetalleRutina } = useDetallesRutina();
   const { user } = useAuth();
 
   const navigate = useNavigate();

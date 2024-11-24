@@ -14,9 +14,10 @@ export default function IniciaEjercicioPage() {
   const { state } = useLocation();
   const { detalles } = state || {};
 
-  if (!detalles || !detalles.ejercicio) {
-    return <div>Error: No se han encontrado los detalles del ejercicio</div>;
+  if (!detalles || detalles.ejercicioCompletado !== 1) {
+    return <div>No hay ejercicios completados para mostrar.</div>;
   }
+
 
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
@@ -41,7 +42,9 @@ export default function IniciaEjercicioPage() {
       const response = await getDetalleRutinaRequest(detalles.rutina);
       const detallesRutina = response.data.detalles;
 
-      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+      const ejerciciosCompletos = detallesRutina.filter(
+        (detalle) => detalle.estado === "Completado"
+      ).length;
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
@@ -53,7 +56,7 @@ export default function IniciaEjercicioPage() {
             estado: "Completado",
             fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas()
+            caloriasQuemadas: calcularCaloriasQuemadas(),
           });
         }
       }
@@ -61,6 +64,35 @@ export default function IniciaEjercicioPage() {
       console.error("Error al actualizar los datos completos:", error);
     }
   };
+
+  /*
+    const actualizarDatosCompletos = async () => {
+      try {
+        await updateEstadoEjercicioRequest(detalles._id, "Completado");
+  
+        const response = await getDetalleRutinaRequest(detalles.rutina);
+        const detallesRutina = response.data.detalles;
+  
+        const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+        await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+  
+        if (ejerciciosCompletos >= detallesRutina.length) {
+          await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+  
+          if (detalles.progresoId) {
+            await updateEstadoProgresoRequest(detalles.progresoId, {
+              ejerciciosCompletados: ejerciciosCompletos,
+              estado: "Completado",
+              fechaFin: new Date(),
+              tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+              caloriasQuemadas: calcularCaloriasQuemadas()
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error al actualizar los datos completos:", error);
+      }
+    };*/
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
