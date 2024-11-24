@@ -25,12 +25,13 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Registrar usuario
     const signup = async (user) => {
         try {
+            // Registro del usuario
             const res = await registerRequest(user);
             console.log("Usuario registrado:", res.data);
 
+            // Inicia sesión automáticamente con los mismos datos
             await signin({ email: user.email, password: user.password });
 
             setErrors([]);
@@ -44,18 +45,12 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Iniciar sesión
     const signin = async (user) => {
         try {
             const res = await loginRequest(user);
             console.log("Usuario autenticado:", res.data);
 
-            Cookies.set("token", res.data.token, {
-                expires: 1, // Expira en 1 día
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "Strict",
-            });
-
+            // Guarda el estado de autenticación
             setIsAuthenticated(true);
             setUser(res.data);
         } catch (error) {
@@ -67,7 +62,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Actualizar contraseña
     const updatePassword = async (currentPassword, newPassword) => {
         try {
             const res = await updatePasswordRequest(currentPassword, newPassword);
@@ -78,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Actualizar perfil
     const updatePerfil = async (datos) => {
         try {
             const res = await updatePerfilRequest(datos);
@@ -95,7 +88,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Verificar si el email existe
     const checkEmailExists = async (email) => {
         try {
             await checkEmailRequest(email);
@@ -108,42 +100,21 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Cerrar sesión
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
         Cookies.remove("token");
     };
 
-    // Verificar el token al cargar la aplicación
     const checkLogin = async () => {
-        const token = Cookies.get("token");
-
-        if (!token) {
-            setIsAuthenticated(false);
-            setLoading(false);
-            setUser(null);
-            return;
-        }
-
         try {
-            const res = await verifityTokenRequest(token);
-
+            const res = await verifityTokenRequest();
             if (res.data) {
                 setIsAuthenticated(true);
                 setUser(res.data);
-            } else {
-                setIsAuthenticated(false);
-                setUser(null);
             }
         } catch (error) {
             console.error("Error verificando el token:", error);
-
-            if (error.response && error.response.status === 401) {
-                // Si el token ha expirado, elimínalo
-                Cookies.remove("token");
-            }
-
             setIsAuthenticated(false);
             setUser(null);
         } finally {
@@ -151,12 +122,39 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Verificar el login cuando se monta el componente
+    /*
+        const checkLogin = async () => {
+            const cookies = Cookies.get();
+    
+            if (!cookies.token) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return setUser(null);
+            }
+    
+            try {
+                const res = await verifityTokenRequest(cookies.token);
+                if (!res.data) {
+                    setIsAuthenticated(false);
+                    setLoading(false);
+                    return;
+                }
+    
+                setIsAuthenticated(true);
+                setUser(res.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error verificando el token:", error);
+                setIsAuthenticated(false);
+                setUser(null);
+                setLoading(false);
+            }
+        };*/
+
     useEffect(() => {
         checkLogin();
     }, []);
 
-    // Manejar errores para eliminarlos después de un tiempo
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
