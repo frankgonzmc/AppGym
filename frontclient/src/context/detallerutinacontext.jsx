@@ -3,7 +3,6 @@ import {
     createDetalleRutinaRequest,
     deleteDetalleRutinaRequest,
     getDetalleRutinaRequest,
-    updateProgresoEjercicioRequest,
     updateDetalleRutinaRequest,
 } from "../api/detallerutina";
 
