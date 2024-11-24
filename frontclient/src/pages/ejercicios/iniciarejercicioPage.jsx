@@ -71,11 +71,11 @@ export default function IniciaEjercicioPage() {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
 
         if (progreso) {
+          // Asegúrate de enviar un string en `estado`
           await updateEstadoProgresoRequest(progreso.data._id, { estado: "Completado" });
 
           await updateProgresoRequest(progreso.data._id, {
             ejerciciosCompletados: ejerciciosCompletos,
-            estado: "En Progreso",
             fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
