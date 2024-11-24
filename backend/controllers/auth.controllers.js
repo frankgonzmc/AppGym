@@ -235,16 +235,14 @@ export const forgotPassword = async (req, res) => {
         console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
 
         const transporter = nodemailer.createTransport({
-            host: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
-            port: 587,                     // Puerto para STARTTLS
-            secure: false,                 // STARTTLS requiere secure=false
+            service: 'gmail', // Gmail como servicio SMTP
             auth: {
-                user: process.env.EMAIL_USER, // Tu correo
-                pass: process.env.EMAIL_PASS, // Contraseña de aplicación
+                user: process.env.EMAIL_USER, // Tu cuenta Gmail
+                pass: process.env.EMAIL_PASS, // Contraseña de aplicación generada
             },
         });
 
-        const resetUrl = `http://localhost:5000/reset-password/${token}`; // Cambia el URL según tu entorno
+        const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
 
         const mailOptions = {
             to: user.email,
