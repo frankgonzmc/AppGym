@@ -38,9 +38,9 @@ export default function IniciaEjercicioPage() {
 
   const actualizarDatosCompletos = async () => {
     try {
-      await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
+      const resdetalles = await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
 
-      const response = await getDetalleRutinaRequest(detalles.rutina);
+      const response = await getDetalleRutinaRequest(resdetalles.detalles.rutina);
       if (!response || !response.detalles) {
         throw new Error("La respuesta no contiene los detalles esperados.");
       }
