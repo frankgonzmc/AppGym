@@ -228,7 +228,12 @@ export const forgotPassword = async (req, res) => {
         const token = crypto.randomBytes(20).toString('hex');
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
-        await user.save();
+        try {
+            await user.save();
+            console.log("Token almacenado correctamente en la base de datos.");
+        } catch (error) {
+            console.error("Error al guardar el token en la base de datos:", error);
+        }
 
         console.log("Token generado:", token);
 

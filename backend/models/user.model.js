@@ -73,6 +73,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    // Campos necesarios para recuperación de contraseña
+    resetPasswordToken: {
+        type: String,
+        default: null, // Inicialmente null hasta que se genere un token
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null, // Inicialmente null hasta que se genere una fecha de expiración
+    },
 }, {
     timestamps: true,
 });
