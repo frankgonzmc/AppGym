@@ -199,22 +199,22 @@ export const actualizarProgresoRutina = async (rutinaId) => {
 };
 
 export const registrarRutinaCompletado = async (req, res) => {
-    const { rutinaId } = req.params.id;
+    console.log("ID recibido:", req.params.id);
+    const { id } = req.params; // Asegúrate de extraer correctamente el ID
 
     try {
-        const rutina = await Rutinas.findById(rutinaId);
-
+        const rutina = await Rutinas.findById(id);
         if (!rutina) {
-            return res.status(404).json({ message: "Rutina no encontrado." });
+            return res.status(404).json({ message: "Rutina no encontrada." });
         }
 
-        // Actualizar progreso de la rutina
+        // Actualizar estado de la rutina
         rutina.estadoRutinaRealizado = 1;
         await rutina.save();
 
-        res.status(200).json({ message: "Progreso actualizado.", rutina });
+        res.status(200).json({ message: "Rutina marcada como completada.", rutina });
     } catch (error) {
-        console.error("Error al actualizar el progreso de la rutina:", error);
+        console.error("Error al registrar rutina como completada:", error);
         res.status(500).json({ message: "Error interno del servidor." });
     }
-}
+};
