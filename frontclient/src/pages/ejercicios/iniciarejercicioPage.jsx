@@ -50,7 +50,7 @@ export default function IniciaEjercicioPage() {
     try {
       setLoading(true);
 
-      if (!user || !user._id) {
+      if (!user || !user.id) {
         throw new Error("Usuario no autenticado o user._id es inválido.");
       }
 
@@ -63,13 +63,13 @@ export default function IniciaEjercicioPage() {
 
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
-      const progreso = await getProgresoUsuarioRequest(user._id);
+      const progreso = await getProgresoUsuarioRequest(user.id);
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-        
+
         if (progreso) {
           await updateEstadoProgresoRequest(progreso._id, { estado: "Completado" });
 
