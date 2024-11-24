@@ -27,9 +27,9 @@ const rutinaSchema = new mongoose.Schema({
         enum: ['Principiante', 'Intermedio', 'Avanzado'],
         default: 'Principiante',
     },
-    categorias: [{
+    categoria: {
         type: String, // Por ejemplo, 'Cardio', 'Fuerza', 'Resistencia'
-    }],
+    },
     estado: {
         type: String,
         default: 'Pendiente',
