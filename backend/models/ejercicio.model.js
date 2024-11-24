@@ -39,8 +39,13 @@ const ejercicioSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    calorias: {
+        type: Number,
+        default: 0,
+    },
     caloriasPorRepeticion: {
         type: Number, // Estimación de calorías quemadas por repetición
+        default: 0,
     },
     estado: {
         type: String,
