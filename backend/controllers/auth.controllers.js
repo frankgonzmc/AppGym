@@ -131,35 +131,28 @@ export const profile = async (req, res) => {
 
 // Verificación de token
 export const verifityToken = async (req, res) => {
-    const { token } = req.cookies;
+    const token = req.cookies.token;
     if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
 
-    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    jwt.verify(token, TOKEN_SECRET, async (err, decoded) => {
         if (err) return res.status(401).json({ message: "NO AUTORIZADO" });
 
         try {
-            const userFound = await User.findById(user.id);
+            const userFound = await User.findById(decoded.id);
             if (!userFound) return res.status(401).json({ message: "NO AUTORIZADO" });
 
+            // Devuelve los datos necesarios del usuario
             return res.json({
                 id: userFound._id,
                 username: userFound.username,
                 email: userFound.email,
-                edad: userFound.edad,
-                estatura: userFound.estatura,
-                objetivos: userFound.objetivos,
-                nivelActividad: userFound.nivelActividad,
-                genero: userFound.genero,
-                profileImage: userFound.profileImage,
-                peso: userFound.peso,
                 nivel: userFound.nivel,
-                defaultToken: userFound.defaultToken,
             });
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     });
-}
+};
 
 // Ruta para verificar si el email existe
 export const checkEmail = async (req, res) => {

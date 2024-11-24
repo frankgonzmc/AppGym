@@ -125,13 +125,15 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-            const res = await verifityTokenRequest(); // Solicitud para verificar el token
+            const res = await verifityTokenRequest(); // Solicitud al backend para verificar el token
             if (res.data) {
-                setIsAuthenticated(true);
-                setUser(res.data);
+                setIsAuthenticated(true); // Establece el usuario como autenticado
+                setUser(res.data); // Almacena los datos del usuario en el estado
+            } else {
+                throw new Error("Token inválido o expirado"); // Maneja casos de respuesta inesperada
             }
         } catch (error) {
-            console.error("Error verificando el token:", error);
+            console.error("Error verificando el token:", error.message);
             setIsAuthenticated(false);
             setUser(null);
         } finally {
