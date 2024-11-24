@@ -10,19 +10,32 @@ const ForgotPasswordPage = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
     const onSubmit = handleSubmit(async (data) => {
+
+        const confirmed = await showConfirmation(
+            '¿Estás seguro?',
+            'Esta acción no se puede deshacer.',
+            'warning'
+        );
+
         setLoading(true);
         console.log(data);
-        try {
-            const response = await axios.post('/forgot-password', { email: data.email });
-            setMessage(response.data.message);
-            setEmail(''); // Limpiar el campo de email
-        } catch (error) {
-            setMessage(error.response ? error.response.data.message : "Error en la solicitud");
-        } finally {
-            setLoading(false); // Ocultar carga
+
+        if (confirmed) {
+            try {
+                const response = await axios.post('/forgot-password', { email: data.email });
+                setMessage(response.data.message);
+                setEmail(''); // Limpiar el campo de email
+            } catch (error) {
+                setMessage(error.response ? error.response.data.message : "Error en la solicitud");
+            } finally {
+                setLoading(false); // Ocultar carga
+            }
+
+            showAlert('¡Hecho!', 'Acción confirmada.', 'success');
+        } else {
+            showAlert('Cancelado', 'No se realizó ninguna acción.', 'info');
         }
     });
-
 
     return (
         <div className="seccion flex h-screen items-center justify-center">
