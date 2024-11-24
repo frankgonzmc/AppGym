@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRutinas } from '../../context/rutinascontext';
+import { useProgreso } from '../../context/progresocontext';
 import { getEjerciciosRequest } from '../../api/ejercicio';
 import { useAuth } from '../../context/authcontext';
 import '../../css/rutinaPage.css';
@@ -11,6 +12,7 @@ import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
   const { createRutina, getRutina, updateRutina } = useRutinas();
+  const { createProgreso } = useProgreso();
   const { user } = useAuth();
 
   const navigate = useNavigate();
@@ -77,6 +79,15 @@ const RutinaForm = () => {
           detalles,
         };
         await createRutina(nuevaRutina);
+
+        const nuevoProgreso = {
+          ejerciciosCompletados: 0,
+          estado: 'Pendiente',
+          tiempoTotal: 0,
+          caloriasQuemadas: 0,
+        };
+
+        await createProgreso(nuevoProgreso);
       }
 
       showSuccessAlert('Rutina Guardada', 'La rutina se guardó exitosamente.');
