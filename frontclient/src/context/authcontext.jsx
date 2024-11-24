@@ -115,32 +115,20 @@ export const AuthProvider = ({ children }) => {
     };
 
     const checkLogin = async () => {
-        const token = Cookies.get("token"); // Obtén el token de las cookies
-
-        if (!token) {
-            setIsAuthenticated(false);
-            setUser(null);
-            setLoading(false);
-            return; // No hay token, finaliza la ejecución
-        }
-
         try {
-            const res = await verifityTokenRequest(); // Solicitud al backend para verificar el token
+            const res = await verifityTokenRequest(); // Asegúrate de que 'axios' ya incluye cookies
             if (res.data) {
-                setIsAuthenticated(true); // Establece el usuario como autenticado
-                setUser(res.data); // Almacena los datos del usuario en el estado
-            } else {
-                throw new Error("Token inválido o expirado"); // Maneja casos de respuesta inesperada
+                setIsAuthenticated(true);
+                setUser(res.data);
             }
         } catch (error) {
-            console.error("Error verificando el token:", error.message);
+            //console.error("Error verificando el token:", error);
             setIsAuthenticated(false);
             setUser(null);
         } finally {
             setLoading(false);
         }
     };
-
     /*
     const checkLogin = async () => {
         const cookies = Cookies.get();
