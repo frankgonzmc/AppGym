@@ -11,7 +11,7 @@ const router = Router()
 router.get('/rutinas', authRequired, getRutinas);
 router.get('/rutinas/:id', authRequired, validateObjectId, getRutina);
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas);
-router.post('/:ejercicioId/registrar-completado', registrarEjercicioCompletado);
+router.post('/detalles-rutinas/:ejercicioId/registrar-completado', authRequired, validateObjectId, registrarEjercicioCompletado);
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
 
