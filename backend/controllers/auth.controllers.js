@@ -30,13 +30,7 @@ export const register = async (req, res) => {
         const savedUser = await newUser.save();
 
         const token = createAccessToken({ id: savedUser._id });
-
-        res.cookie('token', token, {
-            httpOnly: true, // Evita que el cliente acceda a la cookie desde JavaScript
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict', // Previene ataques CSRF
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
-        });
+        res.cookie('token', token);
 
         return res.status(201).json({
             id: savedUser._id,
@@ -67,13 +61,7 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userEncontrado._id });
 
-        res.cookie('token', token, {
-            httpOnly: true, // Evita que el cliente acceda a la cookie desde JavaScript
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict', // Previene ataques CSRF
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
-        });
-
+        res.cookie('token', token);
         res.json({
             id: userEncontrado.id,
             username: userEncontrado.username,
@@ -97,14 +85,11 @@ export const login = async (req, res) => {
 
 // Eliminar token y cerrar sesión
 export const logout = (req, res) => {
-    res.cookie('token', '', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        expires: new Date(0),
+    res.cookie('token', "", {
+        expires: new Date(0)
     });
     return res.sendStatus(200);
-};
+}
 
 // Seleccionar el perfil del usuario
 export const profile = async (req, res) => {
@@ -134,31 +119,34 @@ export const profile = async (req, res) => {
 // Verificación de token
 export const verifityToken = async (req, res) => {
     const { token } = req.cookies;
-    if (!token) return res.status(401).json({ message: "No autorizado. No token." });
+    if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
 
-    try {
-        const decoded = jwt.verify(token, TOKEN_SECRET); // Decodifica el token
-        const user = await User.findById(decoded.id); // Busca al usuario en la base de datos
+    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+        if (err) return res.status(401).json({ message: "NO AUTORIZADO" });
 
-        if (!user) {
-            return res.status(404).json({ message: "Usuario no encontrado." });
+        try {
+            const userFound = await User.findById(user.id);
+            if (!userFound) return res.status(401).json({ message: "NO AUTORIZADO" });
+
+            return res.json({
+                id: userFound._id,
+                username: userFound.username,
+                email: userFound.email,
+                edad: userFound.edad,
+                estatura: userFound.estatura,
+                objetivos: userFound.objetivos,
+                nivelActividad: userFound.nivelActividad,
+                genero: userFound.genero,
+                profileImage: userFound.profileImage,
+                peso: userFound.peso,
+                nivel: userFound.nivel,
+                defaultToken: userFound.defaultToken,
+            });
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
         }
-
-        return res.status(200).json({
-            id: user._id,
-            username: user.username,
-            email: user.email,
-            peso: user.peso,
-            edad: user.edad,
-            genero: user.genero,
-            nivel: user.nivel,
-            estatura: user.estatura,
-        });
-    } catch (error) {
-        console.error("Error al verificar el token:", error.message);
-        return res.status(401).json({ message: "Token inválido o expirado." });
-    }
-};
+    });
+}
 
 // Ruta para verificar si el email existe
 export const checkEmail = async (req, res) => {
@@ -281,19 +269,20 @@ export const resetPassword = async (req, res) => {
     const { password } = req.body;
 
     try {
+        console.log("Token recibido:", token);
         const user = await User.findOne({
             resetPasswordToken: token,
             resetPasswordExpires: { $gt: Date.now() },
         });
 
         if (!user) {
+            console.error("Token no encontrado o expirado:", token);
             return res.status(400).json({ message: "Token no válido o expirado." });
         }
 
         user.password = await bcrypt.hash(password, 10);
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
-        user.defaultToken = crypto.randomBytes(20).toString('hex'); // Nuevo token
         await user.save();
 
         res.status(200).json({ message: "Contraseña restablecida correctamente." });

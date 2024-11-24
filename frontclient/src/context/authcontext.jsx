@@ -107,53 +107,32 @@ export const AuthProvider = ({ children }) => {
     };
 
     const checkLogin = async () => {
-        try {
-            const res = await verifityTokenRequest(); // Verifica el token en el backend
-            if (res.data) {
-                setIsAuthenticated(true);
-                setUser(res.data); // Configura el usuario en el estado
-            } else {
-                setIsAuthenticated(false);
-                setUser(null);
-            }
-        } catch (error) {
-            console.error("Error verificando el token:", error.message);
+        const cookies = Cookies.get();
+
+        if (!cookies.token) {
             setIsAuthenticated(false);
-            setUser(null); // Limpia el usuario si la verificación falla
-        } finally {
-            setLoading(false); // Finaliza la carga
+            setLoading(false);
+            return setUser(null);
+        }
+
+        try {
+            const res = await verifityTokenRequest(cookies.token);
+            if (!res.data) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return;
+            }
+
+            setIsAuthenticated(true);
+            setUser(res.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error verificando el token:", error);
+            setIsAuthenticated(false);
+            setUser(null);
+            setLoading(false);
         }
     };
-    
-
-    /*
-        const checkLogin = async () => {
-            const cookies = Cookies.get();
-    
-            if (!cookies.token) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return setUser(null);
-            }
-    
-            try {
-                const res = await verifityTokenRequest(cookies.token);
-                if (!res.data) {
-                    setIsAuthenticated(false);
-                    setLoading(false);
-                    return;
-                }
-    
-                setIsAuthenticated(true);
-                setUser(res.data);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error verificando el token:", error);
-                setIsAuthenticated(false);
-                setUser(null);
-                setLoading(false);
-            }
-        };*/
 
     useEffect(() => {
         checkLogin();
