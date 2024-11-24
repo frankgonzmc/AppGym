@@ -8,6 +8,7 @@ const router = Router();
 
 router.get('/detalles-rutinas/:id', authRequired, validateObjectId, getDetallesRutina);
 router.post('/detalles-rutinas', authRequired, createDetalleRutina);
+router.post('/detalles-rutinas/:id/ejercicio-completado', authRequired, validateObjectId, updateDetalleRutina); // Actualizar un detalle de rutina
 router.put('/detalles-rutinas/:id', authRequired, validateObjectId, updateDetalleRutina);
 router.delete('/detalles-rutinas/:id', authRequired, validateObjectId, deleteDetalleRutina);
 router.put('/detalles-rutinas/:id/progreso', authRequired, validateObjectId, actualizarProgresoDetalleRutina);

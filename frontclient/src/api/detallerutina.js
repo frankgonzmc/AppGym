@@ -1,8 +1,8 @@
 import axios from './axios';
 
-export const registrarDetalleCompletadoRequest = async (ejercicioId) => {
+export const registrarDetalleEjercicioCompletadoRequest = async (ejercicioId) => {
     try {
-        const response = await axios.post(`/detalles-rutinas/${ejercicioId}/registrar-completado`);
+        const response = await axios.post(`/detalles-rutinas/${ejercicioId}/ejercicio-completado`);
         return response.data;
     } catch (error) {
         console.error(`Error al registrar el ejercicio como completado con ID ${ejercicioId}:`, error);

@@ -124,35 +124,34 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de un detalle de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     try {
-        const { detalleId } = req.params;
+        const { id } = req.params; // `id` en lugar de `detalleId`
         const { seriesProgreso } = req.body;
 
-        const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
+        const detalle = await DetallesRutina.findById(id).populate("ejercicio");
         if (!detalle) return res.status(404).json({ message: "Detalle de rutina no encontrado." });
 
         detalle.seriesProgreso = seriesProgreso;
 
         // Calcular tiempo total y calorías quemadas
-        const tiempoTotal = detalle.ejercicio.duracion * detalle.seriesProgreso;
+        const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso;
         const caloriasQuemadas = calcularCaloriasQuemadas(detalle.ejercicio, tiempoTotal);
 
-        // Actualizar estado según el progreso
-        detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
+        // Actualizar estado del detalle
+        detalle.estado = seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
         detalle.caloriasQuemadas = caloriasQuemadas;
         detalle.tiempoEstimado = tiempoTotal;
 
         await detalle.save();
 
-        // Actualizar progreso de la rutina asociada
+        // Actualizar progreso general de la rutina
         await actualizandoEstadosDetallesRutinas(detalle.rutina);
 
         res.status(200).json(detalle);
     } catch (error) {
-        console.error("Error al actualizar progreso de detalle de rutina:", error);
-        res.status(500).json({ message: "Error al actualizar progreso de detalle de rutina.", error });
+        console.error("Error al actualizar progreso del detalle:", error);
+        res.status(500).json({ message: "Error al actualizar progreso del detalle.", error });
     }
 };
-
 
 // Función para calcular calorías quemadas
 const calcularCaloriasQuemadas = (ejercicio, tiempoTotal) => {
