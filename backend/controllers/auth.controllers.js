@@ -146,7 +146,11 @@ export const verifityToken = async (req, res) => {
             const userFound = await User.findById(user.id);
             if (!userFound) return res.status(404).json({ message: "Usuario no encontrado." });
 
-            return res.json(userFound);
+            return res.status(200).json({
+                user: userFound, // Información del usuario
+                token: newToken || token, // Token renovado o actual
+            });
+
         });
     } catch (error) {
         console.error("Error al verificar el token:", error);
