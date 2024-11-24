@@ -102,10 +102,12 @@ export const updateDetalleRutina = async (req, res) => {
 // Eliminar un detalle de rutina
 export const deleteDetalleRutina = async (req, res) => {
     try {
-        const { id } = req.params.id;
-        const detalle = await DetallesRutina.findByIdAndDelete(id);
+        console.log("ID recibido para eliminar:", req.params.id);
+        const detalle = await DetallesRutina.findByIdAndDelete(req.params.id);
 
-        if (!detalle) return res.status(404).json({ message: "Detalle no encontrado." });
+        if (!detalle) {
+            return res.status(404).json({ message: "Detalle no encontrado." });
+        }
 
         // Actualizar el total de ejercicios en la rutina
         const rutina = await Rutinas.findById(detalle.rutina);

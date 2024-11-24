@@ -55,12 +55,13 @@ export function DetalleRutinaProvider({ children }) {
     // Eliminar un detalle de rutina
     const deleteDetalleRutina = async (id) => {
         try {
+            console.log("Eliminando detalle con ID:", id);
             await deleteDetalleRutinaRequest(id);
             setDetalles((prev) => prev.filter((detalle) => detalle._id !== id));
         } catch (error) {
             console.error("Error al eliminar detalle de rutina:", error);
         }
-    };
+    };    
 
     // Actualizar un detalle de rutina
     const updateDetalleRutina = async (id, data) => {
