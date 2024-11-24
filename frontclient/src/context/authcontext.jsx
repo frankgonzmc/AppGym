@@ -7,6 +7,7 @@ import {
     updatePerfilRequest,
     checkEmailRequest,
 } from "../api/auth";
+import axios from "../api/axios";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -112,7 +113,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Error cerrando sesión:", error);
         }
     };
-    
+
     const checkLogin = async () => {
         try {
             const res = await verifityTokenRequest(); // Asegúrate de que 'axios' ya incluye cookies
