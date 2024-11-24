@@ -76,6 +76,10 @@ export default function IniciaEjercicioPage() {
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
+      if (!detalles || !detalles.ejercicio) {
+        throw new Error("Detalles o información del ejercicio no disponibles.");
+      }
+
       if (nuevasSeries <= detalles.ejercicio.series) {
         await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
 
@@ -90,6 +94,7 @@ export default function IniciaEjercicioPage() {
       console.error("Error al actualizar progreso de la serie:", error);
     }
   };
+
 
   const registrarEjercicioCompletado = async () => {
     if (estadoEjercicioRealizado === 0) {

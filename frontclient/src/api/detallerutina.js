@@ -18,6 +18,9 @@ export const registrarDetalleCompletadoRequest = async (ejercicioId) => {
 export const getDetalleRutinaRequest = async (rutinaId) => {
     try {
         const response = await axios.get(`/detalles-rutinas/${rutinaId}`);
+        if (!response || !response.data) {
+            throw new Error("La API no devolvió una respuesta válida.");
+        }
         return response.data;
     } catch (error) {
         console.error(`Error al obtener los detalles de la rutina ${rutinaId}:`, error);
