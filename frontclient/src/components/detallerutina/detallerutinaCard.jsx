@@ -28,12 +28,10 @@ export default function DetalleRutinaCard({ detalles }) {
   };
 
   // Validar estado del ejercicio
-  const estadoEjercicio =
-    detalles.seriesProgreso === detalles.ejercicio.series ? "Completado" : "Pendiente";
+  const estadoEjercicio = detalles.seriesProgreso === detalles.ejercicio.series ? "Completado" : "Pendiente";
 
   // Validar estadoEjercicioCompletado (si es requerido)
-  const estadoRutinaCompletado =
-    detalles.estadoRutinaCompletado === 1 ? "Completado" : "Pendiente";
+  const estadoRutinaCompletado = detalles.estadoRutinaCompletado === 1 ? "Completado" : "Pendiente";
 
   return (
     <section className="seccion-card">

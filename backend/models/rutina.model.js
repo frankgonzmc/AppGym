@@ -18,7 +18,7 @@ const rutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    estadoRutinaCompletado: {
+    estadoRutinaRealizado: {
         type: Number,
         default: 0,
     },

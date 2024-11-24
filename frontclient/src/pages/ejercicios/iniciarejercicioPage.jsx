@@ -5,9 +5,13 @@ import reposo from "../../imagenes/reposo.webp";
 import {
   updateProgresoEjercicioRequest,
   updateEstadoEjercicioRequest,
-  getDetalleRutinaRequest
+  getDetalleRutinaRequest,
+  registrarEjercicioCompletadoRequest, // Asegúrate de que esta API exista
 } from '../../api/detallerutina';
-import { updateRutinaProgressRequest, updateEstadoRutinaRequest } from '../../api/rutina';
+import {
+  updateRutinaProgressRequest,
+  updateEstadoRutinaRequest,
+} from '../../api/rutina';
 import { updateEstadoProgresoRequest } from '../../api/progreso';
 
 export default function IniciaEjercicioPage() {
@@ -24,7 +28,7 @@ export default function IniciaEjercicioPage() {
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
-
+  const [estadoEjercicioRealizado, setEstadoEjercicioRealizado] = useState(detalles.ejercicio.estadoEjercicioRealizado || 0); // 0 = Pendiente, 1 = Completado
   const intervalRef = useRef(null);
 
   const calcularCaloriasQuemadas = () => {
@@ -49,12 +53,11 @@ export default function IniciaEjercicioPage() {
 
         if (detalles.progresoId) {
           await updateEstadoProgresoRequest(detalles.progresoId, {
-            ejerciciosCompletados: ejerciciosCompletos.length,
+            ejerciciosCompletados: ejerciciosCompletos,
             estado: "Completado",
-            estadoEjercicioCompletado: 1,
             fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas()
+            caloriasQuemadas: calcularCaloriasQuemadas(),
           });
         }
       }
@@ -71,10 +74,23 @@ export default function IniciaEjercicioPage() {
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
+          await registrarEjercicioCompletado();
         }
       }
     } catch (error) {
       console.error("Error al actualizar progreso de la serie:", error);
+    }
+  };
+
+  const registrarEjercicioCompletado = async () => {
+    if (estadoEjercicioRealizado === 0) {
+      try {
+        await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
+        setEstadoEjercicioRealizado(1); // Marcar como realizado
+        console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
+      } catch (error) {
+        console.error("Error al registrar el ejercicio como completado:", error);
+      }
     }
   };
 

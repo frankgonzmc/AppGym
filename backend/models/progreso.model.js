@@ -18,7 +18,7 @@ const progresoSchema = new mongoose.Schema({
     fechaFin: {
         type: Date,
     },
-    ejerciciosCompletados: {
+    estadoProgresoCompletado: {
         type: Number,
         default: 0,
     },
