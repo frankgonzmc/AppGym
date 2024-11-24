@@ -25,9 +25,11 @@ const detallesrutinaSchema = new mongoose.Schema({
     },
     caloriasQuemadas: {
         type: Number,
+        default: 0,
     },
     tiempoEstimado: {
         type: Number, // Duración estimada del ejercicio (en minutos)
+        default: 0,
     },
     fecha: {
         type: Date,
