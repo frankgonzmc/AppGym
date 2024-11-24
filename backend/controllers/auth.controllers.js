@@ -25,7 +25,6 @@ export const register = async (req, res) => {
             peso,
             genero,
             nivel,
-            defaultToken: token,
         });
 
         const savedUser = await newUser.save();
