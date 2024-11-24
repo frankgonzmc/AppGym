@@ -4,6 +4,7 @@ import { useAuth } from "../../context/authcontext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
+import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
 
 export function Inicio() {
   return (
@@ -23,6 +24,7 @@ export function FormularioSesion() {
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
+    showSuccessAlert('Bienvenido!', 'estas listo para iniciar tu rutina???');
   });
 
   useEffect(() => {
