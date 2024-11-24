@@ -134,46 +134,24 @@ export const profile = async (req, res) => {
 // Verificación de token
 export const verifityToken = async (req, res) => {
     const { token } = req.cookies;
-    if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
+    if (!token) return res.status(401).json({ message: "No autorizado. No token." });
 
-    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-        if (err) {
-            if (err.name === 'TokenExpiredError') {
-                // Renovar el token si ha expirado
-                const newToken = createAccessToken({ id: user.id });
-                res.cookie('token', newToken, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'strict',
-                    maxAge: 24 * 60 * 60 * 1000, // 1 día
-                });
-                return res.status(200).json({ message: "Token renovado." });
+    try {
+        jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+            if (err) {
+                return res.status(401).json({ message: "Token expirado o inválido." });
             }
-            return res.status(401).json({ message: "NO AUTORIZADO" });
-        }
 
-        try {
+            // Token válido, enviar los detalles del usuario
             const userFound = await User.findById(user.id);
-            if (!userFound) return res.status(401).json({ message: "NO AUTORIZADO" });
+            if (!userFound) return res.status(404).json({ message: "Usuario no encontrado." });
 
-            return res.json({
-                id: userFound._id,
-                username: userFound.username,
-                email: userFound.email,
-                edad: userFound.edad,
-                estatura: userFound.estatura,
-                objetivos: userFound.objetivos,
-                nivelActividad: userFound.nivelActividad,
-                genero: userFound.genero,
-                profileImage: userFound.profileImage,
-                peso: userFound.peso,
-                nivel: userFound.nivel,
-                defaultToken: userFound.defaultToken,
-            });
-        } catch (error) {
-            return res.status(500).json({ message: error.message });
-        }
-    });
+            return res.json(userFound);
+        });
+    } catch (error) {
+        console.error("Error al verificar el token:", error);
+        return res.status(500).json({ message: "Error interno." });
+    }
 };
 
 // Ruta para verificar si el email existe
