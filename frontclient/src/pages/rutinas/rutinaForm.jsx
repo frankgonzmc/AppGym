@@ -61,30 +61,43 @@ const RutinaForm = () => {
 
     try {
       if (params.id) {
+        // Actualizar rutina existente
         const rutinaActualizada = {
           user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length,
-          ejercicios: selectedEjercicios,
+          totalEjercicios: selectedEjercicios.length, // Asegúrate de enviar el número total
         };
 
-
         await updateRutina(params.id, rutinaActualizada);
+
+        // Actualiza los detalles asociados
+        await Promise.all(
+          selectedEjercicios.map(async (ejercicioId) => {
+            const detalle = {
+              rutina: params.id,
+              ejercicio: ejercicioId,
+              fecha: new Date(),
+            };
+            await createDetalleRutina(detalle);
+          })
+        );
+
         showSuccessAlert('Rutina Actualizada', 'Tu rutina se ha actualizado exitosamente.');
         navigate('/rutinas');
 
-
       } else {
+        // Crear nueva rutina
         const nuevaRutina = {
           user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios,
+          totalEjercicios: selectedEjercicios.length, // Corregido
         };
 
         const rutinaCreada = await createRutina(nuevaRutina);
 
+        // Crear detalles asociados a la nueva rutina
         const detallesRutina = selectedEjercicios.map(ejercicioId => ({
           rutina: rutinaCreada._id,
           ejercicio: ejercicioId,
@@ -93,12 +106,15 @@ const RutinaForm = () => {
 
         await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
 
+        // Crear progreso asociado a la rutina
         const progresoData = {
           user: user._id,
           rutina: rutinaCreada._id,
-          fecha: new Date()
+          fecha: new Date(),
         };
+
         await createProgreso(progresoData);
+
         showSuccessAlert('Rutina Creada', 'Tu rutina se ha creado exitosamente.');
         navigate('/rutinas');
       }
@@ -107,6 +123,7 @@ const RutinaForm = () => {
       showErrorAlert('Error', 'Ocurrió un problema al guardar la rutina. Inténtalo de nuevo.');
     }
   });
+
 
   const handleCheckboxChange = (ejercicioId) => {
     if (selectedEjercicios.includes(ejercicioId)) {
