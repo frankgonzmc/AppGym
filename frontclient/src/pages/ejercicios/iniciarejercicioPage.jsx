@@ -75,6 +75,7 @@ export default function IniciaEjercicioPage() {
 
           await updateProgresoRequest(progreso.data._id, {
             ejerciciosCompletados: ejerciciosCompletos,
+            estado: "En Progreso",
             fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
