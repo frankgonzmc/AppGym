@@ -73,15 +73,10 @@ export function RutinaCard({ rutina }) {
 
       <p className="text-slate-300">
         <strong>Descripción:</strong> {rutina?.descripcion || "No se proporcionó descripción"}
-        <strong>
-          Descripción: {detalles.ejercicio.descripcion}
-        </strong>
-        <strong>
-          Calorias Quemadas: {detalles.caloriasQuemadas}
-        </strong>
-        <strong>
-          Tiempo Estimado: {detalles.tiempoEstimado} segundos
-        </strong>
+        <br />
+        <strong>Calorías Quemadas:</strong> {rutina?.caloriasQuemadas || "0"} kcal
+        <br />
+        <strong>Tiempo Estimado:</strong> {rutina?.tiempoEstimado || "0"} segundos
       </p>
 
       <div className="my-3">
