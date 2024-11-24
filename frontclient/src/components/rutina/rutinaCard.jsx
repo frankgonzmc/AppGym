@@ -10,6 +10,7 @@ export function RutinaCard({ rutina }) {
   const { deleteRutina } = useRutinas();
 
   // Estado para sincronizar el progreso
+  const [loading, setLoading] = useState(false);
   const [totalEjercicios, setTotalEjercicios] = useState(rutina?.totalEjercicios || 0);
   const [ejerciciosCompletados, setEjerciciosCompletados] = useState(rutina?.ejerciciosCompletados || 0);
 
@@ -35,14 +36,16 @@ export function RutinaCard({ rutina }) {
     );
 
     if (confirmed) {
+      setLoading(true); // Muestra el indicador de carga
+
       try {
         try {
           await deleteRutina(rutina._id);
-          alert("Rutina eliminada exitosamente.");
+          showAlert('¡Hecho!', 'Rutina Elimina Exitosamente.', 'success');
           navigate('/rutinas');
         } catch (error) {
           console.error("Error al eliminar rutina:", error);
-          alert("Hubo un error al intentar eliminar la rutina.");
+          //alert("Hubo un error al intentar eliminar la rutina.");
         }
       } catch (error) {
         setMessage(error.response ? error.response.data.message : "Error en la solicitud");
@@ -88,17 +91,21 @@ export function RutinaCard({ rutina }) {
       </p>
 
       <footer className="mt-4">
-        <div className="flex gap-x-3 items-center">
-          <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>
-            Editar
-          </button>
-          <button className="btn btn-primary" onClick={() => navigate(`/detalles-rutinas/${rutina._id}`)}>
-            Ver Ejercicios
-          </button>
-          <button className="btn btn-danger" onClick={handleDelete}>
-            Eliminar
-          </button>
-        </div>
+        {loading ? (
+          <p className="text-center text-slate-300">Eliminando rutina...</p>
+        ) : (
+          <div className="flex gap-x-3 items-center">
+            <button className="btn btn-primary" onClick={() => navigate(`/rutinas/${rutina._id}`)}>
+              Editar
+            </button>
+            <button className="btn btn-primary" onClick={() => navigate(`/detalles-rutinas/${rutina._id}`)}>
+              Ver Ejercicios
+            </button>
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Eliminar
+            </button>
+          </div>
+        )}
       </footer>
     </Card>
   );
