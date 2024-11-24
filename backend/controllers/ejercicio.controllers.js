@@ -88,7 +88,7 @@ export const deleteEjercicios = async (req, res) => {
 };
 
 export const registrarEjercicioCompletado = async (req, res) => {
-    const { ejercicioId } = req.params;
+    const { ejercicioId } = req.params.id;
 
     try {
         const ejercicio = await Ejercicios.findById(ejercicioId);
