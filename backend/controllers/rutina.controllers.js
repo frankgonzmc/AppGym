@@ -22,10 +22,10 @@ export const createRutinas = async (req, res) => {
     try {
         const { nombre, descripcion, detalles = [] } = req.body;
 
-        if (!nombre || !descripcion) {
-            return res.status(400).json({ message: "Los campos nombre y descripción son obligatorios." });
+        if (!nombre || !descripcion || detalles) {
+            return res.status(400).json({ message: "Los campos nombre, descripción y ejercicios son obligatorios." });
         }
-
+        console.log(detalles);
         // Crear nueva rutina
         const newRutina = new Rutinas({
             user: req.user.id,
@@ -78,7 +78,7 @@ export const updateRutina = async (req, res) => {
         if (descripcion) updateData.descripcion = descripcion;
         if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
         //if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
-       // if (estado) updateData.estado = estado;
+        // if (estado) updateData.estado = estado;
 
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
