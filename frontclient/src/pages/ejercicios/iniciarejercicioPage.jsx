@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
+import { useAuth } from "../../context/authcontext";
 import {
   getDetalleRutinaRequest,
   updateDetalleRutinaRequest,
@@ -11,10 +12,12 @@ import {
   updateEstadoRutinaRequest,
   registrarRutinaCompletadoRequest,
 } from '../../api/rutina';
-import { updateProgresoRequest, updateEstadoProgresoRequest } from '../../api/progreso';
+import { updateProgresoRequest, updateEstadoProgresoRequest, getProgresoUsuarioRequest } from '../../api/progreso';
+
 
 export default function IniciaEjercicioPage() {
   const { state } = useLocation();
+  const { user } = useAuth();
   const { detalles } = state || {};
 
   if (!detalles || !detalles.ejercicio) {
@@ -55,25 +58,23 @@ export default function IniciaEjercicioPage() {
 
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
+      const progreso = await getProgresoUsuarioRequest(user._id);
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-        const progreso = await getProgresoUsuarioRequest(detalles.user);
+      }
 
-        if (progreso && progreso.id) {
-          await updateEstadoProgresoRequest(progreso.id, {
-            estado: "Completado",
-          });
+      if (progreso) {
+        await updateEstadoProgresoRequest(progreso._id, { estado: "Completado" });
 
-          await updateProgresoRequest(progreso.id, {
-            ejerciciosCompletados: ejerciciosCompletos,
-            fechaFin: new Date(),
-            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas(),
-          });
-        }
+        await updateProgresoRequest(progreso._id, {
+          ejerciciosCompletados: ejerciciosCompletos,
+          fechaFin: new Date(),
+          tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+          caloriasQuemadas: calcularCaloriasQuemadas(),
+        });
       }
     } finally {
       setLoading(false);

@@ -166,3 +166,13 @@ export const compareProgressWithGoals = async (req, res) => {
         res.status(500).json({ message: "Error al comparar progreso con objetivos.", error });
     }
 };
+
+export const getProgresoUsuarioRequest = async (userId) => {
+    try {
+        const progreso = await Progreso.findOne({ user: userId, estado: "En Progreso" });
+        return progreso || null;
+    } catch (error) {
+        console.error("Error al obtener progreso:", error);
+        throw error;
+    }
+};
