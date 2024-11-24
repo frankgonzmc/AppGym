@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
+    const logoutRequest = () => axios.post('/logout'); // Asegúrate de que `axios` incluye `withCredentials`
 
     const signup = async (user) => {
         try {
@@ -100,13 +101,18 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        setUser(null);
-        Cookies.remove("Token");
+    const logout = async () => {
+        try {
+            await logoutRequest(); // Llama al backend para eliminar la cookie
+            setIsAuthenticated(false);
+            setUser(null);
+            Cookies.remove("token"); // Solo como precaución si el backend no elimina correctamente
+            console.log("Sesión cerrada correctamente");
+        } catch (error) {
+            console.error("Error cerrando sesión:", error);
+        }
     };
-
-
+    
     const checkLogin = async () => {
         try {
             const res = await verifityTokenRequest(); // Asegúrate de que 'axios' ya incluye cookies

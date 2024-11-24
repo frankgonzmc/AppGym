@@ -72,7 +72,7 @@ export const login = async (req, res) => {
             sameSite: 'strict', // Previene ataques CSRF
             maxAge: 24 * 60 * 60 * 1000, // 1 día
         });
-        
+
         res.json({
             id: userEncontrado.id,
             username: userEncontrado.username,
@@ -97,11 +97,13 @@ export const login = async (req, res) => {
 // Eliminar token y cerrar sesión
 export const logout = (req, res) => {
     res.cookie('token', "", {
-        expires: new Date(0)
+        httpOnly: true, // Igual que al configurar
+        secure: process.env.NODE_ENV === 'production', // Igual que al configurar
+        sameSite: 'strict', // Igual que al configurar
+        maxAge: 0, // Expira inmediatamente
     });
-    return res.sendStatus(200);
-}
-
+    return res.status(200).json({ message: "Sesión cerrada correctamente" });
+};
 // Seleccionar el perfil del usuario
 export const profile = async (req, res) => {
     try {
