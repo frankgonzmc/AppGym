@@ -146,7 +146,7 @@ export const updateProgresoRutina = async (req, res) => {
         ).length;
 
         // Actualiza la rutina
-        const rutina = await Rutina.findByIdAndUpdate(
+        const rutina = await Rutinas.findByIdAndUpdate(
             rutinaId,
             { ejerciciosCompletados },
             { new: true }

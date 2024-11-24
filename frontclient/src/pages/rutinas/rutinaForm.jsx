@@ -72,16 +72,13 @@ const RutinaForm = () => {
         await updateRutina(params.id, rutinaActualizada);
 
         // Actualiza los detalles asociados
-        await Promise.all(
-          selectedEjercicios.map(async (ejercicioId) => {
-            const detalle = {
-              rutina: params.id,
-              ejercicio: ejercicioId,
-              fecha: new Date(),
-            };
-            await createDetalleRutina(detalle);
-          })
-        );
+        //await DetallesRutinas.deleteMany({ rutina: params.id }); // Borra detalles anteriores
+        const nuevosDetalles = selectedEjercicios.map((ejercicioId) => ({
+          rutina: params.id,
+          ejercicio: ejercicioId,
+          fecha: new Date(),
+        }));
+        await Promise.all(nuevosDetalles.map((detalle) => createDetalleRutina(detalle)));
 
         showSuccessAlert('Rutina Actualizada', 'Tu rutina se ha actualizado exitosamente.');
         navigate('/rutinas');
