@@ -25,8 +25,7 @@ export const createRutinas = async (req, res) => {
         if (!nombre || !descripcion) {
             return res.status(400).json({ message: "Los campos nombre, descripción y ejercicios son obligatorios." });
         }
-        console.log(detalles)
-        // Crear nueva rutina
+
         const newRutina = new Rutinas({
             user: req.user.id,
             nombre,
@@ -42,6 +41,8 @@ export const createRutinas = async (req, res) => {
             const detallesToSave = detalles.map((detalle) => ({
                 ...detalle,
                 rutina: savedRutina._id, // Asegura que el detalle apunte a la nueva rutina
+                estado: "Pendiente", // Inicializa el estado
+                seriesProgreso: 0, // Inicializa progreso
             }));
             await DetallesRutina.insertMany(detallesToSave);
         }
@@ -77,8 +78,8 @@ export const updateRutina = async (req, res) => {
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
         if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
-        //if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
-        // if (estado) updateData.estado = estado;
+        if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
+        if (estado) updateData.estado = estado;
 
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
@@ -87,10 +88,13 @@ export const updateRutina = async (req, res) => {
         if (ejercicios) {
             await DetallesRutina.deleteMany({ rutina: rutinaId });
 
-            const nuevosDetalles = ejercicios.map(ejercicioId => ({
+            // Crear nuevos detalles
+            const nuevosDetalles = ejercicios.map((ejercicioId) => ({
                 rutina: rutinaId,
                 ejercicio: ejercicioId,
-                fecha: new Date()
+                fecha: new Date(),
+                estado: "Pendiente", // Asegúrate de inicializar correctamente el estado
+                seriesProgreso: 0,
             }));
             await DetallesRutina.insertMany(nuevosDetalles);
         }
