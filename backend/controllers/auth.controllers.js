@@ -227,31 +227,28 @@ export const forgotPassword = async (req, res) => {
 
         const token = crypto.randomBytes(20).toString('hex');
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 7200000; // 2 horas
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
         await user.save();
 
-
-        console.log("EMAIL_USER:", process.env.EMAIL_USER);
-        console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
+        console.log("Token generado:", token);
 
         const transporter = nodemailer.createTransport({
-            service: 'gmail', // Gmail como servicio SMTP
+            service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER, // Tu cuenta Gmail
-                pass: process.env.EMAIL_PASS, // Contraseña de aplicación generada
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
 
-        const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
-
+        const resetUrl = `http://localhost:5173/reset-password/${token}`;
         const mailOptions = {
             to: user.email,
             subject: 'Recuperación de Contraseña',
-            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetUrl}`
+            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetUrl}`,
         };
 
         await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: "Correo de recuperación enviado. Revisa tu bandeja de entrada." });
+        res.status(200).json({ message: "Correo enviado. Revisa tu bandeja de entrada." });
     } catch (error) {
         console.error("Error en forgotPassword:", error);
         res.status(500).json({ message: error.message });
@@ -264,22 +261,21 @@ export const resetPassword = async (req, res) => {
     const { password } = req.body;
 
     try {
+        console.log("Token recibido:", token);
         const user = await User.findOne({
             resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() }, // Verifica que no haya expirado
+            resetPasswordExpires: { $gt: Date.now() },
         });
 
         if (!user) {
-            console.error(`Token no encontrado o expirado: ${token}`);
+            console.error("Token no encontrado o expirado:", token);
             return res.status(400).json({ message: "Token no válido o expirado." });
         }
 
         user.password = await bcrypt.hash(password, 10);
-        user.resetPasswordToken = undefined; // Elimina el token después de usarlo
+        user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         await user.save();
-        console.log("Token guardado:", user.resetPasswordToken);
-        console.log("Expiración:", new Date(user.resetPasswordExpires));
 
         res.status(200).json({ message: "Contraseña restablecida correctamente." });
     } catch (error) {
