@@ -1,20 +1,32 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "react-bootstrap";
-import '../../css/detallePage.css';
+import "../../css/detallePage.css";
 import { showConfirmation } from "../alerts/utils-alerts";
+import { useState, useEffect } from "react";
 
 export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
   const navigate = useNavigate();
+  const [caloriasQuemadas, setCaloriasQuemadas] = useState(0);
+
+  // Calcular calorías quemadas dinámicamente
+  useEffect(() => {
+    if (detalles) {
+      const totalRepeticiones = detalles.seriesProgreso * detalles.ejercicio.repeticiones;
+      const calorias = totalRepeticiones * detalles.ejercicio.caloriasPorRepeticion;
+      setCaloriasQuemadas(calorias);
+    }
+  }, [detalles]);
 
   const handleDelete = async () => {
     try {
       await deleteDetalleRutina(detalles._id);
       navigate("/rutinas");
-      showConfirmation("Exito!", "Se eliminó el ejercicio.", "success");
+      showConfirmation("Éxito!", "Se eliminó el ejercicio.", "success");
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
+      showConfirmation("Error", "Hubo un problema al eliminar el ejercicio.", "danger");
     }
   };
 
@@ -32,12 +44,6 @@ export default function DetalleRutinaCard({ detalles }) {
 
   // Validar estado del ejercicio
   const estadoEjercicio = detalles.seriesProgreso === detalles.ejercicio.series ? "Completado" : "Pendiente";
-
-  // Validar estadoEjercicioCompletado (si es requerido)
-  const estadoEjercicioCompletado = detalles.ejercicio.estadoEjercicioRealizado === 1 ? "Completado" : "Pendiente";
-
-  // Validar estadoEjercicioCompletado (si es requerido)
-  const estadoRutinaCompletado = estadoEjercicio === estadoEjercicioCompletado ? "Pendiente" : "Completado";
 
   return (
     <section className="seccion-card">
@@ -59,7 +65,7 @@ export default function DetalleRutinaCard({ detalles }) {
             Estado: <strong>{estadoEjercicio}</strong>
           </p>
           <p className="text-center">
-            Estado del Ejercicio: <strong>{estadoRutinaCompletado}</strong>
+            Calorías Quemadas: <strong>{caloriasQuemadas.toFixed(2)} kcal</strong>
           </p>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between">
