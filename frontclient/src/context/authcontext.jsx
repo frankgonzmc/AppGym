@@ -108,19 +108,23 @@ export const AuthProvider = ({ children }) => {
 
     const checkLogin = async () => {
         try {
-            const res = await verifityTokenRequest();
+            const res = await verifityTokenRequest(); // Verifica el token en el backend
             if (res.data) {
                 setIsAuthenticated(true);
-                setUser(res.data);
+                setUser(res.data); // Configura el usuario en el estado
+            } else {
+                setIsAuthenticated(false);
+                setUser(null);
             }
         } catch (error) {
-            console.error("Error verificando el token:", error);
+            console.error("Error verificando el token:", error.message);
             setIsAuthenticated(false);
-            setUser(null);
+            setUser(null); // Limpia el usuario si la verificación falla
         } finally {
-            setLoading(false);
+            setLoading(false); // Finaliza la carga
         }
     };
+    
 
     /*
         const checkLogin = async () => {

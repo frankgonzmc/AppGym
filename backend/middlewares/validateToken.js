@@ -1,35 +1,18 @@
-import { TOKEN_SECRET } from '../config.js';
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
 
 export const authRequired = (req, res, next) => {
+    const { token } = req.cookies; // Obtiene el token desde las cookies
+    if (!token) {
+        return res.status(401).json({ message: "No autorizado. Token no encontrado." });
+    }
+
     try {
-        const { token } = req.cookies;
-
-        if (!token) {
-            return res.status(401).json({ message: "No token, authorization denied" });
-        }
-
-        jwt.verify(token, TOKEN_SECRET, async (error, user) => {
-            if (error) {
-                if (error.name === 'TokenExpiredError') {
-                    // Renovar el token
-                    const newToken = await createAccessToken({ id: user.id });
-                    res.cookie('token', newToken, {
-                        httpOnly: true,
-                        secure: process.env.NODE_ENV === 'production',
-                        sameSite: 'strict',
-                        maxAge: 24 * 60 * 60 * 1000, // 1 día
-                    });
-                    return res.status(200).json({ message: "Token renovado", token: newToken });
-                }
-                return res.status(403).json({ message: "Token inválido" });
-            }
-
-            req.user = user;
-            next();
-        });
+        const decoded = jwt.verify(token, TOKEN_SECRET); // Verifica el token
+        req.user = decoded; // Adjunta los datos del usuario al objeto de la solicitud
+        next(); // Continúa al siguiente middleware
     } catch (error) {
-        console.error("Error en el middleware de autenticación:", error);
-        return res.status(500).json({ message: "Error interno del servidor" });
+        console.error("Error verificando el token:", error.message);
+        return res.status(401).json({ message: "Token inválido o expirado." });
     }
 };

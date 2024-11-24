@@ -133,31 +133,29 @@ export const profile = async (req, res) => {
 
 // Verificación de token
 export const verifityToken = async (req, res) => {
-    const { token } = req.cookies; // Asegúrate de que las cookies estén habilitadas
+    const { token } = req.cookies;
     if (!token) return res.status(401).json({ message: "No autorizado. No token." });
 
     try {
         const decoded = jwt.verify(token, TOKEN_SECRET); // Decodifica el token
-        const userFound = await User.findById(decoded.id);
+        const user = await User.findById(decoded.id); // Busca al usuario en la base de datos
 
-        if (!userFound) {
+        if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado." });
         }
 
-        // Envía los detalles del usuario al frontend
         return res.status(200).json({
-            id: userFound._id,
-            username: userFound.username,
-            email: userFound.email,
-            genero: userFound.genero,
-            nivel: userFound.nivel,
-            edad: userFound.edad,
-            estatura: userFound.estatura,
-            peso: userFound.peso,
-            objetivos: userFound.objetivos,
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            peso: user.peso,
+            edad: user.edad,
+            genero: user.genero,
+            nivel: user.nivel,
+            estatura: user.estatura,
         });
     } catch (error) {
-        console.error("Error al verificar el token:", error);
+        console.error("Error al verificar el token:", error.message);
         return res.status(401).json({ message: "Token inválido o expirado." });
     }
 };
