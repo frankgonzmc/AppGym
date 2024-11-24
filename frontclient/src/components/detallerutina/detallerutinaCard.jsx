@@ -41,8 +41,6 @@ export default function DetalleRutinaCard({ detalles }) {
   // Validar estadoEjercicioCompletado (si es requerido)
   const estadoRutinaCompletado = estadoEjercicio === estadoEjercicioCompletado ? "Pendiente" : "Completado";
 
-  const fechaInicio = detalles.fecha ? new Date(detalles.fecha).toLocaleDateString() : "";
-
   return (
     <section className="seccion-card">
       <Card className="text-white bg-primary">
@@ -50,10 +48,6 @@ export default function DetalleRutinaCard({ detalles }) {
           <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
           <Card.Subtitle className="mb-2 text-black text-center">
             Descripción: {detalles.ejercicio.descripcion}
-            <br />
-            Calorias Quemadas: {detalles.caloriasQuemadas} <br />
-            Tiempo Estimado: {detalles.tiempoEstimado} segundos <br />
-            <p className="text-center">Fecha Inicio: {fechaInicio}</p>
           </Card.Subtitle>
           <p className="text-center">Categoría: {detalles.ejercicio.categoria}</p>
           <p className="text-center">Duración: {detalles.ejercicio.duracion} segundos</p>
