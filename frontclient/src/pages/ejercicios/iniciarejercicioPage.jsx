@@ -6,7 +6,6 @@ import {
   getDetalleRutinaRequest,
   updateDetalleRutinaRequest,
 } from '../../api/detallerutina';
-import { registrarEjercicioCompletadoRequest } from '../../api/ejercicio';
 import {
   updateRutinaProgressRequest,
   updateEstadoRutinaRequest,
@@ -78,8 +77,6 @@ export default function IniciaEjercicioPage() {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
 
-          // Registrar que el ejercicio se completó
-          await registrarEjercicioCompletadoRequest(detalles.ejercicio);
           await registrarRutinaCompletadoRequest(detalles.rutina);
         }
       }
