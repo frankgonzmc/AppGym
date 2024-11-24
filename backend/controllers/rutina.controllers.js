@@ -45,6 +45,13 @@ export const createRutinas = async (req, res) => {
             await DetallesRutina.insertMany(detallesToSave);
         }
 
+        const saveProgreso = {
+            user: req.user.id,
+            rutina: savedRutina._id,
+        };
+
+        await saveProgreso.save();
+
         res.status(201).json(savedRutina);
     } catch (error) {
         console.error('Error al crear rutina:', error);
