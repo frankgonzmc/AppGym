@@ -23,7 +23,7 @@ export function RutinaCard({ rutina }) {
 
   // Calcular progreso
   const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
-  const estadoRutina = porcentajeProgreso === 100 ? 1 : 0;
+  const estadoRutina = porcentajeProgreso === 100 ? "Completo" : "Pendiente";
 
   // Confirmación antes de eliminar la rutina
   const handleDelete = async () => {
@@ -59,7 +59,7 @@ export function RutinaCard({ rutina }) {
     <Card>
       <header className="flex justify-between items-center">
         <h1 className="text-2xl text-slate-300 font-bold text-center">{rutina?.nombre || "Sin Nombre"}</h1>
-        {estadoRutina === 1 && (
+        {estadoRutina === "Completo" && (
           <span className="bg-green-500 text-white px-2 py-1 rounded">Completado</span>
         )}
       </header>
