@@ -244,7 +244,7 @@ export const forgotPassword = async (req, res) => {
             },
         });
 
-        const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
+        const resetUrl = `http://localhost:5000/reset-password/${token}`; // Cambia el URL según tu entorno
 
         const mailOptions = {
             to: user.email,
