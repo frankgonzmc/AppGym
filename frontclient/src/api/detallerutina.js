@@ -72,38 +72,6 @@ export const updateDetalleRutinaRequest = async (detalleId, detalles) => {
 };
 
 /**
- * Actualizar el estado de un ejercicio específico en los detalles de la rutina
- * @param {string} detalleId - ID del detalle a actualizar
- * @param {string} estado - Nuevo estado del ejercicio (e.g., "Completado", "Pendiente")
- * @returns {Promise} - Promesa con la respuesta del servidor
- */
-export const updateEstadoEjercicioRequest = async (detalleId, estado) => {
-    try {
-        const response = await axios.put(`/detalles-rutinas/${detalleId}`, { estado });
-        return response.data;
-    } catch (error) {
-        console.error(`Error al actualizar el estado del ejercicio con ID ${detalleId}:`, error);
-        throw error;
-    }
-};
-
-/**
- * Actualizar el progreso de un ejercicio específico (series completadas)
- * @param {string} detalleId - ID del detalle a actualizar
- * @param {number} seriesProgreso - Número de series completadas
- * @returns {Promise} - Promesa con la respuesta del servidor
- */
-export const updateProgresoEjercicioRequest = async (detalleId, seriesProgreso) => {
-    try {
-        const response = await axios.put(`/detalles-rutinas/${detalleId}/progreso`, { seriesProgreso });
-        return response.data;
-    } catch (error) {
-        console.error(`Error al actualizar el progreso del ejercicio con ID ${detalleId}:`, error);
-        throw error;
-    }
-};
-
-/**
  * Obtener todos los detalles relacionados con una rutina
  * @param {string} rutinaId - ID de la rutina
  * @returns {Promise} - Promesa con los detalles de la rutina

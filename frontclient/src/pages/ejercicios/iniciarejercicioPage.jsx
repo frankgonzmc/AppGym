@@ -4,14 +4,16 @@ import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
 import {
   updateProgresoEjercicioRequest,
-  updateEstadoEjercicioRequest,
   getDetalleRutinaRequest,
-  registrarEjercicioCompletadoRequest, // Asegúrate de que esta API exista
+  updateDetalleRutinaRequest,
 } from '../../api/detallerutina';
+import { registrarEjercicioCompletadoRequest } from '../../api/ejercicio';
+import { registrarRutinaCompletadoRequest } from '../../api/rutina';
 import {
   updateRutinaProgressRequest,
   updateEstadoRutinaRequest,
 } from '../../api/rutina';
+
 import { updateEstadoProgresoRequest } from '../../api/progreso';
 
 export default function IniciaEjercicioPage() {
@@ -41,7 +43,7 @@ export default function IniciaEjercicioPage() {
 
   const actualizarDatosCompletos = async () => {
     try {
-      await updateEstadoEjercicioRequest(detalles._id, "Completado");
+      await updateDetalleRutinaRequest(detalles._id, "Completado");
 
       const response = await getDetalleRutinaRequest(detalles.rutina);
       if (!response || !response.detalles) {
@@ -82,6 +84,7 @@ export default function IniciaEjercicioPage() {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
           await registrarEjercicioCompletado();
+          await registrarRutinaCompletado();
         }
       }
     } catch (error) {
@@ -101,10 +104,10 @@ export default function IniciaEjercicioPage() {
     }
   };
 
-  const registrarRutinaCompletada = async () => {
+  const registrarRutinaCompletado = async () => {
     if (estadoRutinaRealizado === 0) {
       try {
-        await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
+        await registrarRutinaCompletadoRequest(detalles.rutina._id);
         setEstadoRutinaRealizado(1); // Marcar como realizado
         //console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
       } catch (error) {
