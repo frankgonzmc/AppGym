@@ -55,7 +55,7 @@ export default function DetalleRutinaCard({ detalles }) {
             Estado: <strong>{estadoEjercicio}</strong>
           </p>
           <p className="text-center">
-            Estado del Ejercicio: <strong>{estadoEjercicioCompletado}</strong>
+            Estado del Ejercicio: <strong>{estadoRutinaCompletado}</strong>
           </p>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between">
