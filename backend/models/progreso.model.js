@@ -18,10 +18,6 @@ const progresoSchema = new mongoose.Schema({
     fechaFin: {
         type: Date,
     },
-    estadoProgresoCompletado: {
-        type: Number,
-        default: 0,
-    },
     estado: {
         type: String,
         enum: ['Pendiente', 'En Progreso', 'Completado', 'Cancelado'],

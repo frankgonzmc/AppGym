@@ -29,6 +29,7 @@ export default function IniciaEjercicioPage() {
   const [isDescanso, setIsDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
   const [estadoEjercicioRealizado, setEstadoEjercicioRealizado] = useState(detalles.ejercicio.estadoEjercicioRealizado || 0); // 0 = Pendiente, 1 = Completado
+  const [estadoRutinaRealizado, setEstadoRutinaRealizado] = useState(detalles.ejercicio.estadoRutinaRealizado || 0); // 0 = Pendiente, 1 = Completado
   const intervalRef = useRef(null);
 
   const calcularCaloriasQuemadas = () => {
@@ -39,33 +40,38 @@ export default function IniciaEjercicioPage() {
   };
 
   const actualizarDatosCompletos = async () => {
-    await updateEstadoEjercicioRequest(detalles._id, "Completado");
+    try {
+      await updateEstadoEjercicioRequest(detalles._id, "Completado");
 
-    const response = await getDetalleRutinaRequest(detalles.rutina);
-    const detallesRutina = response.data.detalles;
-
-    const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
-    await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
-
-    if (ejerciciosCompletos >= detallesRutina.length) {
-      await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-
-      if (detalles.progresoId) {
-        await updateEstadoProgresoRequest(detalles.progresoId, {
-          ejerciciosCompletados: ejerciciosCompletos,
-          estado: "Completado",
-          fechaFin: new Date(),
-          tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-          caloriasQuemadas: calcularCaloriasQuemadas(),
-        });
-      } else {
-        console.error("No se encontró el progreso asociado a la rutina.");  // Agrega esta línea para ver el error
+      const response = await getDetalleRutinaRequest(detalles.rutina);
+      if (!response || !response.detalles) {
+        throw new Error("La respuesta no contiene los detalles esperados.");
       }
-    } else {
+
+      const detallesRutina = response.detalles; // Acceso seguro a 'detalles'
+      const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
+
+      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+
+      if (ejerciciosCompletos >= detallesRutina.length) {
+        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+
+        if (detalles.progresoId) {
+          await updateEstadoProgresoRequest(detalles.progresoId, {
+            ejerciciosCompletados: ejerciciosCompletos,
+            estado: "Completado",
+            fechaFin: new Date(),
+            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas(),
+          });
+        } else {
+          console.error("No se encontró el progreso asociado a la rutina.");
+        }
+      }
+    } catch (error) {
       console.error("Error al actualizar los datos completos:", error);
     }
   };
-
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
@@ -88,7 +94,19 @@ export default function IniciaEjercicioPage() {
       try {
         await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
         setEstadoEjercicioRealizado(1); // Marcar como realizado
-        console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
+        //console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
+      } catch (error) {
+        console.error("Error al registrar el ejercicio como completado:", error);
+      }
+    }
+  };
+
+  const registrarRutinaCompletada = async () => {
+    if (estadoRutinaRealizado === 0) {
+      try {
+        await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
+        setEstadoRutinaRealizado(1); // Marcar como realizado
+        //console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
       } catch (error) {
         console.error("Error al registrar el ejercicio como completado:", error);
       }

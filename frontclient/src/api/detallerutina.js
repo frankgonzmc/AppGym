@@ -1,6 +1,6 @@
 import axios from './axios';
 
-export const registrarEjercicioCompletadoRequest = async (ejercicioId) => {
+export const registrarDetalleCompletadoRequest = async (ejercicioId) => {
     try {
         const response = await axios.post(`/detalles-rutinas/${ejercicioId}/registrar-completado`);
         return response.data;
