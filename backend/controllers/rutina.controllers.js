@@ -20,49 +20,36 @@ export const getRutinas = async (req, res) => {
 // Crear una nueva rutina
 export const createRutinas = async (req, res) => {
     try {
-        const { nombre, descripcion, detalles = [], progreso } = req.body;
+        const { nombre, descripcion, detalles = [] } = req.body;
 
         if (!nombre || !descripcion) {
             return res.status(400).json({ message: "Los campos nombre y descripción son obligatorios." });
         }
 
+        // Crear nueva rutina
         const newRutina = new Rutinas({
             user: req.user.id,
             nombre,
             descripcion,
-            totalEjercicios: detalles.length || 0,
+            totalEjercicios: detalles.length, // Número total de detalles enviados
             date: new Date(),
         });
 
         const savedRutina = await newRutina.save();
-        console.log("Rutina guardada:", savedRutina);
 
-        // Crear detalles de la rutina
+        // Crear detalles asociados a la rutina
         if (detalles.length > 0) {
-            const detallesToSave = detalles.map(detalle => ({
+            const detallesToSave = detalles.map((detalle) => ({
                 ...detalle,
-                rutina: savedRutina._id
+                rutina: savedRutina._id, // Asegura que el detalle apunte a la nueva rutina
             }));
-
             await DetallesRutina.insertMany(detallesToSave);
-            console.log("Detalles guardados.");
-        }
-
-        // Crear progreso asociado
-        if (progreso) {
-            const newProgreso = new Progreso({
-                user: req.user.id,
-                rutina: savedRutina._id,
-                ...progreso
-            });
-            await newProgreso.save();
-            console.log("Progreso asociado creado.");
         }
 
         res.status(201).json(savedRutina);
     } catch (error) {
-        console.error("Error al crear rutina:", error);
-        res.status(500).json({ message: "Error al crear rutina.", error });
+        console.error('Error al crear rutina:', error);
+        res.status(500).json({ message: 'Error al crear rutina.', error });
     }
 };
 
@@ -90,8 +77,8 @@ export const updateRutina = async (req, res) => {
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
         if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
-        if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
-        if (estado) updateData.estado = estado;
+        //if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
+       // if (estado) updateData.estado = estado;
 
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });

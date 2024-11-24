@@ -54,7 +54,6 @@ const RutinaForm = () => {
     const { nombre, descripcion } = data;
 
     if (!nombre || !descripcion || selectedEjercicios.length === 0) {
-      console.error("Faltan datos requeridos");
       showErrorAlert('Datos incompletos', 'Por favor completa todos los campos y selecciona ejercicios.');
       return;
     }
@@ -66,13 +65,13 @@ const RutinaForm = () => {
           user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length, // Asegúrate de enviar el número total
+          totalEjercicios: selectedEjercicios.length, // Número total de ejercicios seleccionados
         };
 
         await updateRutina(params.id, rutinaActualizada);
 
         // Actualiza los detalles asociados
-        //await DetallesRutinas.deleteMany({ rutina: params.id }); // Borra detalles anteriores
+        await DetallesRutina.deleteMany({ rutina: params.id }); // Borra detalles anteriores
         const nuevosDetalles = selectedEjercicios.map((ejercicioId) => ({
           rutina: params.id,
           ejercicio: ejercicioId,
@@ -82,28 +81,27 @@ const RutinaForm = () => {
 
         showSuccessAlert('Rutina Actualizada', 'Tu rutina se ha actualizado exitosamente.');
         navigate('/rutinas');
-
       } else {
         // Crear nueva rutina
         const nuevaRutina = {
           user: user._id,
           nombre,
           descripcion,
-          totalEjercicios: selectedEjercicios.length, // Corregido
+          totalEjercicios: selectedEjercicios.length, // Asegúrate de enviar el número total
         };
 
         const rutinaCreada = await createRutina(nuevaRutina);
 
-        // Crear detalles asociados a la nueva rutina
-        const detallesRutina = selectedEjercicios.map(ejercicioId => ({
+        // Crear detalles asociados
+        const detallesRutina = selectedEjercicios.map((ejercicioId) => ({
           rutina: rutinaCreada._id,
           ejercicio: ejercicioId,
           fecha: new Date(),
         }));
 
-        await Promise.all(detallesRutina.map(detalle => createDetalleRutina(detalle)));
+        await Promise.all(detallesRutina.map((detalle) => createDetalleRutina(detalle)));
 
-        // Crear progreso asociado a la rutina
+        // Crear progreso asociado
         const progresoData = {
           user: user._id,
           rutina: rutinaCreada._id,
@@ -116,11 +114,10 @@ const RutinaForm = () => {
         navigate('/rutinas');
       }
     } catch (error) {
-      console.error("Error al actualizar o crear la rutina:", error);
+      console.error('Error al actualizar o crear la rutina:', error);
       showErrorAlert('Error', 'Ocurrió un problema al guardar la rutina. Inténtalo de nuevo.');
     }
   });
-
 
   const handleCheckboxChange = (ejercicioId) => {
     if (selectedEjercicios.includes(ejercicioId)) {
