@@ -230,6 +230,11 @@ export const forgotPassword = async (req, res) => {
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hora para expiración
         await user.save();
 
+
+        console.log("EMAIL_USER:", process.env.EMAIL_USER);
+        console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
+
+
         const transporter = nodemailer.createTransport({
             host: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
             port: 587,                     // Puerto para STARTTLS
@@ -239,7 +244,7 @@ export const forgotPassword = async (req, res) => {
                 pass: process.env.EMAIL_PASS, // Contraseña de aplicación
             },
         });
-        
+
         const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
 
         const mailOptions = {
