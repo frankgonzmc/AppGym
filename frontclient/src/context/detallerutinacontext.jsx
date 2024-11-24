@@ -10,6 +10,95 @@ const DetalleRutinaContext = createContext();
 
 export const useDetallesRutina = () => {
     const context = useContext(DetalleRutinaContext);
+    if (!context) {
+        throw new Error("useDetallesRutina debe estar dentro de un DetalleRutinaProvider");
+    }
+    return context;
+};
+
+export function DetalleRutinaProvider({ children }) {
+    const [detalles, setDetalles] = useState([]);
+
+    const getDetalleRutina = async (id) => {
+        try {
+            const res = await getDetalleRutinaRequest(id);
+            return res.data;
+        } catch (error) {
+            console.error("Error al obtener detalle de rutina:", error);
+            throw error;
+        }
+    };
+
+    const fetchDetallesRutina = async (id) => {
+        try {
+            const response = await getDetalleRutinaRequest(id);
+            setDetalles(response.data);
+        } catch (error) {
+            console.error("Error al obtener detalles de rutina:", error);
+        }
+    };
+
+    const createDetalleRutina = async (detalle) => {
+        try {
+            const res = await createDetalleRutinaRequest(detalle);
+            setDetalles((prevDetalles) => [...prevDetalles, res.data]);
+            return res.data;
+        } catch (error) {
+            console.error("Error al crear detalle de rutina:", error);
+            throw error;
+        }
+    };
+
+    const deleteDetalleRutina = async (id) => {
+        try {
+            await deleteDetalleRutinaRequest(id);
+            setDetalles((prev) => prev.filter((detalle) => detalle._id !== id));
+        } catch (error) {
+            console.error("Error al eliminar detalle de rutina:", error);
+        }
+    };
+
+    const updateDetalleRutina = async (id, data) => {
+        try {
+            const response = await updateDetalleRutinaRequest(id, data);
+            setDetalles((prev) =>
+                prev.map((detalle) => (detalle._id === id ? response.data : detalle))
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error al actualizar detalle:", error);
+            throw error;
+        }
+    };
+
+    return (
+        <DetalleRutinaContext.Provider
+            value={{
+                detalles,
+                getDetalleRutina,
+                fetchDetallesRutina,
+                createDetalleRutina,
+                deleteDetalleRutina,
+                updateDetalleRutina,
+            }}
+        >
+            {children}
+        </DetalleRutinaContext.Provider>
+    );
+}
+
+/*import { createContext, useContext, useState } from "react";
+import {
+    createDetalleRutinaRequest,
+    deleteDetalleRutinaRequest,
+    getDetalleRutinaRequest,
+    updateDetalleRutinaRequest,
+} from "../api/detallerutina";
+
+const DetalleRutinaContext = createContext();
+
+export const useDetallesRutina = () => {
+    const context = useContext(DetalleRutinaContext);
     if (!context) throw new Error("useDetallesRutina debe estar dentro de un DetalleRutinaProvider");
     return context;
 };
@@ -126,3 +215,4 @@ export function DetalleRutinaProvider({ children }) {
         </DetalleRutinaContext.Provider>
     );
 }
+*/
