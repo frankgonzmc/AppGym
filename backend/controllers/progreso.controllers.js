@@ -167,16 +167,15 @@ export const compareProgressWithGoals = async (req, res) => {
     }
 };
 
-export const getProgresoUsuarioRequest = async (userId) => {
+export const getProgresoUsuarioRequest = async (req, res) => {
     try {
-        const { userId } = req.params;
         const progreso = await Progreso.findOne({ user: req.params.userId, estado: 'En Progreso' });
         if (!progreso) {
             return res.status(404).json({ message: 'Progreso no encontrado.' });
         }
-        res.status(200).json(progreso);
+        return res.status(200).json(progreso);
     } catch (error) {
         console.error('Error al obtener progreso:', error);
-        res.status(500).json({ message: 'Error interno del servidor.', error });
+        return res.status(500).json({ message: 'Error interno del servidor.', error });
     }
 };
