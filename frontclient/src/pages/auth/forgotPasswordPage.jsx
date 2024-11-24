@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import '../../css/authPage.css';
 import axios from '../../api/axios'
+import { showAlert, showConfirmation } from '../../components/alerts/utils-alerts';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
