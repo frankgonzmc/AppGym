@@ -250,8 +250,7 @@ export const forgotPassword = async (req, res) => {
             text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetUrl}`
         };
 
-        const res = await transporter.sendMail(mailOptions);
-        console.log("Correo enviado:", res);
+        await transporter.sendMail(mailOptions);
         res.status(200).json({ message: "Correo de recuperación enviado. Revisa tu bandeja de entrada." });
     } catch (error) {
         console.error("Error en forgotPassword:", error);
