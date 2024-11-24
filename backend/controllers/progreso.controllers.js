@@ -78,7 +78,7 @@ export const updateProgreso = async (req, res) => {
         }
 
         // Actualizar estadísticas del usuario
-        const user = await User.findById(progreso.user);
+        const user = await User.findById(progreso.id?.user);
         if (user) {
             user.ejerciciosCompletados += ejerciciosCompletados || 0;
             user.caloriasQuemadas += caloriasQuemadas || 0;

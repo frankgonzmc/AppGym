@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
 import { Card } from "react-bootstrap";
 import '../../css/detallePage.css';
+import { showConfirmation } from "../alerts/utils-alerts";
 
 export default function DetalleRutinaCard({ detalles }) {
   const { deleteDetalleRutina } = useDetallesRutina();
@@ -10,7 +11,10 @@ export default function DetalleRutinaCard({ detalles }) {
   const handleDelete = async () => {
     try {
       await deleteDetalleRutina(detalles._id);
+
+      showConfirmation("Exito!", "Se eliminó el ejercicio.", "success");
       navigate("/rutinas");
+
     } catch (error) {
       console.error("Error al eliminar el detalle:", error);
     }
@@ -19,6 +23,7 @@ export default function DetalleRutinaCard({ detalles }) {
   const handleStartOrContinueExercise = () => {
     if (!detalles) {
       console.error("Detalles incompletos:", detalles);
+      showConfirmation("Error", "Los detalles no están completos.", "danger");
       return;
     }
 
