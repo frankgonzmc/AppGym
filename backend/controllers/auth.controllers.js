@@ -231,7 +231,7 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         const transporter = nodemailer.createTransport({
-            host: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
+            service: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
             port: 587,                     // Puerto para STARTTLS
             secure: false,                 // STARTTLS requiere secure=false
             auth: {
