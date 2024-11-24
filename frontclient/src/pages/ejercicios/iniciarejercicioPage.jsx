@@ -81,7 +81,7 @@ export default function IniciaEjercicioPage() {
       }
 
       if (nuevasSeries <= detalles.ejercicio.series) {
-        await updateProgresoEjercicioRequest(detalles._id, nuevasSeries);
+        await updateRutinaProgressRequest(detalles._id, nuevasSeries);
 
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
