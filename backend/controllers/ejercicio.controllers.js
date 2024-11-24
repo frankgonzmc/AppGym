@@ -86,3 +86,24 @@ export const deleteEjercicios = async (req, res) => {
         return res.status(404).json({ message: "Ejercicio no encontrado..." });
     }
 };
+
+export const registrarEjercicioCompletado = async (req, res) => {
+    const { ejercicioId } = req.params;
+
+    try {
+        const ejercicio = await Ejercicios.findById(ejercicioId);
+
+        if (!ejercicio) {
+            return res.status(404).json({ message: "Ejercicio no encontrado." });
+        }
+
+        // Actualizar progreso de la rutina
+        ejercicio.estadoEjercicioRealizado = 1;
+        await ejercicio.save();
+
+        res.status(200).json({ message: "Progreso actualizado.", ejercicio });
+    } catch (error) {
+        console.error("Error al actualizar el progreso de la rutina:", error);
+        res.status(500).json({ message: "Error interno del servidor." });
+    }
+}

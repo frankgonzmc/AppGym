@@ -185,3 +185,24 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         console.error("Error al actualizar progreso de rutina:", error);
     }
 };
+
+export const registrarRutinaCompletado = async (req, res) => {
+    const { rutinaId } = req.params;
+
+    try {
+        const rutina = await Rutinas.findById(rutinaId);
+
+        if (!rutina) {
+            return res.status(404).json({ message: "Rutina no encontrado." });
+        }
+
+        // Actualizar progreso de la rutina
+        rutina.estadoRutinaRealizado = 1;
+        await rutina.save();
+
+        res.status(200).json({ message: "Progreso actualizado.", rutina });
+    } catch (error) {
+        console.error("Error al actualizar el progreso de la rutina:", error);
+        res.status(500).json({ message: "Error interno del servidor." });
+    }
+}

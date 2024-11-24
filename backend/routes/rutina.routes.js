@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { authRequired } from '../middlewares/validateToken.js'
 import { getRutina, getRutinas, createRutinas, updateRutina, deleteRutina } from '../controllers/rutina.controllers.js'
-import { registrarEjercicioCompletado } from '../controllers/progreso.controllers.js'
+import { registrarRutinaCompletado } from '../controllers/rutina.controllers.js'
 import Rutinas from '../models/rutina.model.js'
 import { validateSchema } from '../middlewares/validator.middleware.js'
 import { validateObjectId } from '../middlewares/validateId.js'
@@ -12,6 +12,7 @@ const router = Router()
 router.get('/rutinas', authRequired, getRutinas);
 router.get('/rutinas/:id', authRequired, validateObjectId, getRutina);
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas);
+router.post('/rutinas/:id/registrar-completado', authRequired, validateObjectId, registrarRutinaCompletado);
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
 
