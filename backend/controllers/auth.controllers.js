@@ -278,6 +278,8 @@ export const resetPassword = async (req, res) => {
         user.resetPasswordToken = undefined; // Elimina el token después de usarlo
         user.resetPasswordExpires = undefined;
         await user.save();
+        console.log("Token guardado:", user.resetPasswordToken);
+        console.log("Expiración:", new Date(user.resetPasswordExpires));
 
         res.status(200).json({ message: "Contraseña restablecida correctamente." });
     } catch (error) {
