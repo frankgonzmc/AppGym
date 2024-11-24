@@ -169,7 +169,7 @@ export const compareProgressWithGoals = async (req, res) => {
 
 export const getProgresoUsuarioRequest = async (req, res) => {
     try {
-        const progreso = await Progreso.findOne({ user: req.params.userId, estado: 'En Progreso' });
+        const progreso = await Progreso.findOne({ user: req.params.userId, estado: 'Pendiente' });
         if (!progreso) {
             return res.status(404).json({ message: 'Progreso no encontrado.' });
         }

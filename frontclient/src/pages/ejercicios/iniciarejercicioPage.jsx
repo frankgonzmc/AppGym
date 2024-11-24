@@ -63,15 +63,16 @@ export default function IniciaEjercicioPage() {
 
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
-      const progreso = await getProgresoUsuarioRequest(user.id);
+
+      const idUsuario = await getProgresoUsuarioRequest(user.id);
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
 
-        if (progreso) {
-          await updateEstadoProgresoRequest(progreso._id, { estado: "Completado" });
+        if (idUsuario) {
+          await updateEstadoProgresoRequest(progreso._id, { estado: "En Progreso" });
 
           await updateProgresoRequest(progreso._id, {
             ejerciciosCompletados: ejerciciosCompletos,
