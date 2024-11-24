@@ -14,10 +14,9 @@ export default function IniciaEjercicioPage() {
   const { state } = useLocation();
   const { detalles } = state || {};
 
-  if (!detalles || detalles.ejercicioCompletado !== 1) {
+  if (!detalles || detalles.estado !== "Completado") {
     return <div>No hay ejercicios completados para mostrar.</div>;
   }
-
 
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
