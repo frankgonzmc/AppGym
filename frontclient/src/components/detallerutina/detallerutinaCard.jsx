@@ -47,21 +47,21 @@ export default function DetalleRutinaCard({ detalles }) {
           <Card.Subtitle className="mb-2 text-black text-center">
             Descripción: {detalles.ejercicio.descripcion}
           </Card.Subtitle>
-          <p className="text-right">Categoría: {detalles.ejercicio.categoria}</p>
-          <p className="text-right">Duración: {detalles.ejercicio.duracion} segundos</p>
-          <p className="text-right">Series: {detalles.ejercicio.series}</p>
-          <p className="text-right">Repeticiones: {detalles.ejercicio.repeticiones}</p>
-          <p className="text-right">Descanso: {detalles.ejercicio.descanso}</p>
-          <p className="text-right">
+          <p className="text-left">Categoría: {detalles.ejercicio.categoria}</p>
+          <p className="text-left">Duración: {detalles.ejercicio.duracion} segundos</p>
+          <p className="text-left">Series: {detalles.ejercicio.series}</p>
+          <p className="text-left">Repeticiones: {detalles.ejercicio.repeticiones}</p>
+          <p className="text-left">Descanso: {detalles.ejercicio.descanso}</p>
+          <p className="text-left">
             Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}
           </p>
-          <p className="text-right">
+          <p className="text-left">
             Estado: <strong>{estadoEjercicio}</strong>
           </p>
-          <p className="text-right">
+          <p className="text-left">
             Estado del Ejercicio: <strong>{estadoRutinaCompletado}</strong>
           </p>
-          <p className="text-right"></p>
+          <p className="text-left"></p>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between">
           <button className="btn btn-danger" onClick={handleDelete}>

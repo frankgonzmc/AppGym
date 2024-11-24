@@ -131,6 +131,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         if (!detalle) return res.status(404).json({ message: "Detalle de rutina no encontrado." });
 
         detalle.seriesProgreso = seriesProgreso;
+        const valorestado = detalle.ejercicio.estadoEjercicioRealizado = 1;
 
         // Calcular tiempo total y calorías quemadas
         const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso;
@@ -138,7 +139,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         // Actualizar estado del detalle
         detalle.estado = seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
-        detalle.estadoEjercicioRealizado = 1;
+        detalle.estadoEjercicioRealizado = valorestado;
         detalle.caloriasQuemadas = caloriasQuemadas;
         detalle.tiempoEstimado = tiempoTotal;
 
