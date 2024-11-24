@@ -78,8 +78,10 @@ export default function IniciaEjercicioPage() {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
           try {
-            await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
-            await registrarRutinaCompletadoRequest(detalles.rutina._id);
+            console.log("Ejercicio completado:", detalles.ejercicio);
+            console.log("Rutina completada:", detalles.rutina);
+            await registrarEjercicioCompletadoRequest(detalles.ejercicio);
+            await registrarRutinaCompletadoRequest(detalles.rutina);
           } catch (error) {
             console.error("Error al registrar como completado:", error);
           }
