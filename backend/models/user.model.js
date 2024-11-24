@@ -73,6 +73,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    defaultToken: {
+        type: String,
+        default: "",
+    },
     // Campos necesarios para recuperación de contraseña
     resetPasswordToken: {
         type: String,

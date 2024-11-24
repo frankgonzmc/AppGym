@@ -25,6 +25,7 @@ export const register = async (req, res) => {
             peso,
             genero,
             nivel,
+            defaultToken: token,
         });
 
         const savedUser = await newUser.save();
@@ -39,6 +40,7 @@ export const register = async (req, res) => {
             genero: savedUser.genero,
             nivel: savedUser.nivel,
             edad: savedUser.edad,
+            defaultToken: savedUser.defaultToken,
         });
     } catch (error) {
         console.error("Error en el registro:", error);
@@ -72,6 +74,7 @@ export const login = async (req, res) => {
             nivelActividad: userEncontrado.nivelActividad,
             estatura: userEncontrado.estatura,
             nivel: userEncontrado.nivel,
+            defaultToken: userEncontrado.defaultToken,
             createdAt: userEncontrado.createdAt,
             updatedAt: userEncontrado.updatedAt,
         });
@@ -138,6 +141,7 @@ export const verifityToken = async (req, res) => {
                 profileImage: userFound.profileImage,
                 peso: userFound.peso,
                 nivel: userFound.nivel,
+                defaultToken: userFound.defaultToken,
             });
         } catch (error) {
             return res.status(500).json({ message: error.message });
