@@ -43,7 +43,31 @@ export const createDetalleRutina = async (req, res) => {
     }
 };
 
+
 // Actualizar un detalle de rutina existente
+const updateDetalleRutina = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { seriesProgreso, estado, caloriasQuemadas, tiempoEstimado } = req.body;
+
+        const detalle = await DetallesRutina.findByIdAndUpdate(
+            id,
+            { seriesProgreso, estado, caloriasQuemadas, tiempoEstimado },
+            { new: true }
+        );
+
+        if (!detalle) {
+            return res.status(404).json({ message: "Detalle de rutina no encontrado." });
+        }
+
+        res.json(detalle);
+    } catch (error) {
+        console.error("Error al actualizar detalle de rutina:", error);
+        res.status(500).json({ message: "Error al actualizar detalle de rutina.", error });
+    }
+};
+
+/*
 export const updateDetalleRutina = async (req, res) => {
     try {
         const { id } = req.params; // Corregir aquí: no es req.params.id, sino req.params
@@ -73,7 +97,7 @@ export const updateDetalleRutina = async (req, res) => {
         console.error("Error al actualizar detalle de rutina:", error);
         res.status(500).json({ message: "Error al actualizar detalle de rutina.", error });
     }
-};
+};*/
 
 // Eliminar un detalle de rutina
 export const deleteDetalleRutina = async (req, res) => {

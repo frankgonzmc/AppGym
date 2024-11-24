@@ -139,7 +139,15 @@ export const verifityToken = async (req, res) => {
     jwt.verify(token, TOKEN_SECRET, async (err, user) => {
         if (err) {
             if (err.name === 'TokenExpiredError') {
-                return res.status(401).json({ message: "Token expirado" });
+                // Renovar el token si ha expirado
+                const newToken = createAccessToken({ id: user.id });
+                res.cookie('token', newToken, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    maxAge: 24 * 60 * 60 * 1000, // 1 día
+                });
+                return res.status(200).json({ message: "Token renovado." });
             }
             return res.status(401).json({ message: "NO AUTORIZADO" });
         }
@@ -166,7 +174,7 @@ export const verifityToken = async (req, res) => {
             return res.status(500).json({ message: error.message });
         }
     });
-}
+};
 
 // Ruta para verificar si el email existe
 export const checkEmail = async (req, res) => {

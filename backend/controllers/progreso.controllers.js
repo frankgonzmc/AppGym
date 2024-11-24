@@ -56,7 +56,7 @@ export const deleteProgreso = async (req, res) => {
 };
 
 // Actualizar progreso existente
-export const updateProgreso = async (req, res) => {
+const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
         const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
@@ -83,8 +83,18 @@ export const updateProgreso = async (req, res) => {
             user.ejerciciosCompletados += ejerciciosCompletados || 0;
             user.caloriasQuemadas += caloriasQuemadas || 0;
             user.tiempoEntrenado += tiempoTotal || 0;
+
+            // Revisión de nivel
+            if (user.ejerciciosCompletados >= user.metasEjercicios) {
+                if (user.nivel === 'Principiante') {
+                    user.nivel = 'Intermedio';
+                    user.metasEjercicios += 20;
+                } else if (user.nivel === 'Intermedio') {
+                    user.nivel = 'Avanzado';
+                }
+            }
+
             await user.save();
-            console.log("Estadísticas del usuario actualizadas.");
         }
 
         res.json(progreso);
