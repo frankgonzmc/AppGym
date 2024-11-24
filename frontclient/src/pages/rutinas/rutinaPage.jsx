@@ -12,6 +12,16 @@ export default function RutinaPage() {
   const { getProgreso } = useProgreso();
   const [isLoading, setIsLoading] = useState(true);
 
+  const calcularEjerciciosCompletados = async (rutinaId) => {
+    try {
+      const detalles = await getDetallesRutina(rutinaId); // Obtener detalles desde el backend
+      const completados = detalles.filter(d => d.seriesProgreso >= d.series).length;
+
+      await updateRutina(rutinaId, { ejerciciosCompletados: completados });
+    } catch (error) {
+      console.error("Error al calcular ejercicios completados:", error);
+    }
+  };
   // Efecto para cargar las rutinas y su progreso
   useEffect(() => {
     const fetchRutinasConProgreso = async () => {
