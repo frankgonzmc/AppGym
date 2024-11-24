@@ -42,11 +42,7 @@ export default function IniciaEjercicioPage() {
   }, [detalles]);
 
   const actualizarDatosCompletos = async () => {
-
-    /// aqui puedes crearme un metodo para que obtenga el progreso del usuario con su id, envase a ese id saldra el id de la rutina entocnes actualizara el progreso
     try {
-
-
       setLoading(true);
       await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
 
@@ -58,12 +54,14 @@ export default function IniciaEjercicioPage() {
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
+      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
+
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
 
-
-        if (progresoId) {
-          await updateEstadoProgresoRequest(detalles.progresoId, {
+        const progreso = await getProgresoUsuarioRequest(detalles.user);
+        if (progreso && progreso.id) {
+          await updateEstadoProgresoRequest(progreso.id, {
             estado: "Completado",
             ejerciciosCompletados: ejerciciosCompletos,
             fechaFin: new Date(),
@@ -72,10 +70,6 @@ export default function IniciaEjercicioPage() {
           });
         }
       }
-
-      await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
-
-
     } catch (error) {
       console.error("Error al actualizar los datos completos:", error);
     } finally {

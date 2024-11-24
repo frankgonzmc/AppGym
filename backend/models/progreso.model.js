@@ -11,6 +11,9 @@ const progresoSchema = new mongoose.Schema({
         ref: 'Rutina',
         required: true,
     },
+    ejerciciosCompletados: {
+        type: Number,
+    },
     fechaInicio: {
         type: Date,
         default: Date.now,
