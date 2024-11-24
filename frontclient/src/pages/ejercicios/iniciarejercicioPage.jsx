@@ -60,21 +60,19 @@ export default function IniciaEjercicioPage() {
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-
         const progreso = await getProgresoUsuarioRequest(detalles.user);
-        if (detalles.progresoId) {
+
+        if (progreso && progreso.id) {
           await updateEstadoProgresoRequest(progreso.id, {
             estado: "Completado",
           });
 
-          if (progreso && progreso.id) {
-            await updateProgresoRequest(progreso.id, {
-              ejerciciosCompletados: ejerciciosCompletos,
-              fechaFin: new Date(),
-              tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
-              caloriasQuemadas: calcularCaloriasQuemadas(),
-            });
-          }
+          await updateProgresoRequest(progreso.id, {
+            ejerciciosCompletados: ejerciciosCompletos,
+            fechaFin: new Date(),
+            tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas(),
+          });
         }
       }
     } finally {
