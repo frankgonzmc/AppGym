@@ -60,9 +60,9 @@ export function FormularioSesion() {
           </label>
           {errors.password && (<p className="text-red-500">Password es Necesario!</p>)}
 
-          <button type="submit" className="container4-button1">Iniciar Sesión</button>
+          <button type="submit" className="container4-button1 mt-4 my-3">Iniciar Sesión</button>
           <p className="flex gap-x-2 justify-between">
-            <Link to="/forgot-password" className="text-sky-500">Olvidaste tu contraseña?</Link>
+            <Link to="/forgot-password" className="text-sky-500 mt-4 my-3">Olvidaste tu contraseña?</Link>
           </p>
         </form>
         <hr className="text-white" />
