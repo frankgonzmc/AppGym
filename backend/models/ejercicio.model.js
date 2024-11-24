@@ -45,7 +45,7 @@ const ejercicioSchema = new mongoose.Schema({
     estado: {
         type: String,
     },
-    ejercicioCompletado: {
+    estadoEjercicioCompletado: {
         type: Number,
         default: 0,
     },
