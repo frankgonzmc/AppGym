@@ -24,6 +24,7 @@ export default function IniciaEjercicioPage() {
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesProgreso || 0);
+  const [caloriasQuemadas, setCaloriasQuemadas ] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
