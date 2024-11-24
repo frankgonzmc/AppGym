@@ -7,12 +7,11 @@ import {
   updateDetalleRutinaRequest,
 } from '../../api/detallerutina';
 import { registrarEjercicioCompletadoRequest } from '../../api/ejercicio';
-import { registrarRutinaCompletadoRequest } from '../../api/rutina';
 import {
   updateRutinaProgressRequest,
   updateEstadoRutinaRequest,
+  registrarRutinaCompletadoRequest,
 } from '../../api/rutina';
-
 import { updateEstadoProgresoRequest } from '../../api/progreso';
 
 export default function IniciaEjercicioPage() {
@@ -29,8 +28,6 @@ export default function IniciaEjercicioPage() {
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
   const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
-  const [estadoEjercicioRealizado, setEstadoEjercicioRealizado] = useState(detalles.ejercicio.estadoEjercicioRealizado || 0); // 0 = Pendiente, 1 = Completado
-  const [estadoRutinaRealizado, setEstadoRutinaRealizado] = useState(detalles.ejercicio.estadoRutinaRealizado || 0); // 0 = Pendiente, 1 = Completado
   const intervalRef = useRef(null);
 
   const calcularCaloriasQuemadas = () => {
@@ -42,14 +39,14 @@ export default function IniciaEjercicioPage() {
 
   const actualizarDatosCompletos = async () => {
     try {
-      await updateDetalleRutinaRequest(detalles._id, "Completado");
+      await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
 
       const response = await getDetalleRutinaRequest(detalles.rutina);
       if (!response || !response.detalles) {
         throw new Error("La respuesta no contiene los detalles esperados.");
       }
 
-      const detallesRutina = response.detalles; // Acceso seguro a 'detalles'
+      const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter(detalle => detalle.estado === 'Completado').length;
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
@@ -65,8 +62,6 @@ export default function IniciaEjercicioPage() {
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
           });
-        } else {
-          console.error("No se encontró el progreso asociado a la rutina.");
         }
       }
     } catch (error) {
@@ -76,47 +71,18 @@ export default function IniciaEjercicioPage() {
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
     try {
-      if (!detalles || !detalles.ejercicio) {
-        throw new Error("Detalles o información del ejercicio no disponibles.");
-      }
-
       if (nuevasSeries <= detalles.ejercicio.series) {
-        await updateRutinaProgressRequest(detalles._id, nuevasSeries);
+        await updateDetalleRutinaRequest(detalles._id, { seriesProgreso: nuevasSeries });
 
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos();
-          await registrarEjercicioCompletado();
-          await registrarRutinaCompletado();
+          await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
+          await registrarRutinaCompletadoRequest(detalles.rutina);
         }
       }
     } catch (error) {
       console.error("Error al actualizar progreso de la serie:", error);
-    }
-  };
-
-
-  const registrarEjercicioCompletado = async () => {
-    if (estadoEjercicioRealizado === 0) {
-      try {
-        await registrarEjercicioCompletadoRequest(detalles.ejercicio._id);
-        setEstadoEjercicioRealizado(1); // Marcar como realizado
-        //console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
-      } catch (error) {
-        console.error("Error al registrar el ejercicio como completado:", error);
-      }
-    }
-  };
-
-  const registrarRutinaCompletado = async () => {
-    if (estadoRutinaRealizado === 0) {
-      try {
-        await registrarRutinaCompletadoRequest(detalles.rutina._id);
-        setEstadoRutinaRealizado(1); // Marcar como realizado
-        //console.log(`Ejercicio ${detalles.ejercicio.nombre} registrado como completado.`);
-      } catch (error) {
-        console.error("Error al registrar el ejercicio como completado:", error);
-      }
     }
   };
 
@@ -151,20 +117,13 @@ export default function IniciaEjercicioPage() {
     setIsPausado((prev) => !prev);
   };
 
-  const handleReset = async () => {
-    try {
-      await updateProgresoEjercicioRequest(detalles._id, 0);
-      await updateEstadoEjercicioRequest(detalles._id, "Pendiente");
-
-      setDuracionRestante(detalles.ejercicio.duracion);
-      setDescansoRestante(detalles.ejercicio.descanso);
-      setSeriesCompletadas(0);
-      setIsPausado(true);
-      setIsDescanso(false);
-      setEjercicioCompletado(false);
-    } catch (error) {
-      console.error("Error al reiniciar el ejercicio:", error);
-    }
+  const handleReset = () => {
+    setDuracionRestante(detalles.ejercicio.duracion);
+    setDescansoRestante(detalles.ejercicio.descanso);
+    setSeriesCompletadas(0);
+    setIsPausado(true);
+    setIsDescanso(false);
+    setEjercicioCompletado(false);
   };
 
   return (
@@ -183,9 +142,9 @@ export default function IniciaEjercicioPage() {
       <Card.Body>
         <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
         <p>{detalles.ejercicio.descripcion}</p>
-        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`Duración: ${duracionRestante}s`} className='mt-2' style={{ height: '40px', maxWidth: 'auto', }} />
+        <ProgressBar now={(duracionRestante / detalles.ejercicio.duracion) * 100} label={`Duración: ${duracionRestante}s`} className='mt-2' style={{ height: '40px', maxWidth: 'auto' }} />
         {isDescanso && (
-          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} className='mt-2' label={`Descanso: ${descansoRestante}s`} style={{ height: '40px', maxWidth: 'auto', }} />
+          <ProgressBar variant="info" now={(descansoRestante / detalles.ejercicio.descanso) * 100} className='mt-2' label={`Descanso: ${descansoRestante}s`} style={{ height: '40px', maxWidth: 'auto' }} />
         )}
         <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
 
