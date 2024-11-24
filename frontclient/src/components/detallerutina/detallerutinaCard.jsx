@@ -41,8 +41,9 @@ export default function DetalleRutinaCard({ detalles }) {
           <p className="text-center">Repeticiones: {detalles.ejercicio.repeticiones}</p>
           <p className="text-center">Descanso: {detalles.ejercicio.descanso}</p>
           <p className="text-center">Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}</p>
-          <p className="text-center">Estado: {detalles.estado}</p>
-          <p className="text-center">Peso: {detalles.estado} Kg</p>
+          <p className="text-center">Estado: 
+            {detalles.ejercicio.estado === "Completado" ? "Pendiente" : 1}
+          </p>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between">
           <button className="btn btn-danger" onClick={handleDelete}>Eliminar</button>
