@@ -124,7 +124,7 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de un detalle de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     try {
-        const { detalleId } = req.params.id;
+        const { detalleId } = req.params;
         const { seriesProgreso } = req.body;
 
         const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
@@ -136,16 +136,14 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         const tiempoTotal = detalle.ejercicio.duracion * detalle.seriesProgreso;
         const caloriasQuemadas = calcularCaloriasQuemadas(detalle.ejercicio, tiempoTotal);
 
-        // Determinar estado del detalle
+        // Actualizar estado según el progreso
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
-        detalle.ejercicio.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;
-        detalle.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;;
-        detalle.tiempoEstimado = tiempoTotal;
         detalle.caloriasQuemadas = caloriasQuemadas;
+        detalle.tiempoEstimado = tiempoTotal;
 
         await detalle.save();
 
-        // Actualizar el estado de la rutina general
+        // Actualizar progreso de la rutina asociada
         await actualizandoEstadosDetallesRutinas(detalle.rutina);
 
         res.status(200).json(detalle);
@@ -154,6 +152,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         res.status(500).json({ message: "Error al actualizar progreso de detalle de rutina.", error });
     }
 };
+
 
 // Función para calcular calorías quemadas
 const calcularCaloriasQuemadas = (ejercicio, tiempoTotal) => {

@@ -165,38 +165,28 @@ export const updateProgresoRutina = async (req, res) => {
 
 // Actualizar progreso de la rutina basado en los ejercicios completados (actualiza todos los detalles)
 export const actualizarProgresoRutina = async (rutinaId) => {
-
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
+
+        // Calcular ejercicios completados
         const completados = detalles.filter((detalle) => detalle.estado === "Completado").length;
 
-        const estadoRutina = completados === detalles.length ? "Completado" : "Pendiente";
+        // Determinar estado general de la rutina
+        const estadoRutina = completados === detalles.length ? "Completado" : "En Progreso";
 
-        const rutina = await Rutinas.findByIdAndUpdate(
+        // Actualizar la rutina
+        await Rutinas.findByIdAndUpdate(
             rutinaId,
-            {
-                ejerciciosCompletados: completados,
-                estado: estadoRutina,
-            },
+            { ejerciciosCompletados: completados, estado: estadoRutina },
             { new: true }
         );
 
-        if (!rutina) return console.error("Rutina no encontrada para actualizar progreso.");
-
-        const user = await User.findById(rutinaId);
-        if (user) {
-            user.ejerciciosCompletados += completados;
-            await user.save();
-            console.log("Estadísticas del usuario actualizadas.");
-        }
-
         console.log(`Progreso actualizado para rutina ${rutinaId}: ${completados}/${detalles.length}`);
-
-        return rutina;
     } catch (error) {
         console.error("Error al actualizar progreso de rutina:", error);
     }
 };
+
 
 export const registrarRutinaCompletado = async (req, res) => {
     console.log("ID recibido:", req.params.id);
