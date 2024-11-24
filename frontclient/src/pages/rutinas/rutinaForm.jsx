@@ -71,7 +71,7 @@ const RutinaForm = () => {
         await updateRutina(params.id, rutinaActualizada);
 
         // Actualiza los detalles asociados
-        await DetallesRutina.deleteMany({ rutina: params.id }); // Borra detalles anteriores
+        //await DetallesRutinas.deleteMany({ rutina: params.id }); // Borra detalles anteriores
         const nuevosDetalles = selectedEjercicios.map((ejercicioId) => ({
           rutina: params.id,
           ejercicio: ejercicioId,
