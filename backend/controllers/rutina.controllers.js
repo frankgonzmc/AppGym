@@ -22,10 +22,10 @@ export const createRutinas = async (req, res) => {
     try {
         const { nombre, descripcion, detalles = [] } = req.body;
 
-        if (!nombre || !descripcion || detalles) {
+        if (!nombre || !descripcion) {
             return res.status(400).json({ message: "Los campos nombre, descripción y ejercicios son obligatorios." });
         }
-        console.log(detalles);
+        console.log(detalles)
         // Crear nueva rutina
         const newRutina = new Rutinas({
             user: req.user.id,
