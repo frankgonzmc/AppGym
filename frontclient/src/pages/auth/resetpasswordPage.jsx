@@ -15,7 +15,7 @@ function ResetpasswordPage() {
         try {
             const response = await axios.post(`/reset-password/${token}`, { password: data.password });
             setMessage(response.data.message);
-            navigate('/login');
+            navigate('/');
         } catch (error) {
             setMessage(error.response?.data?.message || "Error al restablecer contraseña");
         } finally {
