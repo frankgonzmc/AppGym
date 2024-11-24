@@ -166,3 +166,30 @@ export const compareProgressWithGoals = async (req, res) => {
         res.status(500).json({ message: "Error al comparar progreso con objetivos.", error });
     }
 };
+
+export const registrarProgresoRutinaEjercicio = async (req, res) => {
+    const { rutinaId } = req.params;
+    const { ejercicioId } = req.body;
+
+    try {
+        const ejercicio = await DetallesRutina.findById(ejercicioId);
+        const rutina = await Rutinas.findById(rutinaId);
+
+        if (!ejercicio || !rutina) {
+            return res.status(404).json({ message: "Ejercicio o rutina no encontrado." });
+        }
+
+        // Actualizar progreso de la rutina
+        rutina.ejerciciosCompletados = 1;
+        // Actualizar progreso del ejercicio
+        ejercicio.estadoProgresoCompletado = 1;
+
+        await rutina.save();
+        await ejercicio.save();
+
+        res.status(200).json({ message: "Progreso actualizado.", ejercicio, rutina });
+    } catch (error) {
+        console.error("Error al actualizar el progreso de la rutina:", error);
+        res.status(500).json({ message: "Error interno del servidor." });
+    }
+}
