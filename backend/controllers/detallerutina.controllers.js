@@ -60,6 +60,22 @@ export const updateDetalleRutina = async (req, res) => {
             return res.status(404).json({ message: "Detalle de rutina no encontrado." });
         }
 
+        // Actualiza los campos permitidos
+        if (seriesProgreso !== undefined) detalle.seriesProgreso = seriesProgreso;
+        if (estado) detalle.estado = estado;
+
+        // Actualizar estadoEjercicioRealizado si el ejercicio se completa
+        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
+            detalle.estado = "Completado";
+        }
+
+        detalle.ejercicio.estadoEjercicioRealizado = detalle.estado >= detalle.seriesProgreso ? 1 : 0;
+
+        await detalle.save();
+
+        // Actualizar progreso general de la rutina
+        await actualizandoEstadosDetallesRutinas(detalle.rutina);
+
         res.json(detalle);
     } catch (error) {
         console.error("Error al actualizar detalle de rutina:", error);
