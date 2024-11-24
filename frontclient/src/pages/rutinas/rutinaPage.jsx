@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRutinas } from "../../context/rutinascontext";
-import { useProgreso } from "../../context/progresocontext";
 import { RutinaCard } from "../../components/rutina/rutinaCard";
 import "../../css/rutinaPage.css";
 import { ImFileEmpty } from "react-icons/im";
@@ -9,39 +8,14 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function RutinaPage() {
   const { rutinas, getRutinas } = useRutinas();
-  const { getProgreso } = useProgreso();
   const [isLoading, setIsLoading] = useState(true);
 
-  const calcularEjerciciosCompletados = async (rutinaId) => {
-    try {
-      const detalles = await getDetallesRutina(rutinaId); // Obtener detalles desde el backend
-      const completados = detalles.filter(d => d.seriesProgreso >= d.series).length;
-
-      await updateRutina(rutinaId, { ejerciciosCompletados: completados });
-    } catch (error) {
-      console.error("Error al calcular ejercicios completados:", error);
-    }
-  };
-  // Efecto para cargar las rutinas y su progreso
+  // Obtener rutinas y actualizar estado
   useEffect(() => {
-    const fetchRutinasConProgreso = async () => {
+    const fetchRutinas = async () => {
       setIsLoading(true);
       try {
-        const rutinasList = await getRutinas();
-        if (rutinasList && rutinasList.length > 0) {
-          // Si hay rutinas, obtenemos el progreso de cada una
-          for (const rutina of rutinasList) {
-            const respuesta = await getProgreso(rutina._id); // Solo si hay progreso asociado
-            if (respuesta) {
-              const { ejerciciosCompletados, totalEjercicios } = respuesta;
-              const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
-              await updateProgresoRutina(rutina._id, { ejerciciosCompletados, totalEjercicios, porcentajeProgreso });
-            }
-          }
-
-        } else {
-          console.log("No se encontraron rutinas."); // Mensaje claro si no hay rutinas
-        }
+        await getRutinas(); // Recarga todas las rutinas desde el backend
       } catch (error) {
         console.error("Error al obtener rutinas:", error.response?.data || error.message);
       } finally {
@@ -49,12 +23,18 @@ export default function RutinaPage() {
       }
     };
 
-    fetchRutinasConProgreso();
-  }, [getRutinas, getProgreso]);
+    fetchRutinas();
+  }, [getRutinas]);
 
   // Si está cargando, mostramos un mensaje de "Cargando"
   if (isLoading) {
-    return <p>Cargando rutinas...</p>;
+    return (
+      <section className="seccion">
+        <Container className="py-4 text-center">
+          <h3 className="text-primary">Cargando rutinas...</h3>
+        </Container>
+      </section>
+    );
   }
 
   // Renderizamos si no hay rutinas
@@ -85,7 +65,7 @@ export default function RutinaPage() {
       <Container className="py-4">
         <Row className="g-4">
           <header>
-            <Link to="/add-rutinas" className="btn btn-success">
+            <Link to="/add-rutinas" className="btn btn-success mb-4">
               CREAR RUTINA
             </Link>
           </header>
