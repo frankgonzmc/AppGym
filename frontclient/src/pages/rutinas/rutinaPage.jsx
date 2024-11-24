@@ -21,8 +21,14 @@ export default function RutinaPage() {
         if (rutinasList && rutinasList.length > 0) {
           // Si hay rutinas, obtenemos el progreso de cada una
           for (const rutina of rutinasList) {
-            await getProgreso(rutina._id); // Solo si hay progreso asociado
+            const respuesta = await getProgreso(rutina._id); // Solo si hay progreso asociado
+            if (respuesta) {
+              const { ejerciciosCompletados, totalEjercicios } = respuesta;
+              const porcentajeProgreso = totalEjercicios > 0 ? (ejerciciosCompletados / totalEjercicios) * 100 : 0;
+              await updateProgresoRutina(rutina._id, { ejerciciosCompletados, totalEjercicios, porcentajeProgreso });
+            }
           }
+
         } else {
           console.log("No se encontraron rutinas."); // Mensaje claro si no hay rutinas
         }
