@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "react-bootstrap";
 import { useRutinas } from "../../context/rutinascontext";
 import { useEffect, useState } from "react";
+import { showAlert, showConfirmation } from '../../components/alerts/utils-alerts';
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
@@ -26,15 +27,31 @@ export function RutinaCard({ rutina }) {
 
   // Confirmación antes de eliminar la rutina
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta rutina?");
-    if (confirmDelete) {
+
+    const confirmed = await showConfirmation(
+      '¿Estás seguro?',
+      'Esta acción no se puede deshacer.',
+      'warning'
+    );
+
+    if (confirmed) {
       try {
-        await deleteRutina(rutina._id);
-        alert("Rutina eliminada exitosamente.");
+        try {
+          await deleteRutina(rutina._id);
+          alert("Rutina eliminada exitosamente.");
+        } catch (error) {
+          console.error("Error al eliminar rutina:", error);
+          alert("Hubo un error al intentar eliminar la rutina.");
+        }
       } catch (error) {
-        console.error("Error al eliminar rutina:", error);
-        alert("Hubo un error al intentar eliminar la rutina.");
+        setMessage(error.response ? error.response.data.message : "Error en la solicitud");
+      } finally {
+        setLoading(false); // Ocultar carga
       }
+
+      showAlert('¡Hecho!', 'Acción confirmada.', 'success');
+    } else {
+      showAlert('Cancelado', 'No se realizó ninguna acción.', 'info');
     }
   };
 
