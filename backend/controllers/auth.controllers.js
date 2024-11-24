@@ -234,8 +234,6 @@ export const forgotPassword = async (req, res) => {
         console.log("EMAIL_USER:", process.env.EMAIL_USER);
         console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
 
-        const nodemailer = require('nodemailer');
-
         const transporter = nodemailer.createTransport({
             host: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
             port: 587,                     // Puerto para STARTTLS
@@ -254,7 +252,8 @@ export const forgotPassword = async (req, res) => {
             text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetUrl}`
         };
 
-        await transporter.sendMail(mailOptions);
+        const res = await transporter.sendMail(mailOptions);
+        console.log("Correo enviado:", res);
         res.status(200).json({ message: "Correo de recuperación enviado. Revisa tu bandeja de entrada." });
     } catch (error) {
         console.error("Error en forgotPassword:", error);
