@@ -56,7 +56,7 @@ export const deleteProgreso = async (req, res) => {
 };
 
 // Actualizar progreso existente
-const updateProgreso = async (req, res) => {
+export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
         const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
