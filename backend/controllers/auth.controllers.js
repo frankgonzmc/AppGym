@@ -231,15 +231,15 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         const transporter = nodemailer.createTransport({
-            host: 'smtp-mail.outlook.com', // Cambiar si usas otro proveedor
-            port: 587,
-            secure: false, // Cambiar a false para puertos que usan STARTTLS
+            host: 'smtp-mail.outlook.com', // Servidor SMTP de Outlook
+            port: 587,                     // Puerto para STARTTLS
+            secure: false,                 // STARTTLS requiere secure=false
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
+                user: process.env.EMAIL_USER, // Tu correo
+                pass: process.env.EMAIL_PASS, // Contraseña de aplicación
             },
-        });        
-
+        });
+        
         const resetUrl = `http://localhost:5173/reset-password/${token}`; // Cambia el URL según tu entorno
 
         const mailOptions = {
