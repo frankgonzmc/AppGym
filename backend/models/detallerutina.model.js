@@ -19,6 +19,10 @@ const detallesrutinaSchema = new mongoose.Schema({
         type: String,
         default: 'Pendiente',
     },
+    estadoEjercicioRealizado: {
+        type: Number,
+        default: 0,
+    },
     caloriasQuemadas: {
         type: Number,
     },
