@@ -8,7 +8,7 @@ import { useAuth } from '../../context/authcontext';
 import '../../css/rutinaPage.css'; // Tu propio archivo CSS para personalizar el calendario
 import { useDetallesRutina } from '../../context/detallerutinacontext';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { showSuccessAlert, showErrorAlert } from '../../utils/alerts'; // Importa las alertas
+import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
 
 const RutinaForm = () => {
   const { register, handleSubmit, setValue } = useForm();
