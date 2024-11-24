@@ -7,6 +7,8 @@ export const getRutinaRequest = (id) => axios.get(`/rutinas/${id}`)
 
 export const createRutinaRequest = (rutina) => axios.post('/rutinas', rutina)
 
+export const registrarRutinaCompletadoRequest = (rutinaId) => axios.post(`/rutinas/${rutinaId}/registrar-completado`);
+
 export const updateRutinaRequest = (id, rutina) => axios.put(`/rutinas/${id}`, rutina)
 
 export const deleteRutinaRequest = (id, rutina) => axios.delete(`/rutinas/${id}`, rutina)
