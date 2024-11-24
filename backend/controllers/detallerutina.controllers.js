@@ -46,14 +46,21 @@ export const createDetalleRutina = async (req, res) => {
 // Actualizar un detalle de rutina existente
 export const updateDetalleRutina = async (req, res) => {
     try {
-        const { id } = req.params.id;
+        const { id } = req.params; // Corregir aquí: no es req.params.id, sino req.params
         const { seriesProgreso, estado } = req.body;
 
         const detalle = await DetallesRutina.findById(id);
         if (!detalle) return res.status(404).json({ message: "Detalle no encontrado." });
 
+        // Actualiza los campos permitidos
         if (seriesProgreso !== undefined) detalle.seriesProgreso = seriesProgreso;
         if (estado) detalle.estado = estado;
+
+        // Actualizar estadoEjercicioRealizado si el ejercicio se completa
+        if (detalle.seriesProgreso >= detalle.ejercicio.series) {
+            detalle.ejercicio.estadoEjercicioRealizado = 1;
+            detalle.estado = "Completado";
+        }
 
         await detalle.save();
 
@@ -92,10 +99,10 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de un detalle de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     try {
-        const { detalleId } = req.params.id;
+        const { id } = req.params; // Corregir el acceso a req.params.id
         const { seriesProgreso } = req.body;
 
-        const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
+        const detalle = await DetallesRutina.findById(id).populate('ejercicio');
         if (!detalle) return res.status(404).json({ message: "Detalle de rutina no encontrado." });
 
         detalle.seriesProgreso = seriesProgreso;
@@ -106,7 +113,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
 
         // Determinar estado del detalle
         detalle.estado = detalle.seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
-        detalle.ejercicio.estadoEjercicioRealizado = 1;
+        detalle.ejercicio.estadoEjercicioRealizado = detalle.seriesProgreso >= detalle.ejercicio.series ? 1 : 0;
         detalle.tiempoEstimado = tiempoTotal;
         detalle.caloriasQuemadas = caloriasQuemadas;
 
