@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { resetPasswordRequest } from '../../api/auth';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import '../../css/authPage.css';
@@ -14,9 +15,9 @@ function ResetpasswordPage() {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post(`/reset-password/${token}`, { password: data.password });
+            const response = await resetPasswordRequest(token, data.password); // Enviar token y nueva contraseña
             setMessage(response.data.message);
-            navigate('/');
+            navigate('/'); // Redirigir después del éxito
         } catch (error) {
             setMessage(error.response?.data?.message || "Error al restablecer contraseña");
         } finally {
