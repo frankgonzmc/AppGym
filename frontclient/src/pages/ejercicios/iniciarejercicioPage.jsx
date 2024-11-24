@@ -49,8 +49,9 @@ export default function IniciaEjercicioPage() {
 
         if (detalles.progresoId) {
           await updateEstadoProgresoRequest(detalles.progresoId, {
-            ejerciciosCompletados: ejerciciosCompletos,
+            ejerciciosCompletados: ejerciciosCompletos.length,
             estado: "Completado",
+            estadoEjercicioCompletado: 1,
             fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas()

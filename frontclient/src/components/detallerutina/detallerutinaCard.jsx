@@ -32,8 +32,8 @@ export default function DetalleRutinaCard({ detalles }) {
     detalles.seriesProgreso === detalles.ejercicio.series ? "Completado" : "Pendiente";
 
   // Validar estadoEjercicioCompletado (si es requerido)
-  const estadoEjercicioCompletado =
-    detalles.estadoEjercicioCompletado === 1 ? "Completado" : "Pendiente";
+  const estadoRutinaCompletado =
+    detalles.estadoRutinaCompletado === 1 ? "Completado" : "Pendiente";
 
   return (
     <section className="seccion-card">

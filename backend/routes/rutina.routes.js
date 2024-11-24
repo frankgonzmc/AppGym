@@ -8,7 +8,6 @@ import { createRutinaSchema } from '../validator/rutina.schema.js'
 
 const router = Router()
 
-
 router.get('/rutinas', authRequired, getRutinas);
 router.get('/rutinas/:id', authRequired, validateObjectId, getRutina);
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas);
