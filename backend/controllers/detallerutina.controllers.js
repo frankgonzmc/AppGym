@@ -45,7 +45,7 @@ export const createDetalleRutina = async (req, res) => {
 // Actualizar un detalle de rutina existente
 export const updateDetalleRutina = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params.id;
         const { seriesProgreso, estado } = req.body;
 
         const detalle = await DetallesRutina.findById(id);
@@ -69,7 +69,7 @@ export const updateDetalleRutina = async (req, res) => {
 // Eliminar un detalle de rutina
 export const deleteDetalleRutina = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params.id;
         const detalle = await DetallesRutina.findByIdAndDelete(id);
 
         if (!detalle) return res.status(404).json({ message: "Detalle no encontrado." });
@@ -91,7 +91,7 @@ export const deleteDetalleRutina = async (req, res) => {
 // Actualizar progreso y estado de un detalle de rutina
 export const actualizarProgresoDetalleRutina = async (req, res) => {
     try {
-        const { detalleId } = req.params;
+        const { detalleId } = req.params.id;
         const { seriesProgreso } = req.body;
 
         const detalle = await DetallesRutina.findById(detalleId).populate('ejercicio');
