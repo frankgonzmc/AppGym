@@ -155,3 +155,24 @@ export const updateProgresoRutina = async (req, res) => {
         res.status(500).json({ message: "Error del servidor" });
     }
 };
+
+// controllers/detallerutina.controller.js
+export const registrarEjercicioCompletado = async (req, res) => {
+    const { ejercicioId } = req.params;
+
+    try {
+        const ejercicio = await DetallesRutina.findById(ejercicioId);
+        if (!ejercicio) {
+            return res.status(404).json({ message: "Ejercicio no encontrado." });
+        }
+
+        // Marcar como completado alguna vez
+        ejercicio.estadoEjercicioRealizado = 1;
+        await ejercicio.save();
+
+        res.status(200).json({ message: "Ejercicio registrado como completado.", ejercicio });
+    } catch (error) {
+        console.error("Error al registrar el ejercicio como completado:", error);
+        res.status(500).json({ message: "Error interno del servidor." });
+    }
+};
