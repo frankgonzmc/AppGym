@@ -115,8 +115,16 @@ export const AuthProvider = ({ children }) => {
     };
 
     const checkLogin = async () => {
+        const cookies = Cookies.get();
+
+        if (!cookies.token) {
+            setIsAuthenticated(false);
+            setLoading(false);
+            return setUser(null);
+        }
+
         try {
-            const res = await verifityTokenRequest(); // Asegúrate de que 'axios' ya incluye cookies
+            const res = await verifityTokenRequest(cookies.token); // Asegúrate de que 'axios' ya incluye cookies
             if (res.data) {
                 setIsAuthenticated(true);
                 setUser(res.data);
