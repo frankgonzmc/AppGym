@@ -20,3 +20,6 @@ export const getUserStatsRequest = (userId, period) => axios.get(`/stats/${userI
 
 // Comparar progreso con los objetivos del usuario
 export const compareProgressRequest = (userId) => axios.get(`/compare-progress/${userId}`);
+
+// Obtener el progreso de un usuario específico (API Request)
+export const getProgresoUsuarioRequest = (userId) => axios.get(`/progreso/user/${userId}`);
