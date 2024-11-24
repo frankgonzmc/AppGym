@@ -18,6 +18,10 @@ const rutinaSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    ejerciciosCompletados: {
+        type: Number,
+        min: 0,
+    },
     estadoRutinaRealizado: {
         type: Number,
         default: 0,
