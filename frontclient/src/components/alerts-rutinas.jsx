@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { showWarningAlert } from "./components/alerts/utils-alerts";
+import { showWarningAlert } from "./alerts/utils-alerts";
 
 const useRoutineAlerts = (intervalTime) => {
     const [alertsEnabled, setAlertsEnabled] = useState(true);
