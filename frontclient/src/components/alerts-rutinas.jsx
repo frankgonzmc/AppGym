@@ -18,10 +18,10 @@ const useRoutineAlerts = (intervalTime) => {
                 
                     const data = await response.json();
                 
-                    if (data.routines.length > 0) {
+                    if (data.rutinas.length > 0) {
                         showWarningAlert(
                             "¡Atención!",
-                            `Tienes ${data.routines.length} rutina(s) sin completar.`
+                            `Tienes ${data.rutinas.length} rutina(s) sin completar.`
                         );
                     }
                 } catch (error) {
