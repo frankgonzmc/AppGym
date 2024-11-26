@@ -16,7 +16,7 @@ router.post('/rutinas/:id/registrar-completado', authRequired, validateObjectId,
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
 
-router.get('/rutinas/incomplete', authRequired, getIncompleteRoutines);
+router.get('/rutinas/incomplete', getIncompleteRoutines);
 
 // Nueva ruta para obtener recomendaciones de rutinas basadas en el nivel
 router.get('/rutinas/recomendadas', authRequired, async (req, res) => {

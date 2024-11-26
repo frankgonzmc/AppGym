@@ -212,14 +212,15 @@ export const registrarRutinaCompletado = async (req, res) => {
 // Obtener rutinas incompletas
 export const getIncompleteRoutines = async (req, res) => {
     try {
-        const userId = req.user.id; // Supongamos que usas JWT o una cookie para identificar al usuario
-        const incompleteRoutines = await Rutinas.find({ 
+        const userId = req.user.id;
+        const incompleteRoutines = await Rutinas.find({
             user: userId,
-            estado: 'Pendiente' || 'En Progreso'
+            $or: [{ estado: 'Pendiente' }, { estado: 'En Progreso' }]
         });
 
         res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
+        console.error("Error al obtener rutinas incompletas:", error);
         res.status(500).json({ message: "Error al obtener rutinas incompletas" });
     }
 };
