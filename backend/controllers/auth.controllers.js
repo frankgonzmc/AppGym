@@ -15,14 +15,6 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: "El email ya está registrado" });
         }
 
-        const token = createAccessToken({ id: savedUser._id });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Usa HTTPS en producción
-            sameSite: 'strict', // Protege contra ataques CSRF
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
-        });
-
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,
@@ -37,6 +29,13 @@ export const register = async (req, res) => {
         });
 
         const savedUser = await newUser.save();
+        const token = createAccessToken({ id: savedUser._id });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Usa HTTPS en producción
+            sameSite: 'strict', // Protege contra ataques CSRF
+            maxAge: 24 * 60 * 60 * 1000, // 1 día
+        });
 
         return res.status(201).json({
             id: savedUser._id,
