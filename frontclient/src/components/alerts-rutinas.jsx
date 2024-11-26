@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { showWarningAlert } from "./alerts/utils-alerts";
+import axios from "../api/axios";
 
 const useRoutineAlerts = (intervalTime) => {
     const [alertsEnabled, setAlertsEnabled] = useState(true);
@@ -8,14 +9,7 @@ const useRoutineAlerts = (intervalTime) => {
         if (alertsEnabled) {
             const interval = setInterval(async () => {
                 try {
-                    const response = await fetch("http://localhost:5000/api/rutinas/incomplete", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`, // Reemplaza con tu lógica para obtener el token
-                        },
-                        credentials: "include", // Incluye cookies
-                    });
+                    const response = await axios.get("http://localhost:5000/api/rutinas/incomplete");                    
 
                     if (!response.ok) {
                         throw new Error(`Error ${response.status}: ${response.statusText}`);
