@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authRequired } from '../middlewares/validateToken.js'
-import { getRutina, getRutinas, createRutinas, updateRutina, deleteRutina } from '../controllers/rutina.controllers.js'
+import { getRutina, getRutinas, createRutinas, updateRutina, deleteRutina, getIncompleteRoutines } from '../controllers/rutina.controllers.js'
 import { registrarRutinaCompletado } from '../controllers/rutina.controllers.js'
 import Rutinas from '../models/rutina.model.js'
 import { validateSchema } from '../middlewares/validator.middleware.js'
@@ -15,6 +15,8 @@ router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), create
 router.post('/rutinas/:id/registrar-completado', authRequired, validateObjectId, registrarRutinaCompletado);
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
+
+router.get('/rutinas/incomplete', authRequired, getIncompleteRoutines);
 
 // Nueva ruta para obtener recomendaciones de rutinas basadas en el nivel
 router.get('/rutinas/recomendadas', authRequired, async (req, res) => {

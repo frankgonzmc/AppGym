@@ -138,7 +138,7 @@ export const updateProgresoRutina = async (req, res) => {
 
     try {
         // Obtén los detalles de la rutina
-        const detalles = await DetalleRutina.find({ rutina: rutinaId });
+        const detalles = await DetallesRutina.find({ rutina: rutinaId });
 
         // Calcula ejercicios completados
         const ejerciciosCompletados = detalles.filter(
@@ -206,5 +206,20 @@ export const registrarRutinaCompletado = async (req, res) => {
     } catch (error) {
         console.error("Error al registrar rutina como completada:", error);
         res.status(500).json({ message: "Error interno del servidor." });
+    }
+};
+
+// Obtener rutinas incompletas
+export const getIncompleteRoutines = async (req, res) => {
+    try {
+        const userId = req.user.id; // Supongamos que usas JWT o una cookie para identificar al usuario
+        const incompleteRoutines = await Rutinas.find({ 
+            user: userId,
+            estado: 'Pendiente' || 'En Progreso'
+        });
+
+        res.status(200).json({ routines: incompleteRoutines });
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener rutinas incompletas" });
     }
 };

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
+import useRoutineAlerts from "../components/alerts-rutinas";
 
 export function Inicio() {
     const { user } = useAuth();
@@ -13,8 +14,9 @@ export function Inicio() {
     const [error, setError] = useState("");
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
-
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
+
+    useRoutineAlerts(10000); // 1 hora en milisegundos (puedes editar este tiempo)
 
     const calcularTMB = () => {
         const peso = user.peso || 0;
