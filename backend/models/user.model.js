@@ -73,6 +73,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    newToken: {
+        type: String,
+        default: "",
+    },
     defaultToken: {
         type: String,
         default: "",
