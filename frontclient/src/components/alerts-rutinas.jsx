@@ -9,7 +9,7 @@ const useRoutineAlerts = (intervalTime) => {
         if (alertsEnabled) {
             const interval = setInterval(async () => {
                 try {
-                    const response = await axios.get("/rutinas/incomplete");                    
+                    const response = await axios.get("/api/rutinas/incomplete");                
 
                     if (!response.ok) {
                         throw new Error(`Error ${response.status}: ${response.statusText}`);
