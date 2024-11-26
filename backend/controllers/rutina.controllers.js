@@ -212,6 +212,10 @@ export const registrarRutinaCompletado = async (req, res) => {
 // Obtener rutinas incompletas
 export const getIncompleteRoutines = async (req, res) => {
     try {
+        if (!req.user || !req.user.id) {
+            return res.status(400).json({ message: "Usuario no autenticado" });
+        }
+
         const userId = req.user.id;
         const incompleteRoutines = await Rutinas.find({
             user: userId,
