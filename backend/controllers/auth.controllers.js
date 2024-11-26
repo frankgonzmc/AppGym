@@ -146,7 +146,15 @@ export const verifityToken = async (req, res) => {
                 id: userFound._id,
                 username: userFound.username,
                 email: userFound.email,
+                edad: userFound.edad,
+                genero: userFound.genero,
+                objetivos: userFound.objetivos,
+                nivelActividad: userFound.nivelActividad,
+                profileImage: userFound.profileImage,
+                estatura: userFound.estatura,
+                peso: userFound.peso,
                 nivel: userFound.nivel,
+                token: userFound.defaultToken,
             });
         } catch (error) {
             return res.status(500).json({ message: error.message });
