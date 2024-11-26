@@ -9,10 +9,15 @@ const useRoutineAlerts = (intervalTime) => {
             const interval = setInterval(async () => {
                 try {
                     const response = await fetch("http://localhost:5000/rutinas/incomplete", {
-                        credentials: "include", // Asegúrate de enviar cookies si las usas
+                        credentials: "include",
                     });
+                
+                    if (!response.ok) {
+                        throw new Error(`Error ${response.status}: ${response.statusText}`);
+                    }
+                
                     const data = await response.json();
-
+                
                     if (data.routines.length > 0) {
                         showWarningAlert(
                             "¡Atención!",
@@ -20,8 +25,9 @@ const useRoutineAlerts = (intervalTime) => {
                         );
                     }
                 } catch (error) {
-                    console.error("Error al obtener rutinas incompletas:", error);
+                    console.error("Error al obtener rutinas incompletas:", error.message);
                 }
+                
             }, intervalTime);
 
             return () => clearInterval(interval); // Limpia el intervalo al desmontar

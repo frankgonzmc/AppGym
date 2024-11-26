@@ -218,7 +218,7 @@ export const getIncompleteRoutines = async (req, res) => {
             estado: 'Pendiente' || 'En Progreso'
         });
 
-        res.status(200).json({ routines: incompleteRoutines });
+        res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
         res.status(500).json({ message: "Error al obtener rutinas incompletas" });
     }
