@@ -1,6 +1,7 @@
 import Progreso from '../models/progreso.model.js';
 import User from '../models/user.model.js';
 import Rutinas from '../models/rutina.model.js';
+import { calcularCaloriasQuemadas } from '../utils/calorias.js';
 
 // Obtener progreso de un usuario para una rutina específica
 export const getProgreso = async (req, res) => {
@@ -59,8 +60,10 @@ export const deleteProgreso = async (req, res) => {
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, tiempoTotal, caloriasQuemadas, fechaFin } = req.body;
+        const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
+        const caloriasQuemadas = calcularCaloriasQuemadas(user.peso, tiempoTotal);
 
+        // Actualizar el progreso
         const progreso = await Progreso.findByIdAndUpdate(
             id,
             {
@@ -96,7 +99,8 @@ export const updateProgreso = async (req, res) => {
             await user.save();
         }
 
-        res.json(progreso, user);
+        // Respuesta exitosa
+        res.status(200).json({ progreso, user });
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
         res.status(500).json({ message: "Error al actualizar progreso.", error });

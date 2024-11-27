@@ -1,6 +1,7 @@
 import DetallesRutina from '../models/detallerutina.model.js';
 import Rutinas from '../models/rutina.model.js';
 import Ejercicios from '../models/ejercicio.model.js';
+import { calcularCaloriasQuemadas } from '../utils/calorias.js';
 
 // Obtener detalles de rutina por ID de rutina
 export const getDetallesRutina = async (req, res) => {
@@ -152,8 +153,8 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         const valorestado = detalle.ejercicio.estadoEjercicioRealizado = 1;
 
         // Calcular tiempo total y calorías quemadas
-        const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso;
-        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.ejercicio, tiempoTotal);
+        const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso; // En segundos
+        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.pesoUsuario || 70, tiempoTotal);
 
         // Actualizar estado del detalle
         detalle.estado = seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
