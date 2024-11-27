@@ -8,15 +8,21 @@ export const authRequired = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, TOKEN_SECRET);
+
+        if (!decoded.id || !decoded.id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: "ID no válido" }); // Validar formato del ID
+        }
+
         const user = await User.findById(decoded.id);
         if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
 
-        req.user = user; // Adjunta el usuario al objeto req
+        req.user = user; // Adjuntar usuario completo al objeto req
         next();
     } catch (error) {
         return res.status(403).json({ message: "Token inválido o expirado" });
     }
 };
+
 
 /*import { TOKEN_SECRET } from '../config.js';
 import jwt from 'jsonwebtoken';

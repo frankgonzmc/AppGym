@@ -142,10 +142,15 @@ export function Inicio() {
 
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
+
+
+    const cookieToken = Cookies.get('token');
     const formData = new FormData();
     formData.append('objetivos', user.objetivos);
     formData.append('nivelActividad', user.nivelActividad);
-    formData.append('estado', estado);
+    formData.append('estado', calcularEstado());
+    formData.append('defaultToken', cookieToken);
+
 
     useEffect(() => {
         calcularEstado();

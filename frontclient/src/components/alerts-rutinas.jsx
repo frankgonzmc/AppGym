@@ -11,7 +11,7 @@ const useRoutineAlerts = (intervalTime) => {
                 try {
                     const { data } = await axios.get("/rutinas/incomplete");
 
-                    if (data.rutinas.length > 0) {
+                    if (data.rutinas && data.rutinas.length > 0) {
                         const confirmed = await showInteractiveAlert(
                             "¡Atención!",
                             `Tienes ${data.rutinas.length} rutina(s) sin completar. ¿Deseas ir a completarlas?`

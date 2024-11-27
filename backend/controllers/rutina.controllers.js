@@ -213,19 +213,24 @@ export const registrarRutinaCompletado = async (req, res) => {
 export const getIncompleteRoutines = async (req, res) => {
     try {
         if (!req.user || !req.user._id) {
-            return res.status(400).json({ message: "Usuario no autenticado" });
+            return res.status(400).json({ message: "Usuario no autenticado o ID inválido" });
         }
 
         const userId = req.user._id;
+
+        // Validación adicional para garantizar que el ID sea válido
+        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: "ID de usuario no válido" });
+        }
+
         const incompleteRoutines = await Rutinas.find({
             user: userId,
-            estado: { $in: ['Pendiente', 'En Progreso'] }, // Mejora: usa $in para simplificar
+            estado: { $in: ['Pendiente', 'En Progreso'] }, // Simplificar la consulta con $in
         });
 
-        return res.status(200).json({ rutinas: incompleteRoutines });
+        res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
         console.error("Error al obtener rutinas incompletas:", error);
-        return res.status(500).json({ message: "Error al obtener rutinas incompletas" });
+        res.status(500).json({ message: "Error al obtener rutinas incompletas" });
     }
 };
-
