@@ -213,14 +213,11 @@ export const updatePerfil = async (req, res) => {
         if (peso) user.peso = peso;
         if (genero) user.genero = genero;
         if (profileImage) user.profileImage = profileImage;
-
-        // Opcional: Actualizar tokens
-        if (newToken) user.newToken = newToken;
         if (defaultToken) user.defaultToken = defaultToken;
 
 
         await user.save();
-        return res.status(200).json(user);
+        return res.status(200).json({ message: "Perfil actualizado correctamente", user });
     } catch (error) {
         console.error("Error en updatePerfil:", error);
         return res.status(500).json({ message: "Error al actualizar el perfil", error: error.message });
