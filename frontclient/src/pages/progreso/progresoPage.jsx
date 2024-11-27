@@ -3,7 +3,7 @@ import { LineChart } from "../../components/GraCharts.jsx";
 import { useAuth } from "../../context/authcontext";
 import { getUserStatsRequest, compareProgressRequest } from '../../api/progreso';
 import { ProgressBar, Alert, Card, Container, Row, Col, Dropdown } from 'react-bootstrap';
-import axios from '../../api/axios';
+import '../../css/progresoPage.css';
 
 function ProgresoPage() {
   const { user } = useAuth();
@@ -68,7 +68,7 @@ function ProgresoPage() {
   };
 
   return (
-    <section>
+    <section className='seccion'>
       <Card>
         <Container fluid className="progreso-page-container">
           {alert && <Alert variant="warning">{alert}</Alert>}

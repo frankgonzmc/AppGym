@@ -1,4 +1,7 @@
-/* Contenedor principal */
+.seccion {
+    background-color: #ee9037;
+}
+
 .progreso-page-container {
     padding: 20px;
     background-color: #ffffff;
