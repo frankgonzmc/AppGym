@@ -24,7 +24,7 @@ function CalendarPage() {
   };
 
   return (
-    <section>
+    <section className='seccion'>
       <div className="calendar-page-container">
         <h2 className="calendar-title">Calendario de Rutinas</h2>
         <Calendar
