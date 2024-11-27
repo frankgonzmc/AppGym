@@ -1,4 +1,7 @@
+import { Router } from 'express';
 import Mensaje from '../models/mensaje.model.js';
+
+const router = Router();
 
 router.post('/faq-supporting', async (req, res) => {
     const { nombre, correo, mensaje } = req.body;
@@ -31,3 +34,7 @@ router.post('/faq-supporting', async (req, res) => {
         res.status(500).json({ message: 'Hubo un problema al enviar el mensaje.' });
     }
 });
+
+export default router
+
+
