@@ -13,7 +13,7 @@ export const deleteProgresoRequest = (id) => axios.delete(`/progreso/${id}`);
 export const updateProgresoRequest = (id, progreso) => axios.put(`/progreso/${id}`, progreso);
 
 // Actualizar el estado de un progreso específico
-export const updateEstadoProgresoRequest = (id, estado) => axios.put(`/progreso/${id}/estado`, { estado });
+export const updateEstadoProgresoRequest = (id, estado) => axios.put(`/progreso/${id}/estado`, estado);
 
 // Obtener estadísticas del progreso por período (mensual, semanal, anual)
 export const getUserStatsRequest = (userId, period) => axios.get(`/stats/${userId}/${period}`);

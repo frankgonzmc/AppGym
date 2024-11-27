@@ -59,7 +59,7 @@ export default function IniciaEjercicioPage() {
         throw new Error("Usuario no autenticado o user._id es inválido.");
       }
 
-      await updateDetalleRutinaRequest(detalles._id, "Completado");
+      await updateDetalleRutinaRequest(detalles._id, { estado: "Completado" });
 
       const response = await getDetalleRutinaRequest(detalles.rutina);
       if (!response || !response.detalles) {

@@ -125,21 +125,22 @@ export const updateProgreso = async (req, res) => {
 export const updateEstadoProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { estado } = req.body;
+        const estado = req.body; // El frontend ahora envía directamente el string
 
-        // Actualizar el progreso
+        if (typeof estado !== "string") {
+            return res.status(400).json({ message: "El estado debe ser un string." });
+        }
+
         const progreso = await Progreso.findByIdAndUpdate(
             id,
-            {
-                estado,
-            },
-            { new: true } // Retorna el documento actualizado
+            { estado },
+            { new: true }
         );
 
         if (!progreso) {
             return res.status(404).json({ message: "Progreso no encontrado." });
         }
-        // Respuesta exitosa
+
         res.status(200).json(progreso);
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
