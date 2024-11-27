@@ -34,7 +34,6 @@ export const register = async (req, res) => {
             peso,
             genero,
             nivel,
-            newToken: crypto.randomBytes(16).toString('hex'), // Generar un token único
             defaultToken: crypto.randomBytes(16).toString('hex'), // Otro token
         });
 
