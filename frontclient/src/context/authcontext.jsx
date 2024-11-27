@@ -121,7 +121,9 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false);
             setLoading(false);
             return setUser(null);
-        }
+
+        } else { console.log("Token encontrado en cookies:", cookies.token); }
+
 
         try {
             const res = await verifityTokenRequest(cookies.token); // Asegúrate de que 'axios' ya incluye cookies
@@ -140,13 +142,13 @@ export const AuthProvider = ({ children }) => {
     /*
     const checkLogin = async () => {
         const cookies = Cookies.get();
-
+    
         if (!cookies.token) {
             setIsAuthenticated(false);
             setLoading(false);
             return setUser(null);
         }
-
+    
         try {
             const res = await verifityTokenRequest(cookies.token);
             if (!res.data) {
@@ -154,7 +156,7 @@ export const AuthProvider = ({ children }) => {
                 setLoading(false);
                 return;
             }
-
+    
             setIsAuthenticated(true);
             setUser(res.data);
             setLoading(false);
