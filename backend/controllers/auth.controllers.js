@@ -41,7 +41,7 @@ export const register = async (req, res) => {
         const token = createAccessToken({ id: savedUser._id });
 
         res.cookie('token', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 24 * 60 * 60 * 1000,
@@ -78,7 +78,7 @@ export const login = async (req, res) => {
         const token = await createAccessToken({ id: userEncontrado._id });
 
         res.cookie('token', token, {
-            httpOnly: true, // No permite que JavaScript del cliente acceda a la cookie
+            httpOnly: false, // No permite que JavaScript del cliente acceda a la cookie
             secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
             sameSite: 'strict', // Previene ataques CSRF
             maxAge: 24 * 60 * 60 * 1000, // 1 día
@@ -108,7 +108,7 @@ export const login = async (req, res) => {
 // Eliminar token y cerrar sesión
 export const logout = (req, res) => {
     res.cookie('token', "", {
-        httpOnly: true, // Igual que al configurar
+        httpOnly: false, // Igual que al configurar
         secure: process.env.NODE_ENV === 'production', // Igual que al configurar
         sameSite: 'strict', // Igual que al configurar
         maxAge: 0, // Expira inmediatamente
@@ -201,7 +201,7 @@ export const updatePerfil = async (req, res) => {
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     try {
-        const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero, newToken, defaultToken } = req.body;
+        const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero, defaultToken } = req.body;
         const profileImage = req.file ? `/uploads/perfil/${userId}.jpg` : user.profileImage;
 
         if (username) user.username = username;
