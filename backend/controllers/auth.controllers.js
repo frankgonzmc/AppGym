@@ -8,11 +8,20 @@ import { TOKEN_SECRET } from '../config.js'
 
 export const register = async (req, res) => {
     try {
-        const { username, email, password, edad, estatura, peso, genero, nivel = 'Principiante' } = req.body;
+        const {
+            username,
+            email,
+            password,
+            edad,
+            estatura,
+            peso,
+            genero,
+            nivel = 'Principiante',
+        } = req.body;
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "El email ya está registrado" });
+            return res.status(400).json({ message: "El email no es valido!!" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,15 +34,18 @@ export const register = async (req, res) => {
             peso,
             genero,
             nivel,
+            newToken: crypto.randomBytes(16).toString('hex'), // Generar un token único
+            defaultToken: crypto.randomBytes(16).toString('hex'), // Otro token
         });
 
         const savedUser = await newUser.save();
         const token = createAccessToken({ id: savedUser._id });
+
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Usa HTTPS en producción
-            sameSite: 'strict', // Protege contra ataques CSRF
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000,
         });
 
         return res.status(201).json({
@@ -44,6 +56,7 @@ export const register = async (req, res) => {
             nivel: savedUser.nivel,
             edad: savedUser.edad,
             defaultToken: savedUser.defaultToken,
+            newToken: savedUser.newToken,
         });
     } catch (error) {
         console.error("Error en el registro:", error);
@@ -201,6 +214,11 @@ export const updatePerfil = async (req, res) => {
         if (peso) user.peso = peso;
         if (genero) user.genero = genero;
         if (profileImage) user.profileImage = profileImage;
+
+        // Opcional: Actualizar tokens
+        if (req.body.newToken) user.newToken = req.body.newToken;
+        if (req.body.defaultToken) user.defaultToken = req.body.defaultToken;
+
 
         await user.save();
         return res.status(200).json(user);
