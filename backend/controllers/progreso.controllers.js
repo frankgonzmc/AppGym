@@ -61,7 +61,7 @@ export const deleteProgreso = async (req, res) => {
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, estado, tiempoTotal, fechaFin } = req.body;
+        const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
 
         // Recuperar el progreso actual
         const progreso = await Progreso.findById(id);
@@ -90,7 +90,6 @@ export const updateProgreso = async (req, res) => {
         const progresoActualizado = await Progreso.findByIdAndUpdate(
             id,
             {
-                estado,
                 ejerciciosCompletados,
                 tiempoTotal,
                 caloriasQuemadas,
@@ -123,21 +122,16 @@ export const updateProgreso = async (req, res) => {
     }
 };
 
-/*
-export const updateProgreso = async (req, res) => {
+export const updateEstadoProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
-        const caloriasQuemadas = calcularCaloriasQuemadas(user.peso, tiempoTotal);
+        const { estado } = req.body;
 
         // Actualizar el progreso
         const progreso = await Progreso.findByIdAndUpdate(
             id,
             {
-                ejerciciosCompletados,
-                tiempoTotal,
-                caloriasQuemadas,
-                fechaFin,
+                estado,
             },
             { new: true } // Retorna el documento actualizado
         );
@@ -145,27 +139,6 @@ export const updateProgreso = async (req, res) => {
         if (!progreso) {
             return res.status(404).json({ message: "Progreso no encontrado." });
         }
-
-        // Actualizar estadísticas del usuario
-        const user = await User.findById(progreso.user);
-        if (user) {
-            user.ejerciciosCompletados += ejerciciosCompletados || 0;
-            user.caloriasQuemadas += caloriasQuemadas || 0;
-            user.tiempoEntrenado += tiempoTotal || 0;
-
-            // Ajustar nivel del usuario
-            if (user.ejerciciosCompletados >= user.metasEjercicios) {
-                if (user.nivel === "Principiante") {
-                    user.nivel = "Intermedio";
-                    user.metasEjercicios += 20;
-                } else if (user.nivel === "Intermedio") {
-                    user.nivel = "Avanzado";
-                }
-            }
-
-            await user.save();
-        }
-
         // Respuesta exitosa
         res.status(200).json(progreso);
     } catch (error) {
@@ -173,7 +146,6 @@ export const updateProgreso = async (req, res) => {
         res.status(500).json({ message: "Error al actualizar progreso.", error });
     }
 };
-*/
 
 // Obtener estadísticas del progreso de un usuario (por mes)
 export const getUserStats = async (req, res) => {
