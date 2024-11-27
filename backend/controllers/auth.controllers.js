@@ -145,11 +145,11 @@ export const verifityToken = async (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ message: "NO AUTORIZADO" });
 
-    jwt.verify(token, TOKEN_SECRET, async (err, decoded) => {
+    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).json({ message: "NO AUTORIZADO" });
 
         try {
-            const userFound = await User.findById(decoded.id);
+            const userFound = await User.findById(user.id);
             if (!userFound) return res.status(401).json({ message: "NO AUTORIZADO" });
 
             // Devuelve los datos necesarios del usuario
@@ -165,7 +165,7 @@ export const verifityToken = async (req, res) => {
                 estatura: userFound.estatura,
                 peso: userFound.peso,
                 nivel: userFound.nivel,
-                token: userFound.defaultToken,
+                defaultToken: userFound.defaultToken,
             });
         } catch (error) {
             return res.status(500).json({ message: error.message });
@@ -201,7 +201,7 @@ export const updatePerfil = async (req, res) => {
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     try {
-        const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero } = req.body;
+        const { username, email, edad, estatura, peso, objetivos, nivelActividad, genero, newToken, defaultToken } = req.body;
         const profileImage = req.file ? `/uploads/perfil/${userId}.jpg` : user.profileImage;
 
         if (username) user.username = username;
@@ -215,8 +215,8 @@ export const updatePerfil = async (req, res) => {
         if (profileImage) user.profileImage = profileImage;
 
         // Opcional: Actualizar tokens
-        if (req.body.newToken) user.newToken = req.body.newToken;
-        if (req.body.defaultToken) user.defaultToken = req.body.defaultToken;
+        if (newToken) user.newToken = newToken;
+        if (defaultToken) user.defaultToken = defaultToken;
 
 
         await user.save();

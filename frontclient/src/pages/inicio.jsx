@@ -7,14 +7,17 @@ import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import '../css/inicio.css';
 import profileImage from '../imagenes/profileicono.png';
 import useRoutineAlerts from "../components/alerts-rutinas";
+import axios from "axios";
 
 export function Inicio() {
-    const { user } = useAuth();
+    const { user, updatePerfil } = useAuth();
+
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
+    const nuevoEstado = user.estado;
 
     useRoutineAlerts(10000); // 1 hora en milisegundos (puedes editar este tiempo)
 
@@ -140,11 +143,18 @@ export function Inicio() {
         };
     };
 
+
+
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
 
-    useEffect(() => {
+    const formData = new FormData();
+    formData.append('estado', nuevoEstado);
+
+    useEffect(async () => {
         calcularEstado();
+
+        await updatePerfil(formData);
     }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
 
     return (
