@@ -145,7 +145,7 @@ export function Inicio() {
     const formData = new FormData();
     formData.append('objetivos', user.objetivos);
     formData.append('nivelActividad', user.nivelActividad);
-    formData.append('estado', user.estado);
+    formData.append('estado', estado);
 
     useEffect(() => {
         calcularEstado();
