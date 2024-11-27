@@ -49,7 +49,8 @@ export const createDetalleRutina = async (req, res) => {
 export const updateDetalleRutina = async (req, res) => {
     try {
         const { id } = req.params;
-        const { seriesProgreso, estado, caloriasQuemadas, tiempoEstimado } = req.body;
+        const { seriesProgreso, estado, tiempoEstimado } = req.body;
+        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.pesoUsuario || 70, tiempoTotal);
 
         const detalle = await DetallesRutina.findByIdAndUpdate(
             id,
