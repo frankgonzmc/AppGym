@@ -49,8 +49,7 @@ export const createDetalleRutina = async (req, res) => {
 export const updateDetalleRutina = async (req, res) => {
     try {
         const { id } = req.params;
-        const { seriesProgreso, estado, tiempoEstimado } = req.body;
-        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.pesoUsuario || 70, tiempoTotal);
+        const { seriesProgreso, estado, caloriasQuemadas, tiempoEstimado } = req.body;
 
         const detalle = await DetallesRutina.findByIdAndUpdate(
             id,
@@ -156,6 +155,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         // Calcular tiempo total y calorías quemadas
         const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso; // En segundos
         const caloriasQuemadas = calcularCaloriasQuemadas(detalle.pesoUsuario || 70, tiempoTotal);
+        detalle.caloriasQuemadas = caloriasQuemadas;
 
         // Actualizar estado del detalle
         detalle.estado = seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
@@ -173,14 +173,6 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         console.error("Error al actualizar progreso del detalle:", error);
         res.status(500).json({ message: "Error al actualizar progreso del detalle.", error });
     }
-};
-
-// Función para calcular calorías quemadas
-const calcularCaloriasQuemadas = (ejercicio, tiempoTotal) => {
-    const MET = 8; // MET estimado para ejercicios moderados
-    const pesoUsuario = 70; // Peso promedio del usuario en kg (puedes personalizar esto)
-    const duracionEnHoras = tiempoTotal / 60; // Convertir minutos a horas
-    return MET * pesoUsuario * duracionEnHoras;
 };
 
 // Actualizar el progreso general de la rutina
