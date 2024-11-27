@@ -25,7 +25,6 @@ export function FormularioSesion() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await signin(data);
-      navigate('/inicio');
       showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
@@ -38,7 +37,7 @@ export function FormularioSesion() {
   });
   
   useEffect(() => {
-    if (!isAuthenticated) navigate('/inicio');
+    if (isAuthenticated) navigate('/inicio');
   }, [isAuthenticated]);
 
   return (
