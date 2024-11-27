@@ -149,7 +149,7 @@ export function Inicio() {
         const formData = new FormData();
         formData.append("objetivos", user.objetivos || "");
         formData.append("nivelActividad", user.nivelActividad || "");
-        formData.append("estado", nuevoEstado || "N/A");
+        formData.append("estado", nuevoEstado || user.estado);
         formData.append("defaultToken", cookieToken);
 
         updateDatosPerfil(formData)
@@ -161,7 +161,7 @@ export function Inicio() {
             .catch((err) => {
                 console.error("Error al actualizar el perfil:", err);
             });
-    }, [user.peso, user.estatura, user.objetivos, user.nivelActividad, perfilActualizado]); // Depende de atributos específicos
+    }, [user.peso, user.estatura, user.objetivos, user.nivelActividad, user.estado, perfilActualizado]); // Depende de atributos específicos
 
 
     return (
