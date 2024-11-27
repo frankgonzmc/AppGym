@@ -28,7 +28,7 @@ function FaqPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
-            });
+            });            
 
             if (response.ok) {
                 setSuccessMessage('¡Gracias por tu mensaje! Te responderemos pronto.');
