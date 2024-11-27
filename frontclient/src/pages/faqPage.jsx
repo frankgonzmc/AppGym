@@ -25,7 +25,7 @@ function FaqPage() {
 
         try {
             // Enviar datos al backend
-            const response = await fetch('/api/contact', {
+            const response = await fetch('/faq-supporting', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
