@@ -1,4 +1,25 @@
-section {
-    background-color: #f8f9fa;
+.seccion {
     padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.card {
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1,
+h2 {
+    color: #343a40;
+}
+
+p {
+    color: #6c757d;
+}
+
+button {
+    margin-top: 10px;
 }

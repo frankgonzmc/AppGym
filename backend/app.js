@@ -53,6 +53,33 @@ app.get('/api/dieta', async (req, res) => {
     }
 });
 
+router.post('/faq-supporting', async (req, res) => {
+    const { nombre, correo, mensaje } = req.body;
+
+    if (!nombre || !correo || !mensaje) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+    }
+
+    try {
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: process.env.EMAIL, // Destinatario: correo configurado en .env
+            subject: `Nuevo mensaje de ${nombre}`,
+            text: `
+                Nombre: ${nombre}
+                Correo: ${correo}
+                Mensaje:
+                ${mensaje}
+            `,
+        });
+
+        res.status(200).json({ message: 'Correo enviado con éxito.' });
+    } catch (error) {
+        console.error('Error al enviar correo:', error);
+        res.status(500).json({ message: 'Hubo un problema al enviar el correo.' });
+    }
+});
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());

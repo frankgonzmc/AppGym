@@ -9,6 +9,8 @@ const ProgresoSchema = new mongoose.Schema({
     caloriasQuemadas: { type: Number, default: 0 },
     fechaInicio: { type: Date, default: Date.now },
     fechaFin: { type: Date },
+}, {
+    timestamps: true,
 });
 
 export default mongoose.model("Progreso", ProgresoSchema);
