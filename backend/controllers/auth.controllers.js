@@ -163,6 +163,7 @@ export const verifityToken = async (req, res) => {
                 nivelActividad: userFound.nivelActividad,
                 profileImage: userFound.profileImage,
                 estatura: userFound.estatura,
+                estado: userFound.estado,
                 peso: userFound.peso,
                 nivel: userFound.nivel,
                 defaultToken: userFound.defaultToken,
