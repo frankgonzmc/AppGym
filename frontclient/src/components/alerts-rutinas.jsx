@@ -23,7 +23,7 @@ const useRoutineAlerts = (intervalTime) => {
                         }
                     }
                 } catch (error) {
-                    console.error("Error al obtener rutinas incompletas:", error.message);
+                    console.error(error);
                 }
             }, intervalTime);
 
