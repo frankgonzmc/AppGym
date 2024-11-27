@@ -1,5 +1,6 @@
 import { PanelElements } from "../components/panelElements.jsx";
 import { PanelEjercicios } from "../components/panelEjercicios.jsx";
+import Cookies from 'js-cookie';
 import { useAuth } from "../context/authcontext";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -144,13 +145,16 @@ export function Inicio() {
     const nutrientesVolumen = calcularNutrientesVolumen();
 
 
-    const cookieToken = Cookies.get('token');
+    const cookieToken = Cookies.get('token'); // Obtén el token de las cookies
     const formData = new FormData();
     formData.append('objetivos', user.objetivos);
     formData.append('nivelActividad', user.nivelActividad);
     formData.append('estado', calcularEstado());
-    formData.append('defaultToken', cookieToken);
-
+    if (cookieToken) {
+        formData.append('defaultToken', cookieToken);
+    } else {
+        console.error("El token no se encuentra en las cookies.");
+    }
 
     useEffect(() => {
         calcularEstado();
