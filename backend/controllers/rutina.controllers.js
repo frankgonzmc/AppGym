@@ -212,16 +212,22 @@ export const registrarRutinaCompletado = async (req, res) => {
 // Obtener rutinas incompletas
 export const getIncompleteRoutines = async (req, res) => {
     try {
-        const userId = req.user.id;
+        const { id: userId } = req.params;
 
-        if (!userId) {
-            return res.status(400).json({ message: "ID de usuario no proporcionado o inválido." });
+        // Validar que el ID sea válido
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: "ID no válido" });
         }
 
+        // Buscar rutinas incompletas del usuario
         const incompleteRoutines = await Rutinas.find({
             user: userId,
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
+
+        if (!incompleteRoutines || incompleteRoutines.length === 0) {
+            return res.status(404).json({ message: "No hay rutinas incompletas." });
+        }
 
         res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
