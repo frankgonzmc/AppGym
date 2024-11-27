@@ -71,15 +71,15 @@ const userSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        default: "",
+        default: null,
     },
     newToken: {
         type: String,
-        default: "",
+        default: null,
     },
     defaultToken: {
         type: String,
-        default: "",
+        default: null,
     },
     // Campos necesarios para recuperación de contraseña
     resetPasswordToken: {
