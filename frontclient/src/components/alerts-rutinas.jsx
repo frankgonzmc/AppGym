@@ -14,7 +14,7 @@ const useRoutineAlerts = (intervalTime) => {
                     if (data.rutinas && data.rutinas.length > 0) {
                         const confirmed = await showInteractiveAlert(
                             "¡Atención!",
-                            `Tienes ${data.rutinas.length} rutina(s) sin completar. ¿Deseas ir a completarlas?`
+                            `Tienes ${data.rutinas.length} rutina(s) pendientes. ¿Deseas ir a completarlas?`
                         );
 
                         if (confirmed) {
