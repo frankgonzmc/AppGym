@@ -10,9 +10,8 @@ const useRoutineAlerts = (intervalTime) => {
             const interval = setInterval(async () => {
                 try {
                     const { data } = await axios.get("/rutinas/incomplete");
-                    console.log("Datos obtenidos:", data);
-                    /*
-                    if (data.rutinas && data.rutinas.length > 0) {
+
+                    if (data.rut && data.rut.length > 0) {
                         const confirmed = await showInteractiveAlert(
                             "¡Atención!",
                             `Tienes ${data.rutinas.length} rutina(s) pendientes. ¿Deseas ir a completarlas?`
@@ -22,12 +21,9 @@ const useRoutineAlerts = (intervalTime) => {
                             // Redirige a la página de rutinas
                             window.location.href = "/rutinas";
                         }
-                    }*/
+                    }
                 } catch (error) {
-                    console.error(
-                        "Error al obtener rutinas incompletas:",
-                        error.response?.data?.message || error.message
-                    );
+                    console.error("Error al obtener rutinas incompletas:", error.response?.data?.message || error.message);
                 }
             }, intervalTime);
 

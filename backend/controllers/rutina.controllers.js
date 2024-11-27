@@ -213,8 +213,8 @@ export const registrarRutinaCompletado = async (req, res) => {
 export const getIncompleteRoutines = async (req, res) => {
     try {
         // Asegúrate de que el middleware `authRequired` haya poblado `req.user`
-        const userId = req.user?._id;
-
+        const userId = req.user.id;
+        console.log("ID del usuario:", userId);
         if (!userId) {
             return res.status(400).json({ message: "ID de usuario no proporcionado o inválido." });
         }
@@ -225,7 +225,7 @@ export const getIncompleteRoutines = async (req, res) => {
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
 
-        return res.status(200).json({ rutinas: incompleteRoutines });
+        return res.status(200).json({ rut: incompleteRoutines });
     } catch (error) {
         console.error("Error al obtener rutinas incompletas:", error);
         return res.status(500).json({ message: "Error interno al obtener rutinas incompletas." });
