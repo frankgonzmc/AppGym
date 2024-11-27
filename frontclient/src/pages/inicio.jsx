@@ -10,7 +10,7 @@ import profileImage from '../imagenes/profileicono.png';
 import useRoutineAlerts from "../components/alerts-rutinas";
 
 export function Inicio() {
-    const { user, updatePerfil } = useAuth();
+    const { user, updateDatosPerfil } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
     const [newMultiplicador, setMultiplicador] = useState(null);
@@ -152,7 +152,7 @@ export function Inicio() {
         formData.append("estado", nuevoEstado || "N/A");
         formData.append("defaultToken", cookieToken);
 
-        updatePerfil(formData)
+        updateDatosPerfil(formData)
             .then(() => {
                 console.log("Perfil actualizado con el token");
                 setPerfilActualizado(true); // Marca como actualizado para evitar bucles
