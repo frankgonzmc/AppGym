@@ -224,6 +224,26 @@ export const updatePerfil = async (req, res) => {
     }
 };
 
+export const updateDatosPerfil = async (req, res) => {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    try {
+        const { objetivos, nivelActividad, defaultToken } = req.body;
+
+        if (objetivos) user.objetivos = objetivos;
+        if (nivelActividad) user.nivelActividad = nivelActividad;
+        if (defaultToken) user.defaultToken = defaultToken;
+
+        await user.save();
+        return res.status(200).json({ message: "Objetivo, nivel de actividad y token actualizados correctamente", user });
+    } catch (error) {
+        console.error("Error en updatePerfil:", error);
+        return res.status(500).json({ message: "Error al actualizar el perfil", error: error.message });
+    }
+};
+
 // Actualizar Password
 export const updatePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;

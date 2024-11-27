@@ -22,6 +22,8 @@ export const updatePerfilRequest = (datos) => axios.put('/update-perfil', datos,
     },
 });
 
+export const updateDatosPerfilRequest = (datos) => axios.put('/update-datos-perfil', datos);
+
 export const checkEmailRequest = (email) => axios.get(`/check-email?email=${email}`);
 
 // Función para enviar los datos del usuario autenticado como string

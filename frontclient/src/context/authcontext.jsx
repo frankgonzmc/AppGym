@@ -4,6 +4,7 @@ import {
     loginRequest,
     verifityTokenRequest,
     updatePasswordRequest,
+    updateDatosPerfilRequest,
     updatePerfilRequest,
     checkEmailRequest,
 } from "../api/auth";
@@ -87,6 +88,17 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error("Error al actualizar el perfil:", error);
             throw new Error("No se pudo actualizar el perfil.");
+        }
+    };
+
+    const updateDatosPerfil = async (datos) => {
+        try {
+            console.log("Datos a actualizar:", datos);
+            await updateDatosPerfilRequest(datos);
+            return true;
+        } catch (error) {
+            console.error("Error al actualizar los datos del perfil:", error);
+            throw new Error("No se pudieron actualizar los datos del perfil.");
         }
     };
 
@@ -195,6 +207,7 @@ export const AuthProvider = ({ children }) => {
                 logout,
                 updatePassword,
                 updatePerfil,
+                updateDatosPerfil,
                 checkEmailExists,
                 loading,
                 user,
