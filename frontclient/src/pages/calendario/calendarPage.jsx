@@ -24,31 +24,33 @@ function CalendarPage() {
   };
 
   return (
-    <div className="calendar-page-container">
-      <h2 className="calendar-title">Calendario de Rutinas</h2>
-      <Calendar
-        onChange={handleDateChange}
-        value={value}
-        className="calendar-component"
-      />
-      <div className="calendar-selected-date">
-        Fecha seleccionada: {value.toDateString()}
+    <section>
+      <div className="calendar-page-container">
+        <h2 className="calendar-title">Calendario de Rutinas</h2>
+        <Calendar
+          onChange={handleDateChange}
+          value={value}
+          className="calendar-component"
+        />
+        <div className="calendar-selected-date">
+          Fecha seleccionada: {value.toDateString()}
+        </div>
+        <button className="btn btn-primary mt-3" onClick={handleAddEvent}>
+          Agregar Nota
+        </button>
+        <div className="event-list mt-3">
+          {events[value.toDateString()] && events[value.toDateString()].length > 0 ? (
+            <ul>
+              {events[value.toDateString()].map((note, index) => (
+                <li key={index}>{note}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No hay notas para esta fecha.</p>
+          )}
+        </div>
       </div>
-      <button className="btn btn-primary mt-3" onClick={handleAddEvent}>
-        Agregar Nota
-      </button>
-      <div className="event-list mt-3">
-        {events[value.toDateString()] && events[value.toDateString()].length > 0 ? (
-          <ul>
-            {events[value.toDateString()].map((note, index) => (
-              <li key={index}>{note}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay notas para esta fecha.</p>
-        )}
-      </div>
-    </div>
+    </section>
   );
 }
 
