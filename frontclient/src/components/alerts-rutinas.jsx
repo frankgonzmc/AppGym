@@ -10,7 +10,8 @@ const useRoutineAlerts = (intervalTime) => {
             const interval = setInterval(async () => {
                 try {
                     const { data } = await axios.get("/rutinas/incomplete");
-
+                    console.log("Datos obtenidos:", data);
+                    /*
                     if (data.rutinas && data.rutinas.length > 0) {
                         const confirmed = await showInteractiveAlert(
                             "¡Atención!",
@@ -21,7 +22,7 @@ const useRoutineAlerts = (intervalTime) => {
                             // Redirige a la página de rutinas
                             window.location.href = "/rutinas";
                         }
-                    }
+                    }*/
                 } catch (error) {
                     console.error(
                         "Error al obtener rutinas incompletas:",
