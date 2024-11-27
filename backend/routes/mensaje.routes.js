@@ -1,7 +1,30 @@
 import { Router } from 'express';
 import Mensaje from '../models/mensaje.model.js';
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = Router();
+
+// Configuración del transporter de nodemailer
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com', // Cambiar si usas otro servicio
+    port: process.env.SMTP_PORT || 587,
+    secure: false, // Usar false para el puerto 587 y true para el puerto 465
+    auth: {
+        user: process.env.EMAIL, // Tu correo desde el archivo .env
+        pass: process.env.EMAIL_PASSWORD, // Contraseña o token de aplicación desde el archivo .env
+    },
+});
+
+transporter.verify((error) => {
+    if (error) {
+        console.error('Error al conectar con el servicio de correo:', error);
+    } else {
+        console.log('Conexión exitosa con el servicio de correo');
+    }
+});
 
 router.post('/faq-supporting', async (req, res) => {
     const { nombre, correo, mensaje } = req.body;
@@ -18,7 +41,7 @@ router.post('/faq-supporting', async (req, res) => {
         // Enviar correo
         await transporter.sendMail({
             from: process.env.EMAIL,
-            to: process.env.EMAIL,
+            to: process.env.EMAIL, // Dirección de destino desde .env
             subject: `Nuevo mensaje de ${nombre}`,
             text: `
                 Nombre: ${nombre}
@@ -35,6 +58,4 @@ router.post('/faq-supporting', async (req, res) => {
     }
 });
 
-export default router
-
-
+export default router;
