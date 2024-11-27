@@ -40,7 +40,7 @@ router.post('/faq-supporting', async (req, res) => {
 
         // Enviar correo
         await transporter.sendMail({
-            from: process.env.EMAIL,
+            from: correo,
             to: process.env.EMAIL, // Dirección de destino desde .env
             subject: `Nuevo mensaje de ${nombre}`,
             text: `
