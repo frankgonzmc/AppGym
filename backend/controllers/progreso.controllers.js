@@ -57,7 +57,6 @@ export const deleteProgreso = async (req, res) => {
 };
 
 // Actualizar progreso existente
-// Actualizar progreso existente
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
@@ -133,7 +132,7 @@ export const updateEstadoProgreso = async (req, res) => {
 
         const progreso = await Progreso.findByIdAndUpdate(
             id,
-            { estado },
+            estado,
             { new: true }
         );
 
