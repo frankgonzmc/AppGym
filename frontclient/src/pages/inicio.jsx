@@ -15,6 +15,7 @@ export function Inicio() {
     const [error, setError] = useState("");
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
+    const [perfilActualizado, setPerfilActualizado] = useState(false); // Estado para evitar bucles
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
     useRoutineAlerts(10000); // 1 hora en milisegundos (puedes editar este tiempo)
