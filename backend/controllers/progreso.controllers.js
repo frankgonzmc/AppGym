@@ -100,7 +100,7 @@ export const updateProgreso = async (req, res) => {
         }
 
         // Respuesta exitosa
-        res.status(200).json({ progreso, user });
+        res.status(200).json(progreso);
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
         res.status(500).json({ message: "Error al actualizar progreso.", error });
