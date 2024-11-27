@@ -60,7 +60,7 @@ export const deleteProgreso = async (req, res) => {
 // Actualizar progreso existente
 export const updateProgreso = async (req, res) => {
     try {
-        const { id } = req.params; // ID del progreso
+        const { id } = req.params;
         const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
 
         // Recuperar el progreso actual
@@ -75,8 +75,16 @@ export const updateProgreso = async (req, res) => {
             return res.status(404).json({ message: "Usuario no encontrado." });
         }
 
-        // Calcular calorías quemadas usando el peso del usuario
-        const caloriasQuemadas = calcularCaloriasQuemadas(user.peso, tiempoTotal);
+        // Validar valores antes de calcular calorías quemadas
+        const pesoUsuario = user.peso || 70; // Default: 70kg si no está definido
+        const tiempoTotalEnSegundos = tiempoTotal || 0;
+
+        if (isNaN(pesoUsuario) || isNaN(tiempoTotalEnSegundos)) {
+            throw new Error("Valores inválidos para calcular calorías quemadas.");
+        }
+
+        // Calcular calorías quemadas
+        const caloriasQuemadas = calcularCaloriasQuemadas(pesoUsuario, tiempoTotalEnSegundos);
 
         // Actualizar el progreso en la base de datos
         const progresoActualizado = await Progreso.findByIdAndUpdate(
@@ -105,10 +113,8 @@ export const updateProgreso = async (req, res) => {
             }
         }
 
-        // Guardar cambios en el usuario
         await user.save();
 
-        // Respuesta exitosa
         res.status(200).json({ progreso: progresoActualizado, user });
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
