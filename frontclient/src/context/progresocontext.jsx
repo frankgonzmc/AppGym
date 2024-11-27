@@ -4,6 +4,7 @@ import {
     createProgresoRequest,
     deleteProgresoRequest,
     updateProgresoRequest,
+    updateEstadoProgresoRequest,
 } from "../api/progreso";
 
 const ProgresoContext = createContext();
@@ -57,12 +58,19 @@ export function ProgresoProvider({ children }) {
 
     const updateProgreso = async (id, progreso) => {
         try {
-            const res = await updateProgresoRequest(id, progreso);
-            return res.data;
+            await updateProgresoRequest(id, progreso);
         } catch (error) {
             console.error(error);
         }
     };
+
+    const updateEstadoProgreso = async (id, estado) => {
+        try {
+            await updateEstadoProgresoRequest(id, estado);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const updateProgresoEjercicio = (rutinaId, ejercicioId, seriesCompletadas) => {
         setProgreso((prevProgreso) => ({
@@ -93,6 +101,7 @@ export function ProgresoProvider({ children }) {
                 createProgreso,
                 deleteProgreso,
                 updateProgreso,
+                updateEstadoProgreso,
                 updateProgresoEjercicio,
                 updateProgresoRutina,
             }}
