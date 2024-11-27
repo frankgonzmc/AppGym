@@ -149,7 +149,7 @@ export function Inicio() {
         const formData = new FormData();
         formData.append("objetivos", user.objetivos || "");
         formData.append("nivelActividad", user.nivelActividad || "");
-        formData.append("estado", nuevoEstado || user.estado);
+        formData.append("estado", nuevoEstado || estado);
         formData.append("defaultToken", cookieToken);
 
         updateDatosPerfil(formData)

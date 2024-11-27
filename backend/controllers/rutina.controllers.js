@@ -224,11 +224,7 @@ export const getIncompleteRoutines = async (req, res) => {
             user: userId,
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
-
-        if (!incompleteRoutines || incompleteRoutines.length === 0) {
-            return res.status(404).json({ message: "No hay rutinas incompletas." });
-        }
-
+        
         res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
         console.error("Error al obtener rutinas incompletas:", error);
