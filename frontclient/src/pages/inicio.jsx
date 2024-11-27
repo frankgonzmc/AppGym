@@ -144,24 +144,24 @@ export function Inicio() {
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
 
+    const cookieToken = Cookies.get('token');
 
-    const cookieToken = Cookies.get('token'); // Obtén el token de las cookies
-    const formData = new FormData();
-    formData.append('objetivos', user.objetivos);
-    formData.append('nivelActividad', user.nivelActividad);
-    formData.append('estado', calcularEstado());
-    if (cookieToken) {
-        formData.append('defaultToken', cookieToken);
-    } else {
+    if (!cookieToken) {
         console.error("El token no se encuentra en las cookies.");
+        return;
     }
+    // Preparar los datos para actualizar el perfil
+    const formData = new FormData();
+    formData.append('objetivos', user.objetivos || "");
+    formData.append('nivelActividad', user.nivelActividad || "");
+    formData.append('estado', calcularEstado() || "N/A");
+    formData.append('defaultToken', cookieToken);
 
 
     useEffect(() => {
         calcularEstado();
-
         updatePerfil(formData);
-    }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
+    }, [user]); // Recalcular el estado cuando cambien peso o altura
 
     return (
         <Container fluid className="body-inicio">
