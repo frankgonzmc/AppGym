@@ -54,8 +54,6 @@ export const register = async (req, res) => {
             genero: savedUser.genero,
             nivel: savedUser.nivel,
             edad: savedUser.edad,
-            defaultToken: savedUser.defaultToken,
-            newToken: savedUser.newToken,
         });
     } catch (error) {
         console.error("Error en el registro:", error);
@@ -85,16 +83,25 @@ export const login = async (req, res) => {
         });
 
         res.json({
-            id: userEncontrado.id,
+            id: userEncontrado._id,
             username: userEncontrado.username,
             email: userEncontrado.email,
-            peso: userEncontrado.peso,
             edad: userEncontrado.edad,
             genero: userEncontrado.genero,
             objetivos: userEncontrado.objetivos,
             nivelActividad: userEncontrado.nivelActividad,
+            profileImage: userEncontrado.profileImage,
             estatura: userEncontrado.estatura,
+            estado: userEncontrado.estado,
+            peso: userEncontrado.peso,
             nivel: userEncontrado.nivel,
+            ejerciciosCompletados: userEncontrado.ejerciciosCompletados,
+            metasEjercicios: userEncontrado.metasEjercicios,
+            caloriasQuemadas: userEncontrado.caloriasQuemadas,
+            tiempoEntrenado: userEncontrado.tiempoEntrenado,
+            newToken: userEncontrado.newToken,
+            resetPasswordToken: userEncontrado.resetPasswordToken,
+            resetPasswordExpires: userEncontrado.resetPasswordExpires,
             defaultToken: userEncontrado.defaultToken,
             createdAt: userEncontrado.createdAt,
             updatedAt: userEncontrado.updatedAt,
@@ -123,7 +130,7 @@ export const profile = async (req, res) => {
         if (!userEncontrado) return res.status(400).json({ message: "Usuario no encontrado..." });
 
         return res.json({
-            id: userEncontrado.id,
+            id: userEncontrado._id,
             username: userEncontrado.username,
             email: userEncontrado.email,
             edad: userEncontrado.edad,
@@ -132,8 +139,17 @@ export const profile = async (req, res) => {
             nivelActividad: userEncontrado.nivelActividad,
             profileImage: userEncontrado.profileImage,
             estatura: userEncontrado.estatura,
+            estado: userEncontrado.estado,
             peso: userEncontrado.peso,
             nivel: userEncontrado.nivel,
+            ejerciciosCompletados: userEncontrado.ejerciciosCompletados,
+            metasEjercicios: userEncontrado.metasEjercicios,
+            caloriasQuemadas: userEncontrado.caloriasQuemadas,
+            tiempoEntrenado: userEncontrado.tiempoEntrenado,
+            newToken: userEncontrado.newToken,
+            resetPasswordToken: userEncontrado.resetPasswordToken,
+            resetPasswordExpires: userEncontrado.resetPasswordExpires,
+            defaultToken: userEncontrado.defaultToken,
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -166,6 +182,13 @@ export const verifityToken = async (req, res) => {
                 estado: userFound.estado,
                 peso: userFound.peso,
                 nivel: userFound.nivel,
+                ejerciciosCompletados: userFound.ejerciciosCompletados,
+                metasEjercicios: userFound.metasEjercicios,
+                caloriasQuemadas: userFound.caloriasQuemadas,
+                tiempoEntrenado: userFound.tiempoEntrenado,
+                newToken: userFound.newToken,
+                resetPasswordToken: userFound.resetPasswordToken,
+                resetPasswordExpires: userFound.resetPasswordExpires,
                 defaultToken: userFound.defaultToken,
             });
         } catch (error) {
