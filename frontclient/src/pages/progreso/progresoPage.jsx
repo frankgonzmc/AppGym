@@ -69,34 +69,32 @@ function ProgresoPage() {
 
   return (
     <section className='seccion'>
-      <Card>
-        <Container fluid className="progreso-page-container">
-          {alert && <Alert variant="warning">{alert}</Alert>}
-          <h2>Progreso Mensual</h2>
+      <Container fluid className="progreso-page-container">
+        {alert && <Alert variant="warning">{alert}</Alert>}
+        <h2>Progreso Mensual</h2>
 
-          {/* Selector de período */}
-          <Dropdown onSelect={(e) => setPeriod(e)}>
-            <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="weekly">Semanal</Dropdown.Item>
-              <Dropdown.Item eventKey="monthly">Mensual</Dropdown.Item>
-              <Dropdown.Item eventKey="yearly">Anual</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        {/* Selector de período */}
+        <Dropdown onSelect={(e) => setPeriod(e)}>
+          <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item eventKey="weekly">Semanal</Dropdown.Item>
+            <Dropdown.Item eventKey="monthly">Mensual</Dropdown.Item>
+            <Dropdown.Item eventKey="yearly">Anual</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
 
-          {/* Gráfica de progreso */}
-          {loading ? (
-            <p>Cargando datos...</p>
-          ) : monthlyProgress.some(value => value > 0) ? (
-            <LineChart data={monthlyProgress} />
-          ) : (
-            <p>No hay datos disponibles para el progreso mensual.</p>
-          )}
+        {/* Gráfica de progreso */}
+        {loading ? (
+          <p>Cargando datos...</p>
+        ) : monthlyProgress.some(value => value > 0) ? (
+          <LineChart data={monthlyProgress} />
+        ) : (
+          <p>No hay datos disponibles para el progreso mensual.</p>
+        )}
 
-          <h3 className="mt-4">Comparación de Progreso con Objetivos</h3>
-          <Alert variant="info">{progressComparison}</Alert>
-        </Container>
-      </Card>
+        <h3 className="mt-4">Comparación de Progreso con Objetivos</h3>
+        <Alert variant="info">{progressComparison}</Alert>
+      </Container>
     </section>
   );
 }
