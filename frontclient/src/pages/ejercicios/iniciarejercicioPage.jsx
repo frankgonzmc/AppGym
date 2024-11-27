@@ -78,7 +78,7 @@ export default function IniciaEjercicioPage() {
 
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
-          await updateEstadoProgresoRequest(progreso.data._id, { estado: "Completado" });
+          await updateEstadoProgresoRequest(progreso.data._id, "Completado");
 
           await updateProgresoRequest(progreso.data._id, {
             ejerciciosCompletados: ejerciciosCompletos,
