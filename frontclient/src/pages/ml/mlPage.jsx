@@ -103,8 +103,8 @@ export default function mlPage() {
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
     return (
-        <Container className="seccion">
-            <Row>
+        <section className="seccion">
+            < Row >
                 <Col md={12} className="text-center mt-4 mb-2 animate-card">
                     <Card className="p-4 shadow">
                         <Card.Title className="mb-4">Recomendación de alimentación con IA</Card.Title>
@@ -329,7 +329,7 @@ export default function mlPage() {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row>
-        </Container>
+            </Row >
+        </section >
     )
 }
