@@ -67,40 +67,6 @@ export function Inicio() {
         setError("");
     };
 
-    const calcularEstado = () => {
-        const peso = user.peso || 0;
-        const altura = user.estatura || 0;
-
-        if (peso === 0 || altura === 0) {
-            setEstado("Por favor, proporciona un peso y altura válidos.");
-            return;
-        }
-
-        const imc = peso / (altura * altura);
-
-        let nuevoEstado;
-
-        if (imc < 16.00) {
-            nuevoEstado = "Delgadez (desnutrición) severa";
-        } else if (imc < 17.00) {
-            nuevoEstado = "Delgadez (desnutrición) moderada";
-        } else if (imc < 18.50) {
-            nuevoEstado = "Delgadez (desnutrición) leve";
-        } else if (imc < 25.00) {
-            nuevoEstado = "Normal";
-        } else if (imc < 30.00) {
-            nuevoEstado = "Sobrepeso";
-        } else if (imc < 35.00) {
-            nuevoEstado = "Obesidad grado 1";
-        } else if (imc < 40.00) {
-            nuevoEstado = "Obesidad grado 2";
-        } else {
-            nuevoEstado = "Obesidad grado 3";
-        }
-
-        setEstado(nuevoEstado);
-    };
-
     const calcularNutrientesDefinir = () => {
         if (tmb) {
             const totalCalorias = tmb.total - 500; // tmb es el resultado calculado
@@ -145,26 +111,57 @@ export function Inicio() {
     const nutrientesVolumen = calcularNutrientesVolumen();
 
 
+    // Calcular estado basado en IMC
+    const calcularEstado = () => {
+        const peso = user.peso || 0;
+        const altura = user.estatura || 0;
+
+        if (peso === 0 || altura === 0) {
+            return "Por favor, proporciona un peso y altura válidos.";
+        }
+
+        const imc = peso / (altura * altura);
+
+        if (imc < 16.0) return "Delgadez (desnutrición) severa";
+        if (imc < 17.0) return "Delgadez (desnutrición) moderada";
+        if (imc < 18.5) return "Delgadez (desnutrición) leve";
+        if (imc < 25.0) return "Normal";
+        if (imc < 30.0) return "Sobrepeso";
+        if (imc < 35.0) return "Obesidad grado 1";
+        if (imc < 40.0) return "Obesidad grado 2";
+        return "Obesidad grado 3";
+    };
+
+    // useEffect para actualizar el perfil solo cuando sea necesario
     useEffect(() => {
-        const cookieToken = Cookies.get('token');
+        if (perfilActualizado) return; // Evita reejecuciones innecesarias
+
+        const cookieToken = Cookies.get("token");
 
         if (!cookieToken) {
             console.error("El token no se encuentra en las cookies.");
             return;
         }
 
-        // Preparar los datos para actualizar el perfil
-        const formData = new FormData();
-        formData.append('objetivos', user.objetivos || "");
-        formData.append('nivelActividad', user.nivelActividad || "");
-        formData.append('estado', calcularEstado() || "N/A");
-        formData.append('defaultToken', cookieToken);
+        const nuevoEstado = calcularEstado();
 
-        // Actualizar perfil solo una vez
+        const formData = new FormData();
+        formData.append("objetivos", user.objetivos || "");
+        formData.append("nivelActividad", user.nivelActividad || "");
+        formData.append("estado", nuevoEstado || "N/A");
+        formData.append("defaultToken", cookieToken);
+
         updatePerfil(formData)
-            .then(() => console.log("Perfil actualizado con el token"))
-            .catch((err) => console.error("Error al actualizar el perfil:", err));
-    }, [user]); // Se ejecuta una vez cuando los datos del usuario están disponibles
+            .then(() => {
+                console.log("Perfil actualizado con el token");
+                setPerfilActualizado(true); // Marca como actualizado para evitar bucles
+                setEstado(nuevoEstado); // Actualiza el estado visible en la UI
+            })
+            .catch((err) => {
+                console.error("Error al actualizar el perfil:", err);
+            });
+    }, [user.peso, user.estatura, user.objetivos, user.nivelActividad, perfilActualizado]); // Depende de atributos específicos
+
 
     return (
         <Container fluid className="body-inicio">
@@ -187,7 +184,7 @@ export function Inicio() {
                             <p>Sexo: {user.genero}</p>
                             <p>Objetivos: {user.objetivos}</p>
                             <p>Nivel de Actividad: {user.nivelActividad}</p>
-                            <p>Estado (Indice de Masa Corporal): {estado}</p>
+                            <p>Estado (Indice de Masa Corporal): {calcularEstado()}</p>
                             <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB (Tasa de Metabolismo Basal)
