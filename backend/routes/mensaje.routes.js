@@ -9,17 +9,17 @@ const router = Router();
 
 // Configuración del transporter de nodemailer
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com', // Cambiar según el servicio
-    port: process.env.SMTP_PORT || 587, // 587 para TLS, 465 para SSL
-    secure: false, // false para TLS
+    host: process.env.SMTP_HOST || 'smtp.gmail.com', // Servidor SMTP
+    port: parseInt(process.env.SMTP_PORT, 10) || 587, // Puerto: 587 para TLS
+    secure: false, // Usar true para el puerto 465, false para 587
     auth: {
-        user: process.env.EMAIL, // Correo del remitente (desde el .env)
-        pass: process.env.EMAIL_PASSWORD, // Contraseña o token de aplicación (desde el .env)
+        user: process.env.EMAIL_USER, // Correo almacenado en el .env
+        pass: process.env.EMAIL_PASS, // Contraseña o token de aplicación almacenado en el .env
     },
 });
 
 // Verificar conexión con el servidor SMTP
-transporter.verify((error) => {
+transporter.verify((error, success) => {
     if (error) {
         console.error('Error al conectar con el servicio de correo:', error);
     } else {
@@ -39,10 +39,10 @@ router.post('/faq-supporting', async (req, res) => {
         const nuevoMensaje = new Mensaje({ nombre, correo, mensaje });
         await nuevoMensaje.save();
 
-        // Enviar correo al correo almacenado en el .env
+        // Configuración del correo
         const mailOptions = {
-            from: `"${nombre}" <${correo}>`, // Nombre y correo del usuario
-            to: process.env.EMAIL, // Tu correo destino desde el .env
+            from: `"${nombre}" <${correo}>`, // Correo del usuario
+            to: process.env.EMAIL_USER, // Correo destinatario
             subject: `Nuevo mensaje de ${nombre}`,
             text: `
                 Nombre: ${nombre}
@@ -52,6 +52,7 @@ router.post('/faq-supporting', async (req, res) => {
             `,
         };
 
+        // Enviar el correo
         await transporter.sendMail(mailOptions);
 
         res.status(200).json({ message: 'Correo enviado y mensaje guardado con éxito.' });
