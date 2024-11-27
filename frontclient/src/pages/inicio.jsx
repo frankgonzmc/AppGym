@@ -144,47 +144,25 @@ export function Inicio() {
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
 
-    /*
-        const cookieToken = Cookies.get('token'); // Obtén el token de las cookies
-        const formData = new FormData();
-        formData.append('objetivos', user.objetivos);
-        formData.append('nivelActividad', user.nivelActividad);
-        formData.append('estado', calcularEstado());
-        if (cookieToken) {
-            formData.append('defaultToken', cookieToken);
-        } else {
-            console.error("El token no se encuentra en las cookies.");
-        }
-    */
-    useEffect(() => {
-        const cookieToken = Cookies.get('token');
 
-        if (!cookieToken) {
-            console.error("El token no se encuentra en las cookies.");
-            return;
-        }
-
-        // Preparar los datos para actualizar el perfil
-        const formData = new FormData();
-        formData.append('objetivos', user.objetivos || "");
-        formData.append('nivelActividad', user.nivelActividad || "");
-        formData.append('estado', calcularEstado() || "N/A");
+    const cookieToken = Cookies.get('token'); // Obtén el token de las cookies
+    const formData = new FormData();
+    formData.append('objetivos', user.objetivos);
+    formData.append('nivelActividad', user.nivelActividad);
+    formData.append('estado', calcularEstado());
+    if (cookieToken) {
         formData.append('defaultToken', cookieToken);
+    } else {
+        console.error("El token no se encuentra en las cookies.");
+    }
 
-        // Actualizar perfil solo una vez
-        updatePerfil(formData)
-            .then(() => console.log("Perfil actualizado con el token"))
-            .catch((err) => console.error("Error al actualizar el perfil:", err));
-    }, [user]); // Se ejecuta una vez cuando los datos del usuario están disponibles
-
-    /*
 
     useEffect(() => {
         calcularEstado();
 
         updatePerfil(formData);
     }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
-*/
+
     return (
         <Container fluid className="body-inicio">
             <Row className="text-center mb-2">
