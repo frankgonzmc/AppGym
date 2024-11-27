@@ -1,8 +1,12 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import './css.faqPage.css'  // Tu propio archivo CSS para personalizar el faqPage
+import '../css/faqPage.css'
 
 function FaqPage() {
+
+
+
+
     return (
         <section className='seccion'>
             <Card>
