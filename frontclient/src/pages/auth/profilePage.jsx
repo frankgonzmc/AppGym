@@ -85,7 +85,7 @@ function ProfilePage() {
     if (isEmailChanged) {
       const emailExists = await checkEmailExists(nuevoEmail);
       if (emailExists) {
-        setError("El email no está disponible. Por favor, elige otro.");
+        setError("El email es Invalido. Por favor, elige otro.");
         return;
       }
     }
