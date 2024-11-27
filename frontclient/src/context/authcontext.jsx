@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
             const res = await updatePerfilRequest(datos);
             if (res.data) {
                 setUser(res.data);
-                console.log("Perfil actualizado:", res.data);
+                //console.log("Perfil actualizado:", res.data);
                 return res.data;
             } else {
                 throw new Error("No se recibió una respuesta válida.");
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
     const updateDatosPerfil = async (datos) => {
         try {
-            console.log("Datos a actualizar:", datos);
+            //console.log("Datos a actualizar:", datos);
             await updateDatosPerfilRequest(datos);
             return true;
         } catch (error) {
@@ -133,9 +133,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false);
             setLoading(false);
             return setUser(null);
-
-        } else { console.log("Token encontrado en cookies:", cookies.token); }
-
+        }
 
         try {
             const res = await verifityTokenRequest(cookies.token); // Asegúrate de que 'axios' ya incluye cookies
@@ -157,34 +155,6 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     };
-    /*
-    const checkLogin = async () => {
-        const cookies = Cookies.get();
-    
-        if (!cookies.token) {
-            setIsAuthenticated(false);
-            setLoading(false);
-            return setUser(null);
-        }
-    
-        try {
-            const res = await verifityTokenRequest(cookies.token);
-            if (!res.data) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return;
-            }
-    
-            setIsAuthenticated(true);
-            setUser(res.data);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error verificando el token:", error);
-            setIsAuthenticated(false);
-            setUser(null);
-            setLoading(false);
-        }
-    };*/
 
     useEffect(() => {
         checkLogin();

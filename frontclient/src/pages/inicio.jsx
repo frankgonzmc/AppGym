@@ -154,7 +154,7 @@ export function Inicio() {
 
         updateDatosPerfil(formData)
             .then(() => {
-                console.log("Perfil actualizado con el token");
+                //console.log("Perfil actualizado con el token");
                 setPerfilActualizado(true); // Marca como actualizado para evitar bucles
                 setEstado(nuevoEstado); // Actualiza el estado visible en la UI
             })
