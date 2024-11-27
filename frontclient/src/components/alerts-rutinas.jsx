@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { showWarningAlert } from "./alerts/utils-alerts";
+import { showInteractiveAlert } from "./alerts/utils-alerts";
 import axios from "../api/axios";
 
 const useRoutineAlerts = (intervalTime) => {
@@ -9,24 +9,25 @@ const useRoutineAlerts = (intervalTime) => {
         if (alertsEnabled) {
             const interval = setInterval(async () => {
                 try {
-                    const response = await axios.get("/rutinas/incomplete");                
-
-                    if (!response.ok) {
-                        throw new Error(`Error ${response.status}: ${response.statusText}`);
-                    }
-
-                    const data = await response.json();
+                    const { data } = await axios.get("/rutinas/incomplete");
 
                     if (data.rutinas.length > 0) {
-                        showWarningAlert(
+                        const confirmed = await showInteractiveAlert(
                             "¡Atención!",
-                            `Tienes ${data.rutinas.length} rutina(s) sin completar.`
+                            `Tienes ${data.rutinas.length} rutina(s) sin completar. ¿Deseas ir a completarlas?`
                         );
+
+                        if (confirmed) {
+                            // Redirige a la página de rutinas
+                            window.location.href = "/rutinas";
+                        }
                     }
                 } catch (error) {
-                    console.error("Error al obtener rutinas incompletas:", error.message);
+                    console.error(
+                        "Error al obtener rutinas incompletas:",
+                        error.response?.data?.message || error.message
+                    );
                 }
-
             }, intervalTime);
 
             return () => clearInterval(interval); // Limpia el intervalo al desmontar

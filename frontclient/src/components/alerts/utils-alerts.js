@@ -48,3 +48,18 @@ export const showWarningAlert = (title, text) => {
         confirmButtonText: 'Aceptar',
     });
 };
+
+export const showInteractiveAlert = async (title, text) => {
+    const { isConfirmed } = await Swal.fire({
+        title,
+        text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ir a completar',
+        cancelButtonText: 'Cancelar',
+        timer: 10000, // 10 segundos
+        timerProgressBar: true,
+    });
+
+    return isConfirmed; // Retorna true si el usuario confirma
+};

@@ -1,4 +1,24 @@
+import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from '../config.js';
+import User from '../models/user.model.js';
+
+export const authRequired = async (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No autorizado" });
+
+    try {
+        const decoded = jwt.verify(token, TOKEN_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
+
+        req.user = user; // Adjunta el usuario al objeto req
+        next();
+    } catch (error) {
+        return res.status(403).json({ message: "Token inválido o expirado" });
+    }
+};
+
+/*import { TOKEN_SECRET } from '../config.js';
 import jwt from 'jsonwebtoken';
 
 export const authRequired = (req, res, next) => {
@@ -25,3 +45,4 @@ export const authRequired = (req, res, next) => {
         return res.status(500).json({ message: error.message });
     }
 };
+*/
