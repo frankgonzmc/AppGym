@@ -127,14 +127,20 @@ export const AuthProvider = ({ children }) => {
 
         try {
             const res = await verifityTokenRequest(cookies.token); // Asegúrate de que 'axios' ya incluye cookies
-            if (res.data) {
-                setIsAuthenticated(true);
-                setUser(res.data);
+            if (!res.data) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return;
             }
+
+            setIsAuthenticated(true);
+            setUser(res.data);
+            setLoading(false);
         } catch (error) {
             console.error("Error verificando el token:", error);
             setIsAuthenticated(false);
             setUser(null);
+            setLoading(false);
         } finally {
             setLoading(false);
         }
