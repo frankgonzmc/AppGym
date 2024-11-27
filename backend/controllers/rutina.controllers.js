@@ -212,22 +212,27 @@ export const registrarRutinaCompletado = async (req, res) => {
 // Obtener rutinas incompletas
 export const getIncompleteRoutines = async (req, res) => {
     try {
-        // Asegúrate de que el middleware `authRequired` haya poblado `req.user`
         const userId = req.user.id;
-        console.log("ID del usuario:", userId);
-        if (!userId) {
-            return res.status(400).json({ message: "ID de usuario no proporcionado o inválido." });
+        console.log("ID del usuario desde token:", userId);
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            console.error("ID del usuario no es válido:", userId);
+            return res.status(400).json({ message: "ID no válido" });
         }
 
-        // Encuentra rutinas con estado "Pendiente" o "En Progreso"
         const incompleteRoutines = await Rutinas.find({
-            user: userId, // Relación con el usuario
+            user: mongoose.Types.ObjectId(userId), // Asegura que el ID es tratado como ObjectId
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
 
-        return res.status(200).json({ rut: incompleteRoutines });
+        if (!incompleteRoutines || incompleteRoutines.length === 0) {
+            console.warn("No se encontraron rutinas incompletas.");
+            return res.status(404).json({ message: "No hay rutinas incompletas" });
+        }
+
+        res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
         console.error("Error al obtener rutinas incompletas:", error);
-        return res.status(500).json({ message: "Error interno al obtener rutinas incompletas." });
+        res.status(500).json({ message: "Error interno al obtener rutinas incompletas." });
     }
 };

@@ -3,29 +3,31 @@ import jwt from 'jsonwebtoken';
 
 export const authRequired = (req, res, next) => {
     try {
-        // Extrae el token desde las cookies
-        const token = req.cookies?.token;
+        const { token } = req.cookies;
 
         if (!token) {
             console.error("Token no encontrado en las cookies.");
-            return res.status(401).json({ message: "No se encontró un token, acceso denegado." });
+            return res.status(401).json({ message: "No token, authorization denied" });
         }
 
-        // Verifica el token
         jwt.verify(token, TOKEN_SECRET, (error, decoded) => {
             if (error) {
                 console.error("Error verificando token:", error);
-                return res.status(401).json({ message: "El token no es válido o ha expirado." });
+                return res.status(401).json({ message: "Token is not valid" });
             }
 
-            // Decodifica el token y almacena la información del usuario en `req.user`
-            req.user = decoded;
-            console.log("Usuario autenticado:", decoded);
+            //console.log("Usuario autenticado:", decoded);
 
+            if (!mongoose.Types.ObjectId.isValid(decoded.id)) {
+                console.error("El ID en el token no es un ObjectId válido:", decoded.id);
+                return res.status(400).json({ message: "ID en el token no válido" });
+            }
+
+            req.user = decoded; // Propagar el usuario
             next();
         });
     } catch (error) {
         console.error("Error en el middleware de autenticación:", error);
-        return res.status(500).json({ message: "Error interno del servidor." });
+        return res.status(500).json({ message: error.message });
     }
 };
