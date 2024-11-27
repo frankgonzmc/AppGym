@@ -24,8 +24,7 @@ function FaqPage() {
         e.preventDefault();
 
         try {
-            // Enviar datos al backend
-            const response = await fetch('/faq-supporting', {
+            const response = await fetch('/api/faq-supporting', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -33,9 +32,10 @@ function FaqPage() {
 
             if (response.ok) {
                 setSuccessMessage('¡Gracias por tu mensaje! Te responderemos pronto.');
-                setFormData({ nombre: '', correo: '', mensaje: '' }); // Resetear formulario
+                setFormData({ nombre: '', correo: '', mensaje: '' });
             } else {
-                setErrorMessage('Hubo un problema al enviar tu mensaje. Intenta de nuevo.');
+                const errorData = await response.json();
+                setErrorMessage(errorData.message || 'Hubo un problema al enviar tu mensaje.');
             }
         } catch (error) {
             setErrorMessage('Error al enviar el formulario. Verifica tu conexión a internet.');
@@ -55,8 +55,7 @@ function FaqPage() {
                 <p>
                     La IA utiliza algoritmos para analizar datos. En App Gym, usamos IA para generar recomendaciones personalizadas.
                 </p>
-                {/* Agrega más preguntas aquí */}
-
+                <hr className='my-4 mt-4 text-black' />
                 <h2 className="mt-4">¿Tienes preguntas o sugerencias?</h2>
                 <p>Envíanos tus comentarios y sugerencias. ¡Nos encantaría saber de ti!</p>
 
