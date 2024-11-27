@@ -6,6 +6,7 @@ import path from 'path';
 import authRoutes from "./routes/auth.routes.js";
 import rutinaRoutes from "./routes/rutina.routes.js";
 import ejercicioRoutes from "./routes/ejercicio.routes.js";
+import mensajeRoutes from "./routes/mensaje.routes.js";
 import progresoRoutes from "./routes/progreso.routes.js";
 import detallerutinaRoutes from './routes/detallerutina.routes.js';
 import recomendacionRoutes from './routes/recomendacion.routes.js';
@@ -53,32 +54,6 @@ app.get('/api/dieta', async (req, res) => {
     }
 });
 
-router.post('/faq-supporting', async (req, res) => {
-    const { nombre, correo, mensaje } = req.body;
-
-    if (!nombre || !correo || !mensaje) {
-        return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
-    }
-
-    try {
-        await transporter.sendMail({
-            from: process.env.EMAIL,
-            to: process.env.EMAIL, // Destinatario: correo configurado en .env
-            subject: `Nuevo mensaje de ${nombre}`,
-            text: `
-                Nombre: ${nombre}
-                Correo: ${correo}
-                Mensaje:
-                ${mensaje}
-            `,
-        });
-
-        res.status(200).json({ message: 'Correo enviado con éxito.' });
-    } catch (error) {
-        console.error('Error al enviar correo:', error);
-        res.status(500).json({ message: 'Hubo un problema al enviar el correo.' });
-    }
-});
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -86,6 +61,7 @@ app.use(cookieParser());
 
 // Rutas de tu aplicación
 app.use("/api", authRoutes);
+app.use("/api", mensajeRoutes);
 app.use("/api", rutinaRoutes);
 app.use("/api", ejercicioRoutes);
 app.use("/api", progresoRoutes);
