@@ -62,20 +62,18 @@ export default function RutinaPage() {
   // Si hay rutinas, las mostramos
   return (
     <section className="seccion">
-      <Container className="py-4">
-        <Row className="g-4">
-          <header>
-            <Link to="/add-rutinas" className="btn btn-success mb-4">
-              CREAR RUTINA
-            </Link>
-          </header>
-          {rutinas.map((rutina) => (
-            <Col md={6} key={rutina._id}>
-              <RutinaCard rutina={rutina} />
-            </Col>
-          ))}
-        </Row>
-      </Container>
+      <Row className="g-4">
+        <header>
+          <Link to="/add-rutinas" className="btn btn-success mb-4">
+            CREAR RUTINA
+          </Link>
+        </header>
+        {rutinas.map((rutina) => (
+          <Col md={6} key={rutina._id}>
+            <RutinaCard rutina={rutina} />
+          </Col>
+        ))}
+      </Row>
     </section>
   );
 }
