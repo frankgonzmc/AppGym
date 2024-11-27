@@ -5,8 +5,8 @@
 .progreso-page-container {
     padding: 20px;
     background-color: #ffffff;
-    min-height: auto;
-    width: auto;
+    min-height: 100vh;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
