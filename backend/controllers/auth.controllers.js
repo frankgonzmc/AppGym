@@ -230,8 +230,9 @@ export const updateDatosPerfil = async (req, res) => {
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     try {
-        const { objetivos, nivelActividad, defaultToken } = req.body;
+        const { estado, objetivos, nivelActividad, defaultToken } = req.body;
 
+        if (estado) user.estado = estado;
         if (objetivos) user.objetivos = objetivos;
         if (nivelActividad) user.nivelActividad = nivelActividad;
         if (defaultToken) user.defaultToken = defaultToken;
