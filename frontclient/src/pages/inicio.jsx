@@ -144,24 +144,27 @@ export function Inicio() {
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
 
-    const cookieToken = Cookies.get('token');
-
-    if (!cookieToken) {
-        console.error("El token no se encuentra en las cookies.");
-        return;
-    }
-    // Preparar los datos para actualizar el perfil
-    const formData = new FormData();
-    formData.append('objetivos', user.objetivos || "");
-    formData.append('nivelActividad', user.nivelActividad || "");
-    formData.append('estado', calcularEstado() || "N/A");
-    formData.append('defaultToken', cookieToken);
-
 
     useEffect(() => {
-        calcularEstado();
-        updatePerfil(formData);
-    }, [user]); // Recalcular el estado cuando cambien peso o altura
+        const cookieToken = Cookies.get('token');
+
+        if (!cookieToken) {
+            console.error("El token no se encuentra en las cookies.");
+            return;
+        }
+
+        // Preparar los datos para actualizar el perfil
+        const formData = new FormData();
+        formData.append('objetivos', user.objetivos || "");
+        formData.append('nivelActividad', user.nivelActividad || "");
+        formData.append('estado', calcularEstado() || "N/A");
+        formData.append('defaultToken', cookieToken);
+
+        // Actualizar perfil solo una vez
+        updatePerfil(formData)
+            .then(() => console.log("Perfil actualizado con el token"))
+            .catch((err) => console.error("Error al actualizar el perfil:", err));
+    }, [user]); // Se ejecuta una vez cuando los datos del usuario están disponibles
 
     return (
         <Container fluid className="body-inicio">
