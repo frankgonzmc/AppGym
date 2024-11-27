@@ -124,15 +124,15 @@ export const updateProgreso = async (req, res) => {
 export const updateEstadoProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const estado = req.body; // El frontend ahora envía directamente el string
+        const { estado } = req.body; // Se espera un objeto con la clave `estado`
 
-        if (typeof estado !== "string") {
+        if (!estado || typeof estado !== "string") {
             return res.status(400).json({ message: "El estado debe ser un string." });
         }
 
         const progreso = await Progreso.findByIdAndUpdate(
             id,
-            estado,
+            { estado },
             { new: true }
         );
 
