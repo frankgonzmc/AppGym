@@ -71,7 +71,6 @@ const userSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        default: null,
     },
     newToken: {
         type: String,

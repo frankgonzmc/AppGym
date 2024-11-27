@@ -146,17 +146,18 @@ export function Inicio() {
 
         const nuevoEstado = calcularEstado();
 
-        const formData = new FormData();
-        formData.append("objetivos", user.objetivos || "");
-        formData.append("nivelActividad", user.nivelActividad || "");
-        formData.append("estado", nuevoEstado || estado);
-        formData.append("defaultToken", cookieToken);
+        const datosActualizados = {
+            objetivos: user.objetivos || "",
+            nivelActividad: user.nivelActividad || "",
+            estado: nuevoEstado || estado,
+            defaultToken: cookieToken
+        };
 
-        updateDatosPerfil(formData)
+        updateDatosPerfil(datosActualizados)
             .then(() => {
                 //console.log("Perfil actualizado con el token");
-                setPerfilActualizado(true); // Marca como actualizado para evitar bucles
-                setEstado(nuevoEstado); // Actualiza el estado visible en la UI
+                setPerfilActualizado(true);
+                setEstado(nuevoEstado);
             })
             .catch((err) => {
                 console.error("Error al actualizar el perfil:", err);

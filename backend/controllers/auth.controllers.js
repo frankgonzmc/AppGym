@@ -253,10 +253,12 @@ export const updateDatosPerfil = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
+    console.log("Estado recibido:", req.body.estado);  // Log para verificar valor
+
     try {
         const { estado, objetivos, nivelActividad, defaultToken } = req.body;
 
-        if (estado) user.estado = estado;
+        if (estado !== undefined) user.estado = estado;  // Cambié la condición a !== undefined
         if (objetivos) user.objetivos = objetivos;
         if (nivelActividad) user.nivelActividad = nivelActividad;
         if (defaultToken) user.defaultToken = defaultToken;

@@ -93,11 +93,10 @@ export const AuthProvider = ({ children }) => {
 
     const updateDatosPerfil = async (datos) => {
         try {
-            //console.log("Datos a actualizar:", datos);
             const res = await updateDatosPerfilRequest(datos);
             if (res.data) {
+                console.log("Perfil actualizado:", res.data);  // Asegúrate de que los datos contengan el campo 'estado'
                 setUser(res.data);
-                console.log("Datos del Perfil actualizado:", res.data);
                 return res.data;
             } else {
                 throw new Error("No se recibió una respuesta válida.");
