@@ -2,12 +2,14 @@ import { Card } from "../ui";
 import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "react-bootstrap";
 import { useRutinas } from "../../context/rutinascontext";
+import { useAuth } from "../../context/authcontext";
 import { useEffect, useState } from "react";
 import { showAlert, showConfirmation } from '../../components/alerts/utils-alerts';
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
   const { deleteRutina } = useRutinas();
+  const { user } = useAuth();
 
   // Estado para sincronizar el progreso
   const [loading, setLoading] = useState(false);
@@ -74,9 +76,9 @@ export function RutinaCard({ rutina }) {
       <p className="text-slate-300">
         <strong>Descripción:</strong> {rutina?.descripcion || "No se proporcionó descripción"}
         <br />
-        <strong>Calorías Quemadas:</strong> {rutina?.caloriasQuemadas || "0"} kcal
+        <strong>Calorías Quemadas:</strong> {user.caloriasQuemadas || "0"} kcal
         <br />
-        <strong>Tiempo Estimado:</strong> {rutina?.tiempoEstimado || "0"} segundos
+        <strong>Tiempo Estimado:</strong> {user.tiempoEntrenado || "0"} segundos
       </p>
 
       <div className="my-3">

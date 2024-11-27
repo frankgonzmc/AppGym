@@ -1,6 +1,7 @@
 import Progreso from '../models/progreso.model.js';
 import User from '../models/user.model.js';
 import Rutinas from '../models/rutina.model.js';
+import { calcularCaloriasQuemadas } from '../utils/calorias.js';
 
 // Obtener progreso de un usuario para una rutina específica
 export const getProgreso = async (req, res) => {
@@ -56,24 +57,87 @@ export const deleteProgreso = async (req, res) => {
 };
 
 // Actualizar progreso existente
+// Actualizar progreso existente
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
+        const { ejerciciosCompletados, estado, tiempoTotal, fechaFin } = req.body;
 
-        // Validar que `estado` sea un string
-        if (estado && typeof estado !== "string") {
-            return res.status(400).json({ message: "El estado debe ser un string válido." });
+        // Recuperar el progreso actual
+        const progreso = await Progreso.findById(id);
+        if (!progreso) {
+            return res.status(404).json({ message: "Progreso no encontrado." });
         }
 
+        // Recuperar el usuario asociado
+        const user = await User.findById(progreso.user);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado." });
+        }
+
+        // Validar valores antes de calcular calorías quemadas
+        const pesoUsuario = user.peso || 70; // Default: 70kg si no está definido
+        const tiempoTotalEnSegundos = tiempoTotal || 0;
+
+        if (isNaN(pesoUsuario) || isNaN(tiempoTotalEnSegundos)) {
+            throw new Error("Valores inválidos para calcular calorías quemadas.");
+        }
+
+        // Calcular calorías quemadas
+        const caloriasQuemadas = calcularCaloriasQuemadas(pesoUsuario, tiempoTotalEnSegundos);
+
+        // Actualizar el progreso en la base de datos
+        const progresoActualizado = await Progreso.findByIdAndUpdate(
+            id,
+            {
+                estado,
+                ejerciciosCompletados,
+                tiempoTotal,
+                caloriasQuemadas,
+                fechaFin,
+            },
+            { new: true } // Devuelve el documento actualizado
+        );
+
+        // Actualizar estadísticas del usuario
+        user.ejerciciosCompletados += ejerciciosCompletados || 0;
+        user.caloriasQuemadas += caloriasQuemadas || 0;
+        user.tiempoEntrenado += tiempoTotal || 0;
+
+        // Ajustar nivel del usuario si cumple metas
+        if (user.ejerciciosCompletados >= user.metasEjercicios) {
+            if (user.nivel === "Principiante") {
+                user.nivel = "Intermedio";
+                user.metasEjercicios += 20;
+            } else if (user.nivel === "Intermedio") {
+                user.nivel = "Avanzado";
+            }
+        }
+
+        await user.save();
+
+        res.status(200).json({ progreso: progresoActualizado, user });
+    } catch (error) {
+        console.error("Error al actualizar progreso:", error);
+        res.status(500).json({ message: "Error al actualizar progreso.", error });
+    }
+};
+
+/*
+export const updateProgreso = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
+        const caloriasQuemadas = calcularCaloriasQuemadas(user.peso, tiempoTotal);
+
+        // Actualizar el progreso
         const progreso = await Progreso.findByIdAndUpdate(
             id,
             {
                 ejerciciosCompletados,
-                estado,
                 tiempoTotal,
                 caloriasQuemadas,
-                fechaFin: estado === "Completado" ? new Date() : "En Progreso",
+                fechaFin,
             },
             { new: true } // Retorna el documento actualizado
         );
@@ -102,12 +166,14 @@ export const updateProgreso = async (req, res) => {
             await user.save();
         }
 
-        res.json(progreso);
+        // Respuesta exitosa
+        res.status(200).json(progreso);
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
         res.status(500).json({ message: "Error al actualizar progreso.", error });
     }
 };
+*/
 
 // Obtener estadísticas del progreso de un usuario (por mes)
 export const getUserStats = async (req, res) => {

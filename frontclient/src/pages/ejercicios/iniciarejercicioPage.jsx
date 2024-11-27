@@ -35,8 +35,14 @@ export default function IniciaEjercicioPage() {
 
   const calcularCaloriasQuemadas = () => {
     const MET = 8; // MET para ejercicio moderado
-    const pesoEnKg = detalles.peso || 70; // Peso del usuario (kg)
-    const duracionEnHoras = (detalles.ejercicio.duracion * detalles.ejercicio.series) / 3600;
+    const pesoEnKg = detalles.peso || 70; // Default: 70kg
+    const duracionEnHoras = detalles.ejercicio.duracion * detalles.ejercicio.series / 3600;
+
+    if (isNaN(pesoEnKg) || isNaN(duracionEnHoras)) {
+      console.error("Datos inválidos para el cálculo de calorías.");
+      return 0;
+    }
+
     return MET * pesoEnKg * duracionEnHoras;
   };
 
@@ -76,9 +82,9 @@ export default function IniciaEjercicioPage() {
 
           await updateProgresoRequest(progreso.data._id, {
             ejerciciosCompletados: ejerciciosCompletos,
-            fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
+            fechaFin: new Date(),
           });
         }
       }

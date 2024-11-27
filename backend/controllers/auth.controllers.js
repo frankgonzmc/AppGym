@@ -241,7 +241,7 @@ export const updatePerfil = async (req, res) => {
 
 
         await user.save();
-        return res.status(200).json({ message: "Perfil actualizado correctamente", user });
+        return res.status(200).json(user);
     } catch (error) {
         console.error("Error en updatePerfil:", error);
         return res.status(500).json({ message: "Error al actualizar el perfil", error: error.message });
@@ -262,7 +262,7 @@ export const updateDatosPerfil = async (req, res) => {
         if (defaultToken) user.defaultToken = defaultToken;
 
         await user.save();
-        return res.status(200).json({ message: "Objetivo, nivel de actividad y token actualizados correctamente", user });
+        return res.status(200).json(user);
     } catch (error) {
         console.error("Error en updatePerfil:", error);
         return res.status(500).json({ message: "Error al actualizar el perfil", error: error.message });

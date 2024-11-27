@@ -1,4 +1,8 @@
 /* calendarPage.css */
+.seccion {
+  background-color: ee9037;
+}
+
 .calendar-page-container {
   background-color: #f8f9fa;
   padding: 20px;

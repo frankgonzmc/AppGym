@@ -57,7 +57,8 @@ export function ProgresoProvider({ children }) {
 
     const updateProgreso = async (id, progreso) => {
         try {
-            await updateProgresoRequest(id, progreso);
+            const res = await updateProgresoRequest(id, progreso);
+            return res.data;
         } catch (error) {
             console.error(error);
         }

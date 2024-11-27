@@ -1,6 +1,7 @@
 import DetallesRutina from '../models/detallerutina.model.js';
 import Rutinas from '../models/rutina.model.js';
 import Ejercicios from '../models/ejercicio.model.js';
+import { calcularCaloriasQuemadas } from '../utils/calorias.js';
 
 // Obtener detalles de rutina por ID de rutina
 export const getDetallesRutina = async (req, res) => {
@@ -152,8 +153,9 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         const valorestado = detalle.ejercicio.estadoEjercicioRealizado = 1;
 
         // Calcular tiempo total y calorías quemadas
-        const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso;
-        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.ejercicio, tiempoTotal);
+        const tiempoTotal = detalle.ejercicio.duracion * seriesProgreso; // En segundos
+        const caloriasQuemadas = calcularCaloriasQuemadas(detalle.pesoUsuario || 70, tiempoTotal);
+        detalle.caloriasQuemadas = caloriasQuemadas;
 
         // Actualizar estado del detalle
         detalle.estado = seriesProgreso >= detalle.ejercicio.series ? "Completado" : "En Progreso";
@@ -171,14 +173,6 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         console.error("Error al actualizar progreso del detalle:", error);
         res.status(500).json({ message: "Error al actualizar progreso del detalle.", error });
     }
-};
-
-// Función para calcular calorías quemadas
-const calcularCaloriasQuemadas = (ejercicio, tiempoTotal) => {
-    const MET = 8; // MET estimado para ejercicios moderados
-    const pesoUsuario = 70; // Peso promedio del usuario en kg (puedes personalizar esto)
-    const duracionEnHoras = tiempoTotal / 60; // Convertir minutos a horas
-    return MET * pesoUsuario * duracionEnHoras;
 };
 
 // Actualizar el progreso general de la rutina
