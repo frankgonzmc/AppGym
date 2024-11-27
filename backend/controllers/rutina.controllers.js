@@ -1,7 +1,7 @@
 import Rutinas from '../models/rutina.model.js';
 import DetallesRutina from '../models/detallerutina.model.js';
 import Progreso from '../models/progreso.model.js';
-import mongoose from "mongoose";
+import User from '../models/user.model.js'; // Importar modelo de usuario
 
 // Obtener todas las rutinas del usuario autenticado o predeterminadas
 export const getRutinas = async (req, res) => {
@@ -213,22 +213,15 @@ export const registrarRutinaCompletado = async (req, res) => {
 export const getIncompleteRoutines = async (req, res) => {
     try {
         const userId = req.user.id;
-        console.log("ID del usuario desde token:", userId);
 
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            console.error("ID del usuario no es válido:", userId);
-            return res.status(400).json({ message: "ID no válido" });
+        if (!userId) {
+            return res.status(400).json({ message: "ID de usuario no proporcionado o inválido." });
         }
 
         const incompleteRoutines = await Rutinas.find({
-            user: mongoose.Types.ObjectId(userId), // Asegura que el ID es tratado como ObjectId
+            user: userId,
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
-
-        if (!incompleteRoutines || incompleteRoutines.length === 0) {
-            console.warn("No se encontraron rutinas incompletas.");
-            return res.status(404).json({ message: "No hay rutinas incompletas" });
-        }
 
         res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
