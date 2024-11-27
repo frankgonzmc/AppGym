@@ -63,7 +63,7 @@ export default function IniciaEjercicioPage() {
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
-      const progreso = await getProgresoUsuarioRequest(user._id); // Obtener progreso del usuario
+      const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
