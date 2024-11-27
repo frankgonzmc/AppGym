@@ -59,12 +59,7 @@ export const deleteProgreso = async (req, res) => {
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas, fechaFin } = req.body;
-
-        // Validar que `estado` sea un string
-        if (estado && typeof estado !== "string") {
-            return res.status(400).json({ message: "El estado debe ser un string válido." });
-        }
+        const { ejerciciosCompletados, tiempoTotal, caloriasQuemadas, fechaFin } = req.body;
 
         const progreso = await Progreso.findByIdAndUpdate(
             id,
@@ -107,6 +102,8 @@ export const updateProgreso = async (req, res) => {
         res.status(500).json({ message: "Error al actualizar progreso.", error });
     }
 };
+
+
 
 // Obtener estadísticas del progreso de un usuario (por mes)
 export const getUserStats = async (req, res) => {
