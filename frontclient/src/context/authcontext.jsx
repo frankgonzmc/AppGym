@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
             const res = await updatePerfilRequest(datos);
             if (res.data) {
                 setUser(res.data);
-                //console.log("Perfil actualizado:", res.data);
+                console.log("Perfil actualizado:", res.data);
                 return res.data;
             } else {
                 throw new Error("No se recibió una respuesta válida.");
@@ -94,8 +94,14 @@ export const AuthProvider = ({ children }) => {
     const updateDatosPerfil = async (datos) => {
         try {
             //console.log("Datos a actualizar:", datos);
-            await updateDatosPerfilRequest(datos);
-            return true;
+            const res = await updateDatosPerfilRequest(datos);
+            if (res.data) {
+                setUser(res.data);
+                console.log("Datos del Perfil actualizado:", res.data);
+                return res.data;
+            } else {
+                throw new Error("No se recibió una respuesta válida.");
+            }
         } catch (error) {
             console.error("Error al actualizar los datos del perfil:", error);
             throw new Error("No se pudieron actualizar los datos del perfil.");
