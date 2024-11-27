@@ -54,7 +54,7 @@ function Navbar() {
           >
             <NavDropdown.Item as={Link} to="/profile">Perfil</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/faq">FAQ/Supporting</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/faq-supporting">FAQ/Supporting</NavDropdown.Item>
           </NavDropdown>
         ) : (
           <div className="auth-links">
