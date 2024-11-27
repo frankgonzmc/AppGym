@@ -61,7 +61,7 @@ export const deleteProgreso = async (req, res) => {
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, tiempoTotal, fechaFin } = req.body;
+        const { ejerciciosCompletados, estado, tiempoTotal, fechaFin } = req.body;
 
         // Recuperar el progreso actual
         const progreso = await Progreso.findById(id);
@@ -90,6 +90,7 @@ export const updateProgreso = async (req, res) => {
         const progresoActualizado = await Progreso.findByIdAndUpdate(
             id,
             {
+                estado,
                 ejerciciosCompletados,
                 tiempoTotal,
                 caloriasQuemadas,
