@@ -211,8 +211,10 @@ export const registrarRutinaCompletado = async (req, res) => {
 
 // Obtener rutinas incompletas
 export const getIncompleteRoutines = async (req, res) => {
+    const { id } = req.params; // Asegúrate de extraer correctamente el ID
     try {
         const userId = req.user?._id;
+        const rutina = await Rutinas.findById(id);
 
         if (!userId) {
             return res.status(400).json({ message: "ID de usuario no proporcionado o inválido." });
@@ -220,6 +222,7 @@ export const getIncompleteRoutines = async (req, res) => {
 
         const incompleteRoutines = await Rutinas.find({
             user: userId,
+            rutina: rutina,
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
 
