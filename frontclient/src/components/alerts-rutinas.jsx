@@ -12,7 +12,7 @@ const useRoutineAlerts = (intervalTime) => {
             const interval = setInterval(async () => {
                 try {
                     // Enviar solicitud al backend con el ID del usuario
-                    const { data } = await axios.get(`/rutinas/${user.id}/incomplete`);
+                    const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
 
                     if (data.rutinas && data.rutinas.length > 0) {
                         const confirmed = await showInteractiveAlert(

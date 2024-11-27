@@ -17,7 +17,7 @@ export default function RutinaPage() {
       try {
         await getRutinas(); // Recarga todas las rutinas desde el backend
       } catch (error) {
-        console.error("Error al obtener rutinas:", error.response?.data || error.message);
+        //console.error("Error al obtener rutinas:", error.response?.data || error.message);
       } finally {
         setIsLoading(false);
       }

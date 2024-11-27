@@ -25,6 +25,7 @@ import CategoriaPage from './pages/categorias/categoriaPage';
 import RutinaExistentePage from './pages/rutinas/rutinaExistentePage';
 import MlPage from './pages/ml/mlPage';
 import AboutPage from './aboutPage';
+import FaqPage from './pages/faqPage';
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
                   <Route path='/register' element={<RegistroUsuario />} />
                   <Route path='/forgot-password' element={<ForgotPasswordPage />} />
                   <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
-
+                  <Route path='/faq-supporting' element={<FaqPage />} />
 
                   <Route element={<ProtectedRoute />}>
                     <Route path='/' element={<Inicio />} />

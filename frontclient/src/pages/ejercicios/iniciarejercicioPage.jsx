@@ -10,6 +10,7 @@ import {
 import {
   updateRutinaProgressRequest,
   updateEstadoRutinaRequest,
+  registrarRutinaCompletadoRequest,
 } from '../../api/rutina';
 import { updateProgresoRequest, updateEstadoProgresoRequest, getProgresoUsuarioRequest } from '../../api/progreso';
 
@@ -87,6 +88,10 @@ export default function IniciaEjercicioPage() {
             fechaFin: new Date(),
           });
         }
+
+        if(detalles){
+          
+        }
       }
     } finally {
       setLoading(false);
@@ -100,6 +105,7 @@ export default function IniciaEjercicioPage() {
 
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
+          await registrarRutinaCompletadoRequest
           await actualizarDatosCompletos(); // Actualiza progreso general
         }
       }
