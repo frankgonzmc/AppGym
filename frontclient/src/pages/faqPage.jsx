@@ -28,7 +28,7 @@ function FaqPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
-            });            
+            });
 
             if (response.ok) {
                 setSuccessMessage('¡Gracias por tu mensaje! Te responderemos pronto.');
@@ -51,11 +51,7 @@ function FaqPage() {
                     App Gym es una aplicación web que te ayuda a mejorar tus habilidades y llevar una vida más saludable.
                     Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
                 </p>
-                <h2>¿Qué es la IA?</h2>
-                <p>
-                    La IA utiliza algoritmos para analizar datos. En App Gym, usamos IA para generar recomendaciones personalizadas.
-                </p>
-                <hr className='my-4 mt-4 text-black' />
+                <hr className="my-4" />
                 <h2 className="mt-4">¿Tienes preguntas o sugerencias?</h2>
                 <p>Envíanos tus comentarios y sugerencias. ¡Nos encantaría saber de ti!</p>
 

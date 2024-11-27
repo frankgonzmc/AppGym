@@ -9,15 +9,16 @@ const router = Router();
 
 // Configuración del transporter de nodemailer
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com', // Cambiar si usas otro servicio
-    port: process.env.SMTP_PORT || 587,
-    secure: false, // Usar false para el puerto 587 y true para el puerto 465
+    host: process.env.SMTP_HOST || 'smtp.gmail.com', // Cambiar según el servicio
+    port: process.env.SMTP_PORT || 587, // 587 para TLS, 465 para SSL
+    secure: false, // false para TLS
     auth: {
-        user: process.env.EMAIL, // Tu correo desde el archivo .env
-        pass: process.env.EMAIL_PASSWORD, // Contraseña o token de aplicación desde el archivo .env
+        user: process.env.EMAIL, // Correo del remitente (desde el .env)
+        pass: process.env.EMAIL_PASSWORD, // Contraseña o token de aplicación (desde el .env)
     },
 });
 
+// Verificar conexión con el servidor SMTP
 transporter.verify((error) => {
     if (error) {
         console.error('Error al conectar con el servicio de correo:', error);
@@ -38,10 +39,10 @@ router.post('/faq-supporting', async (req, res) => {
         const nuevoMensaje = new Mensaje({ nombre, correo, mensaje });
         await nuevoMensaje.save();
 
-        // Enviar correo
-        await transporter.sendMail({
-            from: correo,
-            to: process.env.EMAIL, // Dirección de destino desde .env
+        // Enviar correo al correo almacenado en el .env
+        const mailOptions = {
+            from: `"${nombre}" <${correo}>`, // Nombre y correo del usuario
+            to: process.env.EMAIL, // Tu correo destino desde el .env
             subject: `Nuevo mensaje de ${nombre}`,
             text: `
                 Nombre: ${nombre}
@@ -49,7 +50,9 @@ router.post('/faq-supporting', async (req, res) => {
                 Mensaje:
                 ${mensaje}
             `,
-        });
+        };
+
+        await transporter.sendMail(mailOptions);
 
         res.status(200).json({ message: 'Correo enviado y mensaje guardado con éxito.' });
     } catch (error) {
