@@ -15,7 +15,7 @@ export function Inicio() {
     const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
-    
+
     useRoutineAlerts(10000); // 1 hora en milisegundos (puedes editar este tiempo)
 
     const calcularTMB = () => {
@@ -142,14 +142,15 @@ export function Inicio() {
 
     const nutrientedefinir = calcularNutrientesDefinir();
     const nutrientesVolumen = calcularNutrientesVolumen();
-    const newEstado = user.estado;
     const formData = new FormData();
-    formData.append('estado', newEstado);
+    formData.append('objetivos', user.objetivos);
+    formData.append('nivelActividad', user.nivelActividad);
+    formData.append('estado', user.estado);
 
-    useEffect(async () => {
+    useEffect(() => {
         calcularEstado();
 
-        await updatePerfil(formData);
+        updatePerfil(formData);
     }, [user.peso, user.estatura]); // Recalcular el estado cuando cambien peso o altura
 
     return (
