@@ -103,8 +103,6 @@ export const updateProgreso = async (req, res) => {
     }
 };
 
-
-
 // Obtener estadísticas del progreso de un usuario (por mes)
 export const getUserStats = async (req, res) => {
     try {
