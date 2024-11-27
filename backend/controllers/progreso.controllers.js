@@ -59,7 +59,7 @@ export const deleteProgreso = async (req, res) => {
 export const updateProgreso = async (req, res) => {
     try {
         const { id } = req.params;
-        const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas } = req.body;
+        const { ejerciciosCompletados, estado, tiempoTotal, caloriasQuemadas, fechaFin } = req.body;
 
         // Validar que `estado` sea un string
         if (estado && typeof estado !== "string") {
@@ -70,10 +70,9 @@ export const updateProgreso = async (req, res) => {
             id,
             {
                 ejerciciosCompletados,
-                estado,
                 tiempoTotal,
                 caloriasQuemadas,
-                fechaFin: estado === "Completado" ? new Date() : "En Progreso",
+                fechaFin,
             },
             { new: true } // Retorna el documento actualizado
         );
@@ -102,7 +101,7 @@ export const updateProgreso = async (req, res) => {
             await user.save();
         }
 
-        res.json(progreso);
+        res.json(progreso, user);
     } catch (error) {
         console.error("Error al actualizar progreso:", error);
         res.status(500).json({ message: "Error al actualizar progreso.", error });

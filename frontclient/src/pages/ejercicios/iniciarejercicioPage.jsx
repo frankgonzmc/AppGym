@@ -76,9 +76,9 @@ export default function IniciaEjercicioPage() {
 
           await updateProgresoRequest(progreso.data._id, {
             ejerciciosCompletados: ejerciciosCompletos,
-            fechaFin: new Date(),
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
+            fechaFin: new Date(),
           });
         }
       }
