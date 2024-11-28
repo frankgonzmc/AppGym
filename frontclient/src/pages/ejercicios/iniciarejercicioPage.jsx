@@ -65,9 +65,10 @@ export default function IniciaEjercicioPage() {
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
       const resejercicios = ejerciciosCompletos === detallesRutina.length ? 1 : 0;
-      const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "completado" : "en progreso";
+      const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
 
       console.log("respuesta: ", resejercicios);
+      console.log("respuesta: ", respuestaEstado);
 
       const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
