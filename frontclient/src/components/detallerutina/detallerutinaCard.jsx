@@ -55,15 +55,16 @@ export default function DetalleRutinaCard({ detalles }) {
           <p className="text-white text-left">
             Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}
           </p>
+          {/*
           <p className="text-white text-left">
             Estado: <strong>{estadoEjercicio}</strong>
-          </p>
-          <p className="text-whitetext-left">
+          </p>*/}
+          <p className="text-white text-left">
             Estado del Ejercicio: <strong>{estadoRutinaCompletado}</strong>
           </p>
           <p className="text-white text-left"></p>
         </Card.Body>
-        <Card.Footer className="d-flex justify-content-between">
+        <Card.Footer className="text-white d-flex justify-content-between">
           <button className="btn btn-danger" onClick={handleDelete}>
             Eliminar
           </button>
