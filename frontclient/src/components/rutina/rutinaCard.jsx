@@ -5,6 +5,7 @@ import { useRutinas } from "../../context/rutinascontext";
 import { useAuth } from "../../context/authcontext";
 import { useEffect, useState } from "react";
 import { showAlert, showConfirmation } from '../../components/alerts/utils-alerts';
+import { updateRutinaRequest } from "../../api/rutina";
 
 export function RutinaCard({ rutina }) {
   const navigate = useNavigate();
@@ -16,11 +17,15 @@ export function RutinaCard({ rutina }) {
   const [totalEjercicios, setTotalEjercicios] = useState(rutina?.totalEjercicios || 0);
   const [ejerciciosCompletados, setEjerciciosCompletados] = useState(rutina?.ejerciciosCompletados || 0);
 
+  const respuesta = totalEjercicios === ejerciciosCompletados ? 1 : 0;
+
   // Actualiza el estado si `rutina` cambia
-  useEffect(() => {
+  useEffect(async () => {
     if (rutina) {
       setTotalEjercicios(rutina.totalEjercicios || 0);
       setEjerciciosCompletados(rutina.ejerciciosCompletados || 0);
+
+      await updateRutinaRequest(rutina._id, { estadoRutinaRealizado: respuesta });  // Actualizar en el backend
     }
   }, [rutina]);
 

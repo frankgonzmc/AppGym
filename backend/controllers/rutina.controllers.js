@@ -81,7 +81,7 @@ export const getRutina = async (req, res) => {
 export const updateRutina = async (req, res) => {
     try {
         const rutinaId = req.params.id;
-        const { nombre, descripcion, ejercicios, totalEjercicios, ejerciciosCompletados, estado } = req.body;
+        const { nombre, descripcion, ejercicios, totalEjercicios, estadoRutinaRealizado, ejerciciosCompletados, estado } = req.body;
 
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
@@ -89,6 +89,7 @@ export const updateRutina = async (req, res) => {
         if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
         if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
         if (estado) updateData.estado = estado;
+        if (estadoRutinaRealizado !== undefined) updateData.estadoRutinaRealizado = estadoRutinaRealizado;
 
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
         if (!rutina) return res.status(404).json({ message: "Rutina no encontrada." });
