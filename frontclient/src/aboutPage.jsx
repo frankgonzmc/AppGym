@@ -9,13 +9,13 @@ function aboutPage() {
           <Col>
             <Card.Body>
               <Card.Title className='text-center text-black'>¿¿Quieres empezar una Dieta??</Card.Title>
-              <p>
+              <p className='text-center text-black'>
                 Empieza hacer Dieta mediante tus objetivos si tu quieres tener un cuerpo *DEFINIDO* y saludable. Sigue estas instruciones para empezar tu dieta.
               </p>
-              <p>
+              <p className='text-center text-black'>
                 Empieza hacer Dieta mediante tus objetivos si tu quieres tener un cuerpo en *VOLUMEN* y saludable. Sigue estas instruciones para empezar tu dieta.
               </p>
-              <p>
+              <p className='text-center text-black'>
                 En nuestro diccionario de nutrición explicamos que las calorías es la unidad que utilizamos para medir la energía que consume e ingresa nuestro cuerpo. Si quieres saber calcular calorías, antes conviene que tengas en cuenta una cosa. Como dijimos debemos hablar de Kcal y no de Calorías, así que en adelante nos referiremos a Kcal.
 
                 Calcular kilocalorías
@@ -31,7 +31,7 @@ function aboutPage() {
                 Cantidad elevada de músculo esquelético (el músculo que se encuentra junto al esqueleto, sin tener en cuenta las vísceras)
                 Tu Dietista-Nutricionista decidirá cuál es la mejor forma para determinar cuál es el gasto de tu metabolismo basal.
               </p>
-              <p>
+              <p className='text-center text-black'>
                 Fórmula de Harris-Benedict
                 Como decíamos existen varias fórmulas teóricas para calcular tu tasa de metabolismo basal. Vamos a enseñarte a calcular tu gasto energético basal a partir de una fórmula que tenga en cuenta el mayor número de variables posibles, es decir: género, peso, talla y edad. Y que es la que se utiliza más habitualmente: fórmula de Harris-Benedict. La fórmula es la siguiente:
 
@@ -58,7 +58,7 @@ function aboutPage() {
 
                 Ahora que ya tenemos el gasto energético basal o tasa de metabolismo basal, vamos a calcular el total de Kilocal necesarias para todo un día en nuestro ejemplo.
               </p>
-              <p>
+              <p className='text-center text-black'>
                 Calcular metabolismo basal
                 Cuando calculamos el gasto del metabolismo basal nos referimos a:
 
@@ -69,7 +69,7 @@ function aboutPage() {
 
                 Como siempre decimos, en nutrición 2+2 nunca suman 4, y pretender la perfección es imposible porque no existe. Así que buscar el número exacto, preciso y milimetrado de nuestro gasto tampoco es el objetivo porque no vale la pena.
               </p>
-              <p>
+              <p className='text-center text-black'>
                 Valor por actividad física
                 Por ahora, una de las tablas de valores para la actividad física que podemos utilizar es la de la FAO/OMS y que dice así:
 
