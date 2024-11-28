@@ -20,7 +20,7 @@ export function RutinaCard({ rutina }) {
   const respuesta = totalEjercicios === ejerciciosCompletados ? 1 : 0;
 
   // Actualiza el estado si `rutina` cambia
-  useEffect(async () => {
+  useEffect(() => {
     if (rutina) {
       setTotalEjercicios(rutina.totalEjercicios || 0);
       setEjerciciosCompletados(rutina.ejerciciosCompletados || 0);
