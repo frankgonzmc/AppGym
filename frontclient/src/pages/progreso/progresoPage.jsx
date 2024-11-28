@@ -71,11 +71,11 @@ function ProgresoPage() {
     <section className='seccion'>
       <Container fluid className="progreso-page-container">
         {alert && <Alert variant="warning">{alert}</Alert>}
-        <h2>Progreso Mensual</h2>
+        <h2 className='text-black'>Progreso Mensual</h2>
 
         {/* Selector de período */}
         <Dropdown onSelect={(e) => setPeriod(e)}>
-          <Dropdown.Toggle variant="secondary">Seleccionar Período</Dropdown.Toggle>
+          <Dropdown.Toggle variant="secondary" className='text-black'>Seleccionar Período</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item eventKey="weekly">Semanal</Dropdown.Item>
             <Dropdown.Item eventKey="monthly">Mensual</Dropdown.Item>
@@ -85,14 +85,14 @@ function ProgresoPage() {
 
         {/* Gráfica de progreso */}
         {loading ? (
-          <p>Cargando datos...</p>
+          <p className='text-black'>Cargando datos...</p>
         ) : monthlyProgress.some(value => value > 0) ? (
           <LineChart data={monthlyProgress} />
         ) : (
-          <p>No hay datos disponibles para el progreso mensual.</p>
+          <p className='text-black'>No hay datos disponibles para el progreso mensual.</p>
         )}
 
-        <h3 className="mt-4">Comparación de Progreso con Objetivos</h3>
+        <h3 className="mt-4 text-black">Comparación de Progreso con Objetivos</h3>
         <Alert variant="info">{progressComparison}</Alert>
       </Container>
     </section>
