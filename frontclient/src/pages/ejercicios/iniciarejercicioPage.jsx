@@ -156,7 +156,7 @@ export default function IniciaEjercicioPage() {
   };
 
   return (
-    <section className="seccion">
+    <section className="text-center text-black seccion">
       <Card>
         <Card.Header>
           <div className="flex h-[calc(80vh-80px)] items-center justify-center">
@@ -164,7 +164,7 @@ export default function IniciaEjercicioPage() {
               <img src={reposo} alt="Descanso" className="w-450 h-450 mt-2 my-2" style={{ maxWidth: "100%", height: "auto" }} />
             ) : (
               detalles.ejercicio.imagen && (
-                <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-450 h-450 mt-2 my-2" style={{ maxWidth: "100%", height: "auto" }} />
+                <img src={detalles.ejercicio.imagen} alt={detalles.ejercicio.nombre} className="w-450 h-450 mt-2 my-2" style={{ maxWidth: "100%", maxHeight: "100%" }} />
               )
             )}
           </div>
