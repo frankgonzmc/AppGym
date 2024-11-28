@@ -64,6 +64,9 @@ export default function IniciaEjercicioPage() {
       const detallesRutina = response.detalles;
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
+      const resejercicios = ejerciciosCompletos === detallesRutina.length ? 1 : 0;
+      console.log("respuesta: ", resejercicios);
+
       const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
@@ -83,7 +86,7 @@ export default function IniciaEjercicioPage() {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            estadoEjercicioRealizado: ejerciciosCompletos >= detalles.ejercicio.series ? 1 : 0,
+            estadoEjercicioRealizado: resejercicios,
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
