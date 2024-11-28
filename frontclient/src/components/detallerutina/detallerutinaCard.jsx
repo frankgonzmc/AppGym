@@ -41,7 +41,7 @@ export default function DetalleRutinaCard({ detalles }) {
 
   return (
     <section className="seccion-card">
-      <Card className="text-white bg-primary">
+      <Card className="text-white bg-dark">
         <Card.Body>
           <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
           <Card.Subtitle className="mb-2 text-black text-center">
