@@ -37,7 +37,7 @@ const rutinaSchema = new mongoose.Schema({
     estado: {
         type: String,
         enum: ['Pendiente', 'En Progreso', 'Completado'],
-        default: 'Pendiente',
+        default: '',
     },
     date: {
         type: Date,
