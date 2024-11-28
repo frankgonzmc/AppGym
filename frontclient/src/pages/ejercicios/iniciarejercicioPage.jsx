@@ -252,6 +252,10 @@ export default function IniciaEjercicioPage() {
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
+        await updateDetalleRutinaRequest(detalles._id, {
+          tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+          caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
+        });
 
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
@@ -262,11 +266,6 @@ export default function IniciaEjercicioPage() {
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
             fechaFin: new Date(),
-          });
-
-          await updateDetalleRutinaRequest(detalles._id, {
-            tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
       }
@@ -292,7 +291,7 @@ export default function IniciaEjercicioPage() {
 
   useEffect(() => {
     if (!isPausado && !ejercicioCompletado) {
-      intervalRef.current = setInterval(async () => {
+      intervalRef.current = setInterval(() => {
         if (!isDescanso) {
           if (duracionRestante > 0) {
             setDuracionRestante((prev) => prev - 1);
@@ -308,8 +307,7 @@ export default function IniciaEjercicioPage() {
             setDuracionRestante(detalles.ejercicio.duracion);
             const nuevasSeries = seriesCompletadas + 1;
             setSeriesCompletadas(nuevasSeries);
-
-            await actualizarProgresoSerie(nuevasSeries);
+            actualizarProgresoSerie(nuevasSeries);
           }
         }
       }, 1000);
