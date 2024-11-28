@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
-import { Card } from "../ui";
+import { Card } from "react-bootstrap";
 import '../../css/detallePage.css';
 import { showConfirmation } from "../alerts/utils-alerts";
 
