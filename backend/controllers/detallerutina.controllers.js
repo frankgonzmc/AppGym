@@ -70,7 +70,7 @@ export const updateDetalleRutina = async (req, res) => {
             detalle.estado = "Completado";
         }
 
-        detalle.estadoEjercicioRealizado = detalle.ejercicio.series === detalle.seriesProgreso ? 1 : 0;
+        detalle.estadoEjercicioRealizado = detalle.seriesProgreso >= detalle.ejercicio.series ? 1 : 0;
 
         await detalle.save();
 
