@@ -10,7 +10,7 @@ import {
 } from '../../api/detallerutina';
 import {
   updateRutinaProgressRequest,
-  updateEstadoRutinaRequest,
+  //updateEstadoRutinaRequest,
 } from '../../api/rutina';
 import { updateProgresoRequest, updateEstadoProgresoRequest, getProgresoUsuarioRequest } from '../../api/progreso';
 
@@ -97,7 +97,7 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
-      }/* else {
+      } else {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
@@ -105,7 +105,7 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
-      }*/
+      }
     } finally {
       setLoading(false);
     }
