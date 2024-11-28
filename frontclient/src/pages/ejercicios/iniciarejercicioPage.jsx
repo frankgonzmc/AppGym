@@ -69,7 +69,7 @@ export default function IniciaEjercicioPage() {
       //const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
 
       console.log("respuesta: ", resejercicios);
-      console.log("respuesta: ", respuestaEstado);
+      //console.log("respuesta: ", respuestaEstado);
 
       const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
