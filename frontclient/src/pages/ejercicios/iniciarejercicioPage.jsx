@@ -83,6 +83,7 @@ export default function IniciaEjercicioPage() {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            estadoEjercicioRealizado: ejerciciosCompletos >= detalles.ejercicio.series ? 1 : 0,
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
