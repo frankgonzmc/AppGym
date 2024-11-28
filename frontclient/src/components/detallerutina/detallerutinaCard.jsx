@@ -41,13 +41,14 @@ export default function DetalleRutinaCard({ detalles }) {
 
   return (
     <section className="seccion-card">
-      <Card className="text-white bg-primary">
+      <Card className="text-black bg-primary">
         <Card.Body>
-          <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
+          <Card.Title className="text-black text-center">{detalles.ejercicio.nombre}</Card.Title>
           <hr className="text-black mt-3 my-4"/>
-          <Card.Subtitle className="mb-2 text-white text-center">
+          <Card.Subtitle className="mb-2 text-black text-center">
             Descripción: {detalles.ejercicio.descripcion}
           </Card.Subtitle>
+          <hr className="text-black mt-3 my-4" />
           <p className=" text-white text-left">Categoría: {detalles.ejercicio.categoria}</p>
           <p className="text-white text-left">Duración: {detalles.ejercicio.duracion} segundos</p>
           <p className="text-white text-left">Series: {detalles.ejercicio.series}</p>

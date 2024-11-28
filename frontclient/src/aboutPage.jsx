@@ -8,7 +8,7 @@ function aboutPage() {
         <Row>
           <Col>
             <Card.Body>
-              <Card.Title>¿¿Quieres empezar una Dieta??</Card.Title>
+              <Card.Title className='text-center text-black'>¿¿Quieres empezar una Dieta??</Card.Title>
               <p>
                 Empieza hacer Dieta mediante tus objetivos si tu quieres tener un cuerpo *DEFINIDO* y saludable. Sigue estas instruciones para empezar tu dieta.
               </p>
