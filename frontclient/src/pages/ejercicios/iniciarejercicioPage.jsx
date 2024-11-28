@@ -100,6 +100,13 @@ export default function IniciaEjercicioPage() {
   };
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
+
+    const response = await getDetalleRutinaRequest(detalles.rutina);
+    if (!response || !response.detalles) {
+      throw new Error("La respuesta no contiene los detalles esperados.");
+    }
+
+    const detallesRutina = response.detalles;
     const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
 
     console.log("respuesta: ", respuestaEstado);
