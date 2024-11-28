@@ -32,9 +32,9 @@ function Navbar() {
   // Simular notificaciones
   useEffect(() => {
     const pendientes = [
-      "Completa tu rutina del martes",
-      "Actualiza tu perfil de peso",
-      "Revisa las recomendaciones de nutrición",
+      "Completa tus rutinas para que empieces a mejorar tus habilidades",
+      "Actualiza tu perfil de objetivos y Nivel de Actividad",
+      "Revisa las recomendaciones de nutrición mediante nuestra IA",
     ];
     setNotifications(pendientes);
   }, []);
@@ -87,8 +87,8 @@ function Navbar() {
           </Nav>
           {isAuthenticated ? (
             <div className="d-flex align-items-center gap-3">
-              <div className="notifications" onClick={handleBellClick}>
-                <FaBell className="text-warning" size={24} style={{ cursor: "pointer" }} />
+              <div className="text-white notifications" onClick={handleBellClick}>
+                <FaBell className="text-white text-warning" size={24} style={{ cursor: "pointer" }} />
                 {notifications.length > 0 && (
                   <Badge bg="danger" pill className="position-relative">
                     {notifications.length}
