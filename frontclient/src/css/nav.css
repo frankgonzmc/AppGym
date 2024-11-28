@@ -67,7 +67,7 @@ button {
 
 .navbar-container .nav-links a:hover,
 .navbar-container .nav-links button:hover {
-    color: #63b3ed;
+    color: #424242;
 }
 
 .navbar-container .dropdown-menu {
@@ -80,7 +80,7 @@ button {
 }
 
 .navbar-container .dropdown-menu a:hover {
-    color: #63b3ed;
+    color: #222222;
 }
 
 /* Responsive Design */
