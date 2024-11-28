@@ -81,14 +81,13 @@ export const getRutina = async (req, res) => {
 export const updateRutina = async (req, res) => {
     try {
         const rutinaId = req.params.id;
-        const { nombre, descripcion, ejercicios, totalEjercicios, estadoRutinaRealizado, ejerciciosCompletados, estado } = req.body;
+        const { nombre, descripcion, ejercicios, totalEjercicios, estadoRutinaRealizado, ejerciciosCompletados } = req.body;
 
         const updateData = {};
         if (nombre) updateData.nombre = nombre;
         if (descripcion) updateData.descripcion = descripcion;
         if (totalEjercicios !== undefined) updateData.totalEjercicios = totalEjercicios;
         if (ejerciciosCompletados !== undefined) updateData.ejerciciosCompletados = ejerciciosCompletados;
-        if (estado) updateData.estado = estado;
         if (estadoRutinaRealizado !== undefined) updateData.estadoRutinaRealizado = estadoRutinaRealizado;
 
         const rutina = await Rutinas.findByIdAndUpdate(rutinaId, updateData, { new: true });
@@ -133,7 +132,7 @@ export const deleteRutina = async (req, res) => {
     }
 };
 
-
+/*
 export const updateProgresoRutina = async (req, res) => {
     const { rutinaId } = req.params;
 
@@ -163,7 +162,7 @@ export const updateProgresoRutina = async (req, res) => {
         res.status(500).json({ message: "Error del servidor" });
     }
 };
-
+*/
 // Actualizar progreso de la rutina basado en los ejercicios completados (actualiza todos los detalles)
 export const actualizarProgresoRutina = async (rutinaId) => {
     try {
@@ -178,8 +177,10 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         // Actualizar la rutina
         await Rutinas.findByIdAndUpdate(
             rutinaId,
-            { ejerciciosCompletados: completados, estado: estadoRutina },
-            { new: true }
+            { 
+                ejerciciosCompletados: completados, 
+                estado: estadoRutina 
+            },  { new: true }
         );
 
         console.log(`Progreso actualizado para rutina ${rutinaId}: ${completados}/${detalles.length}`);

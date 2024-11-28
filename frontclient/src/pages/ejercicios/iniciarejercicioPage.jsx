@@ -27,6 +27,7 @@ export default function IniciaEjercicioPage() {
   const [duracionRestante, setDuracionRestante] = useState(detalles.ejercicio.duracion || 0);
   const [descansoRestante, setDescansoRestante] = useState(detalles.ejercicio.descanso || 0);
   const [seriesCompletadas, setSeriesCompletadas] = useState(detalles.seriesProgreso || 0);
+  const [ejerciciosCompletos, setEjerciciosCompletos] = useState(seriesCompletadas === detalles.ejercicio.series);
   const [caloriasQuemadas, setCaloriasQuemadas] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
@@ -65,18 +66,15 @@ export default function IniciaEjercicioPage() {
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
       const resejercicios = ejerciciosCompletos === detallesRutina.length ? 1 : 0;
-      const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
+
 
       console.log("respuesta: ", resejercicios);
-      console.log("respuesta: ", respuestaEstado);
 
       const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
-
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
           await updateEstadoProgresoRequest(progreso.data._id, "Completado");
@@ -102,6 +100,10 @@ export default function IniciaEjercicioPage() {
   };
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
+    const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
+
+    console.log("respuesta: ", respuestaEstado);
+
     try {
       if (nuevasSeries <= detalles.ejercicio.series) {
         await updateDetalleRutinaRequest(detalles._id, { seriesProgreso: nuevasSeries });
@@ -109,6 +111,7 @@ export default function IniciaEjercicioPage() {
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos(); // Actualiza progreso general
+          await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
         }
       }
     } catch (error) {
