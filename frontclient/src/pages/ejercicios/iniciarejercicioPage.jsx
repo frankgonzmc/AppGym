@@ -87,7 +87,7 @@ export default function IniciaEjercicioPage() {
           });
         }
         if (detalles.rutina) {
-          await updateEstadoRutinaRequest(detalles.rutina._id, "Completado");
+          await updateEstadoRutinaRequest(detalles.rutina, "Completado");
         }
       }
     } finally {
