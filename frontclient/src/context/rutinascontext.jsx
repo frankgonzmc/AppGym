@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest /*updateEstadoRutinaRequest*/ } from "../api/rutina";
+import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest } from "../api/rutina";
 import { createDetalleRutinaRequest } from "../api/detallerutina";
 
 const RutinaContext = createContext();
