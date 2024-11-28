@@ -18,7 +18,7 @@ export function Inicio() {
     const [perfilActualizado, setPerfilActualizado] = useState(false); // Estado para evitar bucles
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
-    useRoutineAlerts(180000); // 1 hora en milisegundos (puedes editar este tiempo)
+    useRoutineAlerts(120000); // 1 hora en milisegundos (puedes editar este tiempo)
 
     const calcularTMB = () => {
         const peso = user.peso || 0;
