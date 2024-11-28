@@ -100,7 +100,7 @@ export default function IniciaEjercicioPage() {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
-            estadoEjercicioRealizado: resejercicios,
+            estadoEjercicioRealizado: 1,
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }

@@ -164,7 +164,7 @@ export const updateProgresoRutina = async (req, res) => {
 };
 */
 // Actualizar progreso de la rutina basado en los ejercicios completados (actualiza todos los detalles)
-export const actualizarProgresoRutina = async (rutinaId) => {
+/*export const actualizarProgresoRutina = async (rutinaId) => {
     try {
         const detalles = await DetallesRutina.find({ rutina: rutinaId });
 
@@ -177,17 +177,17 @@ export const actualizarProgresoRutina = async (rutinaId) => {
         // Actualizar la rutina
         await Rutinas.findByIdAndUpdate(
             rutinaId,
-            { 
-                ejerciciosCompletados: completados, 
-                estado: estadoRutina 
-            },  { new: true }
+            {
+                ejerciciosCompletados: completados,
+                estado: estadoRutina
+            }, { new: true }
         );
 
         console.log(`Progreso actualizado para rutina ${rutinaId}: ${completados}/${detalles.length}`);
     } catch (error) {
         console.error("Error al actualizar progreso de rutina:", error);
     }
-};
+};*/
 
 
 export const registrarRutinaCompletado = async (req, res) => {
@@ -195,7 +195,12 @@ export const registrarRutinaCompletado = async (req, res) => {
     const { id } = req.params; // Asegúrate de extraer correctamente el ID
 
     try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ error: "ID inválido" });
+        }
+
         const rutina = await Rutinas.findById(id);
+
         if (!rutina) {
             return res.status(404).json({ message: "Rutina no encontrada." });
         }
@@ -226,7 +231,7 @@ export const getIncompleteRoutines = async (req, res) => {
             user: userId,
             estado: { $in: ["Pendiente", "En Progreso"] },
         });
-        
+
         res.status(200).json({ rutinas: incompleteRoutines });
     } catch (error) {
         console.error("Error al obtener rutinas incompletas:", error);
