@@ -31,18 +31,16 @@ const DetallerutinaPage = () => {
 
   return (
     <section className="seccion">
-      <Card className="shadow-lg">
-        <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
-        <p className="text-center lead">{rutina.descripcion}</p>
-        <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
-        <div className="row">
-          {detalles.map(detalles => (
-            <div className="col-md-4 mb-4" key={detalles._id}>
-              <DetalleRutinaCard detalles={detalles} />
-            </div>
-          ))}
-        </div>
-      </Card>
+      <h2 className="text-center display-4 font-weight-bold">{rutina.nombre}</h2>
+      <p className="text-center lead">{rutina.descripcion}</p>
+      <h3 className="mt-4 text-center">Ejercicios Asociados</h3>
+      <div className="row">
+        {detalles.map(detalles => (
+          <div className="col-md-4 mb-4" key={detalles._id}>
+            <DetalleRutinaCard detalles={detalles} />
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
