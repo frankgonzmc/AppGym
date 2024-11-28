@@ -20,10 +20,12 @@ export function RutinaCard({ rutina }) {
   const respuesta = totalEjercicios === ejerciciosCompletados ? 1 : 0;
 
   // Actualiza el estado si `rutina` cambia
-  useEffect(() => {
+  useEffect(async () => {
     if (rutina) {
       setTotalEjercicios(rutina.totalEjercicios || 0);
       setEjerciciosCompletados(rutina.ejerciciosCompletados || 0);
+
+      await updateRutinaRequest(rutina._id, { estadoRutinaRealizado: respuesta });  // Actualizar en el backend
     }
   }, [rutina]);
 
@@ -44,9 +46,6 @@ export function RutinaCard({ rutina }) {
       setLoading(true); // Muestra el indicador de carga
 
       try {
-
-        await updateRutinaRequest(rutina._id, { estadoRutinaRealizado: respuesta });  // Actualizar en el backend
-
         try {
           await deleteRutina(rutina._id);
           showAlert('¡Hecho!', 'Rutina Elimina Exitosamente.', 'success');
