@@ -172,12 +172,12 @@ export default function IniciaEjercicioPage() {
         <Card.Body>
           <h1 className="text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
           <p>{detalles.ejercicio.descripcion}</p>
-          <p><strong>Calorías Quemadas (estimado):</strong> {caloriasQuemadas.toFixed(2)} kcal</p>
+          <p className='text-black' ><strong>Calorías Quemadas (estimado):</strong> {caloriasQuemadas.toFixed(2)} kcal</p>
           <ProgressBar
             now={(duracionRestante / detalles.ejercicio.duracion) * 100}
             label={`Duración: ${duracionRestante}s`}
             className="mt-2"
-            style={{ height: "40px", maxWidth: "auto" }}
+            style={{ height: "60px", width: "100%", maxWidth: "auto" }}
           />
           {isDescanso && (
             <ProgressBar
@@ -185,10 +185,10 @@ export default function IniciaEjercicioPage() {
               now={(descansoRestante / detalles.ejercicio.descanso) * 100}
               className="mt-2"
               label={`Descanso: ${descansoRestante}s`}
-              style={{ height: "40px", maxWidth: "auto" }}
+              style={{ height: "60px", width: "100%", maxWidth: "auto" }}
             />
           )}
-          <p>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
+          <p className='text-black'>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
           {loading && <p className="text-center text-slate-500">Actualizando datos...</p>}
           <div className="d-flex justify-content-between">
             <Button onClick={handlePausarReanudar} disabled={ejercicioCompletado}>
