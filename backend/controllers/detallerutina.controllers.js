@@ -184,7 +184,7 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const ejerciciosCompletados = detalles.filter(detalle => detalle.estado === 'Completado').length;
 
         // Determinar el estado general de la rutina
-        const estadoRutina = ejerciciosCompletados === detalles.length ? 'Pendiente' : 'Completado';
+        const estadoRutina = ejerciciosCompletados === detalles.length ? 'Completado' : 'En Progreso';
 
         // Actualizar rutina
         await Rutinas.findByIdAndUpdate(rutinaId, {
