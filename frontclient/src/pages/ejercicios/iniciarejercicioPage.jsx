@@ -51,7 +51,7 @@ export default function IniciaEjercicioPage() {
     try {
       setLoading(true);
 
-      if (!user || !user.id) {
+      if (!user || !user._id) {
         throw new Error("Usuario no autenticado o user._id es inválido.");
       }
 
