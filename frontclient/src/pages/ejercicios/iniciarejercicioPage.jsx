@@ -69,8 +69,6 @@ export default function IniciaEjercicioPage() {
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, { estado: "Completado" });
-
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
           await updateEstadoProgresoRequest(progreso.data._id, "Completado");
@@ -87,6 +85,9 @@ export default function IniciaEjercicioPage() {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
+        }
+        if (detalles.rutina) {
+          await updateEstadoRutinaRequest(detalles.rutina._id, "Completado");
         }
       }
     } finally {
