@@ -1,15 +1,5 @@
 import axios from './axios';
 
-export const registrarDetalleEjercicioCompletadoRequest = async (ejercicioId) => {
-    try {
-        const response = await axios.post(`/detalles-rutinas/${ejercicioId}/ejercicio-completado`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error al registrar el ejercicio como completado con ID ${ejercicioId}:`, error);
-        throw error;
-    }
-};
-
 /**
  * Obtener los detalles de una rutina específica
  * @param {string} rutinaId - ID de la rutina
