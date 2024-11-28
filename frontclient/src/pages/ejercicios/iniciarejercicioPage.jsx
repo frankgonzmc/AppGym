@@ -1,3 +1,4 @@
+/*
 import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -176,9 +177,9 @@ export default function IniciaEjercicioPage() {
       </Card>
     </section>
   );
-}
+}*/
 
-/*import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
 import '../../css/ejercicioPage.css';
 import { useLocation } from 'react-router-dom';
@@ -268,10 +269,11 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(),
             fechaFin: new Date(),
           });
-        }
 
-        if (detalles) {
-
+          await updateDetalleRutinaRequest(detalles._id, {
+            tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
+          });
         }
       }
     } finally {
@@ -286,7 +288,6 @@ export default function IniciaEjercicioPage() {
 
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
-          await registrarRutinaCompletadoRequest
           await actualizarDatosCompletos(); // Actualiza progreso general
         }
       }
@@ -339,7 +340,10 @@ export default function IniciaEjercicioPage() {
     <section className="text-center text-black seccion">
       <Card>
         <Card.Header>
-          <h1 className="text-center text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
+          <header>
+            <h1 className="text-center text-2xl text-black font-bold">{detalles.ejercicio.nombre}</h1>
+          </header>
+          <hr className='text-black my-2' />
           <div className="flex h-[calc(80vh-80px)] items-center justify-center">
             {isDescanso ? (
               <img src={reposo} alt="Descanso" className="w-450 h-450 mt-2 my-2" style={{ maxWidth: "100%", height: "auto" }} />
@@ -383,4 +387,3 @@ export default function IniciaEjercicioPage() {
     </section>
   );
 }
-*/
