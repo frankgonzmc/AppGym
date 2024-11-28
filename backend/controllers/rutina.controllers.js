@@ -163,6 +163,7 @@ export const updateProgresoRutina = async (req, res) => {
     }
 };
 */
+/*
 // Actualizar progreso de la rutina basado en los ejercicios completados (actualiza todos los detalles)
 export const actualizarProgresoRutina = async (rutinaId) => {
     try {
@@ -187,7 +188,7 @@ export const actualizarProgresoRutina = async (rutinaId) => {
     } catch (error) {
         console.error("Error al actualizar progreso de rutina:", error);
     }
-};
+};*/
 
 export const registrarRutinaCompletado = async (req, res) => {
     console.log("ID recibido:", req.params.id);

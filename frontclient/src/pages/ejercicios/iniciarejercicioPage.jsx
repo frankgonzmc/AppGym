@@ -10,7 +10,7 @@ import {
 } from '../../api/detallerutina';
 import {
   updateRutinaProgressRequest,
-  updateEstadoRutinaRequest,
+  //updateEstadoRutinaRequest,
 } from '../../api/rutina';
 import { updateProgresoRequest, updateEstadoProgresoRequest, getProgresoUsuarioRequest } from '../../api/progreso';
 
@@ -66,7 +66,7 @@ export default function IniciaEjercicioPage() {
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
       const resejercicios = ejerciciosCompletos === detallesRutina.length ? 1 : 0;
-      const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
+      //const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
 
       console.log("respuesta: ", resejercicios);
       console.log("respuesta: ", respuestaEstado);
@@ -76,7 +76,7 @@ export default function IniciaEjercicioPage() {
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
+        //await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
 
         if (progreso) {
           // Asegúrate de enviar un string en `estado`

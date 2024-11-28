@@ -11,7 +11,7 @@ export const updateRutinaRequest = (id, rutina) => axios.put(`/rutinas/${id}`, r
 
 export const deleteRutinaRequest = (id, rutina) => axios.delete(`/rutinas/${id}`, rutina)
 
-export const updateEstadoRutinaRequest = (id, estado) => axios.put(`/rutinas/${id}/estado`, { estado })
+//export const updateEstadoRutinaRequest = (id, estado) => axios.put(`/rutinas/${id}/estado`, { estado })
 
 export const updateRutinaProgressRequest = (rutina, ejerciciosCompletados) => {
     return axios.put(`/rutinas/${rutina}`, { ejerciciosCompletados });
