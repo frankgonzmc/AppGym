@@ -88,15 +88,16 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(),
             fechaFin: new Date(),
           });
-          if (detalles) {
-            await updateDetalleRutinaRequest(detalles._id, {
-              tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
-              estadoEjercicioRealizado: resejercicios,
-              caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
-            });
-          }
         }
-      } else {
+
+        if (detalles) {
+          await updateDetalleRutinaRequest(detalles._id, {
+            tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            estadoEjercicioRealizado: resejercicios,
+            caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
+          });
+        }
+      }/* else {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
@@ -104,7 +105,7 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
-      }
+      }*/
     } finally {
       setLoading(false);
     }
