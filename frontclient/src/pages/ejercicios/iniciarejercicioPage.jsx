@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button, Card, ProgressBar } from 'react-bootstrap';
+import '../../css/ejercicioPage.css';
 import { useLocation } from 'react-router-dom';
 import reposo from "../../imagenes/reposo.webp";
 import { useAuth } from "../../context/authcontext";
@@ -89,8 +90,8 @@ export default function IniciaEjercicioPage() {
           });
         }
 
-        if(detalles){
-          
+        if (detalles) {
+
         }
       }
     } finally {
@@ -155,7 +156,7 @@ export default function IniciaEjercicioPage() {
   };
 
   return (
-    <Card className="text-center">
+    <section className="seccion">
       <Card.Header>
         <div className="flex h-[calc(80vh-80px)] items-center justify-center">
           {isDescanso ? (
@@ -197,6 +198,6 @@ export default function IniciaEjercicioPage() {
           </Button>
         </div>
       </Card.Body>
-    </Card>
+    </section>
   );
 }
