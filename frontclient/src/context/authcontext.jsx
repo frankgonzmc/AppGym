@@ -4,6 +4,7 @@ import {
     loginRequest,
     verifityTokenRequest,
     updatePasswordRequest,
+    updateTokenPerfilRequest,
     updateDatosPerfilRequest,
     updatePerfilRequest,
     checkEmailRequest,
@@ -107,6 +108,22 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const updateTokenPerfil = async (tokens) => {
+        try {
+            const res = await updateTokenPerfilRequest(tokens);
+            if (res.data) {
+                setUser(res.data);
+                console.log("Perfil actualizado:", res.data);
+                return res.data;
+            } else {
+                throw new Error("No se recibió una respuesta válida.");
+            }
+        } catch (error) {
+            console.error("Error al actualizar el perfil:", error);
+            throw new Error("No se pudo actualizar el perfil.");
+        }
+    };
+
     const checkEmailExists = async (email) => {
         try {
             await checkEmailRequest(email);
@@ -182,6 +199,7 @@ export const AuthProvider = ({ children }) => {
                 logout,
                 updatePassword,
                 updatePerfil,
+                updateTokenPerfil,
                 updateDatosPerfil,
                 checkEmailExists,
                 loading,

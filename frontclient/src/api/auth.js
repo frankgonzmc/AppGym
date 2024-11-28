@@ -22,6 +22,8 @@ export const updatePerfilRequest = (datos) => axios.put('/update-perfil', datos,
     },
 });
 
+export const updateTokenPerfilRequest = (tokens) => axios.put('/update-token-perfil', tokens);
+
 export const updateDatosPerfilRequest = (datos) => axios.put('/update-datos-perfil', datos);
 
 export const checkEmailRequest = (email) => axios.get(`/check-email?email=${email}`);
