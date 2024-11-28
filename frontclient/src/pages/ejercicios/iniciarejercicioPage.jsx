@@ -66,15 +66,18 @@ export default function IniciaEjercicioPage() {
       const ejerciciosCompletos = detallesRutina.filter((detalle) => detalle.estado === "Completado").length;
 
       const resejercicios = ejerciciosCompletos === detallesRutina.length ? 1 : 0;
-
+      const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
 
       console.log("respuesta: ", resejercicios);
+      console.log("respuesta: ", respuestaEstado);
 
       const progreso = await getProgresoUsuarioRequest(user.id); // Obtener progreso del usuario
 
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
+        await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
+
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
           await updateEstadoProgresoRequest(progreso.data._id, "Completado");
@@ -85,7 +88,15 @@ export default function IniciaEjercicioPage() {
             caloriasQuemadas: calcularCaloriasQuemadas(),
             fechaFin: new Date(),
           });
+          if (detalles) {
+            await updateDetalleRutinaRequest(detalles._id, {
+              tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+              estadoEjercicioRealizado: resejercicios,
+              caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
+            });
+          }
         }
+      } else {
         if (detalles) {
           await updateDetalleRutinaRequest(detalles._id, {
             tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
@@ -100,17 +111,6 @@ export default function IniciaEjercicioPage() {
   };
 
   const actualizarProgresoSerie = async (nuevasSeries) => {
-
-    const response = await getDetalleRutinaRequest(detalles.rutina);
-    if (!response || !response.detalles) {
-      throw new Error("La respuesta no contiene los detalles esperados.");
-    }
-
-    const detallesRutina = response.detalles;
-    const respuestaEstado = ejerciciosCompletos === detallesRutina.length ? "Completado" : "En Progreso";
-
-    console.log("respuesta: ", respuestaEstado);
-
     try {
       if (nuevasSeries <= detalles.ejercicio.series) {
         await updateDetalleRutinaRequest(detalles._id, { seriesProgreso: nuevasSeries });
@@ -118,7 +118,6 @@ export default function IniciaEjercicioPage() {
         if (nuevasSeries === detalles.ejercicio.series) {
           setEjercicioCompletado(true);
           await actualizarDatosCompletos(); // Actualiza progreso general
-          await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
         }
       }
     } catch (error) {
