@@ -75,7 +75,7 @@ export const updateDetalleRutina = async (req, res) => {
         await detalle.save();
 
         // Actualizar progreso general de la rutina
-        await actualizandoEstadosDetallesRutinas(detalle.rutina);
+        //await actualizandoEstadosDetallesRutinas(detalle.rutina);
 
         res.json(detalle);
     } catch (error) {
@@ -166,7 +166,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
         await detalle.save();
 
         // Actualizar progreso general de la rutina
-        await actualizandoEstadosDetallesRutinas(detalle.rutina);
+        //await actualizandoEstadosDetallesRutinas(detalle.rutina);
 
         res.status(200).json(detalle);
     } catch (error) {
@@ -175,6 +175,7 @@ export const actualizarProgresoDetalleRutina = async (req, res) => {
     }
 };
 
+/*
 // Actualizar el progreso general de la rutina
 export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
     try {
@@ -197,4 +198,4 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         console.error("Error al actualizar el progreso de la rutina:", error);
         throw error;
     }
-};
+};*/

@@ -13,7 +13,7 @@ router.get('/rutinas/:id', authRequired, validateObjectId, getRutina);
 router.post('/rutinas', authRequired, validateSchema(createRutinaSchema), createRutinas);
 router.post('/rutinas/:id/registrar-completado', authRequired, validateObjectId, registrarRutinaCompletado);
 router.put('/rutinas/:id', authRequired, validateObjectId, updateRutina);
-//router.put('/rutinas/:id/estado', authRequired, validateObjectId, actualizarProgresoRutina);
+router.put('/rutinas/:id/estado', authRequired, validateObjectId, actualizarProgresoRutina);
 router.delete('/rutinas/:id', authRequired, validateObjectId, deleteRutina);
 
 // Obtener rutinas incompletas
