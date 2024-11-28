@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDetallesRutina } from "../../context/detallerutinacontext";
-import { Card } from "react-bootstrap";
+import { Card } from "../ui";
 import '../../css/detallePage.css';
 import { showConfirmation } from "../alerts/utils-alerts";
 
@@ -44,24 +44,24 @@ export default function DetalleRutinaCard({ detalles }) {
       <Card className="text-white bg-dark">
         <Card.Body>
           <Card.Title className="text-center">{detalles.ejercicio.nombre}</Card.Title>
-          <Card.Subtitle className="mb-2 text-black text-center">
+          <Card.Subtitle className="mb-2 text-white text-center">
             Descripción: {detalles.ejercicio.descripcion}
           </Card.Subtitle>
-          <p className="text-left">Categoría: {detalles.ejercicio.categoria}</p>
-          <p className="text-left">Duración: {detalles.ejercicio.duracion} segundos</p>
-          <p className="text-left">Series: {detalles.ejercicio.series}</p>
-          <p className="text-left">Repeticiones: {detalles.ejercicio.repeticiones}</p>
-          <p className="text-left">Descanso: {detalles.ejercicio.descanso}</p>
-          <p className="text-left">
+          <p className=" text-white text-left">Categoría: {detalles.ejercicio.categoria}</p>
+          <p className="text-white text-left">Duración: {detalles.ejercicio.duracion} segundos</p>
+          <p className="text-white text-left">Series: {detalles.ejercicio.series}</p>
+          <p className="text-white text-left">Repeticiones: {detalles.ejercicio.repeticiones}</p>
+          <p className="text-white text-left">Descanso: {detalles.ejercicio.descanso}</p>
+          <p className="text-white text-left">
             Series Completadas: {detalles.seriesProgreso} / {detalles.ejercicio.series}
           </p>
-          <p className="text-left">
+          <p className="text-white text-left">
             Estado: <strong>{estadoEjercicio}</strong>
           </p>
-          <p className="text-left">
+          <p className="text-whitetext-left">
             Estado del Ejercicio: <strong>{estadoRutinaCompletado}</strong>
           </p>
-          <p className="text-left"></p>
+          <p className="text-white text-left"></p>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between">
           <button className="btn btn-danger" onClick={handleDelete}>
