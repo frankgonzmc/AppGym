@@ -212,25 +212,19 @@ export default function IniciaEjercicioPage() {
   const [caloriasQuemadas, setCaloriasQuemadas] = useState(0);
   const [isPausado, setIsPausado] = useState(true);
   const [isDescanso, setIsDescanso] = useState(false);
-  const [ejercicioCompletado, setEjercicioCompletado] = useState(false);
+  const [ejercicioCompletado, setEjercicioCompletado] = useState(seriesCompletadas === detalles.ejercicio.series);
   const intervalRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
   const calcularCaloriasQuemadas = () => {
     const MET = 8; // MET para ejercicio moderado
-    const pesoEnKg = detalles.peso || 70; // Default: 70kg
-    const duracionEnHoras = detalles.ejercicio.duracion * detalles.ejercicio.series / 3600;
-
-    if (isNaN(pesoEnKg) || isNaN(duracionEnHoras)) {
-      console.error("Datos inválidos para el cálculo de calorías.");
-      return 0;
-    }
+    const pesoEnKg = user?.peso || 70; // Default: 70kg si el peso del usuario no está disponible
+    const duracionEnHoras = (detalles.ejercicio.duracion * detalles.ejercicio.series) / 3600;
 
     return MET * pesoEnKg * duracionEnHoras;
   };
 
   useEffect(() => {
-    // Calcula las calorías iniciales y las almacena temporalmente
     setCaloriasQuemadas(calcularCaloriasQuemadas());
   }, [detalles]);
 
@@ -361,7 +355,7 @@ export default function IniciaEjercicioPage() {
             now={(duracionRestante / detalles.ejercicio.duracion) * 100}
             label={`Duración: ${duracionRestante}s`}
             className="mt-2"
-            style={{ height: "60px", width: "100%", maxWidth: "auto" }}
+            style={{ height: "30px", width: "100%", maxWidth: "auto" }}
           />
           {isDescanso && (
             <ProgressBar
@@ -369,7 +363,7 @@ export default function IniciaEjercicioPage() {
               now={(descansoRestante / detalles.ejercicio.descanso) * 100}
               className="mt-2"
               label={`Descanso: ${descansoRestante}s`}
-              style={{ height: "60px", width: "100%", maxWidth: "auto" }}
+              style={{ height: "30px", width: "100%", maxWidth: "auto" }}
             />
           )}
           <p className='text-black'>Series completadas: {seriesCompletadas} / {detalles.ejercicio.series}</p>
