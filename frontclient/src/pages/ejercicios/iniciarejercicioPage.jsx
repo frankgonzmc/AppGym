@@ -252,10 +252,6 @@ export default function IniciaEjercicioPage() {
 
       if (ejerciciosCompletos >= detallesRutina.length) {
         await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-        await updateDetalleRutinaRequest(detalles._id, {
-          tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
-          caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
-        });
 
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
@@ -266,6 +262,12 @@ export default function IniciaEjercicioPage() {
             tiempoTotal: detalles.ejercicio.duracion * detalles.ejercicio.series,
             caloriasQuemadas: calcularCaloriasQuemadas(),
             fechaFin: new Date(),
+          });
+        }
+        if (detalles) {
+          await updateDetalleRutinaRequest(detalles._id, {
+            tiempoEstimado: detalles.ejercicio.duracion * detalles.ejercicio.series,
+            caloriasQuemadas: calcularCaloriasQuemadas(), // Recalcular calorias
           });
         }
       }
