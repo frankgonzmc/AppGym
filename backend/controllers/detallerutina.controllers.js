@@ -188,12 +188,13 @@ export const actualizandoEstadosDetallesRutinas = async (rutinaId) => {
         const estadoRutina = ejerciciosCompletados === detalles.length ? 'Completado' : 'En Progreso';
 
         // Actualizar rutina
-        await Rutinas.findByIdAndUpdate(rutinaId, {
+        const rutinas = await Rutinas.findByIdAndUpdate(rutinaId, {
             ejerciciosCompletados,
             estado: estadoRutina,
         });
 
         console.log(`Estado actualizado para la rutina ${rutinaId}: ${ejerciciosCompletados}/${detalles.length}`);
+        res.status(200).json(rutinas);
     } catch (error) {
         console.error("Error al actualizar el progreso de la rutina:", error);
         throw error;
