@@ -17,7 +17,7 @@ function ResetpasswordPage() {
         try {
             const response = await resetPasswordRequest(token, data.password); // Enviar token y nueva contraseña
             setMessage(response.data.message);
-            navigate('/'); // Redirigir después del éxito
+            navigate('/login'); // Redirigir después del éxito
         } catch (error) {
             setMessage(error.response?.data?.message || "Error al restablecer contraseña");
         } finally {

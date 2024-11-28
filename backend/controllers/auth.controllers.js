@@ -325,9 +325,13 @@ export const forgotPassword = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: "Usuario no encontrado" });
 
-        const token = crypto.randomBytes(20).toString('hex');
-        user.resetPasswordToken = token;
+        // Generar token y establecer tiempo de expiración
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        user.resetPasswordToken = resetToken;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
+        await user.save();
+
+
         try {
             await user.save();
             console.log("Token almacenado correctamente en la base de datos.");
@@ -366,26 +370,29 @@ export const resetPassword = async (req, res) => {
     const { password } = req.body;
 
     try {
-        console.log("Token recibido:", token);
         const user = await User.findOne({
             resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() },
+            resetPasswordExpires: { $gt: Date.now() }, // Validar que no haya expirado
         });
 
         if (!user) {
-            console.error("Token no encontrado o expirado:", token);
-            return res.status(400).json({ message: "Token no válido o expirado." });
+            return res.status(400).json({ message: 'Token inválido o expirado' });
         }
 
-        user.password = await bcrypt.hash(password, 10);
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
+        // Hashear la nueva contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Actualizar usuario con nueva contraseña y resetear tokens
+        user.password = hashedPassword;
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+        user.defaultToken = token; // Configurar el nuevo token como default
         await user.save();
 
-        res.status(200).json({ message: "Contraseña restablecida correctamente." });
+        res.status(200).json({ message: 'Contraseña restablecida con éxito' });
     } catch (error) {
-        console.error("Error en resetPassword:", error);
-        res.status(500).json({ message: error.message });
+        console.error('Error en resetPassword:', error);
+        res.status(500).json({ message: 'Error al restablecer contraseña', error: error.message });
     }
 };
 
