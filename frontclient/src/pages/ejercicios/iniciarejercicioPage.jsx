@@ -69,8 +69,8 @@ export default function IniciaEjercicioPage() {
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
-        await updateEstadoRutinaRequest(detalles.rutina, "Completado");
-        
+        await updateEstadoRutinaRequest(detalles.rutina, { estado: "Completado" });
+
         if (progreso) {
           // Asegúrate de enviar un string en `estado`
           await updateEstadoProgresoRequest(progreso.data._id, "Completado");
