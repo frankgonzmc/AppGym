@@ -10,7 +10,7 @@ import {
 } from '../../api/detallerutina';
 import {
   updateRutinaProgressRequest,
-  //updateEstadoRutinaRequest,
+  updateEstadoRutinaRequest,
 } from '../../api/rutina';
 import { updateProgresoRequest, updateEstadoProgresoRequest, getProgresoUsuarioRequest } from '../../api/progreso';
 
@@ -76,7 +76,7 @@ export default function IniciaEjercicioPage() {
       await updateRutinaProgressRequest(detalles.rutina, ejerciciosCompletos);
 
       if (ejerciciosCompletos >= detallesRutina.length) {
-        //await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
+        await updateEstadoRutinaRequest(detalles.rutina, respuestaEstado);
 
         if (progreso) {
           // Asegúrate de enviar un string en `estado`

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest } from "../api/rutina";
+import { getRutinasRequest, deleteRutinaRequest, createRutinaRequest, getRutinaRequest, updateRutinaRequest, updateEstadoRutinaRequest } from "../api/rutina";
 import { createDetalleRutinaRequest } from "../api/detallerutina";
 
 const RutinaContext = createContext();
@@ -75,14 +75,13 @@ export function RutinaProvider({ children }) {
         }
     };
 
-    /*
     const updateRutinaEstado = async (id, estado) => {
         try {
             await updateEstadoRutinaRequest(id, estado);
         } catch (error) {
             console.error(error);
         }
-    };*/
+    };
 
     return (
         <RutinaContext.Provider
@@ -93,7 +92,7 @@ export function RutinaProvider({ children }) {
                 createRutina,
                 getRutinas,
                 updateRutina,
-                //updateRutinaEstado,
+                updateRutinaEstado,
                 createDetalleRutina,
             }}
         >
