@@ -107,60 +107,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/abdominales.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJA08",
-        "nombre": "Plancha Frontal",
-        "descripcion": "Mantén una posición de plancha frontal para trabajar el core y fortalecer los músculos abdominales.",
-        "nivel": "Intermedio",
-        "categoria": "Abdomen",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 1,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/plancha_frontal.gif"
-    },
-    {
-        "codigo": "EJA09",
-        "nombre": "Elevaciones de Piernas",
-        "descripcion": "Levanta las piernas desde una posición acostada para trabajar los abdominales inferiores.",
-        "nivel": "Principiante",
-        "categoria": "Abdomen",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/elevaciones_piernas.gif"
-    },
-    {
-        "codigo": "EJA10",
-        "nombre": "Crunch en Bicicleta",
-        "descripcion": "Ejercicio dinámico que activa los oblicuos al simular pedaleo en bicicleta mientras realizas crunches.",
-        "nivel": "Avanzado",
-        "categoria": "Abdomen",
-        "series": 4,
-        "duracion": 25,
-        "descanso": 15,
-        "repeticiones": 15,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/crunch_bicicleta.gif"
-    },
-    {
-        "codigo": "EJA11",
-        "nombre": "Plancha Lateral",
-        "descripcion": "Sostén el cuerpo en posición lateral para fortalecer los oblicuos y el core.",
-        "nivel": "Intermedio",
-        "categoria": "Abdomen",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 15,
-        "repeticiones": 1,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/plancha_lateral.gif"
-    },
-    //
     {
         "codigo": "EJ008",
         "nombre": "Saltos en caja",
@@ -396,87 +342,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/Zancadas.webp" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJP27",
-        "nombre": "Puente de Glúteos",
-        "descripcion": "Fortalece glúteos e isquiotibiales con este ejercicio de levantamiento de cadera.",
-        "nivel": "Intermedio",
-        "categoria": "Piernas",
-        "series": 3,
-        "duracion": 25,
-        "descanso": 10,
-        "repeticiones": 15,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/puente_gluteos.webp"
-    },
-    {
-        "codigo": "EJP28",
-        "nombre": "Sentadilla Búlgara",
-        "descripcion": "Ejercicio unilateral que se enfoca en cuádriceps y glúteos.",
-        "nivel": "Intermedio",
-        "categoria": "Piernas",
-        "series": 4,
-        "duracion": 40,
-        "descanso": 15,
-        "repeticiones": 8,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/sentadilla_bulgara.webp"
-    },
-    {
-        "codigo": "EJP29",
-        "nombre": "Peso Muerto Rumano",
-        "descripcion": "Ejercicio para trabajar los isquiotibiales y glúteos con enfoque en técnica.",
-        "nivel": "Intermedio",
-        "categoria": "Piernas",
-        "series": 3,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/peso_muerto_rumano.webp"
-    },
-    //
-    {
-        "codigo": "EJP27",
-        "nombre": "Puente de Glúteos",
-        "descripcion": "Fortalece glúteos e isquiotibiales con este ejercicio de levantamiento de cadera.",
-        "nivel": "Principiante",
-        "categoria": "Piernas",
-        "series": 3,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/puente_gluteos.webp"
-    },
-    {
-        "codigo": "EJP28",
-        "nombre": "Sentadilla Búlgara",
-        "descripcion": "Ejercicio unilateral que se enfoca en cuádriceps y glúteos.",
-        "nivel": "Principiante",
-        "categoria": "Piernas",
-        "series": 3,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/sentadilla_bulgara.webp"
-    },
-    {
-        "codigo": "EJP29",
-        "nombre": "Peso Muerto Rumano",
-        "descripcion": "Ejercicio para trabajar los isquiotibiales y glúteos con enfoque en técnica.",
-        "nivel": "Principiante",
-        "categoria": "Piernas",
-        "series": 3,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/peso_muerto_rumano.webp"
-    },
-    //
     {
         "codigo": "EJ026",
         "nombre": "Dominadas Elevados",
@@ -568,34 +433,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressdebanca.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJX35",
-        "nombre": "Flexiones de Pecho",
-        "descripcion": "Ejercicio de peso corporal para fortalecer el pecho, triceps y hombros.",
-        "nivel": "Principiante",
-        "categoria": "Pecho",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 15,
-        "repeticiones": 15,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/flexiones.gif"
-    },
-    {
-        "codigo": "EJX36",
-        "nombre": "Aperturas con mancuernas",
-        "descripcion": "Ejercicio enfocado en trabajar el pecho y mejorar su amplitud.",
-        "nivel": "Intermedio",
-        "categoria": "Pecho",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/aperturas_con_mancuernas.gif"
-    },
-    //
     {
         "codigo": "EJ033",
         "nombre": "Remo con barra en Punta",
@@ -609,47 +446,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/remo-en-punta-gif.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJE37",
-        "nombre": "Dominadas",
-        "descripcion": "Ejercicio de peso corporal para trabajar la espalda, bíceps y hombros.",
-        "nivel": "Avanzado",
-        "categoria": "Espalda",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 8,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/dominadas.gif"
-    },
-    {
-        "codigo": "EJE38",
-        "nombre": "Pullover con Mancuerna",
-        "descripcion": "Ejercicio para trabajar la espalda alta y mejorar la expansión torácica.",
-        "nivel": "Intermedio",
-        "categoria": "Espalda",
-        "series": 3,
-        "duracion": 25,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/pullover_mancuerna.gif"
-    },
-    {
-        "codigo": "EJE39",
-        "nombre": "Jalón al Pecho",
-        "descripcion": "Ejercicio enfocado en trabajar el dorsal ancho y la parte media de la espalda.",
-        "nivel": "Intermedio",
-        "categoria": "Espalda",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 10,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/jalon_pecho.gif"
-    },
-    //
     {
         "codigo": "EJ034",
         "nombre": "Press militar",
@@ -663,47 +459,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressmilitar.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJH40",
-        "nombre": "Elevaciones Laterales",
-        "descripcion": "Ejercicio enfocado en trabajar los deltoides laterales para unos hombros más definidos.",
-        "nivel": "Principiante",
-        "categoria": "Hombros",
-        "series": 4,
-        "duracion": 25,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/elevaciones_laterales.gif"
-    },
-    {
-        "codigo": "EJH41",
-        "nombre": "Remo al Mentón con Barra",
-        "descripcion": "Ejercicio que trabaja la parte superior de la espalda y los hombros.",
-        "nivel": "Principiante",
-        "categoria": "Hombros",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/remo_menton_barra.gif"
-    },
-    {
-        "codigo": "EJH42",
-        "nombre": "Pájaro Invertido con Mancuernas",
-        "descripcion": "Ejercicio para trabajar los deltoides posteriores y fortalecer la parte trasera del hombro.",
-        "nivel": "Principiante",
-        "categoria": "Hombros",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/pajaro_invertido.gif"
-    },
-    //
     {
         "codigo": "EJ035",
         "nombre": "Elevaciones laterales",
@@ -756,60 +511,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/pressfrances.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJT44",
-        "nombre": "Extensiones de Tríceps en Polea",
-        "descripcion": "Ejercicio para trabajar la cabeza larga del tríceps.",
-        "nivel": "Principiante",
-        "categoria": "Tríceps",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/extensiones-triceps-polea.gif"
-    },
-    {
-        "codigo": "EJT45",
-        "nombre": "Fondos en Paralelas",
-        "descripcion": "Ejercicio compuesto para tríceps y pectorales.",
-        "nivel": "Principiante",
-        "categoria": "Tríceps",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/fondos-paralelas.gif"
-    },
-    {
-        "codigo": "EJT46",
-        "nombre": "Patada de Tríceps con Mancuernas",
-        "descripcion": "Ejercicio que aísla los tríceps y mejora su definición.",
-        "nivel": "Principiante",
-        "categoria": "Tríceps",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/patada-triceps.gif"
-    },
-    {
-        "codigo": "EJT47",
-        "nombre": "Extensiones de Tríceps por Encima de la Cabeza",
-        "descripcion": "Ejercicio enfocado en la cabeza larga del tríceps.",
-        "nivel": "Principiante",
-        "categoria": "Tríceps",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 10,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/extensiones-triceps-arriba.gif"
-    },
-    //
     {
         "codigo": "EJ039",
         "nombre": "Curl de bíceps alternados",
@@ -823,60 +524,6 @@ const ejerciciosPredeterminados = [
         "estado": "En proceso",
         "imagen": "http://localhost:5000/uploads/ejercicios/curl-biceps-alterno-con-mancuernas.gif" // Agregar URL de la imagen
     },
-    //
-    {
-        "codigo": "EJB40",
-        "nombre": "Curl de Bíceps con Barra",
-        "descripcion": "Ejercicio básico para fortalecer los bíceps con mayor carga.",
-        "nivel": "Intermedio",
-        "categoria": "Bíceps",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 15,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/curl-biceps-barra.gif"
-    },
-    {
-        "codigo": "EJB41",
-        "nombre": "Curl Concentrado",
-        "descripcion": "Ejercicio que aísla los bíceps para un mayor control y definición.",
-        "nivel": "Avanzado",
-        "categoria": "Bíceps",
-        "series": 3,
-        "duracion": 20,
-        "descanso": 10,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/curl-concentrado.gif"
-    },
-    {
-        "codigo": "EJB42",
-        "nombre": "Curl Martillo",
-        "descripcion": "Ejercicio para fortalecer el braquial y bíceps, mejora el volumen del brazo.",
-        "nivel": "Intermedio",
-        "categoria": "Bíceps",
-        "series": 4,
-        "duracion": 30,
-        "descanso": 10,
-        "repeticiones": 10,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/curl-martillo.gif"
-    },
-    {
-        "codigo": "EJB43",
-        "nombre": "Curl de Bíceps Inclinado",
-        "descripcion": "Trabaja los bíceps desde un ángulo inclinado para una mayor amplitud.",
-        "nivel": "Avanzado",
-        "categoria": "Bíceps",
-        "series": 3,
-        "duracion": 25,
-        "descanso": 15,
-        "repeticiones": 12,
-        "estado": "Disponible",
-        "imagen": "http://localhost:5000/uploads/ejercicios/curl-biceps-inclinado.gif"
-    },
-    //
     {
         "codigo": "EJ040",
         "nombre": "Jumping Jacks",
