@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
-import { generarRutinas } from "../../components/generadorRutinas";
+import { generadorRutinas } from "../../components/generadorRutinas";
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
@@ -13,7 +13,7 @@ function RutinaExistentePage() {
       try {
         const response = await axios.get("/api/ejercicios"); // Ajusta la ruta según tu backend
         const ejercicios = response.data;
-        const rutinasGeneradas = generarRutinas(ejercicios);
+        const rutinasGeneradas = generadorRutinas(ejercicios);
         setRutinas(rutinasGeneradas);
       } catch (error) {
         console.error("Error al obtener ejercicios:", error.message);
