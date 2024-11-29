@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/authcontext";
-import { ErrorAlert } from "../../components/alerts/errorAlert";
+import { ErrorAlert } from "../../components/errorAlert";
 import fondo from "../../imagenes/registerfondo.jpg";
 import '../../css/register.css';
 import { useEffect } from "react";
