@@ -6,14 +6,14 @@ export function RutinaCardExistente({ rutina }) {
         <Card className="mb-4 text-black">
             <Card.Header>
                 <h2 className="text-center">{`Rutina de ${rutina.categoria} (${rutina.nivel})`}</h2>
-                <hr className="mb-2 mt-2" />
-                <strong className="text-center">{ejercicio.nombre}</strong>.
             </Card.Header>
             <Card.Body>
                 <ul>
                     {rutina.ejercicios.map((ejercicio, index) => (
                         <li key={index}>
-                            <hr className="mb-2" />
+                            <hr className="mb-2 mt-2" />
+                            <h3 className="text-center">{ejercicio.nombre}</h3>.
+                            <br />
                             <strong>Nivel:</strong> {ejercicio.nivel}.
                             <br />
                             <strong>series:</strong> {ejercicio.series} veces.
