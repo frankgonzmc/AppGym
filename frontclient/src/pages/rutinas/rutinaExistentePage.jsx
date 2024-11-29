@@ -8,7 +8,7 @@ import { generadorRutinas } from "../../components/generadorRutinas";
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
-
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -25,13 +25,13 @@ function RutinaExistentePage() {
     fetchEjercicios();
   }, []);
 
-  //const isRecommended = ejercicio.nivel === user.nivel;
+  const isRecommended = ejercicios.nivel === user.nivel;
 
   return (
     <section className="seccion">
       <Container className="py-4">
         <h2 className="text-center text-black mb-4">Rutinas Disponibles</h2>
-        {/*{isRecommended ? (
+        {isRecommended ? (
           <span className="text-white bg-green-800 px-2 py-1 rounded-lg text-sm">
             Recomendado
           </span>
@@ -39,7 +39,7 @@ function RutinaExistentePage() {
           <span className="text-white bg-red-800 px-2 py-1 rounded-lg text-sm">
             No recomendado
           </span>
-        )}*/}
+        )}
         <div className="row">
           {rutinas.map((rutina, index) => (
             <div className="col-md-4" key={index}>
