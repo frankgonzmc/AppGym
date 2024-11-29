@@ -6,6 +6,7 @@ export function RutinaCardExistente({ rutina }) {
         <Card className="mb-4 text-black">
             <Card.Header>
                 <h2 className="text-center">{`Rutina de ${rutina.categoria} (${rutina.nivel})`}</h2>
+                <hr className="mb-2 mt-2" />
                 <strong className="text-center">{ejercicio.nombre}</strong>.
             </Card.Header>
             <Card.Body>
