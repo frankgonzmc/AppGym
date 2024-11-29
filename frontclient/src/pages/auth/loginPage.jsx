@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
+import { ErrorAlert } from "../../components/errorAlert";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
@@ -35,7 +36,7 @@ export function FormularioSesion() {
       }
     }
   });
-  
+
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio');
   }, [isAuthenticated]);
@@ -43,11 +44,7 @@ export function FormularioSesion() {
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
-        {signinErrors.map((error, i) => (
-          <div className="error-message" key={i}>
-            {error}
-          </div>
-        ))}
+        <ErrorAlert errors={authErrors} /> {/* Mostrar errores de autenticación */}
         <form onSubmit={onSubmit}>
           <label className="form-label">
             Email
