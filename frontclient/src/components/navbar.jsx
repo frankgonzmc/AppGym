@@ -30,14 +30,13 @@ function Navbar() {
     }
   }, [dropdownOpenRutina]);
 
+  // Función para calcular el estado basado en IMC
   const calcularEstado = () => {
-    const { peso = 0, estatura = 0 } = user;
-
-    if (!peso || !estatura) {
+    if (!user || !user.peso || !user.estatura) {
       return "Datos insuficientes para calcular el IMC.";
     }
 
-    const imc = peso / (estatura * estatura);
+    const imc = user.peso / (user.estatura * user.estatura);
     if (imc < 16.0) return "Delgadez severa";
     if (imc < 17.0) return "Delgadez moderada";
     if (imc < 18.5) return "Delgadez leve";
@@ -48,48 +47,53 @@ function Navbar() {
     return "Obesidad grado 3";
   };
 
-  // Generar notificaciones
+  // Función para generar notificaciones
+  const generarNotificaciones = async () => {
+    if (!isAuthenticated || !user || !user._id) return;
+
+    let nuevasNotificaciones = [];
+
+    // Agregar notificación de rutinas pendientes
+    try {
+      const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
+      if (data.rutinas && data.rutinas.length > 0) {
+        nuevasNotificaciones.push(
+          `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Error al obtener rutinas pendientes:",
+        error.response?.data?.message || error.message
+      );
+    }
+
+    // Agregar notificación basada en el IMC
+    const estadoIMC = calcularEstado();
+    if (estadoIMC.includes("Obesidad")) {
+      nuevasNotificaciones.push(
+        "Tu IMC indica obesidad. Se recomienda enfocarte en perder peso mediante una dieta adecuada y ejercicio."
+      );
+    } else if (estadoIMC.includes("Delgadez")) {
+      nuevasNotificaciones.push(
+        "Tu IMC indica delgadez. Se recomienda enfocarte en ganar masa muscular con un plan de entrenamiento y dieta balanceada."
+      );
+    }
+
+    // Agregar notificación si faltan datos en el perfil
+    if (!user.objetivos) {
+      nuevasNotificaciones.push("Falta completar tus objetivos en el perfil.");
+    }
+    if (!user.nivelActividad) {
+      nuevasNotificaciones.push(
+        "Falta completar tu nivel de actividad en el perfil."
+      );
+    }
+
+    setNotifications(nuevasNotificaciones);
+  };
+
   useEffect(() => {
-    const generarNotificaciones = async () => {
-      if (!isAuthenticated || !user || !user._id) return;
-
-      let nuevasNotificaciones = [];
-
-      // Rutinas pendientes
-      try {
-        const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
-        if (data.rutinas && data.rutinas.length > 0) {
-          nuevasNotificaciones.push(
-            `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
-          );
-        }
-      } catch (error) {
-        console.error("Error al obtener rutinas pendientes:", error.response?.data?.message || error.message);
-      }
-
-      // Estado del usuario basado en IMC
-      const estadoIMC = calcularEstado();
-      if (estadoIMC.includes("Obesidad")) {
-        nuevasNotificaciones.push(
-          "Tu IMC indica obesidad. Se recomienda enfocarte en perder peso mediante una dieta adecuada y ejercicio."
-        );
-      } else if (estadoIMC.includes("Delgadez")) {
-        nuevasNotificaciones.push(
-          "Tu IMC indica delgadez. Se recomienda enfocarte en ganar masa muscular con un plan de entrenamiento y dieta balanceada."
-        );
-      }
-
-      // Faltan datos en el perfil
-      if (!user.objetivos) {
-        nuevasNotificaciones.push("Falta completar tus objetivos en el perfil.");
-      }
-      if (!user.nivelActividad) {
-        nuevasNotificaciones.push("Falta completar tu nivel de actividad en el perfil.");
-      }
-
-      setNotifications(nuevasNotificaciones);
-    };
-
     generarNotificaciones();
   }, [user, isAuthenticated]);
 
