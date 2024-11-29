@@ -25,12 +25,14 @@
 .calendar-component {
   border: 1px solid #000000;
   border-radius: 8px;
+  text-emphasis-color: #000000;
   transition: box-shadow 0.3s ease;
   /* Añadir una transición */
 }
 
 .calendar-component:hover {
   box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+  text-emphasis-color: #000000;
   /* Efecto hover */
 }
 
