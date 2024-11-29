@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 
 export function RutinaCardExistente({ rutina }) {
   return (
-    <Card className="mb-4 bg-dark text-white">
+    <Card className="mb-4 text-white">
       <Card.Header>
         <h2 className="text-center">{`Rutina de ${rutina.categoria} (${rutina.nivel})`}</h2>
       </Card.Header>
@@ -12,6 +12,10 @@ export function RutinaCardExistente({ rutina }) {
           {rutina.ejercicios.map((ejercicio, index) => (
             <li key={index}>
               <strong>{ejercicio.nombre}:</strong> {ejercicio.descripcion}
+              <strong>Nivel: {ejercicio.nivel}</strong>
+              <strong>series: {ejercicio.series}</strong>
+              <strong>Duracion: {ejercicio.duracion}</strong>
+              <strong>Repeticiones: {ejercicio.repeticiones}</strong>
             </li>
           ))}
         </ul>
