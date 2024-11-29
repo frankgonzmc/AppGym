@@ -1,4 +1,4 @@
-const generarRutinas = (ejercicios) => {
+export const generadorRutinas = (ejercicios) => {
     const categorias = [
         "Piernas",
         "Abdomen",
