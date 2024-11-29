@@ -12,9 +12,13 @@ export function RutinaCardExistente({ rutina }) {
           {rutina.ejercicios.map((ejercicio, index) => (
             <li key={index}>
               <strong>{ejercicio.nombre}:</strong> {ejercicio.descripcion}
+              <br />
               <strong>Nivel: {ejercicio.nivel}</strong>
+              <br />
               <strong>series: {ejercicio.series}</strong>
+              <br />
               <strong>Duracion: {ejercicio.duracion}</strong>
+              <br />
               <strong>Repeticiones: {ejercicio.repeticiones}</strong>
             </li>
           ))}
