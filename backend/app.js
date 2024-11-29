@@ -40,7 +40,7 @@ app.get('/api/dieta', async (req, res) => {
     const { content } = req.query;
 
     try {
-        const response = await axios.get('https://7e9f-34-125-204-248.ngrok-free.app/dieta', {
+        const response = await axios.get('https://71da-34-48-98-94.ngrok-free.app/dieta', {
             params: { content },
             headers: {
                 'Content-Type': 'application/json',
