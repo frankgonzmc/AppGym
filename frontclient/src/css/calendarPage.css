@@ -1,5 +1,5 @@
 /* Calendario */
-.react-calendar__tile {
+.calendar-page .react-calendar__tile {
   color: #000 !important;
   background: none !important;
   border: none !important;
@@ -41,7 +41,7 @@
 }
 
 /* Calendario */
-.calendar-component {
+.calendar-page .calendar-component {
   max-width: 100%;
   width: 320px;
   margin: auto;
