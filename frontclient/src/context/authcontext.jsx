@@ -39,12 +39,14 @@ export const AuthProvider = ({ children }) => {
             await signin({ email: user.email, password: user.password });
 
             setErrors([]);
+            return res.data;
         } catch (error) {
             if (error.response?.data?.message) {
                 setErrors(error.response.data.message); // Muestra los errores del backend
             } else {
                 setErrors(["Error al conectar con el servidor"]);
             }
+            return null;
         }
     };
 
