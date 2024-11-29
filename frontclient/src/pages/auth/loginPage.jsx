@@ -44,12 +44,7 @@ export function FormularioSesion() {
   });
 
   useEffect(() => {
-    if (errors.length > 0) {
-      const timer = setTimeout(() => {
-        setErrors([]);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
+    return () => setErrors([]); // Limpia errores al desmontar
   }, [setErrors]);
 
   useEffect(() => {

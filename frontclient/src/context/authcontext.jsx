@@ -200,6 +200,7 @@ export const AuthProvider = ({ children }) => {
                 updatePerfil,
                 updateTokenPerfil,
                 updateDatosPerfil,
+                setErrors,
                 checkEmailExists,
                 loading,
                 user,
