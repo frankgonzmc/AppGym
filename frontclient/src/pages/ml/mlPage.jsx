@@ -243,35 +243,6 @@ export default function mlPage() {
                                 </Alert>
                             )}
                         </Card.Body>
-                        <Card className="info-card mt-3">
-                            <Card.Body>
-                                <Card.Title>Recomendaciones de Alimentación para *DEFINIR*</Card.Title>
-                                {nutrientesDefinir ? (
-                                    <>
-                                        <p>Tus Kcal/día son: {nutrientesDefinir.totalCalorias} Kcal</p>
-                                        <p>Proteínas: {nutrientesDefinir.proteinas} g</p>
-                                        <p>Grasas: {nutrientesDefinir.grasas} g</p>
-                                        <p>Hidratos de carbono: {nutrientesDefinir.hidratos} g</p>
-                                    </>
-                                ) : (
-                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
-                                )}
-                            </Card.Body>
-                            <Card.Body>
-                                <Card.Title>Recomendaciones de Alimentación para *VOLUMEN*</Card.Title>
-                                {nutrientesVolumen ? (
-                                    <>
-                                        <p>Tus Kcal/día son: {nutrientesVolumen.totalCalorias} Kcal</p>
-                                        <p>Proteínas: {nutrientesVolumen.proteinas} g</p>
-                                        <p>Grasas: {nutrientesVolumen.grasas} g</p>
-                                        <p>Hidratos de carbono: {nutrientesVolumen.hidratos} g</p>
-                                    </>
-                                ) : (
-                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
-                                )}
-                            </Card.Body>
-                        </Card>
-
                         {/* Tabla de 2x6 */}
                         <Card.Body>
                             <Card.Title>TABLA DE NIVEL DE ACTIVIDAD</Card.Title>
@@ -325,6 +296,34 @@ export default function mlPage() {
                             </Form>
                             {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                         </Card.Body>
+                        <Card className="info-card mt-3">
+                            <Card.Body>
+                                <Card.Title>Recomendaciones de Alimentación para *DEFINIR*</Card.Title>
+                                {nutrientesDefinir ? (
+                                    <>
+                                        <p>Tus Kcal/día son: {nutrientesDefinir.totalCalorias} Kcal</p>
+                                        <p>Proteínas: {nutrientesDefinir.proteinas} g</p>
+                                        <p>Grasas: {nutrientesDefinir.grasas} g</p>
+                                        <p>Hidratos de carbono: {nutrientesDefinir.hidratos} g</p>
+                                    </>
+                                ) : (
+                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
+                                )}
+                            </Card.Body>
+                            <Card.Body>
+                                <Card.Title>Recomendaciones de Alimentación para *VOLUMEN*</Card.Title>
+                                {nutrientesVolumen ? (
+                                    <>
+                                        <p>Tus Kcal/día son: {nutrientesVolumen.totalCalorias} Kcal</p>
+                                        <p>Proteínas: {nutrientesVolumen.proteinas} g</p>
+                                        <p>Grasas: {nutrientesVolumen.grasas} g</p>
+                                        <p>Hidratos de carbono: {nutrientesVolumen.hidratos} g</p>
+                                    </>
+                                ) : (
+                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
+                                )}
+                            </Card.Body>
+                        </Card>
                     </Card>
                 </Col>
                 <Col md={6} className="mb-2">
