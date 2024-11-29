@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
 import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
+import { MostrarAlert } from "../../components/mostrarAlert";
 
 export function Inicio() {
   return (
@@ -27,14 +28,18 @@ export function FormularioSesion() {
     try {
       const success = await signin(data);
       if (success) {
-        showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+        //showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+        <MostrarAlert messages={["Inicio de sesión exitoso."]} type="success" />
+        setErrors([]); // Limpia errores
       } else {
-        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+        //showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+        setErrors([]); // Limpia errores
+        navigate("/login");
       }
-      setErrors([]); // Limpia los errores después de un inicio de sesión exitoso
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
-        showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
+        //showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
+        setErrors([]); // Limpia errores
         navigate("/login");
       } else {
         showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/authcontext";
-import { ErrorAlert } from "../../components/errorAlert";
+import { MostrarAlert } from "../../components/mostrarAlert";
 import fondo from "../../imagenes/registerfondo.jpg";
 import '../../css/register.css';
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ function RegistroUsuario() {
           </Col>
           <Col md={6} className="form-information text-white p-4">
             <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
-            <ErrorAlert errors={authErrors} /> {/* Mostrar errores de autenticación */}
+            <MostrarAlert messages={authErrors} type="danger" /> {/* Mostrar errores de autenticación */}
             <Form onSubmit={onSubmit} className="form-register">
               <Form.Group>
                 <Form.Control
