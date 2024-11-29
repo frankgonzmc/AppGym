@@ -12,10 +12,13 @@ export default function mlPage() {
     const [edad, setEdad] = useState(user.edad || "");
     const [genero, setGenero] = useState(user.genero || "");
     const [tmb, setTmb] = useState(null);
+    const [activityLevel, setActivityLevel] = useState("");
+    const [nutrientesDefinir, setNutrientesDefinir] = useState(null);
+    const [nutrientesVolumen, setNutrientesVolumen] = useState(null);
     const [recomendaciones, setRecomendaciones] = useState([]);
     const [objetivo, setObjetivo] = useState(user.objetivos || "");
-    const [textareaContent, setTextareaContent] = useState(""); // Estado para el textarea
-    const [recomendacionIA, setRecomendacionIA] = useState(""); // Estado para la respuesta del API
+    const [textareaContent, setTextareaContent] = useState("");
+    const [recomendacionIA, setRecomendacionIA] = useState("");
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -49,13 +52,15 @@ export default function mlPage() {
     };
 
     const calcularNutrientesDefinir = () => {
-        if (tmb) {
-            const totalCalorias = tmb - 500; // tmb es el resultado calculado
-            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
-            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
-            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+        if (tmb && activityLevel) {
+            const get = tmb * activityLevel;
+            const totalCalorias = get - 500;
+            const proteinas = (totalCalorias * 0.20) / 4;
+            const grasas = (totalCalorias * 0.25) / 9;
+            const hidratos = (totalCalorias * 0.55) / 4;
 
             return {
+                totalCalorias: totalCalorias.toFixed(2),
                 proteinas: proteinas.toFixed(2),
                 grasas: grasas.toFixed(2),
                 hidratos: hidratos.toFixed(2)
@@ -65,13 +70,15 @@ export default function mlPage() {
     };
 
     const calcularNutrientesVolumen = () => {
-        if (tmb) {
-            const totalCalorias = tmb + 500; // tmb es el resultado calculado
-            const proteinas = (totalCalorias * 0.20) / 4; // 20% de proteínas
-            const grasas = (totalCalorias * 0.25) / 9; // 25% de grasas
-            const hidratos = (totalCalorias * 0.55) / 4; // 55% de carbohidratos
+        if (tmb && activityLevel) {
+            const get = tmb * activityLevel;
+            const totalCalorias = get + 500;
+            const proteinas = (totalCalorias * 0.20) / 4;
+            const grasas = (totalCalorias * 0.25) / 9;
+            const hidratos = (totalCalorias * 0.55) / 4;
 
             return {
+                totalCalorias: totalCalorias.toFixed(2),
                 proteinas: proteinas.toFixed(2),
                 grasas: grasas.toFixed(2),
                 hidratos: hidratos.toFixed(2)
@@ -80,25 +87,20 @@ export default function mlPage() {
         return null;
     };
 
-    const enviarDatosUsuario = async () => {
-        const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
-        const content = textareaContent || "Genera una dieta recomendada para mi.";
-
-        try {
-            const response = await axios.get('/dieta', {
-                params: { content: queryParams + ", " + content },
-            });
-
-            setRecomendacionIA(response.data.respuesta);
-            setError("");
-        } catch (error) {
-            console.error("Error al enviar datos al servidor:", error.response?.data || error.message);
-            setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
+    const calcularNutrientes = () => {
+        const nivelActividad = parseFloat(activityLevel);
+        if (!tmb) {
+            setError("Por favor, calcula primero tu TMB.");
+            return;
         }
+        if (!nivelActividad) {
+            setError("Por favor, ingresa tu nivel de actividad.");
+            return;
+        }
+        setError("");
+        setNutrientesDefinir(calcularNutrientesDefinir());
+        setNutrientesVolumen(calcularNutrientesVolumen());
     };
-
-    const nutrientedefinir = calcularNutrientesDefinir();
-    const nutrientesVolumen = calcularNutrientesVolumen();
 
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
@@ -167,6 +169,7 @@ export default function mlPage() {
                         <Card.Body>
                             <Card.Title>Calculadora de Tasa de Metabolismo Basal (TMB)</Card.Title>
                             <Form>
+                                {/* ...inputs para peso, altura, edad, genero... */}
                                 <Form.Group controlId="peso">
                                     <Form.Label className='text-black'>Peso (kg)</Form.Label>
                                     <Form.Control
@@ -198,7 +201,7 @@ export default function mlPage() {
                                 </Form.Group>
 
                                 <Form.Group controlId="genero">
-                                    <Form.Label className='text-black'>Genero</Form.Label>
+                                    <Form.Label className='text-black'>Género</Form.Label>
                                     <Form.Select
                                         value={genero}
                                         onChange={(e) => setGenero(e.target.value)}
@@ -219,10 +222,92 @@ export default function mlPage() {
                             {tmb !== null && (
                                 <Alert variant="success" className="mt-3">
                                     Tu Tasa de Metabolismo Basal es: {tmb.toFixed(2)} Kcal/día
-                                    Si quieres sacar tu Gasto Energetico Total(GET) es: {tmb.toFixed(2)} Kcal/día deberás multiplicarlo por el nivel de actividad actual que tienes.
+                                    <br />
+                                    Para calcular tu Gasto Energético Total (GET), ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".
                                 </Alert>
                             )}
                         </Card.Body>
+
+                        <Card.Body>
+                            <Card.Title>TABLA DE NIVEL DE ACTIVIDAD</Card.Title>
+                            {/* ...tu tabla... */}
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Factor de actividad Multiplicador</th>
+                                        <th>Nivel de Actividad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1.2</td>
+                                        <td>Poco o ningún ejercicio</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.375</td>
+                                        <td>Ejercicio ligero (1-3 días/semana)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.55</td>
+                                        <td>Ejercicio moderado (3-5 días/semana)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.725</td>
+                                        <td>Ejercicio intenso (6-7 días/semana)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1.9</td>
+                                        <td>Ejercicio muy intenso (dos veces al día, entrenamientos muy duros)</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+
+                            <Form>
+                                <Form.Group controlId="activityLevel">
+                                    <Form.Label>Nivel de Actividad</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        step="any"
+                                        placeholder="Ingresa tu nivel de actividad (e.g., 1.2)"
+                                        value={activityLevel}
+                                        onChange={(e) => setActivityLevel(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Button onClick={calcularNutrientes} variant="primary" className="mt-3">
+                                    Calcular Recomendaciones
+                                </Button>
+                            </Form>
+                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+                        </Card.Body>
+
+                        <Card className="info-card mt-3">
+                            <Card.Body>
+                                <Card.Title>Recomendaciones de Alimentación para *DEFINIR*</Card.Title>
+                                {nutrientesDefinir ? (
+                                    <>
+                                        <p>Tus Kcal/día son: {nutrientesDefinir.totalCalorias} Kcal</p>
+                                        <p>Proteínas: {nutrientesDefinir.proteinas} g</p>
+                                        <p>Grasas: {nutrientesDefinir.grasas} g</p>
+                                        <p>Hidratos de carbono: {nutrientesDefinir.hidratos} g</p>
+                                    </>
+                                ) : (
+                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
+                                )}
+                            </Card.Body>
+                            <Card.Body>
+                                <Card.Title>Recomendaciones de Alimentación para *VOLUMEN*</Card.Title>
+                                {nutrientesVolumen ? (
+                                    <>
+                                        <p>Tus Kcal/día son: {nutrientesVolumen.totalCalorias} Kcal</p>
+                                        <p>Proteínas: {nutrientesVolumen.proteinas} g</p>
+                                        <p>Grasas: {nutrientesVolumen.grasas} g</p>
+                                        <p>Hidratos de carbono: {nutrientesVolumen.hidratos} g</p>
+                                    </>
+                                ) : (
+                                    <p>Por favor, ingresa tu nivel de actividad y presiona "Calcular Recomendaciones".</p>
+                                )}
+                            </Card.Body>
+                        </Card>
 
                         {/* Tabla de 2x6 */}
                         <Card.Body>
@@ -260,6 +345,22 @@ export default function mlPage() {
                                     </tr>
                                 </tbody>
                             </Table>
+                            <Form>
+                                <Form.Group controlId="activityLevel">
+                                    <Form.Label>Nivel de Actividad</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        step="any"
+                                        placeholder="Ingresa tu nivel de actividad (e.g., 1.2)"
+                                        value={activityLevel}
+                                        onChange={(e) => setActivityLevel(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Button onClick={calcularNutrientes} variant="primary" className="mt-3">
+                                    Calcular Recomendaciones
+                                </Button>
+                            </Form>
+                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                         </Card.Body>
                     </Card>
                     <Card className="info-card mt-3">
