@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
-import { generarRutinas } from "../../utils/rutinasUtils"; // Asegúrate de exportar la función
+import { generarRutinas } from "../../components/rutina/generarRutinas";
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
