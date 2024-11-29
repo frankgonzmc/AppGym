@@ -28,11 +28,10 @@ export function FormularioSesion() {
       const respuestaSession = await signin(data);
       if (respuestaSession) {
         showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
-        setErrors([]); // Limpia errores
+        setErrors([]); // Limpia errores después de éxito
+        navigate("/inicio");
       } else {
         showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
-        setErrors([]); // Limpia errores
-        navigate("/login");
       }
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
@@ -43,6 +42,10 @@ export function FormularioSesion() {
       }
     }
   });
+
+  useEffect(() => {
+    return () => setErrors([]); // Limpia errores al desmontar
+  }, [setErrors]);
 
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio');
