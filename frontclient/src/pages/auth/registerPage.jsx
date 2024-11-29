@@ -8,8 +8,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 function RegistroUsuario() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
+  const { register, handleSubmit, formState: { errors: formErrors } } = useForm(); // Renombrado a `formErrors`
+  const { signup, isAuthenticated, errors: authErrors } = useAuth(); // Renombrado a `authErrors`
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,6 @@ function RegistroUsuario() {
   }, [isAuthenticated, navigate]);
 
   const onSubmit = handleSubmit(async (values) => {
-    // Convertimos los valores numéricos a su tipo correcto antes de enviarlos
     const formData = {
       ...values,
       edad: parseInt(values.edad, 10),
@@ -42,7 +41,7 @@ function RegistroUsuario() {
           </Col>
           <Col md={6} className="form-information text-white p-4">
             <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
-            <ErrorAlert errors={errors} /> {/* Muestra errores aquí */}
+            <ErrorAlert errors={authErrors} /> {/* Mostrar errores de autenticación */}
             <Form onSubmit={onSubmit} className="form-register">
               <Form.Group>
                 <Form.Control
@@ -50,7 +49,7 @@ function RegistroUsuario() {
                   placeholder="Nombre Completo"
                   {...register('username', { required: "Nombre Completo es necesario" })}
                 />
-                {errors.username && <span className="error-text">{errors.username.message}</span>}
+                {formErrors.username && <span className="error-text">{formErrors.username.message}</span>}
               </Form.Group>
 
               <Form.Group>
@@ -59,7 +58,7 @@ function RegistroUsuario() {
                   placeholder="Email"
                   {...register('email', { required: "Email es necesario" })}
                 />
-                {errors.email && <span className="error-text">{errors.email.message}</span>}
+                {formErrors.email && <span className="error-text">{formErrors.email.message}</span>}
               </Form.Group>
 
               <Form.Group>
@@ -68,17 +67,17 @@ function RegistroUsuario() {
                   placeholder="Password"
                   {...register('password', { required: "Password es necesario" })}
                 />
-                {errors.password && <span className="error-text">{errors.password.message}</span>}
+                {formErrors.password && <span className="error-text">{formErrors.password.message}</span>}
               </Form.Group>
 
               <Form.Group>
                 <Form.Select {...register('genero', { required: "Género es necesario" })}>
                   <option value="">Seleccionar Género</option>
-                  <option value="varon">Varon</option>
+                  <option value="varon">Varón</option>
                   <option value="mujer">Mujer</option>
                   <option value="otro">Otro</option>
                 </Form.Select>
-                {errors.genero && <span className="error-text">{errors.genero.message}</span>}
+                {formErrors.genero && <span className="error-text">{formErrors.genero.message}</span>}
               </Form.Group>
 
               <Form.Group>
@@ -87,7 +86,7 @@ function RegistroUsuario() {
                   placeholder="Edad"
                   {...register('edad', { required: "Edad es necesaria" })}
                 />
-                {errors.edad && <span className="error-text">{errors.edad.message}</span>}
+                {formErrors.edad && <span className="error-text">{formErrors.edad.message}</span>}
               </Form.Group>
 
               <Form.Group>
@@ -99,7 +98,7 @@ function RegistroUsuario() {
                   max={3}
                   {...register('estatura', { required: "Estatura es necesaria" })}
                 />
-                {errors.estatura && <span className="error-text">{errors.estatura.message}</span>}
+                {formErrors.estatura && <span className="error-text">{formErrors.estatura.message}</span>}
               </Form.Group>
 
               <Form.Group>
@@ -111,7 +110,7 @@ function RegistroUsuario() {
                   max={200}
                   {...register('peso', { required: "Peso es necesario", min: 1, max: 200 })}
                 />
-                {errors.peso && <span className="error-text">{errors.peso.message}</span>}
+                {formErrors.peso && <span className="error-text">{formErrors.peso.message}</span>}
               </Form.Group>
 
               <Form.Control type="hidden" value="Principiante" {...register('nivel')} />
