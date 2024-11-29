@@ -13,8 +13,10 @@ export function Inicio() {
     const { user, updateDatosPerfil } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const [estado, setEstado] = useState("");
+    const [newMultiplicador, setMultiplicador] = useState(null);
     const [alertsEnabled, setAlertsEnabled] = useState(true); // Control para activar/desactivar alertas
+    const [estado, setEstado] = useState("");
+    const [perfilActualizado, setPerfilActualizado] = useState(false); // Estado para evitar bucles
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
     useRoutineAlerts(alertsEnabled ? 10000 : null); // Activar alertas solo si `alertsEnabled` es true
@@ -114,31 +116,48 @@ export function Inicio() {
         return "Obesidad grado 3";
     };
 
+    // useEffect para actualizar el perfil solo cuando sea necesario
     useEffect(() => {
+        if (perfilActualizado) return; // Evita reejecuciones innecesarias
+
+        const cookieToken = Cookies.get("token");
+
+        if (!cookieToken) {
+            console.error("El token no se encuentra en las cookies.");
+            return;
+        }
+
         const nuevoEstado = calcularEstado();
+
         const datosActualizados = {
             objetivos: user.objetivos || "",
             nivelActividad: user.nivelActividad || "",
             estado: nuevoEstado || estado,
+            defaultToken: cookieToken
         };
 
         updateDatosPerfil(datosActualizados)
-            .then(() => setEstado(nuevoEstado))
-            .catch((err) => console.error("Error al actualizar el perfil:", err));
-    }, [user]);
+            .then(() => {
+                //console.log("Perfil actualizado con el token");
+                setPerfilActualizado(true);
+                setEstado(nuevoEstado);
+            })
+            .catch((err) => {
+                console.error("Error al actualizar el perfil:", err);
+            });
+    }, [user.peso, user.estatura, user.objetivos, user.nivelActividad, user.estado, perfilActualizado]); // Depende de atributos específicos
 
     return (
         <Container fluid className="body-inicio">
             <Row className="text-center mb-2">
                 <Col>
                     <h1>Bienvenido a App Gym</h1>
-                    <button onClick={setAlertsEnabled}>{alertsEnabled ? "Desactivar Alertas" : "Activar Alertas"}</button>
                 </Col>
             </Row>
             <Row>
                 <Col md={3}>
                     <Card className="info-card profile-card mb-2 animate-card">
-                        <Card.Body className="text-black">
+                        <Card.Body>
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
@@ -256,5 +275,4 @@ export function Inicio() {
             </Row>
         </Container>
     );
-
 }
