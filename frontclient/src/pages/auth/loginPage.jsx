@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
-import { ErrorAlert } from "../../components/errorAlert";
+import { MostrarAlert } from "../../components/mostrarAlert";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
 import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
-import { MostrarAlert } from "../../components/mostrarAlert";
 
 export function Inicio() {
   return (
