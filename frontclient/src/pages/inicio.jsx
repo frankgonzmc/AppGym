@@ -158,18 +158,18 @@ export function Inicio() {
             <Row>
                 <Col md={3}>
                     <Card className="info-card profile-card mb-2 animate-card">
-                        <Card.Body className="text-black">
+                        <Card.Body>
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
-                            <p>Nivel: {user.nivel}</p>
-                            <p>Peso: {user.peso} kg</p>
-                            <p>Altura: {user.estatura} cm</p>
-                            <p>Edad: {user.edad} años</p>
-                            <p>Sexo: {user.genero}</p>
-                            <p>Objetivos: {user.objetivos}</p>
-                            <p>Nivel de Actividad: {user.nivelActividad}</p>
-                            <p>Estado (Indice de Masa Corporal): {calcularEstado()}</p>
+                            <p className="text-black">Nivel: {user.nivel}</p>
+                            <p className="text-black">Peso: {user.peso} kg</p>
+                            <p className="text-black">Altura: {user.estatura} cm</p>
+                            <p className="text-black">Edad: {user.edad} años</p>
+                            <p className="text-black">Sexo: {user.genero}</p>
+                            <p className="text-black">Objetivos: {user.objetivos}</p>
+                            <p className="text-black">Nivel de Actividad: {user.nivelActividad}</p>
+                            <p className="text-black">Estado (Indice de Masa Corporal): {calcularEstado()}</p>
                             <hr className="text-black my-4" />
                             <Button onClick={calcularTMB} variant="success" className="mt-3 my-2">
                                 Calcular TMB (Tasa de Metabolismo Basal)
