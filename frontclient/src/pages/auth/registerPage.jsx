@@ -42,7 +42,7 @@ function RegistroUsuario() {
           <Col md={6} className="form-information text-white p-4">
             <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
             {registerErrors.map((error, i) => (
-              <div key={i} className="error-message mb-2">{error}</div>
+              <div key={i} className="text-black error-message mb-2">{error}</div>
             ))}
             <Form onSubmit={onSubmit} className="form-register">
               <Form.Group>
