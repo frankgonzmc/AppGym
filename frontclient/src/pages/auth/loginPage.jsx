@@ -31,10 +31,10 @@ export function FormularioSesion() {
       navigate('/inicio');
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
-        //showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
+        showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
         navigate("/login");
       } else {
-        //showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
       }
     }
   });
