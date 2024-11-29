@@ -3,7 +3,7 @@ import { useAuth } from "../context/authcontext";
 import { Form, Button } from "react-bootstrap";
 import { ErrorAlert } from "../../components/alerts/errorAlert";
 
-export function RegisterPage() {
+export default function RegisterPage() {
   const { signup, errors } = useAuth();
   const [user, setUser] = useState({
     username: "",
