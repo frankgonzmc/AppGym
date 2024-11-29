@@ -13,58 +13,41 @@ export function Inicio() {
     const { user, updateDatosPerfil } = useAuth();
     const [tmb, setTmb] = useState(null);
     const [error, setError] = useState("");
-    const [newMultiplicador, setMultiplicador] = useState(null);
     const [estado, setEstado] = useState("");
-    const [perfilActualizado, setPerfilActualizado] = useState(false); // Estado para evitar bucles
+    const [alertsEnabled, setAlertsEnabled] = useState(true); // Control para activar/desactivar alertas
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
-    useRoutineAlerts(10000); // 1 hora en milisegundos (puedes editar este tiempo)
+    useRoutineAlerts(alertsEnabled ? 10000 : null); // Activar alertas solo si `alertsEnabled` es true
 
     const calcularTMB = () => {
-        const peso = user.peso || 0;
-        const altura = user.estatura || 0;
-        const nivelActividad = user.nivelActividad || '';
-        const edad = user.edad || 0;
-        const genero = user.genero || '';
+        const { peso = 0, estatura = 0, nivelActividad = "", edad = 0, genero = "" } = user;
 
         let resultado;
 
-        // Calcular TMB
-        if (genero === 'mujer') {
-            resultado = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);
-        } else if (genero === 'varon') {
-            resultado = 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad);
+        if (genero === "mujer") {
+            resultado = 655 + 9.6 * peso + 1.8 * estatura - 4.7 * edad;
+        } else if (genero === "varon") {
+            resultado = 66 + 13.7 * peso + 5 * estatura - 6.8 * edad;
         } else {
             setError("Por favor, selecciona un género válido.");
             return;
         }
 
-        // Validar nivel de actividad
-        let newMultiplicador;
-        switch (nivelActividad) {
-            case "Sedentario":
-                newMultiplicador = 1.2;
-                break;
-            case "Ejercicio Leve":
-                newMultiplicador = 1.375;
-                break;
-            case "Ejercicio Media":
-                newMultiplicador = 1.55;
-                break;
-            case "Ejercicio Fuerte":
-                newMultiplicador = 1.725;
-                break;
-            case "Ejercicio Extra Fuerte":
-                newMultiplicador = 1.9;
-                break;
-            default:
-                setError("Por favor, dirígete a tu perfil y actualiza tu nivel de actividad para poder calcular tu TMB.");
-                return;
+        let multiplicador = {
+            Sedentario: 1.2,
+            "Ejercicio Leve": 1.375,
+            "Ejercicio Media": 1.55,
+            "Ejercicio Fuerte": 1.725,
+            "Ejercicio Extra Fuerte": 1.9,
+        }[nivelActividad];
+
+        if (!multiplicador) {
+            setError("Por favor, actualiza tu nivel de actividad en el perfil.");
+            return;
         }
 
-        const tdee = resultado * newMultiplicador; // TDEE total
+        const tdee = resultado * multiplicador;
         setTmb({ basal: resultado, total: tdee });
-        setMultiplicador(newMultiplicador);
         setError("");
     };
 
@@ -114,18 +97,16 @@ export function Inicio() {
 
     // Calcular estado basado en IMC
     const calcularEstado = () => {
-        const peso = user.peso || 0;
-        const altura = user.estatura || 0;
+        const { peso = 0, estatura = 0 } = user;
 
-        if (peso === 0 || altura === 0) {
+        if (peso === 0 || estatura === 0) {
             return "Por favor, proporciona un peso y altura válidos.";
         }
 
-        const imc = peso / (altura * altura);
-
-        if (imc < 16.0) return "Delgadez (desnutrición) severa";
-        if (imc < 17.0) return "Delgadez (desnutrición) moderada";
-        if (imc < 18.5) return "Delgadez (desnutrición) leve";
+        const imc = peso / (estatura * estatura);
+        if (imc < 16.0) return "Delgadez severa";
+        if (imc < 17.0) return "Delgadez moderada";
+        if (imc < 18.5) return "Delgadez leve";
         if (imc < 25.0) return "Normal";
         if (imc < 30.0) return "Sobrepeso";
         if (imc < 35.0) return "Obesidad grado 1";
@@ -133,43 +114,25 @@ export function Inicio() {
         return "Obesidad grado 3";
     };
 
-    // useEffect para actualizar el perfil solo cuando sea necesario
     useEffect(() => {
-        if (perfilActualizado) return; // Evita reejecuciones innecesarias
-
-        const cookieToken = Cookies.get("token");
-
-        if (!cookieToken) {
-            console.error("El token no se encuentra en las cookies.");
-            return;
-        }
-
         const nuevoEstado = calcularEstado();
-
         const datosActualizados = {
             objetivos: user.objetivos || "",
             nivelActividad: user.nivelActividad || "",
             estado: nuevoEstado || estado,
-            defaultToken: cookieToken
         };
 
         updateDatosPerfil(datosActualizados)
-            .then(() => {
-                //console.log("Perfil actualizado con el token");
-                setPerfilActualizado(true);
-                setEstado(nuevoEstado);
-            })
-            .catch((err) => {
-                console.error("Error al actualizar el perfil:", err);
-            });
-    }, [user.peso, user.estatura, user.objetivos, user.nivelActividad, user.estado, perfilActualizado]); // Depende de atributos específicos
-
+            .then(() => setEstado(nuevoEstado))
+            .catch((err) => console.error("Error al actualizar el perfil:", err));
+    }, [user]);
 
     return (
         <Container fluid className="body-inicio">
             <Row className="text-center mb-2">
                 <Col>
                     <h1>Bienvenido a App Gym</h1>
+                    <button onClick={setAlertsEnabled}>{alertsEnabled ? "Desactivar Alertas" : "Activar Alertas"}</button>
                 </Col>
             </Row>
             <Row>
