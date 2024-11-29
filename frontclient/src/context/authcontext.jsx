@@ -52,10 +52,10 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await loginRequest(user);
             console.log("Usuario autenticado:", res.data);
-
             // Guarda el estado de autenticación
             setIsAuthenticated(true);
             setUser(res.data);
+            setErrors([]); // Limpia errores en caso de éxito (no se requiere)
         } catch (error) {
             console.error("Error en signin:", error);
             if (Array.isArray(error.response.data)) {
