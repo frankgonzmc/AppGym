@@ -27,18 +27,18 @@ function CalendarPage() {
 
   return (
     <section className="seccion">
-      <div className="calendar-page-container">
-        <h2 className="calendar-title">Calendario de Rutinas</h2>
+      <div className="text-black calendar-page-container">
+        <h2 className="text-black calendar-title">Calendario de Rutinas</h2>
         <Calendar
           onChange={handleDateChange}
           value={value}
-          className="calendar-component"
+          className="text-black calendar-component"
         />
-        <div className="calendar-selected-date">
+        <div className="text-black calendar-selected-date">
           Fecha seleccionada: {value.toDateString()}
         </div>
         <button
-          className="btn btn-primary mt-3"
+          className="text-black btn btn-primary mt-3"
           onClick={() => setShowInput(true)}
         >
           Agregar Nota
