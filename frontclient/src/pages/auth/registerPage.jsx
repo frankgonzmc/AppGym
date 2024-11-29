@@ -96,7 +96,9 @@ function RegistroUsuario() {
                   type="number"
                   placeholder="Estatura"
                   step="0.01"
-                  {...register('estatura', { required: "Estatura es necesaria", min: 0.5, max: 3 })}
+                  min={0.5}
+                  max={3}
+                  {...register('estatura', { required: "Estatura es necesaria" })}
                 />
                 {errors.estatura && <span className="error-text">{errors.estatura.message}</span>}
               </Form.Group>
@@ -106,7 +108,9 @@ function RegistroUsuario() {
                   type="number"
                   placeholder="Peso"
                   step="0.01"
-                  {...register('peso', { required: "Peso es necesario", min: 1, max: 200 })}
+                  min={1}
+                  max={200}
+                  {...register('peso', { required: "Peso es necesario" })}
                 />
                 {errors.peso && <span className="error-text">{errors.peso.message}</span>}
               </Form.Group>
