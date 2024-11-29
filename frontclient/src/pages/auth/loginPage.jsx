@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
-import { MostrarAlert } from "../../components/mostrarAlert";
+import { ErrorAlert } from "../../components/errorAlert";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
@@ -27,8 +27,7 @@ export function FormularioSesion() {
     try {
       const success = await signin(data);
       if (success) {
-        //showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
-        <MostrarAlert messages={["Inicio de sesión exitoso."]} type="success" />
+        showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
         setErrors([]); // Limpia errores
       } else {
         //showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
@@ -38,10 +37,9 @@ export function FormularioSesion() {
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
         //showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
-        setErrors([]); // Limpia errores
         navigate("/login");
       } else {
-        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+        //showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
       }
     }
   });
@@ -53,7 +51,9 @@ export function FormularioSesion() {
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
-        <MostrarAlert messages={authErrors} type="danger" /> {/* Mostrar errores de autenticación */}
+        {/* Mostrar errores de autenticación */}
+        {authErrors && <ErrorAlert errors={authErrors} />}
+
         <form onSubmit={onSubmit}>
           <label className="form-label">
             Email
