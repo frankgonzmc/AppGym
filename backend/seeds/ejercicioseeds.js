@@ -5,8 +5,8 @@ const ejerciciosPredeterminados = [
     //Principiante
     {
         "codigo": "00PRUBEA",
-        "nombre": "PRUEBA",
-        "descripcion": "PRUEBAAAAAAAAAAAAAAA",
+        "nombre": "EJERCICO DE PRUEBA",
+        "descripcion": "Ejercicio de prueba ",
         "nivel": "Principiante",
         "categoria": "Pecho",
         "series": 1,
