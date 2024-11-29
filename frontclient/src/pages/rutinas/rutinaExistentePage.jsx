@@ -1,38 +1,39 @@
-import React from "react";
-import { useAuth } from "../../context/authcontext";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import "../../css/rutinaPage.css";
-import { generarRutinas } from "../../components/generadorRutinas";
+import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
+import axios from "axios";
+import { generarRutinas } from "../../utils/rutinasUtils"; // Asegúrate de exportar la función
 
 function RutinaExistentePage() {
-  const { user } = useAuth();
-  const rutinasGeneradas = generarRutinas(ejerciciosPredeterminados);
+  const [rutinas, setRutinas] = useState([]);
+
+  useEffect(() => {
+    const fetchEjercicios = async () => {
+      try {
+        const response = await axios.get("/api/ejercicios"); // Ajusta la ruta según tu backend
+        const ejercicios = response.data;
+        const rutinasGeneradas = generarRutinas(ejercicios);
+        setRutinas(rutinasGeneradas);
+      } catch (error) {
+        console.error("Error al obtener ejercicios:", error.message);
+      }
+    };
+
+    fetchEjercicios();
+  }, []);
 
   return (
     <section className="seccion">
       <Container className="py-4">
         <h2 className="text-center mb-4">Rutinas Disponibles</h2>
-        <Row className="g-4">
-          {rutinasGeneradas.map((rutina, index) => (
-            <Col md={6} key={index} className="text-center">
-              <Card className="p-4">
-                <h1 className="font-bold">{`Rutina de ${rutina.categoria}`}</h1>
-                <p className="mb-4">{`Nivel: ${rutina.nivel}`}</p>
-                <h2>Ejercicios:</h2>
-                <ul className="text-start">
-                  {rutina.ejercicios.map((ejercicio, idx) => (
-                    <li key={idx}>
-                      {ejercicio.nombre} - {ejercicio.series} series x {ejercicio.repeticiones} reps
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="primary" className="mt-4">
-                  Iniciar Rutina
-                </Button>
-              </Card>
-            </Col>
+        <div className="row">
+          {rutinas.map((rutina, index) => (
+            <div className="col-md-4" key={index}>
+              <RutinaCardExistente rutina={rutina} />
+            </div>
           ))}
-        </Row>
+        </div>
       </Container>
     </section>
   );

@@ -1,20 +1,39 @@
-// Generar rutinas basadas en los ejercicios predeterminados
-export const generarRutinas = (ejercicios) => {
-    const niveles = ["Principiante", "Intermedio", "Avanzado"];
-    const categorias = ["Piernas", "Abdomen", "Cardio", "Pecho", "Espalda", "Hombros", "Tríceps", "Bíceps", "Core", "Cuerpo Completo", "Pliometría"];
+const generarRutinas = (ejercicios) => {
+    const categorias = [
+        "Piernas",
+        "Abdomen",
+        "Brazos",
+        "Cardio",
+        "Pecho",
+        "Espalda",
+        "Hombros",
+        "Tríceps",
+        "Bíceps",
+        "Core",
+        "Cuerpo Completo",
+        "Pliometría",
+    ];
 
-    const rutinas = niveles.map(nivel => {
-        return categorias.map(categoria => {
-            const ejerciciosPorCategoriaYNivel = ejercicios.filter(ejercicio => ejercicio.nivel === nivel && ejercicio.categoria === categoria);
-            return {
-                nivel,
-                categoria,
-                ejercicios: ejerciciosPorCategoriaYNivel
-            };
-        }).filter(rutina => rutina.ejercicios.length > 0); // Elimina categorías sin ejercicios
-    }).flat();
+    const niveles = ["Principiante", "Intermedio", "Avanzado"];
+
+    const rutinas = [];
+
+    niveles.forEach((nivel) => {
+        categorias.forEach((categoria) => {
+            const ejerciciosFiltrados = ejercicios.filter(
+                (ej) => ej.nivel === nivel && ej.categoria === categoria
+            );
+
+            // Agrupar ejercicios en rutinas de 5
+            for (let i = 0; i < ejerciciosFiltrados.length; i += 5) {
+                rutinas.push({
+                    categoria,
+                    nivel,
+                    ejercicios: ejerciciosFiltrados.slice(i, i + 5),
+                });
+            }
+        });
+    });
 
     return rutinas;
 };
-
-const rutinasGeneradas = generarRutinas(ejerciciosPredeterminados);
