@@ -19,14 +19,15 @@ export function Inicio() {
 }
 
 export function FormularioSesion() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signin, isAuthenticated, errors: signinErrors } = useAuth();
+  const { register, handleSubmit, formState: { errors: formErrors } } = useForm();
+  const { signin, isAuthenticated, errors: authErrors, setErrors } = useAuth(); // Incluye `setErrors` para limpiar errores
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       await signin(data);
       showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+      setErrors([]); // Limpia los errores después de un inicio de sesión exitoso
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
         showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
@@ -39,40 +40,59 @@ export function FormularioSesion() {
 
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio');
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
-        <ErrorAlert errors={authErrors} /> {/* Mostrar errores de autenticación */}
+        {/* Mostrar errores de autenticación */}
+        {authErrors && <ErrorAlert errors={authErrors} />}
+
         <form onSubmit={onSubmit}>
           <label className="form-label">
             Email
             <input
               type="email"
-              {...register('email', { required: true })}
+              {...register('email', {
+                required: "El email es obligatorio",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Debe ser un email válido"
+                }
+              })}
               placeholder="Ingrese el Email"
               className="container2-input"
             />
           </label>
-          {errors.email && (<p className="text-red-500">Email es Necesario!</p>)}
+          {formErrors.email && (
+            <p className="text-red-500">{formErrors.email.message}</p>
+          )}
 
           <label className="form-label">
             Password
             <input
               type="password"
-              {...register('password', { required: true })}
+              {...register('password', {
+                required: "El password es obligatorio",
+                minLength: {
+                  value: 6,
+                  message: "El password debe tener al menos 6 caracteres"
+                }
+              })}
               placeholder="Ingrese el Password"
               className="container3-input"
             />
           </label>
-          {errors.password && (<p className="text-red-500">Password es Necesario!</p>)}
+          {formErrors.password && (
+            <p className="text-red-500">{formErrors.password.message}</p>
+          )}
 
           <button type="submit" className="container4-button1 mt-4 my-3">Iniciar Sesión</button>
           <p className="flex gap-x-2 justify-between">
             <Link to="/forgot-password" className="text-sky-500 mt-4 my-3">Olvidaste tu contraseña?</Link>
           </p>
         </form>
+
         <hr className="text-white" />
         <p className="flex gap-x-2 justify-between text-white">
           No tienes una cuenta? <Link to="/register" className="text-sky-500">Registrarse</Link>
