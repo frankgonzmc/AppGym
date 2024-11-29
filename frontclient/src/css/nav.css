@@ -83,6 +83,53 @@ button {
     color: #222222;
 }
 
+/* Toast personalizado */
+.custom-toast {
+    background-color: #222831;
+    /* Fondo oscuro */
+    color: #eeeeee;
+    /* Texto claro */
+    border: 2px solid #00adb5;
+    /* Borde azul claro */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra */
+}
+
+.custom-toast-header {
+    background-color: #00adb5;
+    /* Color de cabecera */
+    color: #ffffff;
+    /* Texto blanco */
+    font-weight: bold;
+    /* Texto en negrita */
+    border-bottom: 2px solid #eeeeee;
+    /* Separador de la cabecera */
+}
+
+.custom-toast-body {
+    font-size: 1rem;
+    /* Tamaño del texto */
+    padding: 10px;
+    /* Espaciado interno */
+}
+
+.custom-toast-error {
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.custom-toast-warning {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.custom-toast-success {
+    background-color: #4caf50;
+    color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar-container {

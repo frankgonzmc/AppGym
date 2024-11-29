@@ -37,14 +37,14 @@ function Navbar() {
     }
 
     const imc = user.peso / (user.estatura * user.estatura);
-    if (imc < 16.0) return "Delgadez severa";
-    if (imc < 17.0) return "Delgadez moderada";
-    if (imc < 18.5) return "Delgadez leve";
-    if (imc < 25.0) return "Normal";
-    if (imc < 30.0) return "Sobrepeso";
-    if (imc < 35.0) return "Obesidad grado 1";
-    if (imc < 40.0) return "Obesidad grado 2";
-    return "Obesidad grado 3";
+    if (imc < 16.0) return { estado: "Delgadez severa", tipo: "danger" };
+    if (imc < 17.0) return { estado: "Delgadez moderada", tipo: "warning" };
+    if (imc < 18.5) return { estado: "Delgadez leve", tipo: "warning" };
+    if (imc < 25.0) return { estado: "Normal", tipo: "success" };
+    if (imc < 30.0) return { estado: "Sobrepeso", tipo: "warning" };
+    if (imc < 35.0) return { estado: "Obesidad grado 1", tipo: "danger" };
+    if (imc < 40.0) return { estado: "Obesidad grado 2", tipo: "danger" };
+    return { estado: "Obesidad grado 3", tipo: "danger" };
   };
 
   // Función para generar notificaciones
@@ -57,9 +57,10 @@ function Navbar() {
     try {
       const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
       if (data.rutinas && data.rutinas.length > 0) {
-        nuevasNotificaciones.push(
-          `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
-        );
+        nuevasNotificaciones.push({
+          mensaje: `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`,
+          tipo: "warning",
+        });
       }
     } catch (error) {
       console.error(
@@ -70,24 +71,28 @@ function Navbar() {
 
     // Agregar notificación basada en el IMC
     const estadoIMC = calcularEstado();
-    if (estadoIMC.includes("Obesidad")) {
-      nuevasNotificaciones.push(
-        "Tu IMC indica obesidad. Se recomienda enfocarte en perder peso mediante una dieta adecuada y ejercicio."
-      );
-    } else if (estadoIMC.includes("Delgadez")) {
-      nuevasNotificaciones.push(
-        "Tu IMC indica delgadez. Se recomienda enfocarte en ganar masa muscular con un plan de entrenamiento y dieta balanceada."
-      );
-    }
+    nuevasNotificaciones.push({
+      mensaje: `Tu IMC indica ${estadoIMC.estado}. Se recomienda ${estadoIMC.tipo === "danger"
+          ? "enfocarte en un cambio significativo en tu dieta y ejercicio."
+          : estadoIMC.tipo === "warning"
+            ? "realizar ajustes leves en tu estilo de vida."
+            : "mantener tus hábitos saludables."
+        }`,
+      tipo: estadoIMC.tipo,
+    });
 
     // Agregar notificación si faltan datos en el perfil
     if (!user.objetivos) {
-      nuevasNotificaciones.push("Falta completar tus objetivos en el perfil.");
+      nuevasNotificaciones.push({
+        mensaje: "Falta completar tus objetivos en el perfil.",
+        tipo: "warning",
+      });
     }
     if (!user.nivelActividad) {
-      nuevasNotificaciones.push(
-        "Falta completar tu nivel de actividad en el perfil."
-      );
+      nuevasNotificaciones.push({
+        mensaje: "Falta completar tu nivel de actividad en el perfil.",
+        tipo: "warning",
+      });
     }
 
     setNotifications(nuevasNotificaciones);
@@ -159,29 +164,20 @@ function Navbar() {
 
       {/* Notificaciones */}
       <ToastContainer className="p-3" position="top-end">
-        <Toast
-          show={showNotifications}
-          onClose={() => setShowNotifications(false)}
-          bg="info"
-          delay={5000}
-          autohide
-        >
-          <Toast.Header>
-            <strong className="me-auto">Notificaciones</strong>
-          </Toast.Header>
-          <Toast.Body>
-            {notifications.length > 0 ? (
-              notifications.map((noti, index) => (
-                <div key={index}>
-                  <p>{noti}</p>
-                  {index < notifications.length - 1 && <hr />}
-                </div>
-              ))
-            ) : (
-              <p>No tienes notificaciones pendientes.</p>
-            )}
-          </Toast.Body>
-        </Toast>
+        {notifications.map((noti, index) => (
+          <Toast
+            key={index}
+            onClose={() => setNotifications(notifications.filter((_, i) => i !== index))}
+            bg={noti.tipo}
+            delay={5000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="me-auto">Notificaciones</strong>
+            </Toast.Header>
+            <Toast.Body>{noti.mensaje}</Toast.Body>
+          </Toast>
+        ))}
       </ToastContainer>
     </>
   );
