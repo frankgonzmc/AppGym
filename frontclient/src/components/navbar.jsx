@@ -74,9 +74,7 @@ function Navbar() {
     nuevasNotificaciones.push({
       mensaje: `Tu IMC indica ${estadoIMC.estado}. Se recomienda ${estadoIMC.tipo === "danger"
           ? "enfocarte en un cambio significativo en tu dieta y ejercicio."
-          : estadoIMC.tipo === "warning"
-            ? "realizar ajustes leves en tu estilo de vida."
-            : "mantener tus hábitos saludables."
+          : "mantener un estilo de vida equilibrado."
         }`,
       tipo: estadoIMC.tipo,
     });
@@ -167,10 +165,12 @@ function Navbar() {
         {notifications.map((noti, index) => (
           <Toast
             key={index}
-            onClose={() => setNotifications(notifications.filter((_, i) => i !== index))}
             bg={noti.tipo}
-            delay={5000}
+            onClose={() =>
+              setNotifications((prev) => prev.filter((_, i) => i !== index))
+            }
             autohide
+            delay={5000}
           >
             <Toast.Header>
               <strong className="me-auto">Notificaciones</strong>
