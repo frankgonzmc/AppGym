@@ -25,15 +25,10 @@ export function FormularioSesion() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const success = await signin(data);
-      if (!success) {
-        showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
-        setErrors([]); // Limpia errores
-      } else {
-        //showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
-        setErrors([]); // Limpia errores
-        navigate("/login");
-      }
+      await signin(data);
+      showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+      setErrors([]); // Limpia errores
+      navigate('/inicio');
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
         //showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
