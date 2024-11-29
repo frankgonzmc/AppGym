@@ -16,7 +16,7 @@ function RutinaExistentePage() {
               <h1 className="font-bold">Rutina 1</h1>
               <p className="mb-4">Descripción de la rutina 1</p>
               <p className='mb-4'>Nivel: Principiante</p>
-              <p> Ejercicios Existentes</p>
+              <h2> Ejercicios Existentes</h2>
               <p>
                 <li>
                   ejercicio 2, 3,4,5, 5,6
