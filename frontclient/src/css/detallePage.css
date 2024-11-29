@@ -1,42 +1,8 @@
-.detalle-seccion {
+.seccion {
     background-color: #ee9037;
     padding: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 20px;
 }
 
 .seccion-card {
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    width: 300px;
-    max-width: 100%;
-    text-align: center;
-}
-
-.detalle-seccion .btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 8px;
-}
-
-.detalle-seccion .btn-danger {
-    background-color: #dc3545;
-}
-
-.detalle-seccion .btn-danger:hover {
-    background-color: #c82333;
-}
-
-.detalle-seccion .btn-success {
-    background-color: #28a745;
-}
-
-.detalle-seccion .btn-success:hover {
-    background-color: #218838;
+    background-color: #ee9037;
 }
