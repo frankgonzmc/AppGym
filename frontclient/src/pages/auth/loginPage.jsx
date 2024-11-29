@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
-import { ErrorAlert } from "../../components/errorAlert";
+import { ErrorAlert } from "../../components/alerts/errorAlert";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
