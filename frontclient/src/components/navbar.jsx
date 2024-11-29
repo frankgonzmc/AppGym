@@ -55,7 +55,7 @@ function Navbar() {
 
       // Rutinas pendientes
       try {
-        const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
+        const { data } = await axios.get(`/rutinas/${user.id}/incomplete`);
         if (data.rutinas && data.rutinas.length > 0) {
           nuevasNotificaciones.push(
             `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
