@@ -10,7 +10,7 @@ import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-
 
 function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors: formErrors } } = useForm(); // Renombrado a `formErrors`
-  const { signup, isAuthenticated, errors: authErrors } = useAuth(); // Renombrado a `authErrors`
+  const { signup, isAuthenticated, errors: authErrors, setErrors } = useAuth(); // Renombrado a `authErrors`
   const navigate = useNavigate();
 
   useEffect(() => {
