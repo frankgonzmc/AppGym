@@ -7,13 +7,13 @@
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: #f0f0f0 !important;
+  background: #000000 !important;
   color: #000 !important;
 }
 
 .react-calendar__tile--active {
   background: #007bff !important;
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
   font-weight: bold;
   border-radius: 8px;
 }
