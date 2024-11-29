@@ -5,13 +5,13 @@
   border: none !important;
 }
 
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
+.calendar-page .react-calendar__tile:enabled:hover,
+.calendar-page .react-calendar__tile:enabled:focus {
   background: #f0f0f0 !important;
   color: #000 !important;
 }
 
-.react-calendar__tile--active {
+.calendar-page.react-calendar__tile--active {
   background: #007bff !important;
   color: white !important;
   font-weight: bold;
@@ -30,7 +30,7 @@
 }
 
 /* Contenedor del calendario */
-.calendar-page-container {
+.calendar-page .calendar-page-container {
   background-color: #ffffff;
   padding: 30px;
   border-radius: 12px;
@@ -50,19 +50,19 @@
   transition: box-shadow 0.3s ease;
 }
 
-.calendar-component:hover {
+.calendar-page .calendar-component:hover {
   box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
 /* Fecha seleccionada */
-.calendar-selected-date {
+.calendar-page .calendar-selected-date {
   margin-top: 20px;
   font-weight: bold;
   color: #007bff;
 }
 
 /* Lista de eventos */
-.event-list {
+.calendar-page .event-list {
   margin-top: 20px;
   padding: 15px;
   background-color: #f8f9fa;
@@ -70,13 +70,13 @@
   border: 1px solid #dddddd;
 }
 
-.event-list ul {
+.calendar-page .event-list ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.event-list li {
+.calendar-page .event-list li {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -87,13 +87,13 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.event-list li:before {
+.calendar-page .event-list li:before {
   content: "📝";
   font-size: 18px;
 }
 
 /* Botones */
-button.btn {
+.calendar-page button.btn {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -105,25 +105,25 @@ button.btn {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button.btn:hover {
+.calendar-page button.btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-button.btn-primary:hover {
+.calendar-page button.btn-primary:hover {
   background-color: #0056b3;
 }
 
-button.btn-success:hover {
+.calendar-page button.btn-success:hover {
   background-color: #28a745;
 }
 
-button.btn-danger:hover {
+.calendar-page button.btn-danger:hover {
   background-color: #dc3545;
 }
 
 /* Modal */
-.modal-overlay {
+.calendar-page .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -136,7 +136,7 @@ button.btn-danger:hover {
   z-index: 1000;
 }
 
-.modal-container {
+.calendar-page .modal-container {
   background: white;
   padding: 20px;
   border-radius: 8px;
