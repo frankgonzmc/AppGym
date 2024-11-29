@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
-import { Nav, NavDropdown, Badge, Toast, ToastContainer } from "react-bootstrap";
+import { Nav, NavDropdown, Badge, Toast } from "react-bootstrap";
 import { FaBell } from "react-icons/fa";
 import axios from "../api/axios";
 import "../css/nav.css";
@@ -30,7 +30,6 @@ function Navbar() {
     }
   }, [dropdownOpenRutina]);
 
-  // Función para calcular el estado basado en IMC
   const calcularEstado = () => {
     if (!user || !user.peso || !user.estatura) {
       return { estado: "Datos insuficientes para calcular el IMC.", tipo: "info" };
@@ -47,13 +46,11 @@ function Navbar() {
     return { estado: "Obesidad grado 3", tipo: "danger" };
   };
 
-  // Función para generar notificaciones
   const generarNotificaciones = async () => {
     if (!isAuthenticated || !user || !user._id) return;
 
     let nuevasNotificaciones = [];
 
-    // Agregar notificación de rutinas pendientes
     try {
       const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
       if (data.rutinas && data.rutinas.length > 0) {
@@ -63,13 +60,9 @@ function Navbar() {
         });
       }
     } catch (error) {
-      console.error(
-        "Error al obtener rutinas pendientes:",
-        error.response?.data?.message || error.message
-      );
+      console.error("Error al obtener rutinas pendientes:", error.response?.data?.message || error.message);
     }
 
-    // Agregar notificación basada en el IMC
     const estadoIMC = calcularEstado();
     nuevasNotificaciones.push({
       mensaje: `Tu IMC indica ${estadoIMC.estado}. ${estadoIMC.tipo === "danger"
@@ -78,7 +71,6 @@ function Navbar() {
       tipo: estadoIMC.tipo,
     });
 
-    // Agregar notificación si faltan datos en el perfil
     if (!user.objetivos) {
       nuevasNotificaciones.push({
         mensaje: "Falta completar tus objetivos en el perfil.",
@@ -159,17 +151,32 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Notificaciones */}
-      <ToastContainer className="p-3" position="top-end">
-        {notifications.map((noti, index) => (
-          <Toast key={index} bg={noti.tipo} onClose={() => setShowNotifications(false)} delay={5000} autohide>
-            <Toast.Header>
-              <strong className="me-auto">Notificaciones</strong>
-            </Toast.Header>
-            <Toast.Body>{noti.mensaje}</Toast.Body>
-          </Toast>
-        ))}
-      </ToastContainer>
+      {/* Contenedor único de notificaciones */}
+      {showNotifications && (
+        <Toast className="p-3" style={{ position: "fixed", top: "10%", right: "10%", zIndex: 1050 }}>
+          <Toast.Header>
+            <strong className="me-auto">Notificaciones</strong>
+            <button
+              className="btn-close"
+              onClick={() => setShowNotifications(false)}
+            ></button>
+          </Toast.Header>
+          <Toast.Body>
+            {notifications.length > 0 ? (
+              notifications.map((noti, index) => (
+                <p
+                  key={index}
+                  className={`alert alert-${noti.tipo} p-2 my-1`}
+                >
+                  {noti.mensaje}
+                </p>
+              ))
+            ) : (
+              <p>No tienes notificaciones pendientes.</p>
+            )}
+          </Toast.Body>
+        </Toast>
+      )}
     </>
   );
 }
