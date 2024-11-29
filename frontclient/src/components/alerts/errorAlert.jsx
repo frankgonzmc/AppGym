@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
 
-export function ErrorAlert({ errors }) {
+export default function ErrorAlert({ errors }) {
   if (!errors || errors.length === 0) return null;
 
   return (
