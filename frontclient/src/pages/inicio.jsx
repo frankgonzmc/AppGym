@@ -175,7 +175,7 @@ export function Inicio() {
             <Row>
                 <Col md={3}>
                     <Card className="info-card profile-card mb-2 animate-card">
-                        <Card.Body>
+                        <Card.Body className="text-black">
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
