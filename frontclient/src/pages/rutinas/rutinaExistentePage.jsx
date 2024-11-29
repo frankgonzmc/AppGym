@@ -4,9 +4,29 @@ import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
 import { generadorRutinas } from "../../components/generadorRutinas";
+import { useAuth } from "../../context/authcontext";
+
+
+
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
+  const { user } = useAuth();
+
+  const fetchExercises = async () => {
+    try {
+      const response = await axios.get(`/ejercicios/${user.nivel}`);
+      setExercises(response.data);
+    } catch (error) {
+      console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.nivel) {
+      fetchExercises();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchEjercicios = async () => {
@@ -23,10 +43,21 @@ function RutinaExistentePage() {
     fetchEjercicios();
   }, []);
 
+  const isRecommended = ejercicio.nivel === user.nivel;
+
   return (
     <section className="seccion">
       <Container className="py-4">
         <h2 className="text-center text-black mb-4">Rutinas Disponibles</h2>
+        {isRecommended ? (
+          <span className="text-white bg-green-800 px-2 py-1 rounded-lg text-sm">
+            Recomendado
+          </span>
+        ) : (
+          <span className="text-white bg-red-800 px-2 py-1 rounded-lg text-sm">
+            No recomendado
+          </span>
+        )}
         <div className="row">
           {rutinas.map((rutina, index) => (
             <div className="col-md-4" key={index}>
