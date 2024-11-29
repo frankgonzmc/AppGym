@@ -153,23 +153,25 @@ function Navbar() {
 
       {/* Contenedor único de notificaciones */}
       {showNotifications && (
-        <Toast className="p-3" style={{ position: "fixed", top: "10%", right: "10%", zIndex: 1050 }}>
+        <Toast
+          style={{
+            position: "fixed",
+            top: "10%",
+            right: "10%",
+            zIndex: 1050,
+            width: "300px",
+          }}
+          onClose={() => setShowNotifications(false)}
+        >
           <Toast.Header>
             <strong className="me-auto">NOTIFICACIONES</strong>
-            <button
-              className="btn-close"
-              onClick={() => setShowNotifications(false)}
-            ></button>
           </Toast.Header>
           <Toast.Body>
             {notifications.length > 0 ? (
               notifications.map((noti, index) => (
-                <p
-                  key={index}
-                  className={`alert alert-${noti.tipo} p-2 my-1`}
-                >
+                <div key={index} className={`alert alert-${noti.tipo} p-2`}>
                   {noti.mensaje}
-                </p>
+                </div>
               ))
             ) : (
               <p>No tienes notificaciones pendientes.</p>
