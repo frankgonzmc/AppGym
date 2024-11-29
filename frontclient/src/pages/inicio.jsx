@@ -256,4 +256,5 @@ export function Inicio() {
             </Row>
         </Container>
     );
+
 }
