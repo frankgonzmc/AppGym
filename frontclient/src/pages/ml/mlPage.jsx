@@ -102,6 +102,23 @@ export default function mlPage() {
         setNutrientesVolumen(calcularNutrientesVolumen());
     };
 
+    const enviarDatosUsuario = async () => {
+        const queryParams = `${altura} metros, ${peso} kilogramos, ${genero}, ${objetivo}`;
+        const content = textareaContent || "Genera una dieta recomendada para mí.";
+    
+        try {
+            const response = await axios.get('/dieta', {
+                params: { content: queryParams + ", " + content },
+            });
+    
+            setRecomendacionIA(response.data.respuesta);
+            setError("");
+        } catch (error) {
+            console.error("Error al enviar datos al servidor:", error.response?.data || error.message);
+            setError("No se pudo obtener la recomendación. Inténtalo de nuevo.");
+        }
+    };
+
     const prediccion = "* Mejorar resistencia cardiovascular *";
 
     return (
