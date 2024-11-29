@@ -1,4 +1,31 @@
-/* calendarPage.css */
+/* Arreglar la visualización de los días del calendario */
+.react-calendar__tile {
+  color: #000;
+  /* Asegúrate de que el texto sea visible */
+  background: none;
+  /* Elimina cualquier color de fondo que pueda estar sobrescribiendo */
+  border: none;
+  /* Opcional: evita bordes indeseados */
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #f0f0f0;
+  /* Cambia el fondo al pasar el mouse */
+  color: #000;
+  /* Mantén el texto visible */
+}
+
+/* Para los días seleccionados */
+.react-calendar__tile--active {
+  background: #007bff;
+  /* Fondo azul para días seleccionados */
+  color: white;
+  /* Texto blanco para contraste */
+  border-radius: 8px;
+  /* Opcional: esquinas redondeadas */
+}
+
 .seccion {
   background-color: #ee9037;
   /* Fondo válido */
