@@ -6,6 +6,7 @@ import '../../css/register.css';
 import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { showSuccessAlert, showErrorAlert } from '../../components/alerts/utils-alerts';
 
 function RegistroUsuario() {
   const { register, handleSubmit, formState: { errors: formErrors } } = useForm(); // Renombrado a `formErrors`
@@ -26,9 +27,29 @@ function RegistroUsuario() {
       peso: parseFloat(values.peso),
     };
 
-    console.log("Datos enviados al backend:", formData); // Verificar los datos en la consola
-    signup(formData);
+    try {
+      const respuestaSession = await signup(formData);
+      //console.log("Respuesta de sesión:", respuestaSession);
+      if (respuestaSession) {
+        showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+        setErrors([]); // Limpia errores después de éxito
+        navigate("/inicio");
+      } else {
+        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message === "Token expirado") {
+        showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
+        navigate("/login");
+      } else {
+        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+      }
+    }
   });
+
+  useEffect(() => {
+    return () => setErrors([]); // Limpia errores al desmontar
+  }, [setErrors]);
 
   return (
     <section className="section-register">
