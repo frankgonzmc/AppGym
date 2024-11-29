@@ -186,7 +186,6 @@ export default function mlPage() {
                         <Card.Body>
                             <Card.Title>Calculadora de Tasa de Metabolismo Basal (TMB)</Card.Title>
                             <Form>
-                                {/* ...inputs para peso, altura, edad, genero... */}
                                 <Form.Group controlId="peso">
                                     <Form.Label className='text-black'>Peso (kg)</Form.Label>
                                     <Form.Control
@@ -244,59 +243,6 @@ export default function mlPage() {
                                 </Alert>
                             )}
                         </Card.Body>
-
-                        <Card.Body>
-                            <Card.Title>TABLA DE NIVEL DE ACTIVIDAD</Card.Title>
-                            {/* ...tu tabla... */}
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>Factor de actividad Multiplicador</th>
-                                        <th>Nivel de Actividad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1.2</td>
-                                        <td>Poco o ningún ejercicio</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.375</td>
-                                        <td>Ejercicio ligero (1-3 días/semana)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.55</td>
-                                        <td>Ejercicio moderado (3-5 días/semana)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.725</td>
-                                        <td>Ejercicio intenso (6-7 días/semana)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.9</td>
-                                        <td>Ejercicio muy intenso (dos veces al día, entrenamientos muy duros)</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-
-                            <Form>
-                                <Form.Group controlId="activityLevel">
-                                    <Form.Label>Nivel de Actividad</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        step="any"
-                                        placeholder="Ingresa tu nivel de actividad (e.g., 1.2)"
-                                        value={activityLevel}
-                                        onChange={(e) => setActivityLevel(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Button onClick={calcularNutrientes} variant="primary" className="mt-3">
-                                    Calcular Recomendaciones
-                                </Button>
-                            </Form>
-                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-                        </Card.Body>
-
                         <Card className="info-card mt-3">
                             <Card.Body>
                                 <Card.Title>Recomendaciones de Alimentación para *DEFINIR*</Card.Title>
@@ -378,58 +324,6 @@ export default function mlPage() {
                                 </Button>
                             </Form>
                             {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-                        </Card.Body>
-                    </Card>
-                    <Card className="info-card mt-3">
-                        <Card.Body>
-                            <Card.Title>Recomendaciones de Alimentaciones para *DEFINIR*</Card.Title>
-                            {tmb ? (
-                                <>
-                                    <p>
-                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
-                                    </p>
-                                    {nutrientedefinir && (
-                                        <>
-                                            <p>
-                                                Proteínas: {nutrientedefinir.proteinas} g
-                                            </p>
-                                            <p>
-                                                Grasas: {nutrientedefinir.grasas} g
-                                            </p>
-                                            <p>
-                                                Hidratos de carbono: {nutrientedefinir.hidratos} g
-                                            </p>
-                                        </>
-                                    )}
-                                </>
-                            ) : (
-                                <p>Por favor, calcula primero tu TMB.</p>
-                            )}
-                        </Card.Body>
-                        <Card.Body>
-                            <Card.Title>Recomendaciones de Alimentaciones para *VOLUMEN*</Card.Title>
-                            {tmb ? (
-                                <>
-                                    <p>
-                                        Tus Kcal/día son: {tmb.toFixed(2)} Kcal
-                                    </p>
-                                    {nutrientesVolumen && (
-                                        <>
-                                            <p>
-                                                Proteínas: {nutrientesVolumen.proteinas} g
-                                            </p>
-                                            <p>
-                                                Grasas: {nutrientesVolumen.grasas} g
-                                            </p>
-                                            <p>
-                                                Hidratos de carbono: {nutrientesVolumen.hidratos} g
-                                            </p>
-                                        </>
-                                    )}
-                                </>
-                            ) : (
-                                <p>Por favor, calcula primero tu TMB.</p>
-                            )}
                         </Card.Body>
                     </Card>
                 </Col>
