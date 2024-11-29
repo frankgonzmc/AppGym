@@ -53,9 +53,7 @@ export function FormularioSesion() {
   return (
     <div className="flex h-[calc(100vh-100px)] items-center justify-center">
       <div className="form">
-        {/* Mostrar errores de autenticación */}
-        {authErrors && <ErrorAlert errors={authErrors} />}
-
+        <MostrarAlert messages={authErrors} type="danger" /> {/* Mostrar errores de autenticación */}
         <form onSubmit={onSubmit}>
           <label className="form-label">
             Email
