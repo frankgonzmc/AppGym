@@ -175,29 +175,31 @@ function Navbar() {
 
       {/* Notificaciones */}
       <ToastContainer className="p-3" position="top-end">
-        <Toast
-          show={showNotifications}
-          onClose={() => setShowNotifications(false)}
-          bg="info"
-          delay={5000}
-          autohide
-        >
-          <Toast.Header>
-            <strong className="me-auto">Notificaciones</strong>
-          </Toast.Header>
-          <Toast.Body>
-            {notifications.length > 0 ? (
-              notifications.map((noti, index) => (
-                <div key={index}>
-                  <p>{noti}</p>
-                  {index < notifications.length - 1 && <hr />}
-                </div>
-              ))
-            ) : (
-              <p>No tienes notificaciones pendientes.</p>
-            )}
-          </Toast.Body>
-        </Toast>
+        {notifications.length > 0 ? (
+          notifications.map((noti, index) => (
+            <Toast
+              key={index}
+              bg={noti.tipo} // Usa el tipo para el color de fondo
+              onClose={() => {
+                setNotifications((prev) => prev.filter((_, i) => i !== index));
+              }}
+              autohide
+              delay={5000}
+            >
+              <Toast.Header>
+                <strong className="me-auto">Notificaciones</strong>
+              </Toast.Header>
+              <Toast.Body>{noti.mensaje}</Toast.Body>
+            </Toast>
+          ))
+        ) : (
+          <Toast bg="info" autohide delay={5000}>
+            <Toast.Header>
+              <strong className="me-auto">Notificaciones</strong>
+            </Toast.Header>
+            <Toast.Body>No tienes notificaciones pendientes.</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
     </>
   );
