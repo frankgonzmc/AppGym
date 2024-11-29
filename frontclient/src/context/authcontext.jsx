@@ -56,20 +56,12 @@ export const AuthProvider = ({ children }) => {
             // Guarda el estado de autenticación
             setIsAuthenticated(true);
             setUser(res.data);
-            setErrors([]); // Limpia errores en caso de éxito
-            return true; // Retorna éxito explícito
         } catch (error) {
-            console.error("Error al iniciar sesión:", error);
-            setIsAuthenticated(false); // Asegúrate de que no esté autenticado
-            if (error.response?.data?.message) {
-                const messages = Array.isArray(error.response.data.message)
-                    ? error.response.data.message
-                    : [error.response.data.message];
-                setErrors(messages);
-            } else {
-                setErrors(["Error al conectar con el servidor"]);
+            console.error("Error en signin:", error);
+            if (Array.isArray(error.response.data)) {
+                return setErrors(error.response.data);
             }
-            return false; // Retorna fallo explícito
+            setErrors([error.response.data.message || "Error al iniciar sesión"]);
         }
     };
 
