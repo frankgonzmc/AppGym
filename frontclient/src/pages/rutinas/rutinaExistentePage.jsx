@@ -26,7 +26,7 @@ function RutinaExistentePage() {
   return (
     <section className="seccion">
       <Container className="py-4">
-        <h2 className="text-center mb-4">Rutinas Disponibles</h2>
+        <h2 className="text-center text-black mb-4">Rutinas Disponibles</h2>
         <div className="row">
           {rutinas.map((rutina, index) => (
             <div className="col-md-4" key={index}>
