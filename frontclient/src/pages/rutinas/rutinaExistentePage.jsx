@@ -4,29 +4,11 @@ import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
 import { generadorRutinas } from "../../components/generadorRutinas";
-import { useAuth } from "../../context/authcontext";
-
-
 
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
-  const { user } = useAuth();
 
-  const fetchExercises = async () => {
-    try {
-      const response = await axios.get(`/ejercicios/${user.nivel}`);
-      setExercises(response.data);
-    } catch (error) {
-      console.error("Error al obtener los ejercicios", error.response ? error.response.data : error.message);
-    }
-  };
-
-  useEffect(() => {
-    if (user?.nivel) {
-      fetchExercises();
-    }
-  }, [user]);
 
   useEffect(() => {
     const fetchEjercicios = async () => {

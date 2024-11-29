@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 
 export function RutinaCardExistente({ rutina }) {
+    
     return (
         <Card className="mb-4 text-black">
             <Card.Header>
