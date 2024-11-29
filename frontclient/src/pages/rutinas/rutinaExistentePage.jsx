@@ -9,6 +9,7 @@ import { useAuth } from "../../context/authcontext";
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
+  const [ejercicios, setEjercicios] = useState([]);
   const { user } = useAuth();
 
   useEffect(() => {
