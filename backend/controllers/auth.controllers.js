@@ -82,7 +82,7 @@ export const login = async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000, // 1 día
         });
 
-        return res.status(200).json({
+        res.json({
             id: userEncontrado._id,
             username: userEncontrado.username,
             email: userEncontrado.email,
