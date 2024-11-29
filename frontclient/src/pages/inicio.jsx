@@ -19,8 +19,9 @@ export function Inicio() {
     const [perfilActualizado, setPerfilActualizado] = useState(false); // Estado para evitar bucles
     const profileImageUrl = user.profileImage ? `http://localhost:5000/uploads/perfil/${user._id}` : profileImage;
 
-    useRoutineAlerts(alertsEnabled ? 10000 : null); // Activar alertas solo si `alertsEnabled` es true
-
+    //useRoutineAlerts(alertsEnabled ? 10000 : null); // Activar alertas solo si `alertsEnabled` es true
+    useRoutineAlerts(10000); // Activar alertas solo si `alertsEnabled` es true
+    
     const calcularTMB = () => {
         const { peso = 0, estatura = 0, nivelActividad = "", edad = 0, genero = "" } = user;
 

@@ -126,7 +126,7 @@ function Navbar() {
           {isAuthenticated ? (
             <div className="d-flex align-items-center gap-3">
               <div className="text-white notifications" onClick={handleBellClick}>
-                <FaBell className="text-white text-warning" size={24} style={{ cursor: "pointer" }} />
+                <FaBell className="text-warning" size={24} style={{ cursor: "pointer" }} />
                 {notifications.length > 0 && (
                   <Badge bg="danger" pill className="position-relative">
                     {notifications.length}
