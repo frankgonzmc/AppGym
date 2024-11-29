@@ -1,47 +1,37 @@
-/* Arreglar la visualización de los días del calendario */
+/* Calendario */
 .react-calendar__tile {
-  color: #000;
-  /* Asegúrate de que el texto sea visible */
-  background: none;
-  /* Elimina cualquier color de fondo que pueda estar sobrescribiendo */
-  border: none;
-  /* Opcional: evita bordes indeseados */
+  color: #000 !important;
+  background: none !important;
+  border: none !important;
 }
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: #f0f0f0;
-  /* Cambia el fondo al pasar el mouse */
-  color: #000;
-  /* Mantén el texto visible */
+  background: #f0f0f0 !important;
+  color: #000 !important;
 }
 
-/* Para los días seleccionados */
 .react-calendar__tile--active {
-  background: #007bff;
-  /* Fondo azul para días seleccionados */
-  color: white;
-  /* Texto blanco para contraste */
+  background: #007bff !important;
+  color: white !important;
+  font-weight: bold;
   border-radius: 8px;
-  /* Opcional: esquinas redondeadas */
 }
 
+/* Contenedor principal */
 .seccion {
   background-color: #ee9037;
-  /* Fondo válido */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  /* Altura completa */
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Fondo Calendario */
+/* Contenedor del calendario */
 .calendar-page-container {
   background-color: #ffffff;
-  /* Fondo blanco para contraste */
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -50,16 +40,11 @@
   text-align: center;
 }
 
-/* Título */
-.calendar-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 20px;
-}
-
 /* Calendario */
 .calendar-component {
+  max-width: 100%;
+  width: 320px;
+  margin: auto;
   border: 1px solid #cccccc;
   border-radius: 8px;
   transition: box-shadow 0.3s ease;
@@ -92,6 +77,9 @@
 }
 
 .event-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background-color: #ffffff;
   padding: 10px;
   margin: 5px 0;
@@ -99,7 +87,12 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Botón */
+.event-list li:before {
+  content: "📝";
+  font-size: 18px;
+}
+
+/* Botones */
 button.btn {
   padding: 10px 20px;
   font-size: 16px;
@@ -109,14 +102,27 @@ button.btn {
   border-radius: 8px;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-primary:hover {
   background-color: #0056b3;
 }
 
-/* Estilos del overlay del modal */
+button.btn-success:hover {
+  background-color: #28a745;
+}
+
+button.btn-danger:hover {
+  background-color: #dc3545;
+}
+
+/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -130,7 +136,6 @@ button.btn:hover {
   z-index: 1000;
 }
 
-/* Contenedor del modal */
 .modal-container {
   background: white;
   padding: 20px;
@@ -139,4 +144,17 @@ button.btn:hover {
   max-width: 400px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

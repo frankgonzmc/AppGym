@@ -6,7 +6,7 @@ import '../../css/calendarPage.css';
 function CalendarPage() {
   const [value, setValue] = useState(new Date());
   const [events, setEvents] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [showInput, setShowInput] = useState(false);
   const [newNote, setNewNote] = useState('');
 
   const handleDateChange = (newDate) => {
@@ -21,7 +21,7 @@ function CalendarPage() {
         [dateKey]: [...(prevEvents[dateKey] || []), newNote.trim()],
       }));
       setNewNote('');
-      setShowModal(false);
+      setShowInput(false);
     }
   };
 
@@ -39,7 +39,7 @@ function CalendarPage() {
         </div>
         <button
           className="btn btn-primary mt-3"
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowInput(true)}
         >
           Agregar Nota
         </button>
@@ -55,28 +55,24 @@ function CalendarPage() {
           )}
         </div>
 
-        {/* Modal para agregar nota */}
-        {showModal && (
-          <div className="modal-overlay">
-            <div className="modal-container">
-              <h4>Agregar Nota</h4>
-              <input
-                type="text"
-                className="form-control"
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                placeholder="Escribe tu nota aquí..."
-              />
-              <button className="btn btn-success mt-2" onClick={handleAddEvent}>
-                Guardar
-              </button>
-              <button
-                className="btn btn-danger mt-2"
-                onClick={() => setShowModal(false)}
-              >
-                Cancelar
-              </button>
-            </div>
+        {showInput && (
+          <div className="input-container">
+            <input
+              type="text"
+              className="form-control"
+              value={newNote}
+              onChange={(e) => setNewNote(e.target.value)}
+              placeholder="Escribe tu nota..."
+            />
+            <button className="btn btn-success mt-2" onClick={handleAddEvent}>
+              Guardar
+            </button>
+            <button
+              className="btn btn-danger mt-2"
+              onClick={() => setShowInput(false)}
+            >
+              Cancelar
+            </button>
           </div>
         )}
       </div>
