@@ -4,7 +4,7 @@
 }
 
 .calendar-page-container {
-  background-color: #f8f9fa;
+  background-color: #000000;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -19,7 +19,7 @@
 }
 
 .calendar-component {
-  border: 1px solid #dee2e6;
+  border: 1px solid #000000;
   border-radius: 8px;
   transition: box-shadow 0.3s ease;
   /* Añadir una transición */

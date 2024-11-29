@@ -4,13 +4,10 @@ import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
 import { generadorRutinas } from "../../components/generadorRutinas";
-import { useAuth } from "../../context/authcontext";
 
 
 function RutinaExistentePage() {
   const [rutinas, setRutinas] = useState([]);
-  const [ejercicios, setEjercicios] = useState([]);
-  const { user } = useAuth();
 
   useEffect(() => {
     const fetchEjercicios = async () => {
