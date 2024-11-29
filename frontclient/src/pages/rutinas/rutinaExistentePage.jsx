@@ -4,6 +4,7 @@ import "../../css/rutinaPage.css";
 import { RutinaCardExistente } from "../../components/rutina/rutinaCardExistente";
 import axios from "axios";
 import { generadorRutinas } from "../../components/generadorRutinas";
+import { useAuth } from "../../context/authcontext";
 
 
 function RutinaExistentePage() {
