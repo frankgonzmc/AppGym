@@ -21,7 +21,7 @@ export function Inicio() {
 
     //useRoutineAlerts(alertsEnabled ? 10000 : null); // Activar alertas solo si `alertsEnabled` es true
     useRoutineAlerts(10000); // Activar alertas solo si `alertsEnabled` es true
-    
+
     const calcularTMB = () => {
         const { peso = 0, estatura = 0, nivelActividad = "", edad = 0, genero = "" } = user;
 
@@ -158,7 +158,7 @@ export function Inicio() {
             <Row>
                 <Col md={3}>
                     <Card className="info-card profile-card mb-2 animate-card">
-                        <Card.Body>
+                        <Card.Body className="text-black">
                             <div className="text-center">
                                 {profileImageUrl && <img src={profileImageUrl} alt="Profile" className="profile-image" />}
                             </div>
