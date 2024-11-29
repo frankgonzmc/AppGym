@@ -26,7 +26,7 @@ export function FormularioSesion() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const success = await signin(data);
-      if (success) {
+      if (!success) {
         showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
         setErrors([]); // Limpia errores
       } else {
