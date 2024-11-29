@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { useAuth } from "./authcontext";
 
-const NotificationsContext = createContext();
+const NotificacionContext = createContext();
 
 export const NotificationsProvider = ({ children }) => {
     const { isAuthenticated, user } = useAuth();
@@ -71,10 +71,10 @@ export const NotificationsProvider = ({ children }) => {
     }, [user, isAuthenticated]); // Actualiza cuando el usuario cambie
 
     return (
-        <NotificationsContext.Provider value={{ notifications }}>
+        <NotificacionContext.Provider value={{ notifications }}>
             {children}
-        </NotificationsContext.Provider>
+        </NotificacionContext.Provider>
     );
 };
 
-export const useNotifications = () => useContext(NotificationsContext);
+export const useNotifications = () => useContext(NotificacionContext);
