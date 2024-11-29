@@ -84,7 +84,13 @@ function RegistroUsuario() {
                 <Form.Control
                   type="number"
                   placeholder="Edad"
-                  {...register('edad', { required: "Edad es necesaria" })}
+                  {...register('edad', {
+                    required: "Edad es necesaria",
+                    min: {
+                      value: 1,
+                      message: "La edad debe ser mayor o igual a 1",
+                    },
+                  })}
                 />
                 {formErrors.edad && <span className="error-text">{formErrors.edad.message}</span>}
               </Form.Group>
@@ -96,7 +102,17 @@ function RegistroUsuario() {
                   step="0.01"
                   min={0.5}
                   max={3}
-                  {...register('estatura', { required: "Estatura es necesaria" })}
+                  {...register('estatura', {
+                    required: "Estatura es necesaria",
+                    min: {
+                      value: 0.5,
+                      message: "La estatura debe ser mayor o igual a 0.5 metros",
+                    },
+                    max: {
+                      value: 3,
+                      message: "La estatura debe ser menor o igual a 3 metros",
+                    },
+                  })}
                 />
                 {formErrors.estatura && <span className="error-text">{formErrors.estatura.message}</span>}
               </Form.Group>
@@ -108,11 +124,21 @@ function RegistroUsuario() {
                   step="0.01"
                   min={1}
                   max={200}
-                  {...register('peso', { required: "Peso es necesario", min: 1, max: 200 })}
+                  {...register('peso', {
+                    required: "Peso es necesario",
+                    min: {
+                      value: 1,
+                      message: "El peso debe ser mayor o igual a 1 kg",
+                    },
+                    max: {
+                      value: 200,
+                      message: "El peso debe ser menor o igual a 200 kg",
+                    },
+                  })}
                 />
                 {formErrors.peso && <span className="error-text">{formErrors.peso.message}</span>}
               </Form.Group>
-
+              
               <Form.Control type="hidden" value="Principiante" {...register('nivel')} />
 
               <Button variant="success" type="submit" className="w-100 mt-3">

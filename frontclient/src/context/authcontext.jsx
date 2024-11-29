@@ -40,8 +40,11 @@ export const AuthProvider = ({ children }) => {
 
             setErrors([]);
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "Error al conectar con el servidor";
-            setErrors([errorMessage]);
+            if (error.response?.data?.message) {
+                setErrors(error.response.data.message); // Muestra los errores del backend
+            } else {
+                setErrors(["Error al conectar con el servidor"]);
+            }
         }
     };
 
@@ -55,8 +58,11 @@ export const AuthProvider = ({ children }) => {
             setUser(res.data);
             setErrors([]); // Limpiar errores al éxito
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "Error al iniciar sesión";
-            setErrors([errorMessage]);
+            if (error.response?.data?.message) {
+                setErrors(error.response.data.message); // Muestra los errores del backend
+            } else {
+                setErrors(["Error al conectar con el servidor"]);
+            }
         }
     };
 
