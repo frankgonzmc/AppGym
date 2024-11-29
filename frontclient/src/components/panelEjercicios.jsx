@@ -53,7 +53,7 @@ export function PanelEjercicios() {
         <div className="panel-ejercicios w-100 ">
             <section className="bg-gray-800 p-2 rounded-md shadow-lg mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Recomendaciones de Ejercicios</h2>
-                <p className="text-gray-400 mb-4">
+                <p className="text-white mb-4">
                     Basado en tu nivel actual: <span className="font-semibold">{user.nivel}</span>
                 </p>
                 <div className="bg-gray-700 p-4 rounded-md">

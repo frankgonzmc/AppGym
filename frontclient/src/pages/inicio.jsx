@@ -240,8 +240,8 @@ export function Inicio() {
                 <Col md={6} className="mb-2">
                     <Card className="info-card animate-card mb-4">
                         <Card.Body>
-                            <Card.Title>¿Qué es App Gym?</Card.Title>
-                            <p>
+                            <Card.Title className="text-black">¿Qué es App Gym?</Card.Title>
+                            <p className="text-black">
                                 App Gym es una aplicación web que te ayuda a mejorar tus habilidades y llevar una vida más saludable.
                                 Explora nuestras recomendaciones de ejercicios y disfruta de una experiencia única.
                             </p>
@@ -252,8 +252,8 @@ export function Inicio() {
                     </Card>
                     <Card className="info-card animate-card mt-3 mb-4">
                         <Card.Body>
-                            <Card.Title>Recomendaciones de Rutinas y Alimentación</Card.Title>
-                            <p>
+                            <Card.Title className="text-black">Recomendaciones de Rutinas y Alimentación</Card.Title>
+                            <p className="text-black">
                                 Mejora tus habilidades físicas con nuestras recomendaciones personalizadas.
                                 ¡Aprende a mejorar tus habilidades y mejorar tu vida diaria!
                                 ¡No te pierdas la oportunidad de alcanzar tus objetivos!
