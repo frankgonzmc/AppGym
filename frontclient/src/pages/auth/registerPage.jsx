@@ -1,134 +1,81 @@
-import { useForm } from "react-hook-form";
-import { useAuth } from "../../context/authcontext";
-import fondo from "../../imagenes/registerfondo.jpg";
-import '../../css/register.css';
-import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { useAuth } from "../context/authcontext";
+import { Form, Button } from "react-bootstrap";
+import { ErrorAlert } from "../../components/alerts/errorAlert";
 
-function RegistroUsuario() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/inicio");
-    }
-  }, [isAuthenticated, navigate]);
-
-  const onSubmit = handleSubmit(async (values) => {
-    // Convertimos los valores numéricos a su tipo correcto antes de enviarlos
-    const formData = {
-      ...values,
-      edad: parseInt(values.edad, 10),
-      estatura: parseFloat(values.estatura),
-      peso: parseFloat(values.peso),
-    };
-
-    console.log("Datos enviados al backend:", formData); // Verificar los datos en la consola
-    signup(formData);
+export function RegisterPage() {
+  const { signup, errors } = useAuth();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    gender: "",
+    age: "",
+    height: "",
+    weight: "",
   });
 
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(user);
+  };
+
   return (
-    <section className="section-register">
-      <Container className="container-form shadow-lg rounded">
-        <Row>
-          <Col md={6} className="information text-white p-4">
-            <h2>BIENVENIDO</h2>
-            <img src={fondo} alt="Fondo de Registro" className="info-image mb-2" />
-            <p>Para unirte a nuestra comunidad, por favor regístrate.</p>
-          </Col>
-          <Col md={6} className="form-information text-white p-4">
-            <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
-            {registerErrors.map((error, i) => (
-              <div key={i} className="text-black error-message mb-2">{error}</div>
-            ))}
-            <Form onSubmit={onSubmit} className="form-register">
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Nombre Completo"
-                  {...register('username', { required: "Nombre Completo es necesario" })}
-                />
-                {errors.username && <span className="error-text">{errors.username.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Control
-                  type="email"
-                  placeholder="Email"
-                  {...register('email', { required: "Email es necesario" })}
-                />
-                {errors.email && <span className="error-text">{errors.email.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  {...register('password', { required: "Password es necesario" })}
-                />
-                {errors.password && <span className="error-text">{errors.password.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Select {...register('genero', { required: "Género es necesario" })}>
-                  <option value="">Seleccionar Género</option>
-                  <option value="varon">Varon</option>
-                  <option value="mujer">Mujer</option>
-                  <option value="otro">Otro</option>
-                </Form.Select>
-                {errors.genero && <span className="error-text">{errors.genero.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  placeholder="Edad"
-                  {...register('edad', { required: "Edad es necesaria" })}
-                />
-                {errors.edad && <span className="error-text">{errors.edad.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  placeholder="Estatura"
-                  step="0.01"
-                  min={0.5}
-                  max={3}
-                  {...register('estatura', { required: "Estatura es necesaria" })}
-                />
-                {errors.estatura && <span className="error-text">{errors.estatura.message}</span>}
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  placeholder="Peso"
-                  step="0.01"
-                  min={1}
-                  max={200}
-                  {...register('peso', { required: "Peso es necesario" })}
-                />
-                {errors.peso && <span className="error-text">{errors.peso.message}</span>}
-              </Form.Group>
-
-              <Form.Control type="hidden" value="Principiante" {...register('nivel')} />
-
-              <Button variant="success" type="submit" className="w-100 mt-3">
-                Continuar Registro
-              </Button>
-            </Form>
-            <p className="footer-text mt-3">
-              ¿Ya tienes una cuenta? <Link to="/login" className="link-login">Inicia sesión</Link>
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+    <div className="register-container">
+      <h2 className="text-center">Crear una Cuenta</h2>
+      <ErrorAlert errors={errors} /> {/* Muestra errores aquí */}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Nombre</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            onChange={handleChange}
+            placeholder="Ingresa tu nombre"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            onChange={handleChange}
+            placeholder="Ingresa tu email"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            onChange={handleChange}
+            placeholder="Ingresa tu contraseña"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Edad</Form.Label>
+          <Form.Control
+            type="number"
+            name="age"
+            onChange={handleChange}
+            placeholder="Ingresa tu edad"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Género</Form.Label>
+          <Form.Select name="gender" onChange={handleChange}>
+            <option value="Varón">Varón</option>
+            <option value="Mujer">Mujer</option>
+          </Form.Select>
+        </Form.Group>
+        <Button variant="primary" type="submit" className="mt-4">
+          Continuar Registro
+        </Button>
+      </Form>
+    </div>
   );
 }
-
-export default RegistroUsuario;
