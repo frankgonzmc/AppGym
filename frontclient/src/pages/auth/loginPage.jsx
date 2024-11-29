@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import '../../css/login.css';
 import { useAuth } from "../../context/authcontext";
-import { ErrorAlert } from "../../components/alerts/errorAlert";
+import { ErrorAlert } from "../../components/errorAlert";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../imagenes/logo.png";
 import { useEffect } from "react";
@@ -25,10 +25,15 @@ export function FormularioSesion() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signin(data);
-      showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
-      setErrors([]); // Limpia errores
-      navigate('/inicio');
+      const respuestaSession = await signin(data);
+      if (respuestaSession) {
+        showSuccessAlert('Bienvenido!', 'Estas listo para iniciar tu rutina???');
+        setErrors([]); // Limpia errores
+      } else {
+        showErrorAlert("Error de autenticación", "Credenciales incorrectas o servidor no disponible.");
+        setErrors([]); // Limpia errores
+        navigate("/login");
+      }
     } catch (error) {
       if (error.response && error.response.data.message === "Token expirado") {
         showErrorAlert("Sesión expirada", "Por favor, inicia sesión nuevamente.");
