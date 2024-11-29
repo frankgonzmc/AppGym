@@ -33,7 +33,7 @@ function Navbar() {
   const calcularEstado = () => {
     const { peso = 0, estatura = 0 } = user;
 
-    if (peso === 0 || estatura === 0) {
+    if (!peso || !estatura) {
       return "Datos insuficientes para calcular el IMC.";
     }
 
@@ -51,11 +51,13 @@ function Navbar() {
   // Generar notificaciones
   useEffect(() => {
     const generarNotificaciones = async () => {
+      if (!isAuthenticated || !user || !user._id) return;
+
       let nuevasNotificaciones = [];
 
       // Rutinas pendientes
       try {
-        const { data } = await axios.get(`/rutinas/${user.id}/incomplete`);
+        const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
         if (data.rutinas && data.rutinas.length > 0) {
           nuevasNotificaciones.push(
             `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
@@ -88,9 +90,7 @@ function Navbar() {
       setNotifications(nuevasNotificaciones);
     };
 
-    if (isAuthenticated && user) {
-      generarNotificaciones();
-    }
+    generarNotificaciones();
   }, [user, isAuthenticated]);
 
   const handleBellClick = () => {
