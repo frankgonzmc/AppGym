@@ -155,7 +155,11 @@ function Navbar() {
       {showNotifications && (
         <Toast className="p-3" style={{ position: "fixed", top: "10%", right: "10%", zIndex: 1050 }}>
           <Toast.Header>
-            <strong className="me-auto">Notificaciones</strong>
+            <strong className="me-auto">NOTIFICACIONES</strong>
+            <button
+              className="btn-close"
+              onClick={() => setShowNotifications(false)}
+            ></button>
           </Toast.Header>
           <Toast.Body>
             {notifications.length > 0 ? (
