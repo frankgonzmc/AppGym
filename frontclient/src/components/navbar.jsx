@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
 import { Nav, NavDropdown, Badge, Toast } from "react-bootstrap";
 import { FaBell } from "react-icons/fa";
@@ -8,44 +8,11 @@ import "../css/nav.css";
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [dropdownOpenRutina, setDropdownOpenRutina] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  const location = useLocation(); // Detecta cambios de ruta
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  const toggleDropdownRutina = () => setDropdownOpenRutina(!dropdownOpenRutina);
-
-  useEffect(() => {
-    if (dropdownOpen) {
-      const timer = setTimeout(() => setDropdownOpen(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [dropdownOpen]);
-
-  useEffect(() => {
-    if (dropdownOpenRutina) {
-      const timer = setTimeout(() => setDropdownOpenRutina(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [dropdownOpenRutina]);
-
-  const calcularEstado = () => {
-    if (!user || !user.peso || !user.estatura) {
-      return { estado: "Datos insuficientes para calcular el IMC.", tipo: "info" };
-    }
-
-    const imc = user.peso / (user.estatura * user.estatura);
-    if (imc < 16.0) return { estado: "Delgadez severa", tipo: "danger" };
-    if (imc < 17.0) return { estado: "Delgadez moderada", tipo: "warning" };
-    if (imc < 18.5) return { estado: "Delgadez leve", tipo: "warning" };
-    if (imc < 25.0) return { estado: "Normal", tipo: "success" };
-    if (imc < 30.0) return { estado: "Sobrepeso", tipo: "warning" };
-    if (imc < 35.0) return { estado: "Obesidad grado 1", tipo: "danger" };
-    if (imc < 40.0) return { estado: "Obesidad grado 2", tipo: "danger" };
-    return { estado: "Obesidad grado 3", tipo: "danger" };
-  };
-
+  // Generar notificaciones basadas en el usuario y la ruta
   const generarNotificaciones = async () => {
     if (!isAuthenticated || !user || !user._id) return;
 
@@ -60,17 +27,23 @@ function Navbar() {
         });
       }
     } catch (error) {
-      console.error("Error al obtener rutinas pendientes:", error.response?.data?.message || error.message);
+      console.error(
+        "Error al obtener rutinas pendientes:",
+        error.response?.data?.message || error.message
+      );
     }
 
+    // Calcular estado del IMC
     const estadoIMC = calcularEstado();
     nuevasNotificaciones.push({
       mensaje: `Tu IMC indica ${estadoIMC.estado}. ${estadoIMC.tipo === "danger"
-        ? "Se recomienda enfocarte en un cambio significativo en tu dieta y ejercicio."
-        : "Mantén un estilo de vida equilibrado."}`,
+          ? "Se recomienda enfocarte en un cambio significativo en tu dieta y ejercicio."
+          : "Mantén un estilo de vida equilibrado."
+        }`,
       tipo: estadoIMC.tipo,
     });
 
+    // Agregar notificaciones adicionales según datos faltantes
     if (!user.objetivos) {
       nuevasNotificaciones.push({
         mensaje: "Falta completar tus objetivos en el perfil.",
@@ -87,10 +60,29 @@ function Navbar() {
     setNotifications(nuevasNotificaciones);
   };
 
+  // Calcular estado del IMC
+  const calcularEstado = () => {
+    if (!user || !user.peso || !user.estatura) {
+      return { estado: "Datos insuficientes para calcular el IMC.", tipo: "info" };
+    }
+
+    const imc = user.peso / (user.estatura * user.estatura);
+    if (imc < 16.0) return { estado: "Delgadez severa", tipo: "danger" };
+    if (imc < 17.0) return { estado: "Delgadez moderada", tipo: "warning" };
+    if (imc < 18.5) return { estado: "Delgadez leve", tipo: "warning" };
+    if (imc < 25.0) return { estado: "Normal", tipo: "success" };
+    if (imc < 30.0) return { estado: "Sobrepeso", tipo: "warning" };
+    if (imc < 35.0) return { estado: "Obesidad grado 1", tipo: "danger" };
+    if (imc < 40.0) return { estado: "Obesidad grado 2", tipo: "danger" };
+    return { estado: "Obesidad grado 3", tipo: "danger" };
+  };
+
+  // Actualizar notificaciones al cambiar de ruta o usuario
   useEffect(() => {
     generarNotificaciones();
-  }, [user, isAuthenticated]);
+  }, [location, user, isAuthenticated]); // Escucha cambios de ruta y usuario
 
+  // Mostrar u ocultar notificaciones
   const handleBellClick = () => {
     setShowNotifications(!showNotifications);
   };
@@ -106,12 +98,7 @@ function Navbar() {
         <div className="nav-links">
           <Nav className="justify-content-center" style={{ width: "100%" }}>
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <NavDropdown
-              title="Rutinas"
-              id="nav-dropdown"
-              show={dropdownOpenRutina}
-              onToggle={toggleDropdownRutina}
-            >
+            <NavDropdown title="Rutinas" id="nav-dropdown">
               <NavDropdown.Item as={Link} to="/rutinas">Mis Rutinas</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/rutinas-predeterminadas">Rutinas Existentes</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/add-rutinas">Crear Rutina</NavDropdown.Item>
@@ -134,8 +121,6 @@ function Navbar() {
               <NavDropdown
                 title={`Bienvenido: ${user.username}`}
                 id="nav-dropdown-user"
-                show={dropdownOpen}
-                onToggle={toggleDropdown}
               >
                 <NavDropdown.Item as={Link} to="/profile">Perfil</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
