@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 
 export function RutinaCardExistente({ rutina }) {
   return (
-    <Card className="mb-4 text-white">
+    <Card className="mb-4 text-black">
       <Card.Header>
         <h2 className="text-center">{`Rutina de ${rutina.categoria} (${rutina.nivel})`}</h2>
       </Card.Header>
