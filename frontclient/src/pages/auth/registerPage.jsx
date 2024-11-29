@@ -43,7 +43,7 @@ function RegistroUsuario() {
           <Col md={6} className="form-information text-white p-4">
             <h2 className="mt-3 mb-4">Crear una Cuenta</h2>
             <ErrorAlert errors={errors} /> {/* Muestra errores aquí */}
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={onSubmit}>
               <Form.Group>
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
