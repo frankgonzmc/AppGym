@@ -59,7 +59,10 @@ export const AuthProvider = ({ children }) => {
             setErrors([]); // Limpiar errores al éxito
         } catch (error) {
             if (error.response?.data?.message) {
-                setErrors(error.response.data.message); // Muestra los errores del backend
+                const messages = Array.isArray(error.response.data.message)
+                    ? error.response.data.message
+                    : [error.response.data.message]; // Asegúrate de que sea un array
+                setErrors(messages); // Muestra los errores del backend
             } else {
                 setErrors(["Error al conectar con el servidor"]);
             }

@@ -56,7 +56,7 @@ export const register = async (req, res) => {
             edad: savedUser.edad,
         });
     } catch (error) {
-        console.error("Error en el registro:", error);
+        //console.error("Error en el registro:", error);
         return res.status(500).json({ message: "Error en el servidor" });
     }
 };
@@ -82,7 +82,7 @@ export const login = async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000, // 1 día
         });
 
-        res.json({
+        return res.status(200).json({
             id: userEncontrado._id,
             username: userEncontrado.username,
             email: userEncontrado.email,
