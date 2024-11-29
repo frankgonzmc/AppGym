@@ -106,11 +106,11 @@ function RegistroUsuario() {
                     required: "Estatura es necesaria",
                     min: {
                       value: 0.5,
-                      message: "La estatura debe ser mayor o igual a 0.5 metros",
+                      message: "La estatura debe ser mayor o igual a 0.5 metros, ejemplo: 1.65, 1.76",
                     },
                     max: {
                       value: 3,
-                      message: "La estatura debe ser menor o igual a 3 metros",
+                      message: "La estatura debe ser menor o igual a 3 metros, ejemplo: 1.65, 1.76",
                     },
                   })}
                 />
@@ -138,7 +138,7 @@ function RegistroUsuario() {
                 />
                 {formErrors.peso && <span className="error-text">{formErrors.peso.message}</span>}
               </Form.Group>
-              
+
               <Form.Control type="hidden" value="Principiante" {...register('nivel')} />
 
               <Button variant="success" type="submit" className="w-100 mt-3">
