@@ -15,11 +15,11 @@ export function RutinaCardExistente({ rutina }) {
               <br />
               <strong>Nivel: {ejercicio.nivel}</strong>
               <br />
-              <strong>series: {ejercicio.series}</strong>
+              <strong>series: {ejercicio.series} veces</strong>
               <br />
-              <strong>Duracion: {ejercicio.duracion}</strong>
+              <strong>Duracion: {ejercicio.duracion} segundos</strong>
               <br />
-              <strong>Repeticiones: {ejercicio.repeticiones}</strong>
+              <strong>Repeticiones: {ejercicio.repeticiones} veces</strong>
             </li>
           ))}
         </ul>
