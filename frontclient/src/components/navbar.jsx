@@ -33,7 +33,7 @@ function Navbar() {
   // Función para calcular el estado basado en IMC
   const calcularEstado = () => {
     if (!user || !user.peso || !user.estatura) {
-      return "Datos insuficientes para calcular el IMC.";
+      return { estado: "Datos insuficientes para calcular el IMC.", tipo: "info" };
     }
 
     const imc = user.peso / (user.estatura * user.estatura);
@@ -57,9 +57,10 @@ function Navbar() {
     try {
       const { data } = await axios.get(`/rutinas/${user._id}/incomplete`);
       if (data.rutinas && data.rutinas.length > 0) {
-        nuevasNotificaciones.push(
-          `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`
-        );
+        nuevasNotificaciones.push({
+          mensaje: `Tienes ${data.rutinas.length} rutina(s) pendientes. ¡No olvides completarlas!`,
+          tipo: "warning",
+        });
       }
     } catch (error) {
       console.error(
@@ -71,26 +72,11 @@ function Navbar() {
     // Agregar notificación basada en el IMC
     const estadoIMC = calcularEstado();
     nuevasNotificaciones.push({
-      mensaje: `Tu IMC indica ${estadoIMC.estado}. Se recomienda ${estadoIMC.tipo === "danger"
-        ? "enfocarte en un cambio significativo en tu dieta y ejercicio."
-        : "mantener un estilo de vida equilibrado."
-        }`,
+      mensaje: `Tu IMC indica ${estadoIMC.estado}. ${estadoIMC.tipo === "danger"
+        ? "Se recomienda enfocarte en un cambio significativo en tu dieta y ejercicio."
+        : "Mantén un estilo de vida equilibrado."}`,
       tipo: estadoIMC.tipo,
     });
-    /*
-    // Agregar notificación basada en el IMC
-    const estadoIMC = calcularEstado();
-    if (estadoIMC.includes("Obesidad")) {
-      nuevasNotificaciones.push({
-        mensaje: "Tu IMC indica obesidad. Se recomienda enfocarte en perder peso mediante una dieta adecuada y ejercicio.",
-        tipo: "warning",
-      });
-    } else if (estadoIMC.includes("Delgadez")) {
-      nuevasNotificaciones.push({
-        mensaje: "Tu IMC indica delgadez. Se recomienda enfocarte en ganar masa muscular con un plan de entrenamiento y dieta balanceada.",
-        tipo: "warning",
-      });
-    }*/
 
     // Agregar notificación si faltan datos en el perfil
     if (!user.objetivos) {
@@ -175,31 +161,14 @@ function Navbar() {
 
       {/* Notificaciones */}
       <ToastContainer className="p-3" position="top-end">
-        {notifications.length > 0 ? (
-          notifications.map((noti, index) => (
-            <Toast
-              key={index}
-              bg={noti.tipo} // Usa el tipo para el color de fondo
-              onClose={() => {
-                setNotifications((prev) => prev.filter((_, i) => i !== index));
-              }}
-              autohide
-              delay={5000}
-            >
-              <Toast.Header>
-                <strong className="me-auto">Notificaciones</strong>
-              </Toast.Header>
-              <Toast.Body>{noti.mensaje}</Toast.Body>
-            </Toast>
-          ))
-        ) : (
-          <Toast bg="info" autohide delay={5000}>
+        {notifications.map((noti, index) => (
+          <Toast key={index} bg={noti.tipo} onClose={() => setShowNotifications(false)} delay={5000} autohide>
             <Toast.Header>
               <strong className="me-auto">Notificaciones</strong>
             </Toast.Header>
-            <Toast.Body>No tienes notificaciones pendientes.</Toast.Body>
+            <Toast.Body>{noti.mensaje}</Toast.Body>
           </Toast>
-        )}
+        ))}
       </ToastContainer>
     </>
   );
