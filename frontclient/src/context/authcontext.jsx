@@ -40,12 +40,8 @@ export const AuthProvider = ({ children }) => {
 
             setErrors([]);
         } catch (error) {
-            console.error("Error en signup:", error);
-            if (error.response) {
-                setErrors([error.response.data.message || "Error en el registro"]);
-            } else {
-                setErrors(["Error al conectar con el servidor"]);
-            }
+            const errorMessage = error.response?.data?.message || "Error al conectar con el servidor";
+            setErrors([errorMessage]);
         }
     };
 
@@ -57,12 +53,10 @@ export const AuthProvider = ({ children }) => {
             // Guarda el estado de autenticación
             setIsAuthenticated(true);
             setUser(res.data);
+            setErrors([]); // Limpiar errores al éxito
         } catch (error) {
-            console.error("Error en signin:", error);
-            if (Array.isArray(error.response.data)) {
-                return setErrors(error.response.data);
-            }
-            setErrors([error.response.data.message || "Error al iniciar sesión"]);
+            const errorMessage = error.response?.data?.message || "Error al iniciar sesión";
+            setErrors([errorMessage]);
         }
     };
 
